@@ -26,9 +26,16 @@ Creare un contributo
 ````
 		(#99999) Fare un esempio concreto nel documento CONTRIBUTING
 
-		Senza questa patch l'esempio del messaggio di commit nel documento CONTRIBUTING non è concreto. Questo è un problema perché il collaboratore non sa come dovrebbe essere un messaggio di commit, e potrebbe basarsi su una descrizione invece che su un esempio. Questa patch risolve il problema presentando un esempio concreto.
+		Senza questa patch l'esempio del messaggio di commit nel documento
+		CONTRIBUTING non è concreto. Questo è un problema perché il collaboratore
+		non sa come dovrebbe essere un messaggio di commit, e potrebbe basarsi su
+		una descrizione invece che su un esempio. Questa patch risolve il problema
+		presentando un esempio concreto.
 
-		La prima linea è una vera e propria dichiarazione imperativa con il numero di ticket dalla issue. Il corpo descrive il comportamento senza la patch, perché questo è un problema, e come la patch risolve il problema quando applicata.
+		La prima linea è una vera e propria dichiarazione imperativa con il numero
+		di ticket dalla issue. Il corpo descrive il comportamento senza la patch,
+		perché questo è un problema, e come la patch risolve il problema quando
+		applicata.
 ````
 
 * Assicurati di aver aggiunto i test necessari per il tuo fix.
@@ -44,9 +51,13 @@ Per contributi di natura banale a commenti e documentazioni, non è sempre neces
 ````
 		(doc) Aggiungere un esempio di commit su documentazione a CONTRIBUTING
 
-		Non ci sono esempi per contribuire con un commit su documentazione nei repository apuliasoft. Questo è un problema perché il collaboratore non sa come dovrebbe essere un commit di questa natura.
+		Non ci sono esempi per contribuire con un commit su documentazione nei
+		repository apuliasoft. Questo è un problema perché il collaboratore non sa
+		come dovrebbe essere un commit di questa natura.
 
-		La prima linea è una vera e propria dichiarazione imperativa con '(doc)' al posto del numero di ticket. Il corpo descrive la natura della nuova documentazione o dei nuovi commenti aggiunti.
+		La prima linea è una vera e propria dichiarazione imperativa con '(doc)' al
+		posto del numero di ticket. Il corpo descrive la natura della nuova
+		documentazione o dei nuovi commenti aggiunti.
 ````
 
 Sottoporre i contributi
