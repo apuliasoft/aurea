@@ -1,5 +1,5 @@
-Come contribuire
-================
+Contribuire in Aurea
+====================
 
 Le patch di terze parti sono essenziali per rendere grande Aurea. Purtroppo non abbiamo la possibilità di accedere all'enorme quantità di piattaforme e alla miriade di configurazioni possibili per l'esecuzione di Aurea. Noi vorremmo che tu sia in grado di contribuire, nel modo più semplice possibile, con soluzioni che permettano di fan funzionare Aurea nel tuo ambiente. D'altro canto, abbiamo bisogno che i collaboratori seguino alcune linee guida in modo da mantenere il controllo della situazione.
 
