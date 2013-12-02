@@ -19,6 +19,7 @@ In questo modo si intende creare un ecosistema nel quale gli istituti scolastici
 
 
 Vincitore del concorso Principi Attivi 2012 - Giovani Idee per una Puglia Migliore
-![Regione Puglia](https://dl.dropboxusercontent.com/u/16527649/regione.jpg)
-![Dipartimento della Gioventù](https://dl.dropboxusercontent.com/u/16527649/ministero.jpg)
-![Vincitore Principi Attivi 2012](https://dl.dropboxusercontent.com/u/16527649/vincitore_vert_3.jpg)
+
+![Dipartimento della Gioventù](https://f.cloud.github.com/assets/666044/1655522/63aa60ec-5b64-11e3-911c-bec35fbac29f.jpg)
+![Regione Puglia](https://f.cloud.github.com/assets/666044/1655523/63c5de30-5b64-11e3-8bab-1889b1ee4f91.jpg)
+![Vincitore Principi Attivi 2012](https://f.cloud.github.com/assets/666044/1655555/0e445b34-5b65-11e3-80ca-cb7171ebff11.jpg)
