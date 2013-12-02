@@ -17,9 +17,7 @@ Inoltre con lo sviluppo del progetto AUREA si vuole permettere alle istituzioni 
 
 In questo modo si intende creare un ecosistema nel quale gli istituti scolastici colmino il gap tecnologico riducendo al massimo i costi di aggiornamento e le aziende ICT abbandonano il regime fortemente concorrenziale che impedisce lo sviluppo di soluzioni forti e affidabili in favore di un regime di **cooperazione costruttiva**.
 
+------------------------------------------------------------------------------------------------------------------------
 
 Vincitore del concorso Principi Attivi 2012 - Giovani Idee per una Puglia Migliore
-
-![Dipartimento della Gioventù](https://f.cloud.github.com/assets/666044/1655522/63aa60ec-5b64-11e3-911c-bec35fbac29f.jpg)
-![Regione Puglia](https://f.cloud.github.com/assets/666044/1655523/63c5de30-5b64-11e3-8bab-1889b1ee4f91.jpg)
-![Vincitore Principi Attivi 2012](https://f.cloud.github.com/assets/666044/1655555/0e445b34-5b65-11e3-80ca-cb7171ebff11.jpg)
+![Vincitore](https://f.cloud.github.com/assets/666044/1655619/ca6e4662-5b65-11e3-93e4-5897704f45db.jpg)
