@@ -1,5 +1,6 @@
 .DS_Store
 .nodemonignore
+.idea/
 .sass-cache/
 node_modules/
 public/lib
