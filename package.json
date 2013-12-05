@@ -1,12 +1,12 @@
 {
-  "name": "mean",
-  "description": "MEAN - A Modern Stack: MongoDB, ExpressJS, AngularJS, NodeJS. (BONUS: Passport User Support).",
-  "version": "0.1.0",
+  "name": "aurea",
+  "description": "Aurea: un registro elettronico aperto",
+  "version": "0.0.*-snapshot",
   "private": false,
-  "author": "Amos Haviv",
+  "author": "ApuliaSoft",
   "repository": {
     "type": "git",
-    "url": "https://github.com/linnovate/mean.git"
+    "url": "https://github.com/apuliasoft/aurea.git"
   },
   "engines": {
     "node": "0.10.x",

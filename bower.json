@@ -1,6 +1,6 @@
 {
-  "name": "mean",
-  "version": "0.1.0",
+  "name": "aurea",
+  "version": "0.0.*-snapshot",
   "dependencies": {
     "bootstrap": "2.3.2",
     "angular": "1.0.6",

@@ -1,7 +1,8 @@
 .DS_Store
-.nodemonignore
 .idea/
+.nodemonignore
 .sass-cache/
+deploy/
 node_modules/
 public/lib
 test/coverage/
