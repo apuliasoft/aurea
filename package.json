@@ -1,7 +1,7 @@
 {
   "name": "aurea",
   "description": "Aurea: un registro elettronico aperto",
-  "version": "0.0.*-snapshot",
+  "version": "0.0.8",
   "private": false,
   "author": "ApuliaSoft",
   "repository": {
