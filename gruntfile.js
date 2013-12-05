@@ -77,7 +77,7 @@ module.exports = function (grunt) {
           archive: 'deploy/aurea.zip'
         },
         files: [
-          {src: ['app/**', 'config/**', 'public/**', '*'], filter: 'isFile'}
+          {src: ['app/**', 'config/**', 'public/**', '*'], dest: 'aurea/', filter: 'isFile'}
         ]
       }
     }
