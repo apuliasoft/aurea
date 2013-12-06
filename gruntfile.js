@@ -6,21 +6,21 @@ module.exports = function (grunt) {
       jade: {
         files: ['app/views/**'],
         options: {
-          livereload: true,
-        },
+          livereload: true
+        }
       },
       js: {
         files: ['public/js/**', 'app/**/*.js'],
         tasks: ['jshint'],
         options: {
-          livereload: true,
-        },
+          livereload: true
+        }
       },
       html: {
         files: ['public/views/**'],
         options: {
-          livereload: true,
-        },
+          livereload: true
+        }
       },
       css: {
         files: ['public/css/**'],
