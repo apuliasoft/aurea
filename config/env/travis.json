@@ -1,5 +1,5 @@
 {
-    "db": "mongodb://localhost/mean-travis",
+    "db": "mongodb://localhost/aurea-travis",
     "port": 3001,
     "app": {
         "name": "Aurea: un registro elettronico aperto - Test on travis"
