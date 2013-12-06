@@ -1,16 +1,14 @@
 {
   "name": "aurea",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "dependencies": {
-    "bootstrap": "2.3.2",
-    "angular": "1.0.6",
-    "angular-resource": "1.0.6",
-    "angular-cookies": "1.0.6",
-    "angular-bootstrap": "0.6.0",
-    "angular-ui-utils": "0.0.4",
-    "angular-mocks": "~1.0.8"
+    "bootstrap": "~3.0.3",
+    "angular": "~1.2.3",
+    "angular-resource": "~1.2.3",
+    "angular-cookies": "~1.2.3",
+    "angular-mocks": "~1.2.3"
   },
   "resolutions": {
-    "angular": "1.0.6"
+    "angular": "~1.2.3"
   }
 }
