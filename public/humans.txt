@@ -3,11 +3,13 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Giuseppe Santoro -- Developer -- @ThePeppino
+    Francesco Maria Pavone -- Developer -- FrancescoKujaku
+    Nicola Sanitate -- Developer -- @n_sanitate
 
 # THANKS
 
-    <name>
+
 
 # TECHNOLOGY COLOPHON
 

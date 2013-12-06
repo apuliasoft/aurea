@@ -1,4 +1,4 @@
-angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', 'mean.system', 'mean.articles']);
+angular.module('aurea', ['ngRoute', 'ngCookies', 'ngResource', 'aurea.system', 'aurea.articles']);
 
-angular.module('mean.system', []);
-angular.module('mean.articles', []);
+angular.module('aurea.system', []);
+angular.module('aurea.articles', []);
