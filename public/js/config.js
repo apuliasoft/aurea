@@ -15,6 +15,18 @@ angular.module('aurea')
         when('/articles/:articleId', {
           templateUrl: 'views/articles/view.html'
         }).
+        when('/schools', {
+          templateUrl: 'views/schools/list.html'
+        }).
+        when('/schools/create', {
+          templateUrl: 'views/schools/create.html'
+        }).
+        when('/schools/:schoolId/edit', {
+          templateUrl: 'views/schools/edit.html'
+        }).
+        when('/schools/:schoolId', {
+          templateUrl: 'views/schools/view.html'
+        }).
         when('/', {
           templateUrl: 'views/index.html'
         }).
