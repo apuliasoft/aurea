@@ -10,8 +10,6 @@ var should = require('should'),
 //Globals
 var school;
 
-console.log(process.env);
-
 //The tests
 describe('<Unit Test>', function () {
     describe('Model School:', function () {

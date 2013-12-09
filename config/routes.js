@@ -26,11 +26,17 @@ module.exports = function(app, passport, auth) {
     app.put('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.update);
     app.del('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy);
 
-    //School Routes
-    var school = require('../app/controllers/school');
-
     //Finish with setting up the articleId param
     app.param('articleId', articles.article);
+
+    //School Routes
+    var school = require('../app/controllers/school');
+    app.post('/school', school.create);
+    app.get('/school/:schoolId', school.show);
+
+    //Finish with setting up the schoolId param
+    app.param('schoolId', school.school);
+
 
     //Home route
     var index = require('../app/controllers/index');
