@@ -16,25 +16,21 @@ angular.module('aurea.schools')
         });
       };
 
+      $scope.init = function () {
+        $scope.complexes = [{}];
+      }
+
       $scope.create = function () {
         var school = new Schools({
           name: this.name,
-          complex: [{
-            address: this.address,
-            zipCode: this.zipCode,
-            city: this.city,
-            province: this.province
-          }]
+          complexes: this.complexes
         });
         school.$save(function (response) {
-          $location.path("schools/" + response._id);
+          $location.path('schools/' + response._id);
         });
 
-        this.name = "";
-        this.address = "";
-        this.zipCode = "";
-        this.city = "";
-        this.province = "";
+        this.name = '';
+        this.complexes.length = 0;
       };
 
       $scope.update = function () {

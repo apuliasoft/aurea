@@ -1,7 +1,12 @@
 <section data-ng-controller="SchoolsController" data-ng-init="find()">
-  <ul class="schools unstyled">
+
+  <ul class="unstyled">
     <li data-ng-repeat="school in schools">
-      <span>{{school.name}}</span>
+      <h2>{{school.name}}</h2>
+      <a data-ng-href="#!/scuole/{{school._id}}">Dettagli...</a>
     </li>
   </ul>
+
+  <a class="btn btn-default" href="#!/scuole/crea">Nuova scuola</a>
+
 </section>

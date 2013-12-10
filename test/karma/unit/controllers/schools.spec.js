@@ -120,7 +120,7 @@
         var postSchoolData = function () {
           return {
             name: 'Scuola Media Statale Giovanni Pascoli',
-            complex: [{
+            complexes: [{
               address: 'via Manzoni s.n.',
               zipCode: '70016',
               city: 'Noicattaro',
@@ -134,7 +134,7 @@
           return {
             _id: '525cf20451979dea2c000001',
             name: 'Scuola Media Statale Giovanni Pascoli',
-            complex: [{
+            complexes: [{
               address: 'via Manzoni s.n.',
               zipCode: '70016',
               city: 'Noicattaro',
@@ -143,12 +143,15 @@
           };
         };
 
+        // initialize scope for creation procedure
+        scope.init();
+
         // fixture mock form input values
         scope.name = 'Scuola Media Statale Giovanni Pascoli';
-        scope.address = 'via Manzoni s.n.';
-        scope.zipCode = '70016';
-        scope.city = 'Noicattaro';
-        scope.province = 'BA';
+        scope.complexes[0].address = 'via Manzoni s.n.';
+        scope.complexes[0].zipCode = '70016';
+        scope.complexes[0].city = 'Noicattaro';
+        scope.complexes[0].province = 'BA';
 
         // test post request is sent
         $httpBackend.expectPOST('school', postSchoolData()).respond(responseSchoolData());
@@ -159,10 +162,7 @@
 
         // test form input(s) are reset
         expect(scope.name).toEqual('');
-        expect(scope.address).toEqual('');
-        expect(scope.zipCode).toEqual('');
-        expect(scope.city).toEqual('');
-        expect(scope.province).toEqual('');
+        expect(scope.complexes.length).toBe(0);
 
         // test URL location to new object
         expect($location.path()).toBe('/schools/' + responseSchoolData()._id);
@@ -175,7 +175,7 @@
           return {
             _id: '525a8422f6d0f87f0e407a33',
             name: 'Istituto Comprensivo Giovanni Pascoli',
-            complex: [{
+            complexes: [{
               address: 'via Manzoni s.n.',
               zipCode: '70016',
               city: 'Noicattaro',
