@@ -1,16 +1,13 @@
-<section data-ng-controller="ArticlesController" data-ng-init="findOne()">
-  <span>{{article.created | date:'medium'}}</span>/
-  <span>{{article.user.name}}</span>
+<section data-ng-controller="SchoolsController" data-ng-init="findOne()">
 
-  <h2>{{article.title}}</h2>
+  <h2>{{school.name}}</h2>
 
-  <div data-ng-show="global.user._id == article.user._id">
-    <a class="btn" href="/#!/articles/{{article._id}}/edit">
-      <i class="icon-edit"></i>
-    </a>
-    <a class="btn" data-ng-click="remove();">
-      <i class="icon-trash"></i>
-    </a>
-  </div>
-  <div>{{article.content}}</div>
+  <ul class="unstyled">
+    <li data-ng-repeat="complex in school.complexes">
+      <span>{{complex}}</span>
+    </li>
+  </ul>
+
+  <a class="btn btn-default" href="#!/scuole/{{school._id}}/modifica">Modifica</a>
+
 </section>
