@@ -38,7 +38,6 @@ module.exports = function(app, passport, auth) {
     //Finish with setting up the schoolId param
     app.param('schoolId', school.school);
 
-
     //Home route
     var index = require('../app/controllers/index');
     app.get('/', index.render);

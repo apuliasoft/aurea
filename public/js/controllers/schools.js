@@ -18,7 +18,7 @@ angular.module('aurea.schools')
 
       $scope.init = function () {
         $scope.complexes = [{}];
-      }
+      };
 
       $scope.create = function () {
         var school = new Schools({
