@@ -3,13 +3,15 @@
  */
 var mongoose = require('mongoose'),
     config = require('../../config/config'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    Complex = require('./complex');
 
 /**
  * School Schema
  */
 var SchoolSchema = new Schema({
-    name: String
+    name: String,
+    complexes: [Complex]
 });
 
 /**
