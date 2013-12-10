@@ -31,8 +31,9 @@ module.exports = function(app, passport, auth) {
 
     //School Routes
     var school = require('../app/controllers/school');
-    app.post('/school', school.create);
+    app.get('/school', school.all);
     app.get('/school/:schoolId', school.show);
+    app.post('/school', school.create);
 
     //Finish with setting up the schoolId param
     app.param('schoolId', school.school);
