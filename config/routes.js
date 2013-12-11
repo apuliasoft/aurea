@@ -34,6 +34,7 @@ module.exports = function(app, passport, auth) {
     app.get('/school', school.all);
     app.get('/school/:schoolId', school.show);
     app.post('/school', school.create);
+    app.put('/school/:schoolId', school.update);
 
     //Finish with setting up the schoolId param
     app.param('schoolId', school.school);

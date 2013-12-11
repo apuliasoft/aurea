@@ -16,6 +16,20 @@ exports.create = function(req, res) {
     });
 };
 
+exports.update = function(req, res) {
+    var school = req.school;
+    school.set(req.body);
+    school.markModified('complexes');
+
+    school.save(function(err) {
+        if (err) {
+            res.json(err.errors);
+        } else {
+            res.json(school);
+        }
+    });
+};
+
 exports.show = function(req, res) {
     res.json(req.school);
 };
