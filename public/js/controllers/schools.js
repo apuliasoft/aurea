@@ -17,20 +17,27 @@ angular.module('aurea.schools')
       };
 
       $scope.init = function () {
-        $scope.complexes = [{}];
+        $scope.school = {
+          name: '',
+          complexes: [{}]
+        };
+      };
+
+      $scope.addComplex = function () {
+        $scope.school.complexes.push({});
+      };
+
+      $scope.removeComplex = function (index) {
+        $scope.school.complexes.splice(index, 1);
       };
 
       $scope.create = function () {
-        var school = new Schools({
-          name: this.name,
-          complexes: this.complexes
-        });
+        var school = new Schools(this.school);
         school.$save(function (response) {
-          $location.path('schools/' + response._id);
+          $location.path('scuole/' + response._id);
         });
 
-        this.name = '';
-        this.complexes.length = 0;
+        $scope.init();
       };
 
       $scope.update = function () {
@@ -41,7 +48,7 @@ angular.module('aurea.schools')
         school.updated.push(new Date().getTime());
 
         school.$update(function () {
-          $location.path('schools/' + school._id);
+          $location.path('scuole/' + school._id);
         });
       };
 
@@ -57,7 +64,7 @@ angular.module('aurea.schools')
         }
         else {
           $scope.school.$remove();
-          $location.path('schools');
+          $location.path('scuole');
         }
       };
 

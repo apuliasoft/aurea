@@ -2,7 +2,7 @@
   'use strict';
 
   // School Controller Spec
-  describe('MEAN controllers', function () {
+  describe('Aurea controllers', function () {
 
     describe('SchoolsController', function () {
 
@@ -112,6 +112,58 @@
 
       });
 
+      it('$scope.init() should create an array with one void school object', function() {
+        // run controller
+        scope.init();
+
+        // test scope value
+        expect(scope.school).toEqualData({
+          name: '',
+          complexes: [{}]
+        });
+      });
+
+      it('$scope.addComplex should create a void complex object ' +
+        'and add it to the school in the scope', function() {
+        // init school in scope
+        scope.school = {
+          name: '',
+          complexes: [{}]
+        };
+
+        // Run controller
+        scope.addComplex();
+
+        // test after successful adding
+        expect(scope.school).toEqualData({
+          name: '',
+          complexes: [{},{}]
+        });
+      });
+
+      it('$scope.removeComplex should delete a complex object' +
+        'from the school in the scope', function() {
+        // fixture rideshare
+        scope.school = {
+            name: '',
+            complexes: [{
+              address: 'via Manzoni s.n.',
+              zipCode: '70016',
+              city: 'Noicattaro',
+              province: 'BA'
+            }]
+          };
+
+        // Run controller
+        scope.removeComplex(0);
+
+        // test after successful adding
+        expect(scope.school).toEqualData({
+          name: '',
+          complexes: []
+        });
+      });
+
       it('$scope.create() with valid form data should send a POST request ' +
         'with the form input values and then ' +
         'locate to new object URL', function () {
@@ -143,15 +195,22 @@
           };
         };
 
-        // initialize scope for creation procedure
-        scope.init();
+        // init school in scope
+        scope.school = {
+          name: '',
+          complexes: [{}]
+        };
 
         // fixture mock form input values
-        scope.name = 'Scuola Media Statale Giovanni Pascoli';
-        scope.complexes[0].address = 'via Manzoni s.n.';
-        scope.complexes[0].zipCode = '70016';
-        scope.complexes[0].city = 'Noicattaro';
-        scope.complexes[0].province = 'BA';
+        scope.school = {
+          name: 'Scuola Media Statale Giovanni Pascoli',
+          complexes: [{
+            address: 'via Manzoni s.n.',
+            zipCode: '70016',
+            city: 'Noicattaro',
+            province: 'BA'
+          }]
+        };
 
         // test post request is sent
         $httpBackend.expectPOST('school', postSchoolData()).respond(responseSchoolData());
@@ -161,11 +220,13 @@
         $httpBackend.flush();
 
         // test form input(s) are reset
-        expect(scope.name).toEqual('');
-        expect(scope.complexes.length).toBe(0);
+        expect(scope.school).toEqualData({
+          name: '',
+          complexes: [{}]
+        });
 
         // test URL location to new object
-        expect($location.path()).toBe('/schools/' + responseSchoolData()._id);
+        expect($location.path()).toBe('/scuole/' + responseSchoolData()._id);
       });
 
       it('$scope.update() should update a valid school', inject(function (Schools) {
@@ -206,7 +267,7 @@
         $httpBackend.flush();
 
         // test URL location to new object
-        expect($location.path()).toBe('/schools/' + putSchoolData()._id);
+        expect($location.path()).toBe('/scuole/' + putSchoolData()._id);
 
       }));
 

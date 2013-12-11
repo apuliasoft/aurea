@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  describe('MEAN controllers', function () {
+  describe('Aurea controllers', function () {
 
     describe('IndexController', function () {
 
