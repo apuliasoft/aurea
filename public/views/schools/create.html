@@ -8,36 +8,46 @@
       <label for="name" class="col-sm-2 control-label">Nome</label>
 
       <div class="col-sm-10">
-        <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Nome">
+        <input type="text" data-ng-model="school.name" id="name" class="form-control" placeholder="Nome" tabindex="1" autofocus="on">
       </div>
     </div>
 
     <h2>Plessi</h2>
 
-    <div data-ng-repeat="complex in complexes">
+    <div data-ng-repeat="complex in school.complexes">
 
       <div class="form-group">
         <label for="address{{$index}}" class="col-sm-2 control-label">Indirizzo</label>
 
         <div class="col-sm-10">
-          <input type="text" data-ng-model="complex.address" id="address{{$index}}" class="form-control" placeholder="Indirizzo">
+          <input type="text" data-ng-model="complex.address" id="address{{$index}}" class="form-control" placeholder="Indirizzo" tabindex="{{$index * 5 + 2}}">
         </div>
       </div>
 
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-2">
-          <input type="text" data-ng-model="complex.zipCode" id="zipCode{{$index}}" class="form-control" placeholder="CAP">
-        </div>
-
-        <div class="col-sm-6">
-          <input type="text" data-ng-model="complex.city" id="city{{$index}}" class="form-control" placeholder="Città">
+        <div class="col-sm-2">
+          <button type="button" data-ng-click="removeComplex($index)" class="btn btn-default pull-right" tabindex="{{$index * 5 + 6}}">Rimuovi plesso</button>
         </div>
 
         <div class="col-sm-2">
-          <input type="text" data-ng-model="complex.province" id="province{{$index}}" class="form-control" placeholder="Provincia">
+          <input type="text" data-ng-model="complex.zipCode" id="zipCode{{$index}}" class="form-control" placeholder="CAP" tabindex="{{$index * 5 + 3}}">
+        </div>
+
+        <div class="col-sm-6">
+          <input type="text" data-ng-model="complex.city" id="city{{$index}}" class="form-control" placeholder="Città" tabindex="{{$index * 5 + 4}}">
+        </div>
+
+        <div class="col-sm-2">
+          <input type="text" data-ng-model="complex.province" id="province{{$index}}" class="form-control" placeholder="Provincia" tabindex="{{$index * 5 + 5}}">
         </div>
       </div>
 
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-12">
+        <button type="button" data-ng-click="addComplex()" class="btn btn-default pull-right" tabindex="100">Nuovo plesso</button>
+      </div>
     </div>
 
     <div class="form-group">

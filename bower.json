@@ -8,8 +8,5 @@
     "angular-resource": "~1.2.3",
     "angular-cookies": "~1.2.3",
     "angular-mocks": "~1.2.3"
-  },
-  "resolutions": {
-    "angular": "~1.2.3"
   }
 }
