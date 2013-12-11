@@ -20,6 +20,16 @@ exports.show = function(req, res) {
     res.json(req.school);
 };
 
+exports.all = function(req, res) {
+    School.find({}, function(err, schools) {
+        if (err) {
+            res.json(err.errors);
+        } else {
+            res.json(schools);
+        }
+    });
+};
+
 /**
  * Find school by id
  */
