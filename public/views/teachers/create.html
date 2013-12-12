@@ -1,0 +1,61 @@
+<section data-ng-controller="SchoolsController" data-ng-init="init()">
+
+  <h1>Crea scuola</h1>
+
+  <form class="form-horizontal" role="form" data-ng-submit="create()">
+
+    <div class="form-group">
+      <label for="name" class="col-sm-2 control-label">Nome</label>
+
+      <div class="col-sm-10">
+        <input type="text" data-ng-model="school.name" id="name" class="form-control" placeholder="Nome" tabindex="1" autofocus="on">
+      </div>
+    </div>
+
+    <h2>Plessi</h2>
+
+    <div data-ng-repeat="complex in school.complexes">
+
+      <div class="form-group">
+        <label for="address{{$index}}" class="col-sm-2 control-label">Indirizzo</label>
+
+        <div class="col-sm-10">
+          <input type="text" data-ng-model="complex.address" id="address{{$index}}" class="form-control" placeholder="Indirizzo" tabindex="{{$index * 5 + 2}}">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-2">
+          <button type="button" data-ng-click="removeComplex($index)" class="btn btn-default pull-right" tabindex="{{$index * 5 + 6}}"><i class="fa fa-trash-o"></i> Rimuovi plesso</button>
+        </div>
+
+        <div class="col-sm-2">
+          <input type="text" data-ng-model="complex.zipCode" id="zipCode{{$index}}" class="form-control" placeholder="CAP" tabindex="{{$index * 5 + 3}}">
+        </div>
+
+        <div class="col-sm-6">
+          <input type="text" data-ng-model="complex.city" id="city{{$index}}" class="form-control" placeholder="Città" tabindex="{{$index * 5 + 4}}">
+        </div>
+
+        <div class="col-sm-2">
+          <input type="text" data-ng-model="complex.province" id="province{{$index}}" class="form-control" placeholder="Provincia" tabindex="{{$index * 5 + 5}}">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-12">
+        <button type="button" data-ng-click="addComplex()" class="btn btn-default pull-right" tabindex="100"><i class="fa fa-plus"></i> Nuovo plesso</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Crea</button>
+      </div>
+    </div>
+
+  </form>
+
+</section>

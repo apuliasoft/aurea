@@ -1,0 +1,13 @@
+<section data-ng-controller="SchoolsController" data-ng-init="findOne()">
+
+  <h2>{{school.name}}</h2>
+
+  <ul class="unstyled">
+    <li data-ng-repeat="complex in school.complexes">
+      <span>{{complex | address}}</span>
+    </li>
+  </ul>
+
+  <a class="btn btn-default" href="#!/scuole/{{school._id}}/modifica"><i class="fa fa-pencil"></i> Modifica</a>
+
+</section>
