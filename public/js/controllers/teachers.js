@@ -32,4 +32,16 @@ angular.module('aurea.teachers')
         $scope.init();
       };
 
+      $scope.update = function () {
+        var teacher = $scope.teacher;
+        if (!teacher.updated) {
+          teacher.updated = [];
+        }
+        teacher.updated.push(new Date().getTime());
+
+        teacher.$update(function () {
+          $location.path('insegnanti/' + teacher._id);
+        });
+      };
+
     }]);

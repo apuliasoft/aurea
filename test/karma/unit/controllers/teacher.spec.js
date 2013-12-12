@@ -153,6 +153,43 @@
         expect($location.path()).toBe('/insegnanti/' + responseTeacherData()._id);
       });
 
+      it('$scope.update() should update a valid teacher', inject(function (Teachers) {
+
+        // fixture rideshare
+        var putTeacherData = function () {
+          return {
+            _id: '525a8422f6d0f87f0e407a33',
+            firstName: 'Jhon',
+            lastName: 'Doe'
+          };
+        };
+
+        // mock teacher object from form
+        var teacher = new Teachers(putTeacherData());
+
+        // mock teacher in scope
+        scope.teacher = teacher;
+
+        // test PUT happens correctly
+        $httpBackend.expectPUT(/teacher\/([0-9a-fA-F]{24})$/).respond();
+
+        // testing the body data is out for now until an idea for testing the dynamic updated array value is figured out
+        // $httpBackend.expectPUT(/teachers\/([0-9a-fA-F]{24})$/, putArticleData()).respond();
+        /*
+         Error: Expected PUT /teachers\/([0-9a-fA-F]{24})$/ with different data
+         EXPECTED: {"_id":"525a8422f6d0f87f0e407a33","title":"An Article about MEAN","to":"MEAN is great!"}
+         GOT:      {"_id":"525a8422f6d0f87f0e407a33","title":"An Article about MEAN","to":"MEAN is great!","updated":[1383534772975]}
+         */
+
+        // run controller
+        scope.update();
+        $httpBackend.flush();
+
+        // test URL location to new object
+        expect($location.path()).toBe('/insegnanti/' + putTeacherData()._id);
+
+      }));
+
     });
 
   });
