@@ -1,31 +1,33 @@
-<section data-ng-controller="SchoolsController" data-ng-init="find()">
+<section data-ng-controller="TeachersController" data-ng-init="find()">
 
-  <h2>Scuole</h2>
+  <h2>Insegnanti</h2>
 
   <table class="table table-condensed">
     <thead>
       <tr>
-        <th>Nome Istituto</th>
+        <th>Nome</th>
+        <th>Cognome</th>
         <th>Azioni</th>
       </tr>
     </thead>
     <tbody>
-      <tr data-ng-repeat="school in schools">
-        <td>{{school.name}}</td>
+      <tr data-ng-repeat="teacher in teachers">
+        <td>{{teacher.firstName}}</td>
+        <td>{{teacher.lastName}}</td>
         <td>
-          <a data-ng-href="/#!/scuole/{{school._id}}" class="btn btn-default btn-xs" title="dettagli"><i class="fa fa-eye"></i></a>
-          <a data-ng-href="/#!/scuole/{{school._id}}/modifica" class="btn btn-default btn-xs" title="modifica"><i class="fa fa-pencil"></i></a>
-          <a data-ng-click="confirmRemove(school)" class="btn btn-default btn-xs" title="elimina"><i class="fa fa-trash-o"></i></a>
+          <a data-ng-href="/#!/insegnanti/{{teacher._id}}" class="btn btn-default btn-xs" title="dettagli"><i class="fa fa-eye"></i></a>
+          <a data-ng-href="/#!/insegnanti/{{teacher._id}}/modifica" class="btn btn-default btn-xs" title="modifica"><i class="fa fa-pencil"></i></a>
+          <a data-ng-click="confirmRemove(teacher)" class="btn btn-default btn-xs" title="elimina"><i class="fa fa-trash-o"></i></a>
         </td>
       </tr>
-      <tr data-ng-show="schools.length == 0" colspan="2">
-        <td>Non sono presenti scuole</td>
+      <tr data-ng-show="teachers.length == 0" colspan="2">
+        <td>Non sono presenti insegnanti</td>
       </tr>
     </tbody>
     <tfoot>
       <tr>
         <td colspan="2">
-          <a class="btn btn-default pull-right" href="#!/scuole/crea"><i class="fa fa-plus"></i> Nuova scuola</a>
+          <a class="btn btn-default pull-right" href="#!/insegnanti/crea"><i class="fa fa-plus"></i> Nuovo insegnante</a>
         </td>
       </tr>
     </tfoot>
