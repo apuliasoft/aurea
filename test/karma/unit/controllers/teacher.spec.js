@@ -107,6 +107,7 @@
           firstName: '',
           lastName: ''
         });
+
       });
 
       it('$scope.create() with valid form data should send a POST request ' +
@@ -151,6 +152,7 @@
 
         // test URL location to new object
         expect($location.path()).toBe('/insegnanti/' + responseTeacherData()._id);
+
       });
 
       it('$scope.update() should update a valid teacher', inject(function (Teachers) {
@@ -187,6 +189,31 @@
 
         // test URL location to new object
         expect($location.path()).toBe('/insegnanti/' + putTeacherData()._id);
+
+      }));
+
+      it('$scope.remove() should send a DELETE request with a valid teacherId' +
+        'and remove the teacher from the scope', inject(function (Teachers) {
+
+        // fixture rideshare
+        var teacher = new Teachers({
+          _id: '525a8422f6d0f87f0e407a33'
+        });
+
+        // mock rideshares in scope
+        scope.teachers = [];
+        scope.teachers.push(teacher);
+
+        // test expected rideshare DELETE request
+        $httpBackend.expectDELETE(/teacher\/([0-9a-fA-F]{24})$/).respond(204);
+
+        // run controller
+        scope.remove(teacher);
+        $httpBackend.flush();
+
+        // test after successful delete URL location schools list
+        //expect($location.path()).toBe('/insegnanti');
+        expect(scope.teachers.length).toBe(0);
 
       }));
 

@@ -285,7 +285,7 @@
         $httpBackend.flush();
 
         // test after successful delete URL location schools list
-        // expect($location.path()).toBe('/schools');
+        //expect($location.path()).toBe('/scuole');
         expect(scope.schools.length).toBe(0);
 
       }));

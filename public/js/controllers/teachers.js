@@ -44,4 +44,26 @@ angular.module('aurea.teachers')
         });
       };
 
+      $scope.remove = function (teacher) {
+        if (teacher) {
+          teacher.$remove();
+
+          for (var i in $scope.teachers) {
+            if ($scope.teachers[i] == teacher) {
+              $scope.teachers.splice(i, 1);
+            }
+          }
+        }
+        else {
+          $scope.school.$remove();
+          $location.path('insegnanti');
+        }
+      };
+
+      $scope.confirmRemove = function (teacher) {
+        if (confirm('Sei sicuro di voler cancellare l\'insegnante?')) {
+          $scope.remove(teacher);
+        }
+      };
+
     }]);
