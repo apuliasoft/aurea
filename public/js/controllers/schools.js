@@ -68,4 +68,10 @@ angular.module('aurea.schools')
         }
       };
 
+      $scope.confirmRemove = function (school) {
+        if (confirm('Sei sicuro di voler cancellare la scuola?')) {
+          $scope.remove(school);
+        }
+      };
+
     }]);

@@ -15,7 +15,7 @@
         <td>
           <a data-ng-href="/#!/scuole/{{school._id}}" class="btn btn-default btn-xs" title="dettagli"><i class="fa fa-eye"></i></a>
           <a data-ng-href="/#!/scuole/{{school._id}}/modifica" class="btn btn-default btn-xs" title="modifica"><i class="fa fa-pencil"></i></a>
-          <a data-ng-click="remove(school)" class="btn btn-default btn-xs" title="elimina"><i class="fa fa-trash-o"></i></a>
+          <a data-ng-click="confirmRemove(school)" class="btn btn-default btn-xs" title="elimina"><i class="fa fa-trash-o"></i></a>
         </td>
       </tr>
       <tr data-ng-show="schools.length == 0" colspan="2">
