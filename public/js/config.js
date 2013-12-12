@@ -18,6 +18,15 @@ angular.module('aurea')
         when('/insegnanti', {
           templateUrl: 'views/teachers/list.html'
         }).
+        when('/insegnanti/crea', {
+          templateUrl: 'views/teachers/create.html'
+        }).
+        when('/insegnanti/:teacherId/modifica', {
+          templateUrl: 'views/teachers/edit.html'
+        }).
+        when('/insegnanti/:teacherId', {
+          templateUrl: 'views/teachers/view.html'
+        }).
         when('/', {
           templateUrl: 'views/index.html'
         }).
