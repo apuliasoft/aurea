@@ -106,4 +106,111 @@ describe('Model School:', function () {
             done();
         });
     });
+
+    describe('Update a saved school', function() {
+
+        var schoolData = {
+            name: 'Istito Tecnico',
+            complexes: [{
+                address: 'via basento, 10',
+                zipCode: '70022',
+                city: 'Altamura',
+                province: 'BA'
+            }]
+        };
+
+        before(function(done) {
+            school = new School(schoolData);
+
+            school.save(function(err) {
+                if (err) {
+                    return done(err);
+                }
+
+                done();
+            });
+        });
+
+        it('Should update the name of the school by set a new school object', function(done) {
+            schoolData.name = 'Liceo Classico';
+            school.set(schoolData);
+
+            school.save(function(err) {
+                should.not.exist(err);
+
+                School.findOne(school._id, function(err, savedSchool) {
+                    should.not.exist(err);
+
+                    expect(savedSchool.equals(school)).to.equal(true);
+                    expect(savedSchool.name).to.equal(schoolData.name);
+                    expect(savedSchool.toObject().complexes[0].address).to.equal(schoolData.complexes[0].address);
+                    expect(savedSchool.toObject().complexes[0].zipCode).to.equal(schoolData.complexes[0].zipCode);
+                    expect(savedSchool.toObject().complexes[0].city).to.equal(schoolData.complexes[0].city);
+                    expect(savedSchool.toObject().complexes[0].province).to.equal(schoolData.complexes[0].province);
+
+                    done();
+                });
+            });
+        });
+
+        it('Should update the name of the school by set just the name', function(done) {
+            schoolData.name = 'Liceo Scentifico';
+            school.set({name: schoolData.name});
+
+            school.save(function(err) {
+                should.not.exist(err);
+
+                School.findOne(school._id, function(err, savedSchool) {
+                    should.not.exist(err);
+
+                    expect(savedSchool.equals(school)).to.equal(true);
+                    expect(savedSchool.name).to.equal(schoolData.name);
+                    expect(savedSchool.toObject().complexes[0].address).to.equal(schoolData.complexes[0].address);
+                    expect(savedSchool.toObject().complexes[0].zipCode).to.equal(schoolData.complexes[0].zipCode);
+                    expect(savedSchool.toObject().complexes[0].city).to.equal(schoolData.complexes[0].city);
+                    expect(savedSchool.toObject().complexes[0].province).to.equal(schoolData.complexes[0].province);
+
+                    done();
+                });
+            });
+        });
+
+        it('Should update the address of the the first school complex', function(done) {
+            schoolData.complexes[0].address = 'Largo ciaia, 30';
+            school.set(schoolData);
+            school.markModified('complexes');
+
+            school.save(function(err) {
+                should.not.exist(err);
+
+                School.findOne(school._id, function(err, savedSchool) {
+                    should.not.exist(err);
+
+                    expect(savedSchool.equals(school)).to.equal(true);
+                    expect(savedSchool.toObject().complexes[0].address).to.equal(schoolData.complexes[0].address);
+
+                    done();
+                });
+            });
+        });
+
+        it ('Should remove the school', function(done) {
+            School.findByIdAndRemove(school._id, function(err) {
+                should.not.exist(err);
+
+                School.findOne(school._id, function(err, removedSchool) {
+                    should.not.exist(err);
+                    should.not.exist(removedSchool);
+
+                    done();
+                });
+            });
+        });
+
+        after(function(done) {
+            School.remove();
+            done();
+        });
+
+    });
 });
