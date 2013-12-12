@@ -35,6 +35,8 @@ module.exports = function(app, passport, auth) {
     app.get('/school/:schoolId', school.show);
     app.post('/school', school.create);
     app.put('/school/:schoolId', school.update);
+    //uso l'underscore per non far convertire l'ID nel documento corrispondente
+    app.delete('/school/:id', school.delete);
 
     //Finish with setting up the schoolId param
     app.param('schoolId', school.school);

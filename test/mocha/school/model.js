@@ -194,6 +194,19 @@ describe('Model School:', function () {
             });
         });
 
+        it ('Should remove the school', function(done) {
+            School.findByIdAndRemove(school._id, function(err) {
+                should.not.exist(err);
+
+                School.findOne(school._id, function(err, removedSchool) {
+                    should.not.exist(err);
+                    should.not.exist(removedSchool);
+
+                    done();
+                });
+            });
+        });
+
         after(function(done) {
             School.remove();
             done();
