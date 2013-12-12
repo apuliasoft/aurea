@@ -22,6 +22,7 @@ module.exports = function (config) {
       'public/js/app.js',
       'public/js/config.js',
       'public/js/filters/address.js',
+      'public/js/filters/name.js',
       'public/js/services/global.js',
       'public/js/services/schools.js',
       'public/js/services/teachers.js',

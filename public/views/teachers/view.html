@@ -1,6 +1,6 @@
 <section data-ng-controller="TeachersController" data-ng-init="findOne()">
 
-  <h2>{{teacher}}</h2>
+  <h2>{{teacher | name}}</h2>
 
   <a class="btn btn-default" href="#!/insegnanti/{{teacher._id}}/modifica"><i class="fa fa-pencil"></i> Modifica</a>
 
