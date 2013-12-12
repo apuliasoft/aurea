@@ -16,4 +16,20 @@ angular.module('aurea.teachers')
         });
       };
 
+      $scope.init = function () {
+        $scope.teacher = {
+          firstName: '',
+          lastName: ''
+        };
+      };
+
+      $scope.create = function () {
+        var teacher = new Teachers(this.teacher);
+        teacher.$save(function (response) {
+          $location.path('insegnanti/' + response._id);
+        });
+
+        $scope.init();
+      };
+
     }]);

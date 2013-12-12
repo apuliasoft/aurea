@@ -98,6 +98,61 @@
 
       });
 
+      it('$scope.init() should create an array with one void teacher object', function() {
+        // run controller
+        scope.init();
+
+        // test scope value
+        expect(scope.teacher).toEqualData({
+          firstName: '',
+          lastName: ''
+        });
+      });
+
+      it('$scope.create() with valid form data should send a POST request ' +
+        'with the form input values and then ' +
+        'locate to new object URL', function () {
+
+        // fixture expected POST data
+        var postTeacherData = function () {
+          return {
+            firstName: 'Jhon',
+            lastName: 'Doe'
+          };
+        };
+
+        // fixture expected response data
+        var responseTeacherData = function () {
+          return {
+            _id: '525cf20451979dea2c000001',
+            firstName: 'Jhon',
+            lastName: 'Doe'
+          };
+        };
+
+        // fixture mock form input values
+        scope.teacher = {
+          firstName: 'Jhon',
+          lastName: 'Doe'
+        };
+
+        // test post request is sent
+        $httpBackend.expectPOST('teacher', postTeacherData()).respond(responseTeacherData());
+
+        // Run controller
+        scope.create();
+        $httpBackend.flush();
+
+        // test form input(s) are reset
+        expect(scope.teacher).toEqualData({
+          firstName: '',
+          lastName: ''
+        });
+
+        // test URL location to new object
+        expect($location.path()).toBe('/insegnanti/' + responseTeacherData()._id);
+      });
+
     });
 
   });
