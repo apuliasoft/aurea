@@ -1,6 +1,6 @@
 module.exports = function(app, passport, auth) {
     //User Routes
-    var users = require('../app/controllers/users');
+    /*var users = require('../app/controllers/users');
     app.get('/signin', users.signin);
     app.get('/signup', users.signup);
     app.get('/signout', users.signout);
@@ -27,7 +27,7 @@ module.exports = function(app, passport, auth) {
     app.del('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy);
 
     //Finish with setting up the articleId param
-    app.param('articleId', articles.article);
+    app.param('articleId', articles.article);*/
 
     //School Routes
     var school = require('../app/controllers/school');
@@ -35,11 +35,22 @@ module.exports = function(app, passport, auth) {
     app.get('/school/:schoolId', school.show);
     app.post('/school', school.create);
     app.put('/school/:schoolId', school.update);
-    //uso l'underscore per non far convertire l'ID nel documento corrispondente
-    app.delete('/school/:id', school.delete);
+    app.del('/school/:id', school.delete);
 
     //Finish with setting up the schoolId param
     app.param('schoolId', school.school);
+
+    //Teacher Routes
+    var teacher = require('../app/controllers/teacher');
+    app.get('/teacher', teacher.all);
+    app.get('/teacher/:teacherId', teacher.show);
+    app.post('/teacher', teacher.create);
+    app.put('/teacher/:teacherId', teacher.update);
+    app.del('/teacher/:id', teacher.delete);
+
+    //Finish with setting up the teacherId param
+    app.param('teacherId', teacher.teacher);
+
 
     //Home route
     var index = require('../app/controllers/index');
