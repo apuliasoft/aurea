@@ -15,6 +15,9 @@ angular.module('aurea')
         when('/scuole/:schoolId', {
           templateUrl: 'views/schools/view.html'
         }).
+        when('/insegnanti', {
+          templateUrl: 'views/teachers/list.html'
+        }).
         when('/', {
           templateUrl: 'views/index.html'
         }).

@@ -19,7 +19,9 @@ angular.module('aurea.schools')
       $scope.init = function () {
         $scope.school = {
           name: '',
-          complexes: [{}]
+          complexes: [
+            {}
+          ]
         };
       };
 
