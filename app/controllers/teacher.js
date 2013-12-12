@@ -2,50 +2,49 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    School = mongoose.model('School');
+    Teacher = mongoose.model('Teacher');
 
 exports.create = function(req, res) {
-    var school = new School(req.body);
+    var teacher = new Teacher(req.body);
 
-    school.save(function(err) {
+    teacher.save(function(err) {
         if (err) {
             res.json(400, err);
         } else {
-            res.json(school);
+            res.json(teacher);
         }
     });
-};
+}
 
 exports.update = function(req, res) {
-    var school = req.school;
-    school.set(req.body);
-    school.markModified('complexes');
+    var teacher = req.teacher;
+    teacher.set(req.body);
 
-    school.save(function(err) {
+    teacher.save(function(err) {
         if (err) {
             res.json(400, err);
         } else {
-            res.json(school);
+            res.json(teacher);
         }
     });
 };
 
 exports.show = function(req, res) {
-    res.json(req.school);
-};
+    res.json(req.teacher);
+}
 
 exports.all = function(req, res) {
-    School.find({}, function(err, schools) {
+    Teacher.find({}, function(err, teacher) {
         if (err) {
             res.json(400, err);
         } else {
-            res.json(schools);
+            res.json(teacher);
         }
     });
-};
+}
 
 exports.delete = function(req, res) {
-    School.findByIdAndRemove(req.params.id, function(err) {
+    Teacher.findByIdAndRemove(req.params.id, function(err) {
         if (err) {
             res.json(400, err);
         } else {
@@ -55,13 +54,13 @@ exports.delete = function(req, res) {
 };
 
 /**
- * Find school by id
+ * Find teacher by id
  */
-exports.school = function(req, res, next, id) {
-    School.findById(id, function(err, school) {
+exports.teacher = function(req, res, next, id) {
+    Teacher.findById(id, function(err, teacher) {
         if (err) return next(err);
-        if (!school) return next(new Error('Failed to load school ' + id));
-        req.school = school;
+        if (!teacher) return next(new Error('Failed to load teacher ' + id));
+        req.teacher = teacher;
         next();
     });
 };

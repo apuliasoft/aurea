@@ -2,10 +2,8 @@
  * Module dependencies.
  */
 var should = require('should'),
-    assert = require("assert"),
     expect = require('chai').expect,
     app = require('../../../server'),
-    util = require('util'),
     mongoose = require('mongoose'),
     School = mongoose.model('School'),
     Complex = mongoose.model('Complex');
