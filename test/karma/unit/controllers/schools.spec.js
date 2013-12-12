@@ -195,12 +195,6 @@
           };
         };
 
-        // init school in scope
-        scope.school = {
-          name: '',
-          complexes: [{}]
-        };
-
         // fixture mock form input values
         scope.school = {
           name: 'Scuola Media Statale Giovanni Pascoli',

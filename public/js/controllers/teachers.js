@@ -8,4 +8,12 @@ angular.module('aurea.teachers')
         });
       };
 
+      $scope.findOne = function () {
+        Teachers.get({
+          teacherId: $routeParams.teacherId
+        }, function (teacher) {
+          $scope.teacher = teacher;
+        });
+      };
+
     }]);

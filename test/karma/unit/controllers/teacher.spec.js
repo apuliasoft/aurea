@@ -54,8 +54,8 @@
         // test expected GET request
         $httpBackend.expectGET('teacher').respond([
           {
-            first_name: 'Jhon',
-            last_name: 'Doe'
+            firstName: 'Jhon',
+            lastName: 'Doe'
           }
         ]);
 
@@ -66,10 +66,35 @@
         // test scope value
         expect(scope.teachers).toEqualData([
           {
-            first_name: 'Jhon',
-            last_name: 'Doe'
+            firstName: 'Jhon',
+            lastName: 'Doe'
           }
         ]);
+
+      });
+
+      it('$scope.findOne() should create an array with one teacher object fetched ' +
+        'from XHR using a teacherId URL parameter', function () {
+        // fixture URL parament
+        $routeParams.teacherId = '525a8422f6d0f87f0e407a33';
+
+        // fixture response object
+        var testTeacherData = function () {
+          return {
+            firstName: 'Jhon',
+            lastName: 'Doe'
+          };
+        };
+
+        // test expected GET request with response object
+        $httpBackend.expectGET(/teacher\/([0-9a-fA-F]{24})$/).respond(testTeacherData());
+
+        // run controller
+        scope.findOne();
+        $httpBackend.flush();
+
+        // test scope value
+        expect(scope.teacher).toEqualData(testTeacherData());
 
       });
 
