@@ -33,4 +33,16 @@ angular.module('aurea.students')
         $scope.init();
       };
 
+      $scope.update = function () {
+        var student = $scope.student;
+        if (!student.updated) {
+          student.updated = [];
+        }
+        student.updated.push(new Date().getTime());
+
+        student.$update(function () {
+          $location.path('alunni/' + student._id);
+        });
+      };
+
     }]);
