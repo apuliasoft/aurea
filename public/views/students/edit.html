@@ -1,0 +1,39 @@
+<section data-ng-controller="StudentsController" data-ng-init="findOne()">
+
+  <h1>Modifica alunno</h1>
+
+  <form class="form-horizontal" role="form" data-ng-submit="update()">
+
+    <div class="form-group">
+      <label for="firstName" class="col-sm-2 control-label">Nome</label>
+
+      <div class="col-sm-10">
+        <input type="text" data-ng-model="school.firstName" id="firstName" class="form-control" placeholder="Nome" tabindex="1" autofocus="on">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName" class="col-sm-2 control-label">Cognome</label>
+
+      <div class="col-sm-10">
+        <input type="text" data-ng-model="school.lastName" id="lastName" class="form-control" placeholder="Cognome" tabindex="2">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="birthday" class="col-sm-2 control-label">Data di nascita</label>
+
+      <div class="col-sm-10">
+        <input type="text" data-ng-model="school.birthday" id="birthday" class="form-control" placeholder="Data di nascita" tabindex="3">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary" tabindex="4">Salva</button>
+      </div>
+    </div>
+
+  </form>
+
+</section>
