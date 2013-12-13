@@ -8,6 +8,7 @@
     "angular-resource": "~1.2.3",
     "angular-cookies": "~1.2.3",
     "angular-mocks": "~1.2.3",
-    "font-awesome": "~4.0.3"
+    "font-awesome": "~4.0.3",
+    "angular-i18n": "~1.2.4"
   }
 }
