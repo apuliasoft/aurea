@@ -45,4 +45,26 @@ angular.module('aurea.students')
         });
       };
 
+      $scope.remove = function (student) {
+        if (student) {
+          student.$remove();
+
+          for (var i in $scope.students) {
+            if ($scope.students[i] == student) {
+              $scope.students.splice(i, 1);
+            }
+          }
+        }
+        else {
+          $scope.school.$remove();
+          $location.path('alunni');
+        }
+      };
+
+      $scope.confirmRemove = function (student) {
+        if (confirm('Sei sicuro di voler cancellare l\'insegnante?')) {
+          $scope.remove(student);
+        }
+      };
+
     }]);

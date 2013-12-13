@@ -201,6 +201,31 @@
 
       }));
 
+      it('$scope.remove() should send a DELETE request with a valid studentId' +
+        'and remove the student from the scope', inject(function (Students) {
+
+        // fixture rideshare
+        var student = new Students({
+          _id: '525a8422f6d0f87f0e407a33'
+        });
+
+        // mock rideshares in scope
+        scope.students = [];
+        scope.students.push(student);
+
+        // test expected rideshare DELETE request
+        $httpBackend.expectDELETE(/student\/([0-9a-fA-F]{24})$/).respond(204);
+
+        // run controller
+        scope.remove(student);
+        $httpBackend.flush();
+
+        // test after successful delete URL location schools list
+        //expect($location.path()).toBe('/alunni');
+        expect(scope.students.length).toBe(0);
+
+      }));
+
     });
 
   });
