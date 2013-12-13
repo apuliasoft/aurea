@@ -15,8 +15,8 @@ describe('Teacher School:', function () {
 
         before(function() {
             teacherData = {
-                name: 'Nicola',
-                surname: 'Sanitate'
+                firstname: 'Nicola',
+                lastname: 'Sanitate'
             };
         });
 
@@ -32,8 +32,8 @@ describe('Teacher School:', function () {
         it('Shoud get the teacher just saved', function(done) {
             Teacher.findById(id, function(err, savedTeacher) {
                 should.not.exist(err);
-                expect(savedTeacher.name).to.equal(teacherData.name);
-                expect(savedTeacher.surname).to.equal(teacherData.surname);
+                expect(savedTeacher.firstname).to.equal(teacherData.firstname);
+                expect(savedTeacher.lastname).to.equal(teacherData.lastname);
                 done();
             });
         });

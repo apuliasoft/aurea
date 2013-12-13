@@ -14,7 +14,7 @@ exports.create = function(req, res) {
             res.json(teacher);
         }
     });
-}
+};
 
 exports.update = function(req, res) {
     var teacher = req.teacher;
@@ -31,7 +31,7 @@ exports.update = function(req, res) {
 
 exports.show = function(req, res) {
     res.json(req.teacher);
-}
+};
 
 exports.all = function(req, res) {
     Teacher.find({}, function(err, teacher) {
@@ -41,7 +41,7 @@ exports.all = function(req, res) {
             res.json(teacher);
         }
     });
-}
+};
 
 exports.delete = function(req, res) {
     Teacher.findByIdAndRemove(req.params.id, function(err) {
