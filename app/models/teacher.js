@@ -9,8 +9,8 @@ var mongoose = require('mongoose'),
  * Teacher Schema
  */
 var TeacherSchema = new Schema({
-    firstname: String,
-    lastname: String
+    firstName: String,
+    lastName: String
 });
 
 mongoose.model('Teacher', TeacherSchema);
