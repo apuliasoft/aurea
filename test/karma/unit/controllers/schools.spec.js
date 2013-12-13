@@ -248,14 +248,6 @@
         // test PUT happens correctly
         $httpBackend.expectPUT(/school\/([0-9a-fA-F]{24})$/).respond();
 
-        // testing the body data is out for now until an idea for testing the dynamic updated array value is figured out
-        // $httpBackend.expectPUT(/schools\/([0-9a-fA-F]{24})$/, putArticleData()).respond();
-        /*
-         Error: Expected PUT /schools\/([0-9a-fA-F]{24})$/ with different data
-         EXPECTED: {"_id":"525a8422f6d0f87f0e407a33","title":"An Article about MEAN","to":"MEAN is great!"}
-         GOT:      {"_id":"525a8422f6d0f87f0e407a33","title":"An Article about MEAN","to":"MEAN is great!","updated":[1383534772975]}
-         */
-
         // run controller
         scope.update();
         $httpBackend.flush();
