@@ -27,6 +27,18 @@ angular.module('aurea')
         when('/insegnanti/:teacherId', {
           templateUrl: 'views/teachers/view.html'
         }).
+        when('/alunni', {
+          templateUrl: 'views/students/list.html'
+        }).
+        when('/alunni/crea', {
+          templateUrl: 'views/students/create.html'
+        }).
+        when('/alunni/:studentId/modifica', {
+          templateUrl: 'views/students/edit.html'
+        }).
+        when('/alunni/:studentId', {
+          templateUrl: 'views/students/view.html'
+        }).
         when('/', {
           templateUrl: 'views/index.html'
         }).
