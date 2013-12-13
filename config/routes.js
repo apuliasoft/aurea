@@ -51,6 +51,17 @@ module.exports = function(app, passport, auth) {
     //Finish with setting up the teacherId param
     app.param('teacherId', teacher.teacher);
 
+    //Student Routes
+    var student = require('../app/controllers/student');
+    app.get('/student', student.all);
+    app.get('/student/:studentId', student.show);
+    app.post('/student', student.create);
+    app.put('/student/:studentId', student.update);
+    app.del('/student/:id', student.delete);
+
+    //Finish with setting up the studentId param
+    app.param('studentId', student.student);
+
 
     //Home route
     var index = require('../app/controllers/index');

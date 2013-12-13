@@ -8,7 +8,7 @@ var should = require('should'),
     Teacher = mongoose.model('Teacher');
 
 //The tests
-describe('Teacher School:', function () {
+describe('Model Teacher:', function () {
     describe('Save a Teacher', function() {
         var id;
         var teacherData;
