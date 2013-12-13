@@ -75,6 +75,32 @@
 
       });
 
+      it('$scope.findOne() should create an array with one student object fetched ' +
+        'from XHR using a studentId URL parameter', function () {
+        // fixture URL parament
+        $routeParams.studentId = '525a8422f6d0f87f0e407a33';
+
+        // fixture response object
+        var testStudentData = function () {
+          return {
+            firstName: 'Jhon',
+            lastName: 'Doe',
+            birthday: '1970-01-01'
+          };
+        };
+
+        // test expected GET request with response object
+        $httpBackend.expectGET(/student\/([0-9a-fA-F]{24})$/).respond(testStudentData());
+
+        // run controller
+        scope.findOne();
+        $httpBackend.flush();
+
+        // test scope value
+        expect(scope.student).toEqualData(testStudentData());
+
+      });
+
     });
 
   });

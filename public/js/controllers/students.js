@@ -8,4 +8,12 @@ angular.module('aurea.students')
         });
       };
 
+      $scope.findOne = function () {
+        Students.get({
+          studentId: $routeParams.studentId
+        }, function (student) {
+          $scope.student = student;
+        });
+      };
+
     }]);
