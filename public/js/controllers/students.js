@@ -16,4 +16,21 @@ angular.module('aurea.students')
         });
       };
 
+      $scope.init = function () {
+        $scope.student = {
+          firstName: '',
+          lastName: '',
+          birthday: ''
+        };
+      };
+
+      $scope.create = function () {
+        var student = new Students(this.student);
+        student.$save(function (response) {
+          $location.path('alunni/' + response._id);
+        });
+
+        $scope.init();
+      };
+
     }]);
