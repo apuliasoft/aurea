@@ -1,8 +1,6 @@
-angular.module('aurea.schools')
+angular.module('aurea')
   .filter('address', [function () {
     return function (input) {
-      address = [input.address, input.zipCode, input.city, input.province];
-
-      return address.join(' ');
+      return [input.address, input.zipCode, input.city, input.province].join(' ');
     };
   }]);

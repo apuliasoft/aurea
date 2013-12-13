@@ -15,6 +15,30 @@ angular.module('aurea')
         when('/scuole/:schoolId', {
           templateUrl: 'views/schools/view.html'
         }).
+        when('/insegnanti', {
+          templateUrl: 'views/teachers/list.html'
+        }).
+        when('/insegnanti/crea', {
+          templateUrl: 'views/teachers/create.html'
+        }).
+        when('/insegnanti/:teacherId/modifica', {
+          templateUrl: 'views/teachers/edit.html'
+        }).
+        when('/insegnanti/:teacherId', {
+          templateUrl: 'views/teachers/view.html'
+        }).
+        when('/alunni', {
+          templateUrl: 'views/students/list.html'
+        }).
+        when('/alunni/crea', {
+          templateUrl: 'views/students/create.html'
+        }).
+        when('/alunni/:studentId/modifica', {
+          templateUrl: 'views/students/edit.html'
+        }).
+        when('/alunni/:studentId', {
+          templateUrl: 'views/students/view.html'
+        }).
         when('/', {
           templateUrl: 'views/index.html'
         }).

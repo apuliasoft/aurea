@@ -1,17 +1,28 @@
-# humanstxt.org/
-# The humans responsible & technology colophon
+/* TEAM */
+    Developer: Giuseppe Santoro - ApuliaSoft
+    Site: it.linkedin.com/pub/giuseppe-santoro/2a/14a/662
+    Twitter: @ThePeppino
+    Location: Bari, Italy.
 
-# TEAM
+    Developer: Nicola Sanitate - ApuliaSoft
+    Site: it.linkedin.com/in/nsanitate
+    Twitter: @n_sanitate
+    Location: Bari, Italy
 
-    Giuseppe Santoro -- Developer -- @ThePeppino
-    Francesco Maria Pavone -- Developer -- FrancescoKujaku
-    Nicola Sanitate -- Developer -- @n_sanitate
+    Developer: Francesco Maria Pavone - ApuliaSoft
+    Site: it.linkedin.com/pub/francesco-maria-pavone/30/a7a/107
+    Twitter: @FrancescoKujaku
+    Location: Bari, Italy
 
-# THANKS
+/* THANKS */
 
 
 
-# TECHNOLOGY COLOPHON
-
-    HTML5, CSS3
-    jQuery, Modernizr
+/* SITE */
+    Last update: 2013/12/13
+    Language: Italian
+    Doctype: HTML5
+    Standards: HTML5, CSS3, Javascript
+    Components: Node.js, Passport, jQuery, Bootstrap, FontAwesome
+    Software: IntelliJ WebStorm, Grunt, Mocha, Karma, Google Chrome
+    Framework: Express, AngularJS
