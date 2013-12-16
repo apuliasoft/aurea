@@ -2,7 +2,7 @@
 
   <h2>{{student | name}}</h2>
 
-  <p>Nato il {{student.birthday}}</p>
+  <p>Nato il {{student.birthday | date:'longDate'}}</p>
 
   <a class="btn btn-default" href="#!/alunni/{{student._id}}/modifica"><i class="fa fa-pencil"></i> Modifica</a>
 

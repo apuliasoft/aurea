@@ -1,4 +1,4 @@
-angular.module('aurea', ['ngRoute', 'ngCookies', 'ngResource',
+angular.module('aurea', ['ngRoute', 'ngCookies', 'ngResource', 'ui.bootstrap',
   'aurea.system', 'aurea.schools', 'aurea.teachers', 'aurea.students']);
 
 angular.module('aurea.system', []);
