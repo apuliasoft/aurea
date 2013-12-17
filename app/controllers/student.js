@@ -5,7 +5,6 @@ var mongoose = require('mongoose'),
     Student = mongoose.model('Student');
 
 exports.create = function(req, res) {
-    req.body.birthday *= 1000;
     var student = new Student(req.body);
 
     student.save(function(err) {
@@ -19,7 +18,6 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
     var student = req.student;
-    req.body.birthday *= 1000;
     student.set(req.body);
 
     student.save(function(err) {
