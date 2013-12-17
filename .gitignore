@@ -1,6 +1,7 @@
 .DS_Store
 .idea/
 .nodemonignore
+npm-debug.log
 .sass-cache/
 deploy/
 node_modules/
