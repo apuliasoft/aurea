@@ -17,7 +17,7 @@ describe('Model Student:', function () {
             studentData = {
                 firstName: 'Giuseppe',
                 lastName: 'Santoro',
-                birthday: 1386936727000
+                birthDate: 1386936727000
             };
         });
 
@@ -35,7 +35,7 @@ describe('Model Student:', function () {
                 should.not.exist(err);
                 expect(savedStudent.firstName).to.equal(studentData.firstName);
                 expect(savedStudent.lastName).to.equal(studentData.lastName);
-                expect(savedStudent.birthday.getTime()).to.equal(1386936727000);
+                expect(savedStudent.birthDate.getTime()).to.equal(1386936727000);
                 done();
             });
         });

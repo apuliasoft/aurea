@@ -6,12 +6,13 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 /**
- * Student Schema
+ * AcademicYear Schema
  */
-var TeacherSchema = new Schema({
-    firstName: String,
-    lastName: String
+var AcademicYearSchema = new Schema({
+    name: String,
+    startDate: Date,
+    endDate: Date
 //    school: Schema.ObjectId
 });
 
-mongoose.model('Teacher', TeacherSchema);
+mongoose.model('AcademicYear', AcademicYearSchema);

@@ -56,7 +56,7 @@
           {
             firstName: 'Jhon',
             lastName: 'Doe',
-            birthday: '2013-12-16T00:00:00.000Z'
+            birthDate: '2013-12-16T00:00:00.000Z'
           }
         ]);
 
@@ -69,7 +69,7 @@
           {
             firstName: 'Jhon',
             lastName: 'Doe',
-            birthday: '2013-12-16T00:00:00.000Z'
+            birthDate: '2013-12-16T00:00:00.000Z'
           }
         ]);
 
@@ -85,7 +85,7 @@
           return {
             firstName: 'Jhon',
             lastName: 'Doe',
-            birthday: '2013-12-16T00:00:00.000Z'
+            birthDate: '2013-12-16T00:00:00.000Z'
           };
         };
 
@@ -109,7 +109,7 @@
         expect(scope.student).toEqualData({
           firstName: '',
           lastName: '',
-          birthday: ''
+          birthDate: ''
         });
 
       });
@@ -123,7 +123,7 @@
           return {
             firstName: 'Jhon',
             lastName: 'Doe',
-            birthday: '2013-12-16T00:00:00.000Z'
+            birthDate: '2013-12-16T00:00:00.000Z'
           };
         };
 
@@ -133,7 +133,7 @@
             _id: '525cf20451979dea2c000001',
             firstName: 'Jhon',
             lastName: 'Doe',
-            birthday: '2013-12-16T00:00:00.000Z'
+            birthDate: '2013-12-16T00:00:00.000Z'
           };
         };
 
@@ -141,7 +141,7 @@
         scope.student = {
           firstName: 'Jhon',
           lastName: 'Doe',
-          birthday: '2013-12-16T00:00:00.000Z'
+          birthDate: '2013-12-16T00:00:00.000Z'
         };
 
         // test post request is sent
@@ -155,7 +155,7 @@
         expect(scope.student).toEqualData({
           firstName: '',
           lastName: '',
-          birthday: ''
+          birthDate: ''
         });
 
         // test URL location to new object
@@ -171,7 +171,7 @@
             _id: '525a8422f6d0f87f0e407a33',
             firstName: 'Jhon',
             lastName: 'Doe',
-            birthday: '2013-12-16T00:00:00.000Z'
+            birthDate: '2013-12-16T00:00:00.000Z'
           };
         };
 

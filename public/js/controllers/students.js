@@ -20,7 +20,7 @@ angular.module('aurea.students')
         $scope.student = {
           firstName: '',
           lastName: '',
-          birthday: ''
+          birthDate: ''
         };
       };
 
