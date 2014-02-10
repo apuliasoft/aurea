@@ -19,7 +19,6 @@ module.exports = function (config) {
       'public/lib/angular-mocks/angular-mocks.js',
       'public/lib/angular-cookies/angular-cookies.js',
       'public/lib/angular-resource/angular-resource.js',
-      'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
       'public/js/app.js',
       'public/js/config.js',
       'public/js/filters/address.js',
