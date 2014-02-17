@@ -11,7 +11,7 @@ var mongoose = require('mongoose'),
 var TeacherSchema = new Schema({
     firstName: String,
     lastName: String
-//    school: Schema.ObjectId
+    // school: Schema.ObjectId
 });
 
 mongoose.model('Teacher', TeacherSchema);

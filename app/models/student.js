@@ -12,7 +12,7 @@ var StudentSchema = new Schema({
     firstName: String,
     lastName: String,
     birthDate: Date
-//    school: Schema.ObjectId
+    // school: Schema.ObjectId
 });
 
 mongoose.model('Student', StudentSchema);

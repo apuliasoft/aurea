@@ -12,7 +12,7 @@ var AcademicYearSchema = new Schema({
     name: String,
     startDate: Date,
     endDate: Date
-//    school: Schema.ObjectId
+    // school: Schema.ObjectId
 });
 
 mongoose.model('AcademicYear', AcademicYearSchema);

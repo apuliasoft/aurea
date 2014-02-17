@@ -19,7 +19,7 @@ describe('Model School:', function () {
     describe('Save a school', function () {
         beforeEach(function (done) {
             school = new School({
-                name: 'Istito Tecnico'
+                name: 'Istituto Tecnico'
             });
 
             done();
@@ -50,7 +50,7 @@ describe('Model School:', function () {
     describe('Save a school with complexes', function() {
         before(function (done) {
             school = new School({
-                name: 'Istito Tecnico'
+                name: 'Istituto Tecnico'
             });
 
             complex = new Complex({
@@ -108,7 +108,7 @@ describe('Model School:', function () {
     describe('Update a saved school', function() {
 
         var schoolData = {
-            name: 'Istito Tecnico',
+            name: 'Istituto Tecnico',
             complexes: [{
                 address: 'via basento, 10',
                 zipCode: '70022',

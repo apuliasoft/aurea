@@ -1,7 +1,8 @@
 angular.module('aurea.system')
-  .controller('HeaderController', ['$scope', 'Global',
-    function ($scope, Global) {
+  .controller('HeaderController', ['$scope', 'Global', 'SchoolContext',
+    function ($scope, Global, SchoolContext) {
       $scope.global = Global;
+      $scope.globalSchools = SchoolContext.schools();
 
       $scope.menu = [
         {
