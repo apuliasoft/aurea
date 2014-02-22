@@ -4,43 +4,56 @@ angular.module('aurea')
     function ($routeProvider) {
       $routeProvider.
         when('/scuole', {
-          templateUrl: 'views/schools/list.html'
+          templateUrl: 'views/school/list.html',
+          controller: 'SchoolCtrl'
         }).
         when('/scuole/crea', {
-          templateUrl: 'views/schools/create.html'
+          templateUrl: 'views/school/create.html',
+          controller: 'SchoolCtrl'
         }).
         when('/scuole/:schoolId/modifica', {
-          templateUrl: 'views/schools/edit.html'
+          templateUrl: 'views/school/edit.html',
+          controller: 'SchoolCtrl'
         }).
         when('/scuole/:schoolId', {
-          templateUrl: 'views/schools/view.html'
+          templateUrl: 'views/school/view.html',
+          controller: 'SchoolCtrl'
         }).
         when('/insegnanti', {
-          templateUrl: 'views/teachers/list.html'
+          templateUrl: 'views/teacher/list.html',
+          controller: 'TeacherCtrl'
         }).
         when('/insegnanti/crea', {
-          templateUrl: 'views/teachers/create.html'
+          templateUrl: 'views/teacher/create.html',
+          controller: 'TeacherCtrl'
         }).
         when('/insegnanti/:teacherId/modifica', {
-          templateUrl: 'views/teachers/edit.html'
+          templateUrl: 'views/teacher/edit.html',
+          controller: 'TeacherCtrl'
         }).
         when('/insegnanti/:teacherId', {
-          templateUrl: 'views/teachers/view.html'
+          templateUrl: 'views/teacher/view.html',
+          controller: 'TeacherCtrl'
         }).
         when('/alunni', {
-          templateUrl: 'views/students/list.html'
+          templateUrl: 'views/student/list.html',
+          controller: 'StudentCtrl'
         }).
         when('/alunni/crea', {
-          templateUrl: 'views/students/create.html'
+          templateUrl: 'views/student/create.html',
+          controller: 'StudentCtrl'
         }).
         when('/alunni/:studentId/modifica', {
-          templateUrl: 'views/students/edit.html'
+          templateUrl: 'views/student/edit.html',
+          controller: 'StudentCtrl'
         }).
         when('/alunni/:studentId', {
-          templateUrl: 'views/students/view.html'
+          templateUrl: 'views/student/view.html',
+          controller: 'StudentCtrl'
         }).
         when('/', {
-          templateUrl: 'views/index.html'
+          templateUrl: 'views/index.html',
+          controller: 'IndexCtrl'
         }).
         otherwise({
           redirectTo: '/'

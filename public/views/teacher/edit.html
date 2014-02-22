@@ -1,8 +1,8 @@
-<section data-ng-controller="TeachersController" data-ng-init="init()">
+<section data-ng-init="findOne()">
 
-  <h1>Crea insegnante</h1>
+  <h1>Modifica insegnante</h1>
 
-  <form class="form-horizontal" role="form" data-ng-submit="create()">
+  <form class="form-horizontal" role="form" data-ng-submit="update()">
 
     <div class="form-group">
       <label for="firstName" class="col-sm-2 control-label">Nome</label>
@@ -22,7 +22,7 @@
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-primary" tabindex="3">Crea</button>
+        <button type="submit" class="btn btn-primary" tabindex="3">Salva</button>
       </div>
     </div>
 
