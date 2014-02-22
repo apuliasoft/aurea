@@ -13,13 +13,13 @@ angular.module('aurea.system')
     }
   ])
 
-  .factory("SchoolContext", ['Schools',
-    function (Schools) {
+  .factory("SchoolContext", ['School',
+    function (School) {
       var schools = [];
 
       return {
         schools: function(){
-          Schools.query(function (data) {
+          School.query(function (data) {
             angular.copy(data, schools);
             console.log(schools);
           });

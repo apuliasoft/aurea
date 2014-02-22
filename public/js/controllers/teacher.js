@@ -1,15 +1,15 @@
-angular.module('aurea.teachers')
-  .controller('TeachersController', ['$scope', '$routeParams', '$location', 'Teachers',
-    function ($scope, $routeParams, $location, Teachers) {
+angular.module('aurea.teacher')
+  .controller('TeacherCtrl', ['$scope', '$routeParams', '$location', 'Teacher',
+    function ($scope, $routeParams, $location, Teacher) {
 
       $scope.find = function () {
-        Teachers.query(function (teachers) {
+        Teacher.query(function (teachers) {
           $scope.teachers = teachers;
         });
       };
 
       $scope.findOne = function () {
-        Teachers.get({
+        Teacher.get({
           teacherId: $routeParams.teacherId
         }, function (teacher) {
           $scope.teacher = teacher;
@@ -24,7 +24,7 @@ angular.module('aurea.teachers')
       };
 
       $scope.create = function () {
-        var teacher = new Teachers(this.teacher);
+        var teacher = new Teacher(this.teacher);
         teacher.$save(function (response) {
           $location.path('insegnanti/' + response._id);
         });

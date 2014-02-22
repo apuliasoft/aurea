@@ -1,15 +1,15 @@
-angular.module('aurea.schools')
-  .controller('SchoolsController', ['$scope', '$routeParams', '$location', 'Schools',
-    function ($scope, $routeParams, $location, Schools) {
+angular.module('aurea.school')
+  .controller('SchoolCtrl', ['$scope', '$routeParams', '$location', 'School',
+    function ($scope, $routeParams, $location, School) {
 
       $scope.find = function () {
-        Schools.query(function (schools) {
+        School.query(function (schools) {
           $scope.schools = schools;
         });
       };
 
       $scope.findOne = function () {
-        Schools.get({
+        School.get({
           schoolId: $routeParams.schoolId
         }, function (school) {
           $scope.school = school;
@@ -34,7 +34,7 @@ angular.module('aurea.schools')
       };
 
       $scope.create = function () {
-        var school = new Schools(this.school);
+        var school = new School(this.school);
         school.$save(function (response) {
           $location.path('scuole/' + response._id);
         });

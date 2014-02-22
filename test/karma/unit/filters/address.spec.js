@@ -3,7 +3,7 @@
 
   describe('Aurea filters', function () {
 
-    describe('Address', function () {
+    describe('Address filter', function () {
 
       // load the filter's module
       beforeEach(module('aurea'));

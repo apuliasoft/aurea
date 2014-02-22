@@ -4,7 +4,7 @@
   // School Controller Spec
   describe('Aurea controllers', function () {
 
-    describe('StudentsController', function () {
+    describe('Student controller', function () {
 
       // The $resource service augments the response object with methods for updating and deleting the resource.
       // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -23,7 +23,7 @@
       beforeEach(module('aurea'));
 
       // Initialize the controller and a mock scope
-      var StudentsController,
+      var StudentCtrl,
         scope,
         $httpBackend,
         $routeParams,
@@ -36,7 +36,7 @@
 
         scope = $rootScope.$new();
 
-        StudentsController = $controller('StudentsController', {
+        StudentCtrl = $controller('StudentCtrl', {
           $scope: scope
         });
 
@@ -163,7 +163,7 @@
 
       });
 
-      it('$scope.update() should update a valid student', inject(function (Students) {
+      it('$scope.update() should update a valid student', inject(function (Student) {
 
         // fixture rideshare
         var putStudentData = function () {
@@ -176,7 +176,7 @@
         };
 
         // mock student object from form
-        var student = new Students(putStudentData());
+        var student = new Student(putStudentData());
 
         // mock student in scope
         scope.student = student;
@@ -194,10 +194,10 @@
       }));
 
       it('$scope.remove() should send a DELETE request with a valid studentId' +
-        'and remove the student from the scope', inject(function (Students) {
+        'and remove the student from the scope', inject(function (Student) {
 
         // fixture rideshare
-        var student = new Students({
+        var student = new Student({
           _id: '525a8422f6d0f87f0e407a33'
         });
 

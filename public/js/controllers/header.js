@@ -1,5 +1,5 @@
 angular.module('aurea.system')
-  .controller('HeaderController', ['$scope', 'Global', 'SchoolContext',
+  .controller('HeaderCtrl', ['$scope', 'Global', 'SchoolContext',
     function ($scope, Global, SchoolContext) {
       $scope.global = Global;
       $scope.globalSchools = SchoolContext.schools();

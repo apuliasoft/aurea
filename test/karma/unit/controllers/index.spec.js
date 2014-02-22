@@ -3,18 +3,18 @@
 
   describe('Aurea controllers', function () {
 
-    describe('IndexController', function () {
+    describe('Index controller', function () {
 
       // Load the controllers module
       beforeEach(module('aurea'));
 
       var scope,
-        IndexController;
+        IndexCtrl;
 
       beforeEach(inject(function ($controller, $rootScope) {
         scope = $rootScope.$new();
 
-        IndexController = $controller('IndexController', {
+        IndexCtrl = $controller('IndexCtrl', {
           $scope: scope
         });
       }));

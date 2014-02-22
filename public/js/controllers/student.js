@@ -1,15 +1,15 @@
-angular.module('aurea.students')
-  .controller('StudentsController', ['$scope', '$routeParams', '$location', 'Students',
-    function ($scope, $routeParams, $location, Students) {
+angular.module('aurea.student')
+  .controller('StudentCtrl', ['$scope', '$routeParams', '$location', 'Student',
+    function ($scope, $routeParams, $location, Student) {
 
       $scope.find = function () {
-        Students.query(function (students) {
+        Student.query(function (students) {
           $scope.students = students;
         });
       };
 
       $scope.findOne = function () {
-        Students.get({
+        Student.get({
           studentId: $routeParams.studentId
         }, function (student) {
           $scope.student = student;
@@ -25,7 +25,7 @@ angular.module('aurea.students')
       };
 
       $scope.create = function () {
-        var student = new Students(this.student);
+        var student = new Student(this.student);
         student.$save(function (response) {
           $location.path('alunni/' + response._id);
         });
