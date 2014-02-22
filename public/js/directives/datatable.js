@@ -16,10 +16,11 @@ angular.module('aurea')
         remove: '&'
       },
 
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope) {
         scope.getData = function(elem, col) {
           return elem[col];
         };
       }
+
     };
   }]);
