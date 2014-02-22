@@ -5,6 +5,26 @@ angular.module('aurea.teacher')
       $scope.labels = ['Nome', 'Cognome'];
       $scope.columns = ['firstName', 'lastName'];
 
+      $scope.list = function () {
+        $location.path('insegnanti');
+      };
+
+      $scope.new = function () {
+        $location.path('insegnanti/crea');
+      };
+
+      $scope.view = function (teacher) {
+        if (teacher) {
+          $location.path('insegnanti/' + teacher._id);
+        }
+      };
+
+      $scope.edit = function (teacher) {
+        if (teacher) {
+          $location.path('insegnanti/' + teacher._id + '/modifica');
+        }
+      };
+
       $scope.find = function () {
         Teacher.query(function (teachers) {
           $scope.teachers = teachers;
@@ -29,7 +49,7 @@ angular.module('aurea.teacher')
       $scope.create = function () {
         var teacher = new Teacher(this.teacher);
         teacher.$save(function (response) {
-          $location.path('insegnanti/' + response._id);
+          $scope.view(response);
         });
 
         $scope.init();
@@ -42,25 +62,9 @@ angular.module('aurea.teacher')
         }
         teacher.updated.push(new Date().getTime());
 
-        teacher.$update(function () {
-          $location.path('insegnanti/' + teacher._id);
+        teacher.$update(function (response) {
+          $scope.view(response);
         });
-      };
-
-      $scope.view = function (teacher) {
-        if (teacher) {
-          $location.path('insegnanti/' + teacher._id);
-        }
-      };
-
-      $scope.new = function () {
-        $location.path('insegnanti/crea');
-      };
-
-      $scope.edit = function (teacher) {
-        if (teacher) {
-          $location.path('insegnanti/' + teacher._id + '/modifica');
-        }
       };
 
       $scope.remove = function (teacher) {
@@ -72,10 +76,8 @@ angular.module('aurea.teacher')
               $scope.teachers.splice(i, 1);
             }
           }
-        }
-        else {
-          $scope.school.$remove();
-          $location.path('insegnanti');
+
+          $scope.list();
         }
       };
 

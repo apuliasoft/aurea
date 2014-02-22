@@ -5,6 +5,26 @@ angular.module('aurea.student')
       $scope.labels = ['Nome', 'Cognome'];
       $scope.columns = ['firstName', 'lastName'];
 
+      $scope.list = function () {
+        $location.path('alunni');
+      };
+
+      $scope.new = function () {
+        $location.path('alunni/crea');
+      };
+
+      $scope.view = function (student) {
+        if (student) {
+          $location.path('alunni/' + student._id);
+        }
+      };
+
+      $scope.edit = function (student) {
+        if (student) {
+          $location.path('alunni/' + student._id + '/modifica');
+        }
+      };
+
       $scope.find = function () {
         Student.query(function (students) {
           $scope.students = students;
@@ -30,7 +50,7 @@ angular.module('aurea.student')
       $scope.create = function () {
         var student = new Student(this.student);
         student.$save(function (response) {
-          $location.path('alunni/' + response._id);
+          $scope.view(response);
         });
 
         $scope.init();
@@ -43,25 +63,9 @@ angular.module('aurea.student')
         }
         student.updated.push(new Date().getTime());
 
-        student.$update(function () {
-          $location.path('alunni/' + student._id);
+        student.$update(function (response) {
+          $scope.view(response);
         });
-      };
-
-      $scope.view = function (student) {
-        if (student) {
-          $location.path('alunni/' + student._id);
-        }
-      };
-
-      $scope.new = function () {
-        $location.path('alunni/crea');
-      };
-
-      $scope.edit = function (student) {
-        if (student) {
-          $location.path('alunni/' + student._id + '/modifica');
-        }
       };
 
       $scope.remove = function (student) {
@@ -73,10 +77,8 @@ angular.module('aurea.student')
               $scope.students.splice(i, 1);
             }
           }
-        }
-        else {
-          $scope.school.$remove();
-          $location.path('alunni');
+
+          $scope.list();
         }
       };
 

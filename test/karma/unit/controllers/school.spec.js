@@ -56,6 +56,70 @@
         expect(scope.columns).toEqualData(['name']);
       });
 
+      it('$scope.list() should locate to list schools URL', function() {
+
+        // run controller
+        scope.list();
+
+        // test URL location to list
+        expect($location.path()).toBe('/scuole');
+      });
+
+      it('$scope.new() should locate to create school form URL', function() {
+
+        // run controller
+        scope.new();
+
+        // test URL location to create form
+        expect($location.path()).toBe('/scuole/crea');
+      });
+
+      it('$scope.view() should locate to view school URL', function() {
+
+        // fixture object to view
+        var viewSchoolData = function () {
+          return {
+            _id: '525cf20451979dea2c000001',
+            name: 'Scuola Media Statale Giovanni Pascoli',
+            complexes: [{
+              address: 'via Manzoni s.n.',
+              zipCode: '70016',
+              city: 'Noicattaro',
+              province: 'BA'
+            }]
+          };
+        };
+
+        // run controller
+        scope.view(viewSchoolData());
+
+        // test URL location to view
+        expect($location.path()).toBe('/scuole/' + viewSchoolData()._id);
+      });
+
+      it('$scope.edit() should locate to edit school form URL', function() {
+
+        // fixture object to edit
+        var editSchoolData = function () {
+          return {
+            _id: '525cf20451979dea2c000001',
+            name: 'Scuola Media Statale Giovanni Pascoli',
+            complexes: [{
+              address: 'via Manzoni s.n.',
+              zipCode: '70016',
+              city: 'Noicattaro',
+              province: 'BA'
+            }]
+          };
+        };
+
+        // run controller
+        scope.edit(editSchoolData());
+
+        // test URL location to edit form
+        expect($location.path()).toBe('/scuole/' + editSchoolData()._id + '/modifica');
+      });
+
       it('$scope.find() should create an array with at least one school object ' +
         'fetched from XHR', function () {
 
@@ -279,6 +343,7 @@
 
         // test after successful delete URL location schools list
         expect(scope.schools.length).toBe(0);
+        expect($location.path()).toBe('/scuole');
 
       }));
 

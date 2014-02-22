@@ -5,6 +5,26 @@ angular.module('aurea.school')
       $scope.labels = ['Nome Istituto'];
       $scope.columns = ['name'];
 
+      $scope.list = function () {
+        $location.path('scuole');
+      };
+
+      $scope.new = function () {
+        $location.path('scuole/crea');
+      };
+
+      $scope.view = function (school) {
+        if (school) {
+          $location.path('scuole/' + school._id);
+        }
+      };
+
+      $scope.edit = function (school) {
+        if (school) {
+          $location.path('scuole/' + school._id + '/modifica');
+        }
+      };
+
       $scope.find = function () {
         School.query(function (schools) {
           $scope.schools = schools;
@@ -39,7 +59,7 @@ angular.module('aurea.school')
       $scope.create = function () {
         var school = new School(this.school);
         school.$save(function (response) {
-          $location.path('scuole/' + response._id);
+          $scope.view(response);
         });
 
         $scope.init();
@@ -52,25 +72,9 @@ angular.module('aurea.school')
         }
         school.updated.push(new Date().getTime());
 
-        school.$update(function () {
-          $location.path('scuole/' + school._id);
+        school.$update(function (response) {
+          $scope.view(response);
         });
-      };
-
-      $scope.view = function (school) {
-        if (school) {
-          $location.path('scuole/' + school._id);
-        }
-      };
-
-      $scope.new = function () {
-        $location.path('scuole/crea');
-      };
-
-      $scope.edit = function (school) {
-        if (school) {
-          $location.path('scuole/' + school._id + '/modifica');
-        }
       };
 
       $scope.remove = function (school) {
@@ -82,10 +86,8 @@ angular.module('aurea.school')
               $scope.schools.splice(i, 1);
             }
           }
-        }
-        else {
-          $scope.school.$remove();
-          $location.path('scuole');
+
+          $scope.list();
         }
       };
 

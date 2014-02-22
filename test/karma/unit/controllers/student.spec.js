@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  // School Controller Spec
+  // Student Controller Spec
   describe('Aurea controllers', function () {
 
     describe('Student controller', function () {
@@ -54,6 +54,70 @@
 
       it('should attach a list of column to the scope', function () {
         expect(scope.columns).toEqualData(['firstName', 'lastName']);
+      });
+
+      it('$scope.list() should locate to list students URL', function() {
+
+        // run controller
+        scope.list();
+
+        // test URL location to list
+        expect($location.path()).toBe('/alunni');
+      });
+
+      it('$scope.new() should locate to create student form URL', function() {
+
+        // run controller
+        scope.new();
+
+        // test URL location to create form
+        expect($location.path()).toBe('/alunni/crea');
+      });
+
+      it('$scope.view() should locate to view student URL', function() {
+
+        // fixture object to view
+        var viewStudentData = function () {
+          return {
+            _id: '525cf20451979dea2c000001',
+            name: 'Scuola Media Statale Giovanni Pascoli',
+            complexes: [{
+              address: 'via Manzoni s.n.',
+              zipCode: '70016',
+              city: 'Noicattaro',
+              province: 'BA'
+            }]
+          };
+        };
+
+        // run controller
+        scope.view(viewStudentData());
+
+        // test URL location to view
+        expect($location.path()).toBe('/alunni/' + viewStudentData()._id);
+      });
+
+      it('$scope.edit() should locate to edit student form URL', function() {
+
+        // fixture object to edit
+        var editStudentData = function () {
+          return {
+            _id: '525cf20451979dea2c000001',
+            name: 'Scuola Media Statale Giovanni Pascoli',
+            complexes: [{
+              address: 'via Manzoni s.n.',
+              zipCode: '70016',
+              city: 'Noicattaro',
+              province: 'BA'
+            }]
+          };
+        };
+
+        // run controller
+        scope.edit(editStudentData());
+
+        // test URL location to edit form
+        expect($location.path()).toBe('/alunni/' + editStudentData()._id + '/modifica');
       });
 
       it('$scope.find() should create an array with at least one student object ' +
@@ -222,8 +286,9 @@
         scope.remove(student);
         $httpBackend.flush();
 
-        // test after successful delete URL location schools list
+        // test after successful delete URL location students list
         expect(scope.students.length).toBe(0);
+        expect($location.path()).toBe('/alunni');
 
       }));
 
