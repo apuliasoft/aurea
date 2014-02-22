@@ -2,6 +2,9 @@ angular.module('aurea.student')
   .controller('StudentCtrl', ['$scope', '$routeParams', '$location', 'Student',
     function ($scope, $routeParams, $location, Student) {
 
+      $scope.labels = ['Nome', 'Cognome'];
+      $scope.columns = ['firstName', 'lastName'];
+
       $scope.find = function () {
         Student.query(function (students) {
           $scope.students = students;
@@ -45,6 +48,22 @@ angular.module('aurea.student')
         });
       };
 
+      $scope.view = function (student) {
+        if (student) {
+          $location.path('alunni/' + student._id);
+        }
+      };
+
+      $scope.new = function () {
+        $location.path('alunni/crea');
+      };
+
+      $scope.edit = function (student) {
+        if (student) {
+          $location.path('alunni/' + student._id + '/modifica');
+        }
+      };
+
       $scope.remove = function (student) {
         if (student) {
           student.$remove();
@@ -58,12 +77,6 @@ angular.module('aurea.student')
         else {
           $scope.school.$remove();
           $location.path('alunni');
-        }
-      };
-
-      $scope.confirmRemove = function (student) {
-        if (confirm('Sei sicuro di voler cancellare l\'insegnante?')) {
-          $scope.remove(student);
         }
       };
 

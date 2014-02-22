@@ -48,40 +48,46 @@
 
       }));
 
+      it('should attach a list of label to the scope', function () {
+        expect(scope.labels).toEqualData(['Nome', 'Cognome']);
+      });
+
+      it('should attach a list of column to the scope', function () {
+        expect(scope.columns).toEqualData(['firstName', 'lastName']);
+      });
+
       it('$scope.find() should create an array with at least one student object ' +
         'fetched from XHR', function () {
 
-        // test expected GET request
-        $httpBackend.expectGET('student').respond([
-          {
-            firstName: 'Jhon',
-            lastName: 'Doe',
-            birthDate: '2013-12-16T00:00:00.000Z'
-          }
-        ]);
+        // fixture expected GET request
+        var responseStudentData = function() {
+          return [{
+              firstName: 'Jhon',
+              lastName: 'Doe',
+              birthDate: '2013-12-16T00:00:00.000Z'
+            }];
+        };
+
+        // test GET happens correctly
+        $httpBackend.expectGET('student').respond(responseStudentData());
 
         // run controller
         scope.find();
         $httpBackend.flush();
 
         // test scope value
-        expect(scope.students).toEqualData([
-          {
-            firstName: 'Jhon',
-            lastName: 'Doe',
-            birthDate: '2013-12-16T00:00:00.000Z'
-          }
-        ]);
+        expect(scope.students).toEqualData(responseStudentData());
 
       });
 
       it('$scope.findOne() should create an array with one student object fetched ' +
         'from XHR using a studentId URL parameter', function () {
+
         // fixture URL parament
         $routeParams.studentId = '525a8422f6d0f87f0e407a33';
 
-        // fixture response object
-        var testStudentData = function () {
+        // fixture expected GET request
+        var responseStudentData = function () {
           return {
             firstName: 'Jhon',
             lastName: 'Doe',
@@ -89,15 +95,16 @@
           };
         };
 
-        // test expected GET request with response object
-        $httpBackend.expectGET(/student\/([0-9a-fA-F]{24})$/).respond(testStudentData());
+        // test GET happens correctly
+        var urlRegex = new RegExp('student/([0-9a-fA-F]{24})');
+        $httpBackend.expectGET(urlRegex).respond(responseStudentData());
 
         // run controller
         scope.findOne();
         $httpBackend.flush();
 
         // test scope value
-        expect(scope.student).toEqualData(testStudentData());
+        expect(scope.student).toEqualData(responseStudentData());
 
       });
 
@@ -118,7 +125,7 @@
         'with the form input values and then ' +
         'locate to new object URL', function () {
 
-        // fixture expected POST data
+        // fixture to send in POST request
         var postStudentData = function () {
           return {
             firstName: 'Jhon',
@@ -127,7 +134,7 @@
           };
         };
 
-        // fixture expected response data
+        // fixture expected from POST request
         var responseStudentData = function () {
           return {
             _id: '525cf20451979dea2c000001',
@@ -138,11 +145,7 @@
         };
 
         // fixture mock form input values
-        scope.student = {
-          firstName: 'Jhon',
-          lastName: 'Doe',
-          birthDate: '2013-12-16T00:00:00.000Z'
-        };
+        scope.student = postStudentData();
 
         // test post request is sent
         $httpBackend.expectPOST('student', postStudentData()).respond(responseStudentData());
@@ -165,7 +168,7 @@
 
       it('$scope.update() should update a valid student', inject(function (Student) {
 
-        // fixture rideshare
+        // fixture to send in PUT request
         var putStudentData = function () {
           return {
             _id: '525a8422f6d0f87f0e407a33',
@@ -175,6 +178,11 @@
           };
         };
 
+        // fixture expected from PUT request
+        var responseStudentData = function() {
+          return putStudentData();
+        };
+
         // mock student object from form
         var student = new Student(putStudentData());
 
@@ -182,38 +190,39 @@
         scope.student = student;
 
         // test PUT happens correctly
-        $httpBackend.expectPUT(/student\/([0-9a-fA-F]{24})$/).respond();
+        var urlRegex = new RegExp('student/[0-9a-fA-F]{24}');
+        $httpBackend.expectPUT(urlRegex).respond(responseStudentData());
 
         // run controller
         scope.update();
         $httpBackend.flush();
 
         // test URL location to new object
-        expect($location.path()).toBe('/alunni/' + putStudentData()._id);
+        expect($location.path()).toBe('/alunni/' + responseStudentData()._id);
 
       }));
 
       it('$scope.remove() should send a DELETE request with a valid studentId' +
         'and remove the student from the scope', inject(function (Student) {
 
-        // fixture rideshare
+        // fixture to send in DELETE request
         var student = new Student({
           _id: '525a8422f6d0f87f0e407a33'
         });
 
-        // mock rideshares in scope
+        // mock student in scope
         scope.students = [];
         scope.students.push(student);
 
-        // test expected rideshare DELETE request
-        $httpBackend.expectDELETE(/student\/([0-9a-fA-F]{24})$/).respond(204);
+        // test expected DELETE request
+        var urlRegex = new RegExp('student/[0-9a-fA-F]{24}');
+        $httpBackend.expectDELETE(urlRegex).respond(204);
 
         // run controller
         scope.remove(student);
         $httpBackend.flush();
 
         // test after successful delete URL location schools list
-        //expect($location.path()).toBe('/alunni');
         expect(scope.students.length).toBe(0);
 
       }));

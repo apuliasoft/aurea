@@ -2,35 +2,8 @@
 
   <h2>Alunni</h2>
 
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Cognome</th>
-        <th>Azioni</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr data-ng-repeat="student in students">
-        <td>{{student.firstName}}</td>
-        <td>{{student.lastName}}</td>
-        <td>
-          <a data-ng-href="/#!/alunni/{{student._id}}" class="btn btn-default btn-xs" title="dettagli"><i class="fa fa-eye"></i></a>
-          <a data-ng-href="/#!/alunni/{{student._id}}/modifica" class="btn btn-default btn-xs" title="modifica"><i class="fa fa-pencil"></i></a>
-          <a data-ng-click="confirmRemove(student)" class="btn btn-default btn-xs" title="elimina"><i class="fa fa-trash-o"></i></a>
-        </td>
-      </tr>
-      <tr data-ng-show="students.length == 0" colspan="3">
-        <td>Non sono presenti alunni</td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="3">
-          <a class="btn btn-default pull-right" href="#!/alunni/crea"><i class="fa fa-plus"></i> Nuovo alunno</a>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+  <datatable labels="labels" columns="columns" list="students" view="view(elem)" edit="edit(elem)" remove="remove(elem)"></datatable>
+
+  <button data-ng-click="new()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo alunno</button>
 
 </section>

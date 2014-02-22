@@ -2,6 +2,9 @@ angular.module('aurea.school')
   .controller('SchoolCtrl', ['$scope', '$routeParams', '$location', 'School',
     function ($scope, $routeParams, $location, School) {
 
+      $scope.labels = ['Nome Istituto'];
+      $scope.columns = ['name'];
+
       $scope.find = function () {
         School.query(function (schools) {
           $scope.schools = schools;
@@ -54,6 +57,22 @@ angular.module('aurea.school')
         });
       };
 
+      $scope.view = function (school) {
+        if (school) {
+          $location.path('scuole/' + school._id);
+        }
+      };
+
+      $scope.new = function () {
+        $location.path('scuole/crea');
+      };
+
+      $scope.edit = function (school) {
+        if (school) {
+          $location.path('scuole/' + school._id + '/modifica');
+        }
+      };
+
       $scope.remove = function (school) {
         if (school) {
           school.$remove();
@@ -67,12 +86,6 @@ angular.module('aurea.school')
         else {
           $scope.school.$remove();
           $location.path('scuole');
-        }
-      };
-
-      $scope.confirmRemove = function (school) {
-        if (confirm('Sei sicuro di voler cancellare la scuola?')) {
-          $scope.remove(school);
         }
       };
 

@@ -48,12 +48,20 @@
 
       }));
 
+      it('should attach a list of label to the scope', function () {
+        expect(scope.labels).toEqualData(['Nome Istituto']);
+      });
+
+      it('should attach a list of column to the scope', function () {
+        expect(scope.columns).toEqualData(['name']);
+      });
+
       it('$scope.find() should create an array with at least one school object ' +
         'fetched from XHR', function () {
 
-        // test expected GET request
-        $httpBackend.expectGET('school').respond([
-          {
+        // fixture expected GET request
+        var responseSchoolData = function() {
+          return [{
             name: 'Scuola Media Statale Giovanni Pascoli',
             complex: [{
               address: 'via Manzoni s.n.',
@@ -61,16 +69,30 @@
               city: 'Noicattaro',
               province: 'BA'
             }]
-          }
-        ]);
+          }];
+        };
+
+        // test GET happens correctly
+        $httpBackend.expectGET('school').respond(responseSchoolData());
 
         // run controller
         scope.find();
         $httpBackend.flush();
 
         // test scope value
-        expect(scope.schools).toEqualData([
-          {
+        expect(scope.schools).toEqualData(responseSchoolData());
+
+      });
+
+      it('$scope.findOne() should create an array with one school object fetched ' +
+        'from XHR using a schoolId URL parameter', function () {
+
+        // fixture URL parament
+        $routeParams.schoolId = '525a8422f6d0f87f0e407a33';
+
+        // fixture expected GET request
+        var responseSchoolData = function () {
+          return {
             name: 'Scuola Media Statale Giovanni Pascoli',
             complex: [{
               address: 'via Manzoni s.n.',
@@ -78,41 +100,24 @@
               city: 'Noicattaro',
               province: 'BA'
             }]
-          }
-        ]);
-
-      });
-
-      it('$scope.findOne() should create an array with one school object fetched ' +
-        'from XHR using a schoolId URL parameter', function () {
-        // fixture URL parament
-        $routeParams.schoolId = '525a8422f6d0f87f0e407a33';
-
-        // fixture response object
-        var testSchoolData = function () {
-          return {
-            name: 'Scuola Media Statale Giovanni Pascoli',
-              complex: [{
-            address: 'via Manzoni s.n.',
-            zipCode: '70016',
-            city: 'Noicattaro',
-            province: 'BA'
-          }]};
+          };
         };
 
-        // test expected GET request with response object
-        $httpBackend.expectGET(/school\/([0-9a-fA-F]{24})$/).respond(testSchoolData());
+        // test GET happens correctly
+        var urlRegex = new RegExp('school/([0-9a-fA-F]{24})');
+        $httpBackend.expectGET(urlRegex).respond(responseSchoolData());
 
         // run controller
         scope.findOne();
         $httpBackend.flush();
 
         // test scope value
-        expect(scope.school).toEqualData(testSchoolData());
+        expect(scope.school).toEqualData(responseSchoolData());
 
       });
 
       it('$scope.init() should create an array with one void school object', function() {
+
         // run controller
         scope.init();
 
@@ -125,6 +130,7 @@
 
       it('$scope.addComplex should create a void complex object ' +
         'and add it to the school in the scope', function() {
+
         // init school in scope
         scope.school = {
           name: '',
@@ -143,16 +149,12 @@
 
       it('$scope.removeComplex should delete a complex object' +
         'from the school in the scope', function() {
-        // fixture rideshare
+
+        // init school in scope
         scope.school = {
-            name: '',
-            complexes: [{
-              address: 'via Manzoni s.n.',
-              zipCode: '70016',
-              city: 'Noicattaro',
-              province: 'BA'
-            }]
-          };
+          name: '',
+          complexes: [{}]
+        };
 
         // Run controller
         scope.removeComplex(0);
@@ -168,7 +170,7 @@
         'with the form input values and then ' +
         'locate to new object URL', function () {
 
-        // fixture expected POST data
+        // fixture to send in POST request
         var postSchoolData = function () {
           return {
             name: 'Scuola Media Statale Giovanni Pascoli',
@@ -181,7 +183,7 @@
           };
         };
 
-        // fixture expected response data
+        // fixture expected from POST request
         var responseSchoolData = function () {
           return {
             _id: '525cf20451979dea2c000001',
@@ -196,15 +198,7 @@
         };
 
         // fixture mock form input values
-        scope.school = {
-          name: 'Scuola Media Statale Giovanni Pascoli',
-          complexes: [{
-            address: 'via Manzoni s.n.',
-            zipCode: '70016',
-            city: 'Noicattaro',
-            province: 'BA'
-          }]
-        };
+        scope.school = postSchoolData();
 
         // test post request is sent
         $httpBackend.expectPOST('school', postSchoolData()).respond(responseSchoolData());
@@ -225,7 +219,7 @@
 
       it('$scope.update() should update a valid school', inject(function (School) {
 
-        // fixture rideshare
+        // fixture to send in PUT request
         var putSchoolData = function () {
           return {
             _id: '525a8422f6d0f87f0e407a33',
@@ -239,6 +233,11 @@
           };
         };
 
+        // fixture expected from PUT request
+        var responseSchoolData = function() {
+          return putSchoolData();
+        };
+
         // mock school object from form
         var school = new School(putSchoolData());
 
@@ -246,38 +245,39 @@
         scope.school = school;
 
         // test PUT happens correctly
-        $httpBackend.expectPUT(/school\/([0-9a-fA-F]{24})$/).respond();
+        var urlRegex = new RegExp('school/[0-9a-fA-F]{24}');
+        $httpBackend.expectPUT(urlRegex).respond(responseSchoolData());
 
         // run controller
         scope.update();
         $httpBackend.flush();
 
         // test URL location to new object
-        expect($location.path()).toBe('/scuole/' + putSchoolData()._id);
+        expect($location.path()).toBe('/scuole/' + responseSchoolData()._id);
 
       }));
 
       it('$scope.remove() should send a DELETE request with a valid schoolId' +
         'and remove the school from the scope', inject(function (School) {
 
-        // fixture rideshare
+        // fixture to send in DELETE request
         var school = new School({
           _id: '525a8422f6d0f87f0e407a33'
         });
 
-        // mock rideshares in scope
+        // mock school in scope
         scope.schools = [];
         scope.schools.push(school);
 
-        // test expected rideshare DELETE request
-        $httpBackend.expectDELETE(/school\/([0-9a-fA-F]{24})$/).respond(204);
+        // test expected DELETE request
+        var urlRegex = new RegExp('school/[0-9a-fA-F]{24}');
+        $httpBackend.expectDELETE(urlRegex).respond(204);
 
         // run controller
         scope.remove(school);
         $httpBackend.flush();
 
         // test after successful delete URL location schools list
-        //expect($location.path()).toBe('/scuole');
         expect(scope.schools.length).toBe(0);
 
       }));

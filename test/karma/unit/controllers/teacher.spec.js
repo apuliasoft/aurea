@@ -48,53 +48,61 @@
 
       }));
 
+      it('should attach a list of label to the scope', function () {
+        expect(scope.labels).toEqualData(['Nome', 'Cognome']);
+      });
+
+      it('should attach a list of column to the scope', function () {
+        expect(scope.columns).toEqualData(['firstName', 'lastName']);
+      });
+
       it('$scope.find() should create an array with at least one teacher object ' +
         'fetched from XHR', function () {
 
-        // test expected GET request
-        $httpBackend.expectGET('teacher').respond([
-          {
-            firstName: 'Jhon',
-            lastName: 'Doe'
-          }
-        ]);
+        // fixture expected GET request
+        var responseTeacherData = function() {
+          return [{
+              firstName: 'Jhon',
+              lastName: 'Doe'
+            }];
+        };
+
+        // test GET happens correctly
+        $httpBackend.expectGET('teacher').respond(responseTeacherData());
 
         // run controller
         scope.find();
         $httpBackend.flush();
 
         // test scope value
-        expect(scope.teachers).toEqualData([
-          {
-            firstName: 'Jhon',
-            lastName: 'Doe'
-          }
-        ]);
+        expect(scope.teachers).toEqualData(responseTeacherData());
 
       });
 
       it('$scope.findOne() should create an array with one teacher object fetched ' +
         'from XHR using a teacherId URL parameter', function () {
+
         // fixture URL parament
         $routeParams.teacherId = '525a8422f6d0f87f0e407a33';
 
-        // fixture response object
-        var testTeacherData = function () {
+        // fixture expected GET request
+        var responseTeacherData = function () {
           return {
             firstName: 'Jhon',
             lastName: 'Doe'
           };
         };
 
-        // test expected GET request with response object
-        $httpBackend.expectGET(/teacher\/([0-9a-fA-F]{24})$/).respond(testTeacherData());
+        // test GET happens correctly
+        var urlRegex = new RegExp('teacher/([0-9a-fA-F]{24})');
+        $httpBackend.expectGET(urlRegex).respond(responseTeacherData());
 
         // run controller
         scope.findOne();
         $httpBackend.flush();
 
         // test scope value
-        expect(scope.teacher).toEqualData(testTeacherData());
+        expect(scope.teacher).toEqualData(responseTeacherData());
 
       });
 
@@ -114,7 +122,7 @@
         'with the form input values and then ' +
         'locate to new object URL', function () {
 
-        // fixture expected POST data
+        // fixture to send in POST request
         var postTeacherData = function () {
           return {
             firstName: 'Jhon',
@@ -122,7 +130,7 @@
           };
         };
 
-        // fixture expected response data
+        // fixture expected from POST request
         var responseTeacherData = function () {
           return {
             _id: '525cf20451979dea2c000001',
@@ -132,10 +140,7 @@
         };
 
         // fixture mock form input values
-        scope.teacher = {
-          firstName: 'Jhon',
-          lastName: 'Doe'
-        };
+        scope.teacher = postTeacherData();
 
         // test post request is sent
         $httpBackend.expectPOST('teacher', postTeacherData()).respond(responseTeacherData());
@@ -157,13 +162,18 @@
 
       it('$scope.update() should update a valid teacher', inject(function (Teacher) {
 
-        // fixture rideshare
+        // fixture to send in PUT request
         var putTeacherData = function () {
           return {
             _id: '525a8422f6d0f87f0e407a33',
             firstName: 'Jhon',
             lastName: 'Doe'
           };
+        };
+
+        // fixture expected from PUT request
+        var responseTeacherData = function() {
+          return putTeacherData();
         };
 
         // mock teacher object from form
@@ -173,38 +183,39 @@
         scope.teacher = teacher;
 
         // test PUT happens correctly
-        $httpBackend.expectPUT(/teacher\/([0-9a-fA-F]{24})$/).respond();
+        var urlRegex = new RegExp('teacher/[0-9a-fA-F]{24}');
+        $httpBackend.expectPUT(urlRegex).respond(responseTeacherData());
 
         // run controller
         scope.update();
         $httpBackend.flush();
 
         // test URL location to new object
-        expect($location.path()).toBe('/insegnanti/' + putTeacherData()._id);
+        expect($location.path()).toBe('/insegnanti/' + responseTeacherData()._id);
 
       }));
 
       it('$scope.remove() should send a DELETE request with a valid teacherId' +
         'and remove the teacher from the scope', inject(function (Teacher) {
 
-        // fixture rideshare
+        // fixture to send in DELETE request
         var teacher = new Teacher({
           _id: '525a8422f6d0f87f0e407a33'
         });
 
-        // mock rideshares in scope
+        // mock teacher in scope
         scope.teachers = [];
         scope.teachers.push(teacher);
 
-        // test expected rideshare DELETE request
-        $httpBackend.expectDELETE(/teacher\/([0-9a-fA-F]{24})$/).respond(204);
+        // test expected DELETE request
+        var urlRegex = new RegExp('teacher/[0-9a-fA-F]{24}');
+        $httpBackend.expectDELETE(urlRegex).respond(204);
 
         // run controller
         scope.remove(teacher);
         $httpBackend.flush();
 
         // test after successful delete URL location schools list
-        //expect($location.path()).toBe('/insegnanti');
         expect(scope.teachers.length).toBe(0);
 
       }));
