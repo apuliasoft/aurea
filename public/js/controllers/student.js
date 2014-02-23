@@ -26,33 +26,24 @@ angular.module('aurea.student')
       };
 
       $scope.find = function () {
-        Student.query(function (students) {
-          $scope.students = students;
-        });
+        $scope.students = Student.query();
       };
 
       $scope.findOne = function () {
-        Student.get({
+        $scope.student = Student.get({
           studentId: $routeParams.studentId
-        }, function (student) {
-          $scope.student = student;
         });
       };
 
       $scope.init = function () {
-        $scope.student = {
-          firstName: '',
-          lastName: '',
-          birthDate: ''
-        };
+        $scope.student = new Student();
       };
 
       $scope.create = function () {
-        var student = new Student(this.student);
+        var student = $scope.student;
         student.$save(function (response) {
           $scope.view(response);
         });
-
         $scope.init();
       };
 

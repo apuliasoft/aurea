@@ -177,17 +177,13 @@
         scope.init();
 
         // test scope value
-        expect(scope.student).toEqualData({
-          firstName: '',
-          lastName: '',
-          birthDate: ''
-        });
+        expect(!!scope.student).toBe(true);
 
       });
 
       it('$scope.create() with valid form data should send a POST request ' +
         'with the form input values and then ' +
-        'locate to new object URL', function () {
+        'locate to new object URL', inject(function (Student) {
 
         // fixture to send in POST request
         var postStudentData = function () {
@@ -209,7 +205,7 @@
         };
 
         // fixture mock form input values
-        scope.student = postStudentData();
+        scope.student = new Student(postStudentData());
 
         // test post request is sent
         $httpBackend.expectPOST('student', postStudentData()).respond(responseStudentData());
@@ -219,16 +215,12 @@
         $httpBackend.flush();
 
         // test form input(s) are reset
-        expect(scope.student).toEqualData({
-          firstName: '',
-          lastName: '',
-          birthDate: ''
-        });
+        expect(scope.student).toEqualData(new Student());
 
         // test URL location to new object
         expect($location.path()).toBe('/alunni/' + responseStudentData()._id);
 
-      });
+      }));
 
       it('$scope.update() should update a valid student', inject(function (Student) {
 

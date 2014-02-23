@@ -27,33 +27,30 @@ angular.module('aurea.school')
       };
 
       $scope.find = function () {
-        School.query(function (schools) {
-          $scope.schools = schools;
-        });
+        $scope.schools = School.query();
       };
 
       $scope.findOne = function () {
-        School.get({
+        $scope.school = School.get({
           schoolId: $routeParams.schoolId
-        }, function (school) {
-          $scope.school = school;
         });
       };
 
       $scope.init = function () {
-        $scope.school = { name:'', complexes:[{}]};
+        $scope.school = new School({complexes:[]});
+        $scope.addComplex();
       };
 
       $scope.addComplex = function () {
         $scope.school.complexes.push({});
       };
 
-      $scope.removeComplex = function (index) {
-        $scope.school.complexes.splice(index, 1);
+      $scope.removeComplex = function (complex) {
+        _.remove($scope.school.complexes, complex);
       };
 
       $scope.create = function () {
-        var school = new School(this.school);
+        var school = $scope.school;
         school.$save(function (response) {
           $scope.view(response);
         });

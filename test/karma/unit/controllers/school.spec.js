@@ -186,50 +186,49 @@
         scope.init();
 
         // test scope value
-        expect(scope.school).toEqualData({name:'', complexes:[{}]});
+        expect(!!scope.school).toBe(true);
       });
 
       it('$scope.addComplex should create a void complex object ' +
-        'and add it to the school in the scope', function() {
+        'and add it to the school in the scope', inject(function (School) {
 
         // init school in scope
-        scope.school = {
-          name: '',
-          complexes: [{}]
-        };
+        scope.school = new School({complexes:[]});
 
         // Run controller
         scope.addComplex();
 
         // test after successful adding
-        expect(scope.school).toEqualData({
-          name: '',
-          complexes: [{},{}]
-        });
-      });
+        expect(scope.school.complexes.length).toBe(1);
+      }));
 
-      it('$scope.removeComplex should delete a complex object' +
-        'from the school in the scope', function() {
+      it('$scope.removeComplex should delete a complex object ' +
+        'from the school in the scope', inject(function (School) {
 
-        // init school in scope
-        scope.school = {
-          name: '',
-          complexes: [{}]
+        var deleteComplexData = function () {
+          return {
+            address: 'via Manzoni s.n.',
+            zipCode: '70016',
+            city: 'Noicattaro',
+            province: 'BA'
+          };
         };
 
-        // Run controller
-        scope.removeComplex(0);
+        // init school in scope
+        scope.school = new School();
+        scope.school.complexes = [];
+        scope.school.complexes.push(deleteComplexData());
 
-        // test after successful adding
-        expect(scope.school).toEqualData({
-          name: '',
-          complexes: []
-        });
-      });
+        // Run controller
+        scope.removeComplex(deleteComplexData());
+
+        // test after successful delete
+        expect(scope.school.complexes.length).toBe(0);
+      }));
 
       it('$scope.create() with valid form data should send a POST request ' +
         'with the form input values and then ' +
-        'locate to new object URL', function () {
+        'locate to new object URL', inject(function (School) {
 
         // fixture to send in POST request
         var postSchoolData = function () {
@@ -259,7 +258,7 @@
         };
 
         // fixture mock form input values
-        scope.school = postSchoolData();
+        scope.school = new School(postSchoolData());
 
         // test post request is sent
         $httpBackend.expectPOST('school', postSchoolData()).respond(responseSchoolData());
@@ -269,14 +268,11 @@
         $httpBackend.flush();
 
         // test form input(s) are reset
-        expect(scope.school).toEqualData({
-          name: '',
-          complexes: [{}]
-        });
+        expect(scope.school).toEqualData(new School({complexes:[{}]}));
 
         // test URL location to new object
         expect($location.path()).toBe('/scuole/' + responseSchoolData()._id);
-      });
+      }));
 
       it('$scope.update() should update a valid school', inject(function (School) {
 
@@ -340,6 +336,7 @@
 
         // test after successful delete URL location schools list
         expect(scope.schools.length).toBe(0);
+        expect($location.path()).toBe('/scuole');
 
       }));
 
