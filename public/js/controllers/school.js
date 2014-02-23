@@ -75,13 +75,7 @@ angular.module('aurea.school')
       $scope.remove = function (school) {
         if (school) {
           school.$remove();
-
-          for (var i in $scope.schools) {
-            if ($scope.schools[i] == school) {
-              $scope.schools.splice(i, 1);
-            }
-          }
-
+          _.remove($scope.schools, school);
           $scope.list();
         }
       };

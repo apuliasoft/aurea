@@ -71,13 +71,7 @@ angular.module('aurea.student')
       $scope.remove = function (student) {
         if (student) {
           student.$remove();
-
-          for (var i in $scope.students) {
-            if ($scope.students[i] == student) {
-              $scope.students.splice(i, 1);
-            }
-          }
-
+          _.remove($scope.students, student);
           $scope.list();
         }
       };
