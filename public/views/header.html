@@ -15,14 +15,14 @@
         <a href="#!/{{item.link}}">{{item.title}}</a>
       </li>
     </ul>
-    <ul class="nav navbar-nav navbar-left">
-      <li>
-        <select>
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <select class="form-control">
           <option>Tutte le scuole</option>
           <option data-ng-repeat="school in globalSchools">{{ school.name }}</option>
         </select>
-      </li>
-    </ul>
+      </div>
+    </form>
     <ul class="nav navbar-nav navbar-right" data-ng-hide="global.authenticated">
       <li><a href="/#!/scuole">Scuole</a></li>
       <li><a href="/#!/insegnanti">Insegnanti</a></li>
