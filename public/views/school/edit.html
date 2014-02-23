@@ -16,7 +16,7 @@
 
       <bsinput type="text" model="complex.city" id="city{{$index}}" placeholder="Città">Città</bsinput>
 
-      <bsinput type="text" model="complex.province" id="province{{$index}}" placeholder="Provincia">Provincia</bsinput>
+      <bsselect model="complex.province" id="province{{$index}}" options="provinces" value="code" label="name">Provincia</bsselect>
 
       <bsbutton click="removeComplex($index)"><i class="fa fa-trash-o"></i> Rimuovi plesso</bsbutton>
     </div>

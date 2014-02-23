@@ -116,7 +116,7 @@
         // run controller
         scope.edit(editSchoolData());
 
-        // test URL location to edit form
+        // test URL location to view
         expect($location.path()).toBe('/scuole/' + editSchoolData()._id + '/modifica');
       });
 
@@ -186,10 +186,7 @@
         scope.init();
 
         // test scope value
-        expect(scope.school).toEqualData({
-          name: '',
-          complexes: [{}]
-        });
+        expect(scope.school).toEqualData({name:'', complexes:[{}]});
       });
 
       it('$scope.addComplex should create a void complex object ' +
@@ -343,7 +340,6 @@
 
         // test after successful delete URL location schools list
         expect(scope.schools.length).toBe(0);
-        expect($location.path()).toBe('/scuole');
 
       }));
 

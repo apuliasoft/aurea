@@ -9,11 +9,21 @@ angular.module('aurea')
         }).
         when('/scuole/crea', {
           templateUrl: 'views/school/create.html',
-          controller: 'SchoolCtrl'
+          controller: 'SchoolCtrl',
+          resolve: {
+            provices: function (Province) {
+              return Province.loadProvinces();
+            }
+          }
         }).
         when('/scuole/:schoolId/modifica', {
           templateUrl: 'views/school/edit.html',
-          controller: 'SchoolCtrl'
+          controller: 'SchoolCtrl',
+          resolve: {
+            provices: function (Province) {
+              return Province.loadProvinces();
+            }
+          }
         }).
         when('/scuole/:schoolId', {
           templateUrl: 'views/school/view.html',

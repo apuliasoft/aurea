@@ -1,9 +1,10 @@
 angular.module('aurea.school')
-  .controller('SchoolCtrl', ['$scope', '$routeParams', '$location', 'School',
-    function ($scope, $routeParams, $location, School) {
+  .controller('SchoolCtrl', ['$scope', '$routeParams', '$location', 'School', 'Province',
+    function ($scope, $routeParams, $location, School, Province) {
 
       $scope.labels = ['Nome Istituto'];
       $scope.columns = ['name'];
+      $scope.provinces = Province.getProvinces();
 
       $scope.list = function () {
         $location.path('scuole');
@@ -40,12 +41,7 @@ angular.module('aurea.school')
       };
 
       $scope.init = function () {
-        $scope.school = {
-          name: '',
-          complexes: [
-            {}
-          ]
-        };
+        $scope.school = { name:'', complexes:[{}]};
       };
 
       $scope.addComplex = function () {
@@ -61,7 +57,6 @@ angular.module('aurea.school')
         school.$save(function (response) {
           $scope.view(response);
         });
-
         $scope.init();
       };
 
