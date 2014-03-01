@@ -228,7 +228,7 @@
             firstName: 'Jhon',
             lastName: 'Doe',
             __v: 2
-          }
+          };
         };
 
         // mock teacher object from form

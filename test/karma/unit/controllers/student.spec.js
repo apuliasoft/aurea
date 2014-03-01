@@ -238,7 +238,7 @@
             lastName: 'Doe',
             birthDate: '2013-12-16T00:00:00.000Z',
             __v: 2
-          }
+          };
         };
 
         // mock student object from form

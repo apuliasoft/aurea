@@ -221,7 +221,7 @@
             _id: '525cf20451979dea2c000001',
             name: '1A',
             __v: 2
-          }
+          };
         };
 
         // mock school class object from form

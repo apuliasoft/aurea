@@ -233,7 +233,7 @@
             startDate: '2013-9-1T00:00:00.000Z',
             endDate: '2014-8-31T00:00:00.000Z',
             __v: 2
-          }
+          };
         };
 
         // mock academic year object from form
