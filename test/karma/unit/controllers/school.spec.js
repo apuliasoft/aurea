@@ -79,7 +79,7 @@
         // fixture object to view
         var viewSchoolData = function () {
           return {
-            _id: '525cf20451979dea2c000001',
+            _id: '525cf20451979dea2c000001'
           };
         };
 
@@ -112,13 +112,15 @@
         // fixture expected GET request
         var responseSchoolData = function() {
           return [{
+            _id: '525cf20451979dea2c000001',
             name: 'Scuola Media Statale Giovanni Pascoli',
             complex: [{
               address: 'via Manzoni s.n.',
               zipCode: '70016',
               city: 'Noicattaro',
               province: 'BA'
-            }]
+            }],
+            __v: 1
           }];
         };
 
@@ -138,18 +140,20 @@
         'from XHR using a schoolId URL parameter', function () {
 
         // fixture URL parament
-        $routeParams.schoolId = '525a8422f6d0f87f0e407a33';
+        $routeParams.schoolId = '525cf20451979dea2c000001';
 
         // fixture expected GET request
         var responseSchoolData = function () {
           return {
+            _id: '525cf20451979dea2c000001',
             name: 'Scuola Media Statale Giovanni Pascoli',
             complex: [{
               address: 'via Manzoni s.n.',
               zipCode: '70016',
               city: 'Noicattaro',
               province: 'BA'
-            }]
+            }],
+            __v: 1
           };
         };
 
@@ -239,7 +243,8 @@
               zipCode: '70016',
               city: 'Noicattaro',
               province: 'BA'
-            }]
+            }],
+            __v: 1
           };
         };
 
@@ -265,20 +270,31 @@
         // fixture to send in PUT request
         var putSchoolData = function () {
           return {
-            _id: '525a8422f6d0f87f0e407a33',
+            _id: '525cf20451979dea2c000001',
             name: 'Istituto Comprensivo Giovanni Pascoli',
             complexes: [{
               address: 'via Manzoni s.n.',
               zipCode: '70016',
               city: 'Noicattaro',
               province: 'BA'
-            }]
+            }],
+            __v: 1
           };
         };
 
         // fixture expected from PUT request
         var responseSchoolData = function() {
-          return putSchoolData();
+          return {
+            _id: '525cf20451979dea2c000001',
+            name: 'Istituto Comprensivo Giovanni Pascoli',
+            complexes: [{
+              address: 'via Manzoni s.n.',
+              zipCode: '70016',
+              city: 'Noicattaro',
+              province: 'BA'
+            }],
+            __v: 2
+          };
         };
 
         // mock school object from form
@@ -305,7 +321,7 @@
 
         // fixture to send in DELETE request
         var school = new School({
-          _id: '525a8422f6d0f87f0e407a33'
+          _id: '525cf20451979dea2c000001'
         });
 
         // mock school in scope

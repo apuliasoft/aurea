@@ -112,9 +112,11 @@
         // fixture expected GET request
         var responseAcademicYearData = function() {
           return [{
+            _id: '525cf20451979dea2c000001',
             name: '2013/2014',
             startDate: '2013-9-1T00:00:00.000Z',
-            endDate: '2014-8-31T00:00:00.000Z'
+            endDate: '2014-8-31T00:00:00.000Z',
+            __v: 1
           }];
         };
 
@@ -134,14 +136,16 @@
         'from XHR using a academic yearId URL parameter', function () {
 
         // fixture URL parament
-        $routeParams.academicYearId = '525a8422f6d0f87f0e407a33';
+        $routeParams.academicYearId = '525cf20451979dea2c000001';
 
         // fixture expected GET request
         var responseAcademicYearData = function () {
           return {
+            _id: '525cf20451979dea2c000001',
             name: '2013/2014',
             startDate: '2013-9-1T00:00:00.000Z',
-            endDate: '2014-8-31T00:00:00.000Z'
+            endDate: '2014-8-31T00:00:00.000Z',
+            __v: 1
           };
         };
 
@@ -183,9 +187,11 @@
         // fixture expected from POST request
         var responseAcademicYearData = function () {
           return {
+            _id: '525cf20451979dea2c000001',
             name: '2013/2014',
             startDate: '2013-9-1T00:00:00.000Z',
-            endDate: '2014-8-31T00:00:00.000Z'
+            endDate: '2014-8-31T00:00:00.000Z',
+            __v: 1
           };
         };
 
@@ -211,16 +217,23 @@
         // fixture to send in PUT request
         var putAcademicYearData = function () {
           return {
-            _id: '525a8422f6d0f87f0e407a33',
+            _id: '525cf20451979dea2c000001',
             name: '2013/2014',
             startDate: '2013-9-1T00:00:00.000Z',
-            endDate: '2014-8-31T00:00:00.000Z'
+            endDate: '2014-8-31T00:00:00.000Z',
+            __v: 1
           };
         };
 
         // fixture expected from PUT request
         var responseAcademicYearData = function() {
-          return putAcademicYearData();
+          return {
+            _id: '525cf20451979dea2c000001',
+            name: '2013/2014',
+            startDate: '2013-9-1T00:00:00.000Z',
+            endDate: '2014-8-31T00:00:00.000Z',
+            __v: 2
+          }
         };
 
         // mock academic year object from form
@@ -247,7 +260,7 @@
 
         // fixture to send in DELETE request
         var academicYear = new AcademicYear({
-          _id: '525a8422f6d0f87f0e407a33'
+          _id: '525cf20451979dea2c000001'
         });
 
         // mock academic year in scope

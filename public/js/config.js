@@ -77,6 +77,22 @@ angular.module('aurea')
           templateUrl: 'views/academicYear/view.html',
           controller: 'AcademicYearCtrl'
         }).
+        when('/classi', {
+          templateUrl: 'views/schoolClass/list.html',
+          controller: 'SchoolClassCtrl'
+        }).
+        when('/classi/crea', {
+          templateUrl: 'views/schoolClass/create.html',
+          controller: 'SchoolClassCtrl'
+        }).
+        when('/classi/:schoolClassId/modifica', {
+          templateUrl: 'views/schoolClass/edit.html',
+          controller: 'SchoolClassCtrl'
+        }).
+        when('/classi/:schoolClassId', {
+          templateUrl: 'views/schoolClass/view.html',
+          controller: 'SchoolClassCtrl'
+        }).
         when('/', {
           templateUrl: 'views/index.html',
           controller: 'IndexCtrl'

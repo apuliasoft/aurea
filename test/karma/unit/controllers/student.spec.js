@@ -98,7 +98,8 @@
             _id: '525cf20451979dea2c000001',
             firstName: 'Jhon',
             lastName: 'Doe',
-            birthDate: '2013-12-16T00:00:00.000Z'
+            birthDate: '2013-12-16T00:00:00.000Z',
+            __v: 1
           };
         };
 
@@ -115,10 +116,12 @@
         // fixture expected GET request
         var responseStudentData = function() {
           return [{
-              firstName: 'Jhon',
-              lastName: 'Doe',
-              birthDate: '2013-12-16T00:00:00.000Z'
-            }];
+            _id: '525cf20451979dea2c000001',
+            firstName: 'Jhon',
+            lastName: 'Doe',
+            birthDate: '2013-12-16T00:00:00.000Z',
+            __v: 1
+           }];
         };
 
         // test GET happens correctly
@@ -137,14 +140,16 @@
         'from XHR using a studentId URL parameter', function () {
 
         // fixture URL parament
-        $routeParams.studentId = '525a8422f6d0f87f0e407a33';
+        $routeParams.studentId = '525cf20451979dea2c000001';
 
         // fixture expected GET request
         var responseStudentData = function () {
           return {
+            _id: '525cf20451979dea2c000001',
             firstName: 'Jhon',
             lastName: 'Doe',
-            birthDate: '2013-12-16T00:00:00.000Z'
+            birthDate: '2013-12-16T00:00:00.000Z',
+            __v: 1
           };
         };
 
@@ -189,7 +194,8 @@
             _id: '525cf20451979dea2c000001',
             firstName: 'Jhon',
             lastName: 'Doe',
-            birthDate: '2013-12-16T00:00:00.000Z'
+            birthDate: '2013-12-16T00:00:00.000Z',
+            __v: 1
           };
         };
 
@@ -216,16 +222,23 @@
         // fixture to send in PUT request
         var putStudentData = function () {
           return {
-            _id: '525a8422f6d0f87f0e407a33',
+            _id: '525cf20451979dea2c000001',
             firstName: 'Jhon',
             lastName: 'Doe',
-            birthDate: '2013-12-16T00:00:00.000Z'
+            birthDate: '2013-12-16T00:00:00.000Z',
+            __v: 1
           };
         };
 
         // fixture expected from PUT request
         var responseStudentData = function() {
-          return putStudentData();
+          return {
+            _id: '525cf20451979dea2c000001',
+            firstName: 'Jhon',
+            lastName: 'Doe',
+            birthDate: '2013-12-16T00:00:00.000Z',
+            __v: 2
+          }
         };
 
         // mock student object from form
@@ -252,7 +265,7 @@
 
         // fixture to send in DELETE request
         var student = new Student({
-          _id: '525a8422f6d0f87f0e407a33'
+          _id: '525cf20451979dea2c000001'
         });
 
         // mock student in scope
