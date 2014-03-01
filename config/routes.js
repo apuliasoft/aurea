@@ -62,6 +62,17 @@ module.exports = function(app, passport, auth) {
     //Finish with setting up the studentId param
     app.param('studentId', student.student);
 
+    //Academic Year Routes
+    var academicYear = require('../app/controllers/academicYear');
+    app.get('/academicYear', academicYear.all);
+    app.get('/academicYear/:academicYearId', academicYear.show);
+    app.post('/academicYear', academicYear.create);
+    app.put('/academicYear/:academicYearId', academicYear.update);
+    app.del('/academicYear/:id', academicYear.delete);
+
+    //Finish with setting up the academicYearId param
+    app.param('academicYearId', academicYear.academicYear);
+
 
     //Home route
     var index = require('../app/controllers/index');
