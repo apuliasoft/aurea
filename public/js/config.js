@@ -61,6 +61,22 @@ angular.module('aurea')
           templateUrl: 'views/student/view.html',
           controller: 'StudentCtrl'
         }).
+        when('/aa', {
+          templateUrl: 'views/academicYear/list.html',
+          controller: 'AcademicYearCtrl'
+        }).
+        when('/aa/crea', {
+          templateUrl: 'views/academicYear/create.html',
+          controller: 'AcademicYearCtrl'
+        }).
+        when('/aa/:academicYearId/modifica', {
+          templateUrl: 'views/academicYear/edit.html',
+          controller: 'AcademicYearCtrl'
+        }).
+        when('/aa/:academicYearId', {
+          templateUrl: 'views/academicYear/view.html',
+          controller: 'AcademicYearCtrl'
+        }).
         when('/', {
           templateUrl: 'views/index.html',
           controller: 'IndexCtrl'
