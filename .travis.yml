@@ -1,7 +1,14 @@
 language: node_js
 node_js:
-  - "0.10"
+- '0.10'
 env:
-  - NODE_ENV=travis
+- NODE_ENV=travis
 services:
-  - mongodb
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: tm3YieEeePPjxtbCGpL/HFjZa1gKf5GyfCJMXe3iW16pWkw4Yu16EIvL7fyRbYncBXB5fNQ3i8xVjvl7Tjw0CUohdoe+J4ZF6WQPwlc/L7xmXJp/YRSN2N0klqqtcza1YN7tDBkn+U6v9d3PgRo6He30viqmvsKh2imixp7+NQg=
+  app: aurea
+  on:
+    repo: apuliasoft/aurea
