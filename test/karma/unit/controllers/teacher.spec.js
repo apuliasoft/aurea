@@ -80,13 +80,6 @@
         var viewTeacherData = function () {
           return {
             _id: '525cf20451979dea2c000001',
-            name: 'Scuola Media Statale Giovanni Pascoli',
-            complexes: [{
-              address: 'via Manzoni s.n.',
-              zipCode: '70016',
-              city: 'Noicattaro',
-              province: 'BA'
-            }]
           };
         };
 
@@ -103,13 +96,6 @@
         var editTeacherData = function () {
           return {
             _id: '525cf20451979dea2c000001',
-            name: 'Scuola Media Statale Giovanni Pascoli',
-            complexes: [{
-              address: 'via Manzoni s.n.',
-              zipCode: '70016',
-              city: 'Noicattaro',
-              province: 'BA'
-            }]
           };
         };
 
