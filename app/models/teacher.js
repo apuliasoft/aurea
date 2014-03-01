@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 /**
- * Student Schema
+ * Teacher Schema
  */
 var TeacherSchema = new Schema({
     firstName: String,
