@@ -1,0 +1,18 @@
+<section data-ng-controller="SchoolClassesCtrl" data-ng-init="findOne()">
+  <h2>Modifica classe</h2>
+
+  <form name="schoolClassForm" role="form" data-ng-submit="update()" novalidate>
+
+    <div class="form-group">
+      <label for="name" class="control-label">Nome</label>
+      <input type="text" data-ng-model="schoolClass.name" id="name" name="name" class="form-control" placeholder="Nome">
+    </div>
+
+    <hr>
+
+    <button type="submit" class="btn btn-primary">Salva</button>
+
+    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+
+  </form>
+</section>

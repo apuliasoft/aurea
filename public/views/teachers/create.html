@@ -1,0 +1,23 @@
+<section data-ng-controller="TeachersCtrl" data-ng-init="init()">
+  <h2>Crea insegnante</h2>
+
+  <form name="teacherForm" role="form" data-ng-submit="create()" novalidate>
+
+    <div class="form-group">
+      <label for="firstName" class="control-label">Nome</label>
+      <input type="text" data-ng-model="teacher.firstName" id="firstName" name="firstName" class="form-control" placeholder="Nome">
+    </div>
+
+    <div class="form-group">
+      <label for="lastName" class="control-label">Cognome</label>
+      <input type="text" data-ng-model="teacher.lastName" id="lastName" name="lastName" class="form-control" placeholder="Cognome">
+    </div>
+
+    <hr>
+
+    <button type="submit" class="btn btn-primary">Crea</button>
+
+    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+
+  </form>
+</section>

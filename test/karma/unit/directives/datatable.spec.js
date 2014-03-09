@@ -1,28 +1,25 @@
-(function () {
-  'use strict';
+'use strict';
 
-  describe('Aurea directives', function () {
+(function() {
+    // Datatable Directive Spec
+    describe('Aurea directives', function() {
+        describe('Datatable', function() {
 
-    describe('Datatable directive', function () {
+            // load the directive's module
+            beforeEach(module('aurea'));
 
-      // load the directive's module
-      beforeEach(module('aurea'));
+            var element,
+                scope;
 
-      var element,
-        scope;
+            beforeEach(inject(function ($rootScope) {
+                scope = $rootScope.$new();
+            }));
 
-      beforeEach(inject(function ($rootScope) {
-        scope = $rootScope.$new();
-      }));
-
-      it('should replace element with template', inject(function ($compile) {
-        element = angular.element('<datatable></datatable>');
-        element = $compile(element)(scope);
-        expect(element.text()).toBe('');
-      }));
-
+            it('should replace element with template', inject(function ($compile) {
+                element = angular.element('<datatable></datatable>');
+                element = $compile(element)(scope);
+                expect(element.text()).toBe('');
+            }));
+        });
     });
-
-  });
-
-})();
+}());

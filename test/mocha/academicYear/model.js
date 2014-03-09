@@ -1,49 +1,134 @@
+'use strict';
+
 /**
  * Module dependencies.
  */
 var should = require('should'),
-    expect = require('chai').expect,
-    app = require('../../../server'),
     mongoose = require('mongoose'),
-    AcademicYear = mongoose.model('AcademicYear');
+    AcademicYear = mongoose.model('AcademicYear'),
+    _ = require('lodash'),
+    /*jshint -W079 */ expect = require('chai').expect;
+
+//Globals
+var academicYear;
 
 //The tests
-describe('Model AcademicYear:', function () {
-    describe('Save an AcademicYear', function() {
-
-        var id;
-        var academicYearData;
-
-        before(function() {
-            academicYearData = {
+describe('<Unit Test>', function() {
+    describe('Model AcademicYear:', function() {
+        beforeEach(function(done) {
+            academicYear = new AcademicYear({
                 name: '2013/2014',
-                startDate: 1377993600000,
-                endDate: 1402358400000
-            };
-        });
+                startDate: 1234567890000,
+                endDate: 2345678910000
+            });
 
-        it('Should Save a new academic year', function(done) {
-            var academicYear = new AcademicYear(academicYearData);
-            academicYear.save(function(err, savedAcademicYear) {
-                should.not.exist(err);
-                id = savedAcademicYear._id;
+            academicYear.save(function(err) {
+                if(err) {
+                    done(err);
+                }
                 done();
             });
         });
 
-        it('Should get the academicYearData just saved', function(done) {
-            AcademicYear.findById(id, function(err, savedAcademicYear) {
-                should.not.exist(err);
-                expect(savedAcademicYear.name).to.equal(academicYearData.name);
-                expect(savedAcademicYear.startDate.getTime()).to.equal(1377993600000);
-                expect(savedAcademicYear.endDate.getTime()).to.equal(1402358400000);
-                done();
+        describe('Method Find', function() {
+            it('should be able to find all academic years', function(done) {
+                return AcademicYear.find({}, function(err, academicYears) {
+                    should.not.exist(err);
+                    expect(academicYears.length).to.equal(1);
+                    expect(academicYears[0].equals(academicYear)).to.equal(true);
+                    done();
+                });
+            });
+
+            it('should be able to find a academic year by id', function(done) {
+                return AcademicYear.findById(academicYear._id, function(err, academicYear) {
+                    should.not.exist(err);
+                    expect(academicYear.equals(academicYear)).to.equal(true);
+                    done();
+                });
             });
         });
 
-        after(function() {
-            AcademicYear.remove({});
+        describe('Method Save', function() {
+            it('should be able to save a academic year', function(done) {
+                return academicYear.save(function (err) {
+                    should.not.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to show an error when try to save without name', function(done) {
+                academicYear.name = '';
+
+                return academicYear.save(function (err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to show an error when try to save without start date', function(done) {
+                academicYear.startDate = NaN;
+
+                return academicYear.save(function (err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to show an error when try to save without end date', function(done) {
+                academicYear.endDate = NaN;
+
+                return academicYear.save(function (err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to update a academicYear', function(done) {
+                var update = {
+                    name: '2014/2015',
+                    startDate: 2345678910000,
+                    endDate: 3456789120000
+                };
+                academicYear = _.extend(academicYear, update);
+
+                return academicYear.save(function(err) {
+                    should.not.exist(err);
+
+                    AcademicYear.findOne(academicYear._id, function(err, academicYear) {
+                        should.not.exist(err);
+
+                        expect(academicYear.equals(academicYear)).to.equal(true);
+                        expect(academicYear.name).to.equal(update.name);
+                        expect(academicYear.startDate.getTime()).to.equal(update.startDate);
+                        expect(academicYear.endDate.getTime()).to.equal(update.endDate);
+
+                        done();
+                    });
+                });
+            });
         });
 
+        describe('Method Remove', function() {
+            it('should be able to remove a academicYear', function(done) {
+                return academicYear.remove(function(err) {
+                    should.not.exist(err);
+                    AcademicYear.findById(academicYear._id, function(err, academicYear) {
+                        should.not.exist(err);
+                        should.not.exist(academicYear);
+                        done();
+                    });
+                });
+            });
+        });
+
+        afterEach(function(done) {
+            AcademicYear.remove().exec();
+            done();
+        });
+        after(function(done) {
+            AcademicYear.remove().exec();
+            done();
+        });
     });
 });

@@ -1,112 +1,121 @@
+'use strict';
+
 //Setting up route
-angular.module('aurea')
-  .config(['$routeProvider',
-    function ($routeProvider) {
-      $routeProvider.
-        when('/scuole', {
-          templateUrl: 'views/school/list.html',
-          controller: 'SchoolCtrl'
-        }).
-        when('/scuole/crea', {
-          templateUrl: 'views/school/create.html',
-          controller: 'SchoolCtrl',
-          resolve: {
-            provices: function (Province) {
-              return Province.loadProvinces();
+angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
+  function($stateProvider, $urlRouterProvider) {
+    // For unmatched routes:
+    $urlRouterProvider.otherwise('/');
+
+    // states for my app
+    $stateProvider
+      .state('all schools', {
+        url: '/scuole',
+        templateUrl: 'views/schools/list.html'
+    })
+      .state('create school', {
+        url: '/scuole/crea',
+        templateUrl: 'views/schools/create.html',
+        resolve: {
+            provices: function (Provinces) {
+                return Provinces.loadProvinces();
             }
-          }
-        }).
-        when('/scuole/:schoolId/modifica', {
-          templateUrl: 'views/school/edit.html',
-          controller: 'SchoolCtrl',
-          resolve: {
-            provices: function (Province) {
-              return Province.loadProvinces();
+        }
+    })
+      .state('edit school', {
+        url: '/scuole/:schoolId/modifica',
+        templateUrl: 'views/schools/edit.html',
+        resolve: {
+            provices: function (Provinces) {
+                return Provinces.loadProvinces();
             }
-          }
-        }).
-        when('/scuole/:schoolId', {
-          templateUrl: 'views/school/view.html',
-          controller: 'SchoolCtrl'
-        }).
-        when('/insegnanti', {
-          templateUrl: 'views/teacher/list.html',
-          controller: 'TeacherCtrl'
-        }).
-        when('/insegnanti/crea', {
-          templateUrl: 'views/teacher/create.html',
-          controller: 'TeacherCtrl'
-        }).
-        when('/insegnanti/:teacherId/modifica', {
-          templateUrl: 'views/teacher/edit.html',
-          controller: 'TeacherCtrl'
-        }).
-        when('/insegnanti/:teacherId', {
-          templateUrl: 'views/teacher/view.html',
-          controller: 'TeacherCtrl'
-        }).
-        when('/alunni', {
-          templateUrl: 'views/student/list.html',
-          controller: 'StudentCtrl'
-        }).
-        when('/alunni/crea', {
-          templateUrl: 'views/student/create.html',
-          controller: 'StudentCtrl'
-        }).
-        when('/alunni/:studentId/modifica', {
-          templateUrl: 'views/student/edit.html',
-          controller: 'StudentCtrl'
-        }).
-        when('/alunni/:studentId', {
-          templateUrl: 'views/student/view.html',
-          controller: 'StudentCtrl'
-        }).
-        when('/aa', {
-          templateUrl: 'views/academicYear/list.html',
-          controller: 'AcademicYearCtrl'
-        }).
-        when('/aa/crea', {
-          templateUrl: 'views/academicYear/create.html',
-          controller: 'AcademicYearCtrl'
-        }).
-        when('/aa/:academicYearId/modifica', {
-          templateUrl: 'views/academicYear/edit.html',
-          controller: 'AcademicYearCtrl'
-        }).
-        when('/aa/:academicYearId', {
-          templateUrl: 'views/academicYear/view.html',
-          controller: 'AcademicYearCtrl'
-        }).
-        when('/classi', {
-          templateUrl: 'views/schoolClass/list.html',
-          controller: 'SchoolClassCtrl'
-        }).
-        when('/classi/crea', {
-          templateUrl: 'views/schoolClass/create.html',
-          controller: 'SchoolClassCtrl'
-        }).
-        when('/classi/:schoolClassId/modifica', {
-          templateUrl: 'views/schoolClass/edit.html',
-          controller: 'SchoolClassCtrl'
-        }).
-        when('/classi/:schoolClassId', {
-          templateUrl: 'views/schoolClass/view.html',
-          controller: 'SchoolClassCtrl'
-        }).
-        when('/', {
-          templateUrl: 'views/index.html',
-          controller: 'IndexCtrl'
-        }).
-        otherwise({
-          redirectTo: '/'
-        });
-    }
-  ]);
+        }
+    })
+      .state('school by id', {
+        url: '/scuole/:schoolId',
+        templateUrl: 'views/schools/view.html'
+    })
+
+      .state('all teachers', {
+        url: '/insegnanti',
+        templateUrl: 'views/teachers/list.html'
+    })
+      .state('create teacher', {
+        url: '/insegnanti/crea',
+        templateUrl: 'views/teachers/create.html'
+    })
+      .state('edit teacher', {
+        url: '/insegnanti/:teacherId/modifica',
+        templateUrl: 'views/teachers/edit.html'
+    })
+      .state('teacher by id', {
+        url: '/insegnanti/:teacherId',
+        templateUrl: 'views/teachers/view.html'
+    })
+
+      .state('all students', {
+        url: '/alunni',
+        templateUrl: 'views/students/list.html'
+    })
+      .state('create student', {
+        url: '/alunni/crea',
+        templateUrl: 'views/students/create.html'
+    })
+      .state('edit student', {
+        url: '/alunni/:studentId/modifica',
+        templateUrl: 'views/students/edit.html'
+    })
+      .state('student by id', {
+        url: '/alunni/:studentId',
+        templateUrl: 'views/students/view.html'
+    })
+
+      .state('all academic years', {
+        url: '/aa',
+        templateUrl: 'views/academicYears/list.html'
+    })
+      .state('create academic year', {
+        url: '/aa/crea',
+        templateUrl: 'views/academicYears/create.html'
+    })
+      .state('edit academic year', {
+        url: '/aa/:academicYearId/modifica',
+        templateUrl: 'views/academicYears/edit.html'
+    })
+      .state('academic year by id', {
+        url: '/aa/:academicYearId',
+        templateUrl: 'views/academicYears/view.html'
+    })
+
+      .state('all school classes', {
+        url: '/classi',
+        templateUrl: 'views/schoolClasses/list.html'
+    })
+      .state('create school class', {
+        url: '/classi/crea',
+        templateUrl: 'views/schoolClasses/create.html'
+    })
+      .state('edit school class', {
+        url: '/classi/:schoolClassId/modifica',
+        templateUrl: 'views/schoolClasses/edit.html'
+    })
+      .state('school class by id', {
+        url: '/classi/:schoolClassId',
+        templateUrl: 'views/schoolClasses/view.html'
+    })
+
+      .state('home', {
+        url: '/',
+        templateUrl: 'views/index.html'
+    });
+}]);
 
 //Setting HTML5 Location Mode
-angular.module('aurea')
-  .config(['$locationProvider',
-    function ($locationProvider) {
-      $locationProvider.hashPrefix("!");
-    }
-  ]);
+angular.module('aurea').config(['$locationProvider',
+  function($locationProvider) {
+    $locationProvider.hashPrefix('!');
+}]);
+
+//Setting Lodash
+angular.module('aurea').factory('_', [function() {
+    return window._;
+}]);

@@ -1,0 +1,7 @@
+<section data-ng-controller="AcademicYearsCtrl" data-ng-init="find()">
+  <h2>Anni accademici</h2>
+
+  <datatable columns="columns" list="academicYears" view="view(element)" edit="edit(element)" remove="remove(element)"></datatable>
+
+  <button data-ng-click="new()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo anno accademico</button>
+</section>

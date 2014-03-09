@@ -1,46 +1,122 @@
+'use strict';
+
 /**
  * Module dependencies.
  */
 var should = require('should'),
-    expect = require('chai').expect,
-    app = require('../../../server'),
     mongoose = require('mongoose'),
-    Teacher = mongoose.model('Teacher');
+    Teacher = mongoose.model('Teacher'),
+    _ = require('lodash'),
+    /*jshint -W079 */ expect = require('chai').expect;
+
+//Globals
+var teacher;
 
 //The tests
-describe('Model Teacher:', function () {
-    describe('Save a Teacher', function() {
-        var id;
-        var teacherData;
+describe('<Unit Test>', function() {
+    describe('Model Teacher:', function() {
+        beforeEach(function(done) {
+            teacher = new Teacher({
+                firstName: 'Pinco',
+                lastName: 'Pallino'
+            });
 
-        before(function() {
-            teacherData = {
-                firstName: 'Nicola',
-                lastName: 'Sanitate'
-            };
-        });
-
-        it('Should Save a new teacher', function(done) {
-            var teacher = new Teacher(teacherData);
-            teacher.save(function(err, savedTeacher) {
-                should.not.exist(err);
-                id = savedTeacher._id;
+            teacher.save(function(err) {
+                if(err) {
+                    done(err);
+                }
                 done();
             });
         });
 
-        it('Shoud get the teacher just saved', function(done) {
-            Teacher.findById(id, function(err, savedTeacher) {
-                should.not.exist(err);
-                expect(savedTeacher.firstName).to.equal(teacherData.firstName);
-                expect(savedTeacher.lastName).to.equal(teacherData.lastName);
-                done();
+        describe('Method Find', function() {
+            it('should be able to find all teachers', function(done) {
+                return Teacher.find({}, function(err, teachers) {
+                    should.not.exist(err);
+                    expect(teachers.length).to.equal(1);
+                    expect(teachers[0].equals(teacher)).to.equal(true);
+                    done();
+                });
+            });
+
+            it('should be able to find a teacher by id', function(done) {
+                return Teacher.findById(teacher._id, function(err, teacher) {
+                    should.not.exist(err);
+                    expect(teacher.equals(teacher)).to.equal(true);
+                    done();
+                });
             });
         });
 
-        after(function() {
-            Teacher.remove({});
+        describe('Method Save', function() {
+            it('should be able to save a teacher', function(done) {
+                return teacher.save(function (err) {
+                    should.not.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to show an error when try to save without first name', function(done) {
+                teacher.firstName = '';
+
+                return teacher.save(function (err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to show an error when try to save without last name', function(done) {
+                teacher.lastName = '';
+
+                return teacher.save(function (err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to update a teacher', function(done) {
+                var update = {
+                    firstName: 'Abra',
+                    lastName: 'Cadabra'
+                };
+                teacher = _.extend(teacher, update);
+
+                return teacher.save(function(err) {
+                    should.not.exist(err);
+
+                    Teacher.findOne(teacher._id, function(err, teacher) {
+                        should.not.exist(err);
+
+                        expect(teacher.equals(teacher)).to.equal(true);
+                        expect(teacher.firstName).to.equal(update.firstName);
+                        expect(teacher.lastName).to.equal(update.lastName);
+
+                        done();
+                    });
+                });
+            });
         });
 
+        describe('Method Remove', function() {
+            it('should be able to remove a teacher', function(done) {
+                return teacher.remove(function(err) {
+                    should.not.exist(err);
+                    Teacher.findById(teacher._id, function(err, teacher) {
+                        should.not.exist(err);
+                        should.not.exist(teacher);
+                        done();
+                    });
+                });
+            });
+        });
+
+        afterEach(function(done) {
+            Teacher.remove().exec();
+            done();
+        });
+        after(function(done) {
+            Teacher.remove().exec();
+            done();
+        });
     });
 });

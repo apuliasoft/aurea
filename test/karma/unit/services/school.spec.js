@@ -1,25 +1,22 @@
-(function () {
-  'use strict';
+'use strict';
 
-  describe('Aurea services', function () {
+(function() {
+    // School Service Spec
+    describe('Aurea services', function() {
+        describe('School', function() {
+            
+            // load the service's module
+            beforeEach(module('aurea'));
 
-    describe('School service', function () {
+            // instantiate service
+            var School;
+            beforeEach(inject(function(_School_) {
+                School = _School_;
+            }));
 
-      // load the service's module
-      beforeEach(module('aurea'));
-
-      // instantiate service
-      var School;
-      beforeEach(inject(function(_School_) {
-        School = _School_;
-      }));
-
-      it('should do something', function () {
-        expect(!!School).toBe(true);
-      });
-
+            it('should do something', function () {
+                expect(!!School).toBe(true);
+            });
+        });
     });
-
-  });
-
-})();
+}());

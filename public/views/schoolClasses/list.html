@@ -1,0 +1,7 @@
+<section data-ng-controller="SchoolClassesCtrl" data-ng-init="find()">
+  <h2>Classi</h2>
+
+  <datatable columns="columns" list="schoolClasses" view="view(element)" edit="edit(element)" remove="remove(element)"></datatable>
+
+  <button data-ng-click="new()" class="btn btn-default"><i class="fa fa-plus"></i> Nuova classe</button>
+</section>

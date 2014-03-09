@@ -1,30 +1,27 @@
-(function () {
-  'use strict';
+'use strict';
 
-  describe('Aurea filters', function () {
+(function() {
+    // Name Filter Spec
+    describe('Aurea filters', function() {
+        describe('Name', function() {
 
-    describe('Name filter', function () {
+            // load the filter's module
+            beforeEach(module('aurea'));
 
-      // load the filter's module
-      beforeEach(module('aurea'));
+            // initialize a new instance of the filter before each test
+            var name;
+            beforeEach(inject(function ($filter) {
+                name = $filter('name');
+            }));
 
-      // initialize a new instance of the filter before each test
-      var name;
-      beforeEach(inject(function ($filter) {
-        name = $filter('name');
-      }));
+            it('should return the name well formatted', function () {
+                var obj = {
+                    firstName: 'Pinco',
+                    lastName: 'Pallino'
+                };
 
-      it('should return the name well formatted', function () {
-        var obj = {
-          firstName: 'Jhon',
-          lastName: 'Doe'
-        };
-
-        expect(name(obj)).toBe('Jhon Doe');
-      });
-
+                expect(name(obj)).toBe('Pinco Pallino');
+            });
+        });
     });
-
-  });
-
-})();
+}());

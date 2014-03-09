@@ -1,0 +1,57 @@
+<section data-ng-controller="SchoolsCtrl" data-ng-init="init()">
+  <h2>Crea scuola</h2>
+
+  <form name="schoolForm" role="form" data-ng-submit="create()" novalidate>
+
+    <div class="form-group">
+      <label for="name" class="control-label">Nome</label>
+      <input type="text" data-ng-model="school.name" id="name" name="name" class="form-control" placeholder="Nome">
+    </div>
+
+    <h3>Plessi</h3>
+
+    <div data-ng-repeat="complex in school.complexes" class="panel panel-default">
+
+      <div class="panel-heading">
+        <h3 class="panel-title">Plesso #{{$index+1}}</h3>
+      </div>
+
+      <div data-ng-form name="complexForm" class="panel-body">
+
+        <div class="form-group">
+          <label for="street_{{$index}}" class="control-label">Via</label>
+          <input type="text" data-ng-model="complex.street" id="street_{{$index}}" name="street" class="form-control" placeholder="Via">
+        </div>
+
+        <div class="form-group">
+          <label for="zipCode_{{$index}}" class="control-label">CAP</label>
+          <input type="text" data-ng-model="complex.zipCode" id="zipCode_{{$index}}" name="zipCode" class="form-control" placeholder="CAP">
+        </div>
+
+        <div class="form-group">
+          <label for="city_{{$index}}" class="control-label">Città</label>
+          <input type="text" data-ng-model="complex.city" id="city_{{$index}}" name="city" class="form-control" placeholder="Città">
+        </div>
+
+        <div class="form-group">
+          <label for="province_{{$index}}" class="control-label">Provincia</label>
+          <select data-ng-model="complex.province" id="province_{{$index}}" name="province" class="form-control">
+            <option data-ng-repeat="province in provinces" value="{{province.code}}">{{province.name}}</option>
+          </select>
+        </div>
+
+        <button data-ng-click="removeComplex(complex)" class="btn btn-default"><i class="fa fa-trash-o"></i> Rimuovi plesso</button>
+
+      </div>
+    </div>
+
+    <button type="button" data-ng-click="addComplex()" class="btn btn-default"><i class="fa fa-plus"></i> Aggiungi plesso</button>
+
+    <hr>
+
+    <button type="submit" class="btn btn-primary">Crea</button>
+
+    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+
+  </form>
+</section>

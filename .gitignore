@@ -1,9 +1,8 @@
 .DS_Store
-.idea/
 .nodemonignore
-npm-debug.log
 .sass-cache/
-deploy/
+.bower-*/
+.idea/
 node_modules/
 public/lib
-test/coverage/
+test/coverage

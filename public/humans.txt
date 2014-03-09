@@ -1,4 +1,8 @@
-/* TEAM */
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
     Developer: Giuseppe Santoro - ApuliaSoft
     Site: it.linkedin.com/pub/giuseppe-santoro/2a/14a/662
     Twitter: @ThePeppino
@@ -14,11 +18,12 @@
     Twitter: @FrancescoKujaku
     Location: Bari, Italy
 
-/* THANKS */
+# THANKS
 
+    <name>
 
+# SITE
 
-/* SITE */
     Last update: 2013/12/13
     Language: Italian
     Doctype: HTML5

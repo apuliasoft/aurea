@@ -1,44 +1,30 @@
-<nav class="navbar navbar-default navbar-fixed-top" data-role="navigation" data-ng-controller="HeaderCtrl">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#aurea-navbar-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="/">Aurea</a>
-  </div>
-
-  <div class="collapse navbar-collapse" id="aurea-navbar-collapse">
-    <ul class="nav navbar-nav">
-      <li data-ng-repeat="item in menu" data-ng-show="global.user">
-        <a href="#!/{{item.link}}">{{item.title}}</a>
-      </li>
+<div data-ng-controller="HeaderCtrl">
+    <ul class="navbar-nav nav">
+        <li>
+            <a class="navbar-brand" href="/">AUREA</a>
+        </li>
+        <li data-ng-repeat="item in menu" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+            <a href="#!/{{item.link}}">{{item.title}}</a>
+        </li>
     </ul>
-    <form class="navbar-form navbar-left" role="search">
-      <div class="form-group">
-        <select class="form-control">
-          <option>Tutte le scuole</option>
-          <option data-ng-repeat="school in globalSchools">{{ school.name }}</option>
-        </select>
-      </div>
-    </form>
-    <ul class="nav navbar-nav navbar-right" data-ng-hide="global.authenticated">
-      <li><a href="/#!/scuole">Scuole</a></li>
-      <li><a href="/#!/insegnanti">Insegnanti</a></li>
-      <li><a href="/#!/alunni">Alunni</a></li>
-      <li><a href="/#!/aa">Anni accademici</a></li>
-      <li><a href="/#!/classi">Classi</a></li>
+  <!--
+    <ul class="navbar-nav nav pull-right" data-ng-hide="global.authenticated">
+        <li><a href="signup">Signup</a>
+        </li>
+        <li class="divider-vertical"></li>
+        <li><a href="signin">Signin</a>
+        </li>
     </ul>
-    <ul class="nav navbar-nav navbar-right" data-ng-show="global.authenticated">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          {{global.user.name}} <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="/signout">Signout</a></li>
-        </ul>
-      </li>
+    <ul class="navbar-nav nav pull-right" data-ng-show="global.authenticated">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				{{global.user.name}} <b class="caret"></b>
+			</a>
+            <ul class="dropdown-menu">
+                <li><a href="/signout">Signout</a>
+                </li>
+            </ul>
+        </li>
     </ul>
-  </div>
-</nav>
+    -->
+</div>

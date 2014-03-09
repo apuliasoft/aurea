@@ -1,10 +1,12 @@
-angular.module('aurea', ['ngRoute', 'ngCookies', 'ngResource',
-  'aurea.system', 'aurea.school', 'aurea.teacher', 'aurea.student',
-  'aurea.academicYear', 'aurea.schoolClass']);
+'use strict';
+
+angular.module('aurea', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router',
+  'aurea.system', 'aurea.schools', 'aurea.teachers', 'aurea.students',
+  'aurea.academicYears', 'aurea.schoolClasses']);
 
 angular.module('aurea.system', []);
-angular.module('aurea.school', []);
-angular.module('aurea.teacher', []);
-angular.module('aurea.student', []);
-angular.module('aurea.academicYear', []);
-angular.module('aurea.schoolClass', []);
+angular.module('aurea.schools', []);
+angular.module('aurea.teachers', []);
+angular.module('aurea.students', []);
+angular.module('aurea.academicYears', []);
+angular.module('aurea.schoolClasses', []);

@@ -1,32 +1,26 @@
-(function () {
-  'use strict';
+'use strict';
 
-  describe('Aurea controllers', function () {
+(function() {
+    describe('AUREA controllers', function() {
+        describe('IndexCtrl', function() {
+            // Load the controllers module
+            beforeEach(module('aurea'));
 
-    describe('Index controller', function () {
+            var scope, IndexCtrl;
 
-      // Load the controllers module
-      beforeEach(module('aurea'));
+            beforeEach(inject(function($controller, $rootScope) {
+                scope = $rootScope.$new();
 
-      var scope,
-        IndexCtrl;
+                IndexCtrl = $controller('IndexCtrl', {
+                    $scope: scope
+                });
+            }));
 
-      beforeEach(inject(function ($controller, $rootScope) {
-        scope = $rootScope.$new();
+            it('should expose some global scope', function() {
 
-        IndexCtrl = $controller('IndexCtrl', {
-          $scope: scope
+                expect(scope.global).toBeTruthy();
+
+            });
         });
-      }));
-
-      it('should expose some global scope', function () {
-
-        expect(scope.global).toBeTruthy();
-
-      });
-
     });
-
-  });
-
 })();

@@ -1,10 +1,12 @@
+'use strict';
+
 /**
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    config = require('../../config/config'),
     Schema = mongoose.Schema,
     Complex = require('./complex');
+
 
 /**
  * School Schema
@@ -20,5 +22,10 @@ var SchoolSchema = new Schema({
 SchoolSchema.path('name').validate(function(name) {
     return name.length;
 }, 'Name cannot be blank');
+
+/**
+ * Statics
+ */
+
 
 mongoose.model('School', SchoolSchema);

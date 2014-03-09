@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Module dependencies.
  */
@@ -11,17 +13,18 @@ var express = require('express'),
  * Please note that the order of loading is important.
  */
 
-//Load configurations
-//if test env, load example file
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
-    config = require('./config/config'),
-    auth = require('./config/middlewares/authorization'),
+// Load configurations
+// Set the node enviornment variable if not set before
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+// Initializing system variables 
+var config = require('./config/config'),
     mongoose = require('mongoose');
 
-//Bootstrap db connection
+// Bootstrap db connection
 var db = mongoose.connect(config.db);
 
-//Bootstrap models
+// Bootstrap models
 var models_path = __dirname + '/app/models';
 var walk = function(path) {
     fs.readdirSync(path).forEach(function(file) {
@@ -38,24 +41,42 @@ var walk = function(path) {
 };
 walk(models_path);
 
-//bootstrap passport config
+// Bootstrap passport config
 require('./config/passport')(passport);
 
 var app = express();
 
-//express settings
+// Express settings
 require('./config/express')(app, passport, db);
 
-//Bootstrap routes
-require('./config/routes')(app, passport, auth);
+// Bootstrap routes
+var routes_path = __dirname + '/app/routes';
+var walk = function(path) {
+    fs.readdirSync(path).forEach(function(file) {
+        var newPath = path + '/' + file;
+        var stat = fs.statSync(newPath);
+        if (stat.isFile()) {
+            if (/(.*)\.(js$|coffee$)/.test(file)) {
+                require(newPath)(app, passport);
+            }
+        // We skip the app/routes/middlewares directory as it is meant to be
+        // used and shared by routes as further middlewares and is not a 
+        // route by itself
+        } else if (stat.isDirectory() && file !== 'middlewares') {
+            walk(newPath);
+        }
+    });
+};
+walk(routes_path);
 
-//Start the app by listening on <port>
+
+// Start the app by listening on <port>
 var port = process.env.PORT || config.port;
 app.listen(port);
 console.log('Express app started on port ' + port);
 
-//Initializing logger
+// Initializing logger
 logger.init(app, passport, mongoose);
 
-//expose app
+// Expose app
 exports = module.exports = app;

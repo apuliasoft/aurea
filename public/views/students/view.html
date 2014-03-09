@@ -1,0 +1,14 @@
+<section data-ng-controller="StudentsCtrl" data-ng-init="findOne()">
+  <h2>Dettaglio alunno</h2>
+
+  <dl class="dl-horizontal">
+    <dt>Nome</dt>
+    <dd>{{ student.firstName }}</dd>
+    <dt>Cognome</dt>
+    <dd>{{ student.lastName }}</dd>
+    <dt>Data di nascita</dt>
+    <dd>{{ student.birthDate | date }}</dd>
+  </dl>
+
+  <button data-ng-click="edit(student)" class="btn btn-default">Modifica alunno</button>
+</section>

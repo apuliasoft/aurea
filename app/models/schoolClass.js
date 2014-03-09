@@ -1,9 +1,11 @@
+'use strict';
+
 /**
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    config = require('../../config/config'),
     Schema = mongoose.Schema;
+
 
 /**
  * SchoolClass Schema
@@ -13,5 +15,17 @@ var SchoolClassSchema = new Schema({
     //students: [Schema.ObjectId]
     //academicYear: Schema.ObjectId
 });
+
+/**
+ * Validations
+ */
+SchoolClassSchema.path('name').validate(function(name) {
+    return name.length;
+}, 'Name cannot be blank');
+
+/**
+ * Statics
+ */
+
 
 mongoose.model('SchoolClass', SchoolClassSchema);

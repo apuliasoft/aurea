@@ -1,15 +1,17 @@
+'use strict';
+
 /**
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    config = require('../../config/config'),
     Schema = mongoose.Schema;
+
 
 /**
  * Complex Schema
  */
 var ComplexSchema = new Schema({
-    address: String,
+    street: String,
     zipCode: String,
     city: String,
     province: String
@@ -18,9 +20,9 @@ var ComplexSchema = new Schema({
 /**
  * Validations
  */
-ComplexSchema.path('address').validate(function(address) {
-    return address.length;
-}, 'Address cannot be blank');
+ComplexSchema.path('street').validate(function(street) {
+    return street.length;
+}, 'Street cannot be blank');
 
 ComplexSchema.path('zipCode').validate(function(zipCode) {
     return zipCode.length;
@@ -33,5 +35,10 @@ ComplexSchema.path('city').validate(function(city) {
 ComplexSchema.path('province').validate(function(province) {
     return province.length;
 }, 'Province cannot be blank');
+
+/**
+ * Statics
+ */
+
 
 mongoose.model('Complex', ComplexSchema);

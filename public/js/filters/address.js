@@ -1,6 +1,8 @@
-angular.module('aurea')
-  .filter('address', [function () {
+'use strict';
+
+//Address filter used for format an address object
+angular.module('aurea').filter('address', [function() {
     return function (input) {
-      return input && [input.address, input.zipCode, input.city, input.province].join(' ');
+        return input && [input.street, input.zipCode, input.city, input.province].join(' ');
     };
-  }]);
+}]);

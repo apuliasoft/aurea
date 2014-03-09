@@ -1,0 +1,18 @@
+<section data-ng-controller="SchoolsCtrl" data-ng-init="findOne()">
+  <h2>Dettaglio scuola</h2>
+
+  <dl class="dl-horizontal">
+    <dt>Nome</dt>
+    <dd>{{ school.name }}</dd>
+    <dl data-ng-repeat="complex in school.complexes">
+      <dt>Plesso #{{$index+1}}</dt>
+      <dd>
+        <address>
+          {{ complex | address }}
+        </address>
+      </dd>
+    </dl>
+  </dl>
+
+  <button data-ng-click="edit(school)" class="btn btn-default">Modifica scuola</button>
+</section>
