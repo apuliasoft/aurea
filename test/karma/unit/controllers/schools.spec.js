@@ -110,7 +110,7 @@
                             city: 'Chissadove',
                             province: 'AZ'
                         }],
-                        __v: 1
+                        __v: 0
                     }];
                 };
 
@@ -143,7 +143,7 @@
                             city: 'Chissadove',
                             province: 'AZ'
                         }],
-                        __v: 1
+                        __v: 0
                     };
                 };
 
@@ -234,7 +234,7 @@
                             city: 'Chissadove',
                             province: 'AZ'
                         }],
-                        __v: 1
+                        __v: 0
                     };
                 };
 
@@ -268,7 +268,7 @@
                             city: 'Chissadove',
                             province: 'AZ'
                         }],
-                        __v: 1
+                        __v: 0
                     };
                 };
 
@@ -283,7 +283,7 @@
                             city: 'Chissadove altro',
                             province: 'ZA'
                         }],
-                        __v: 2
+                        __v: 1
                     };
                 };
 

@@ -106,7 +106,7 @@
                         firstName: 'Pinco',
                         lastName: 'Pallino',
                         birthDate: 1234567890000,
-                        __v: 1
+                        __v: 0
                     }];
                 };
 
@@ -135,7 +135,7 @@
                         firstName: 'Pinco',
                         lastName: 'Pallino',
                         birthDate: 1234567890000,
-                        __v: 1
+                        __v: 0
                     };
                 };
 
@@ -181,7 +181,7 @@
                         firstName: 'Pinco',
                         lastName: 'Pallino',
                         birthDate: 1234567890000,
-                        __v: 1
+                        __v: 0
                     };
                 };
 
@@ -211,7 +211,7 @@
                         firstName: 'Pinco',
                         lastName: 'Pallino',
                         birthDate: 1234567890000,
-                        __v: 1
+                        __v: 0
                     };
                 };
 
@@ -222,7 +222,7 @@
                         firstName: 'Abra',
                         lastName: 'Cadabra',
                         birthDate: 2345678910000,
-                        __v: 2
+                        __v: 1
                     };
                 };
 

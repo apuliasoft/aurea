@@ -18,6 +18,9 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', fun
     }, {
         'title': 'Classi',
         'link': 'classi'
+    }, {
+        'title': 'Insegnamenti',
+        'link': 'insegnamenti'
     }];
     
     $scope.isCollapsed = false;

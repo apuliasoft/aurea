@@ -1,9 +1,9 @@
 'use strict';
 
 (function() {
-    // Teachers Controller Spec
+    // Teachings Controller Spec
     describe('Aurea controllers', function() {
-        describe('TeachersCtrl', function() {
+        describe('TeachingsCtrl', function() {
             // The $resource service augments the response object with methods for updating and deleting the resource.
             // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
             // the responses exactly. To solve the problem, we use a newly-defined toEqualData Jasmine matcher.
@@ -21,7 +21,7 @@
             beforeEach(module('aurea'));
 
             // Initialize the controller and a mock scope
-            var TeachersCtrl,
+            var TeachingsCtrl,
                 scope,
                 $httpBackend,
                 $stateParams,
@@ -34,7 +34,7 @@
 
                 scope = $rootScope.$new();
 
-                TeachersCtrl = $controller('TeachersCtrl', {
+                TeachingsCtrl = $controller('TeachingsCtrl', {
                     $scope: scope
                 });
 
@@ -46,222 +46,216 @@
 
             }));
 
-            it('$scope.list() should locate to list teachers URL', function() {
+            it('$scope.list() should locate to list teachings URL', function() {
 
                 // run controller
                 scope.list();
 
                 // test URL location to list
-                expect($location.path()).toBe('/insegnanti');
+                expect($location.path()).toBe('/insegnamenti');
             });
 
-            it('$scope.new() should locate to create teacher form URL', function() {
+            it('$scope.new() should locate to create teaching form URL', function() {
 
                 // run controller
                 scope.new();
 
                 // test URL location to create form
-                expect($location.path()).toBe('/insegnanti/crea');
+                expect($location.path()).toBe('/insegnamenti/crea');
             });
 
-            it('$scope.view() should locate to view teacher URL', function() {
+            it('$scope.view() should locate to view teaching URL', function() {
 
                 // fixture object to view
-                var viewTeacherData = function () {
+                var viewTeachingData = function () {
                     return {
                         _id: '525cf20451979dea2c000001'
                     };
                 };
 
                 // run controller
-                scope.view(viewTeacherData());
+                scope.view(viewTeachingData());
 
                 // test URL location to view
-                expect($location.path()).toBe('/insegnanti/' + viewTeacherData()._id);
+                expect($location.path()).toBe('/insegnamenti/' + viewTeachingData()._id);
             });
 
-            it('$scope.edit() should locate to edit teacher form URL', function() {
+            it('$scope.edit() should locate to edit teaching form URL', function() {
 
                 // fixture object to edit
-                var editTeacherData = function () {
+                var editTeachingData = function () {
                     return {
                         _id: '525cf20451979dea2c000001'
                     };
                 };
 
                 // run controller
-                scope.edit(editTeacherData());
+                scope.edit(editTeachingData());
 
                 // test URL location to view
-                expect($location.path()).toBe('/insegnanti/' + editTeacherData()._id + '/modifica');
+                expect($location.path()).toBe('/insegnamenti/' + editTeachingData()._id + '/modifica');
             });
 
-            it('$scope.find() should create an array with at least one teacher object ' +
+            it('$scope.find() should create an array with at least one teaching object ' +
                 'fetched from XHR', function() {
 
                 // fixture expected GET request
-                var responseTeacherData = function() {
+                var responseTeachingData = function() {
                     return [{
                         _id: '1234567890abcdef12345678',
-                        firstName: 'Pinco',
-                        lastName: 'Pallino',
+                        name: 'Italiano',
                         __v: 0
                     }];
                 };
 
                 // test GET happens correctly
-                $httpBackend.expectGET('teachers').respond(responseTeacherData());
+                $httpBackend.expectGET('teachings').respond(responseTeachingData());
 
                 // run controller
                 scope.find();
                 $httpBackend.flush();
 
                 // test scope value
-                expect(scope.teachers).toEqualData(responseTeacherData());
+                expect(scope.teachings).toEqualData(responseTeachingData());
 
             });
 
-            it('$scope.findOne() should create an array with one teacher object fetched ' +
-                'from XHR using a teacherId URL parameter', function () {
+            it('$scope.findOne() should create an array with one teaching object fetched ' +
+                'from XHR using a teachingId URL parameter', function () {
 
                 // fixture URL parameter
-                $stateParams.teacherId = '1234567890abcdef12345678';
+                $stateParams.teachingId = '1234567890abcdef12345678';
 
                 // fixture expected GET request
-                var responseTeacherData = function () {
+                var responseTeachingData = function () {
                     return {
                         _id: '1234567890abcdef12345678',
-                        firstName: 'Pinco',
-                        lastName: 'Pallino',
+                        name: 'Italiano',
                         __v: 0
                     };
                 };
 
                 // test GET happens correctly
-                var urlRegex = new RegExp('teachers/([0-9a-fA-F]{24})');
-                $httpBackend.expectGET(urlRegex).respond(responseTeacherData());
+                var urlRegex = new RegExp('teachings/([0-9a-fA-F]{24})');
+                $httpBackend.expectGET(urlRegex).respond(responseTeachingData());
 
                 // run controller
                 scope.findOne();
                 $httpBackend.flush();
 
                 // test scope value
-                expect(scope.teacher).toEqualData(responseTeacherData());
+                expect(scope.teaching).toEqualData(responseTeachingData());
 
             });
 
-            it('$scope.init() should create an array with one void teacher object', function() {
+            it('$scope.init() should create an array with one void teaching object', function() {
 
                 // run controller
                 scope.init();
 
                 // test scope value
-                expect(!!scope.teacher).toBe(true);
+                expect(!!scope.teaching).toBe(true);
             });
 
             it('$scope.create() with valid form data should send a POST request ' +
                 'with the form input values and then ' +
-                'locate to new object URL', inject(function (Teacher) {
+                'locate to new object URL', inject(function (Teaching) {
 
                 // fixture to send in POST request
-                var postTeacherData = function () {
+                var postTeachingData = function () {
                     return {
-                        firstName: 'Pinco',
-                        lastName: 'Pallino'
+                        name: 'Italiano',
                     };
                 };
 
                 // fixture expected from POST request
-                var responseTeacherData = function () {
+                var responseTeachingData = function () {
                     return {
                         _id: '1234567890abcdef12345678',
-                        firstName: 'Pinco',
-                        lastName: 'Pallino',
+                        name: 'Italiano',
                         __v: 0
                     };
                 };
 
                 // fixture mock form input values
-                scope.teacher = new Teacher(postTeacherData());
+                scope.teaching = new Teaching(postTeachingData());
 
                 // test post request is sent
-                $httpBackend.expectPOST('teachers', postTeacherData()).respond(responseTeacherData());
+                $httpBackend.expectPOST('teachings', postTeachingData()).respond(responseTeachingData());
 
                 // Run controller
                 scope.create();
                 $httpBackend.flush();
 
                 // test form input(s) are reset
-                expect(scope.teacher).toEqualData(new Teacher());
+                expect(scope.teaching).toEqualData(new Teaching());
 
                 // test URL location to new object
-                expect($location.path()).toBe('/insegnanti/' + responseTeacherData()._id);
+                expect($location.path()).toBe('/insegnamenti/' + responseTeachingData()._id);
             }));
 
-            it('$scope.update() should update a valid teacher', inject(function (Teacher) {
+            it('$scope.update() should update a valid teaching', inject(function (Teaching) {
 
                 // fixture to send in PUT request
-                var putTeacherData = function () {
+                var putTeachingData = function () {
                     return {
                         _id: '1234567890abcdef12345678',
-                        firstName: 'Pinco',
-                        lastName: 'Pallino',
+                        name: 'Italiano',
                         __v: 0
                     };
                 };
 
                 // fixture expected from PUT request
-                var responseTeacherData = function() {
+                var responseTeachingData = function() {
                     return {
                         _id: '1234567890abcdef12345678',
-                        firstName: 'Abra',
-                        lastName: 'Cadabra',
+                        name: 'Matematica',
                         __v: 1
                     };
                 };
 
-                // mock teacher object from form
-                var teacher = new Teacher(putTeacherData());
+                // mock teaching object from form
+                var teaching = new Teaching(putTeachingData());
 
-                // mock teacher in scope
-                scope.teacher = teacher;
+                // mock teaching in scope
+                scope.teaching = teaching;
 
                 // test PUT happens correctly
-                var urlRegex = new RegExp('teachers/[0-9a-fA-F]{24}');
-                $httpBackend.expectPUT(urlRegex).respond(responseTeacherData());
+                var urlRegex = new RegExp('teachings/[0-9a-fA-F]{24}');
+                $httpBackend.expectPUT(urlRegex).respond(responseTeachingData());
 
                 // run controller
                 scope.update();
                 $httpBackend.flush();
 
                 // test URL location to new object
-                expect($location.path()).toBe('/insegnanti/' + responseTeacherData()._id);
+                expect($location.path()).toBe('/insegnamenti/' + responseTeachingData()._id);
 
             }));
 
-            it('$scope.remove() should send a DELETE request with a valid teacherId' +
-                'and remove the teacher from the scope', inject(function (Teacher) {
+            it('$scope.remove() should send a DELETE request with a valid teachingId' +
+                'and remove the teaching from the scope', inject(function (Teaching) {
 
                 // fixture to send in DELETE request
-                var teacher = new Teacher({
+                var teaching = new Teaching({
                     _id: '1234567890abcdef12345678'
                 });
 
-                // mock teacher in scope
-                scope.teachers = [];
-                scope.teachers.push(teacher);
+                // mock teaching in scope
+                scope.teachings = [];
+                scope.teachings.push(teaching);
 
                 // test expected DELETE request
-                var urlRegex = new RegExp('teachers/[0-9a-fA-F]{24}');
+                var urlRegex = new RegExp('teachings/[0-9a-fA-F]{24}');
                 $httpBackend.expectDELETE(urlRegex).respond(204);
 
                 // run controller
-                scope.remove(teacher);
+                scope.remove(teaching);
                 $httpBackend.flush();
 
-                // test after successful delete URL location teachers list
-                expect(scope.teachers.length).toBe(0);
-                expect($location.path()).toBe('/insegnanti');
+                // test after successful delete URL location teachings list
+                expect(scope.teachings.length).toBe(0);
+                expect($location.path()).toBe('/insegnamenti');
 
             }));
         });

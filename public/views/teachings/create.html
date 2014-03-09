@@ -1,0 +1,18 @@
+<section data-ng-controller="TeachingsCtrl" data-ng-init="init()">
+  <h2>Crea insegnamento</h2>
+
+  <form name="teachingForm" role="form" data-ng-submit="create()" novalidate>
+
+    <div class="form-group">
+      <label for="name" class="control-label">Nome</label>
+      <input type="text" data-ng-model="teaching.name" id="name" name="name" class="form-control" placeholder="Nome">
+    </div>
+
+    <hr>
+
+    <button type="submit" class="btn btn-primary">Crea</button>
+
+    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+
+  </form>
+</section>

@@ -103,6 +103,23 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: 'views/schoolClasses/view.html'
     })
 
+      .state('all teachings', {
+        url: '/insegnamenti',
+        templateUrl: 'views/teachings/list.html'
+    })
+      .state('create teaching', {
+        url: '/insegnamenti/crea',
+        templateUrl: 'views/teachings/create.html'
+    })
+      .state('edit teaching', {
+        url: '/insegnamenti/:teachingId/modifica',
+        templateUrl: 'views/teachings/edit.html'
+    })
+      .state('teaching by id', {
+        url: '/insegnamenti/:teachingId',
+        templateUrl: 'views/teachings/view.html'
+    })
+
       .state('home', {
         url: '/',
         templateUrl: 'views/index.html'

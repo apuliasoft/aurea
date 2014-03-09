@@ -1,0 +1,10 @@
+<section data-ng-controller="TeachingsCtrl" data-ng-init="findOne()">
+  <h2>Dettaglio insegnamento</h2>
+
+  <dl class="dl-horizontal">
+    <dt>Nome</dt>
+    <dd>{{ teaching.name }}</dd>
+  </dl>
+
+  <button data-ng-click="edit(teaching)" class="btn btn-default">Modifica insegnamento</button>
+</section>
