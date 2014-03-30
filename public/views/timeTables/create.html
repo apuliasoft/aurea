@@ -1,0 +1,21 @@
+<section data-ng-controller="TimeTablesCtrl" data-ng-init="init()">
+    <h2>Crea Quadro Orario</h2>
+
+    <form name="timeTableForm" role="form" data-ng-submit="create()" novalidate>
+
+        Giorno: Lunedì
+        <!--<input type="number" min="1" max="7" data-ng-model="timeTable.day" />-->
+        <br><br>
+        <div data-ng-repeat="slot in timeTable.slots">
+            <span>{{$index+1}}.</span>
+            da <input type="time" data-ng-model="slot.start">
+            a <input type="time" data-ng-model="slot.end">
+        </div>
+
+        <hr>
+
+        <button type="submit" class="btn btn-primary">Crea</button>
+
+        <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+    </form>
+</section>
