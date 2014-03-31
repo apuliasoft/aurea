@@ -6,7 +6,6 @@
 var should = require('should'),
     mongoose = require('mongoose'),
     TimeTable = mongoose.model('TimeTable'),
-    _ = require('lodash'),
 /*jshint -W079 */ expect = require('chai').expect;
 
 //Globals
@@ -18,11 +17,19 @@ describe('<Unit Test>', function() {
         beforeEach(function(done) {
 
             timeTable = new TimeTable({
-                day: 0,
-                slots:[
-                    {start:540, end: 600},
-                    {start:600, end: 660}
-                ]
+                days: [{
+                    day: 0,
+                    slots:[
+                        {start:540, end: 600},
+                        {start:600, end: 660}
+                    ]
+                },{
+                    day: 1,
+                    slots:[
+                        {start:540, end: 600},
+                        {start:600, end: 660}
+                    ]
+                }]
             });
 
             timeTable.save(function(err) {
@@ -44,9 +51,9 @@ describe('<Unit Test>', function() {
             });
 
             it('should be able to find a time table by id', function(done) {
-                return TimeTable.findById(timeTable._id, function(err, teaching) {
+                return TimeTable.findById(timeTable._id, function(err, _timeTable) {
                     should.not.exist(err);
-                    expect(teaching.equals(teaching)).to.equal(true);
+                    expect(_timeTable.equals(_timeTable)).to.equal(true);
                     done();
                 });
             });
@@ -61,7 +68,7 @@ describe('<Unit Test>', function() {
             });
 
             it('should be able to show an error when try to save with a day greater than 6', function(done) {
-                timeTable.day = 8;
+                timeTable.days[0].day = 8;
 
                 return timeTable.save(function (err) {
                     should.exist(err);
@@ -70,7 +77,7 @@ describe('<Unit Test>', function() {
             });
 
             it('should be able to show an error when try to save a slot whit a wrong type', function(done) {
-                timeTable.slots.push({
+                timeTable.days[0].slots.push({
                     start: 10,
                     end: '10:00'
                 });
@@ -82,10 +89,8 @@ describe('<Unit Test>', function() {
             });
 
             it('should be able to update the time table', function(done) {
-                var update = {
-                    day: 2
-                };
-                timeTable = _.extend(timeTable, update);
+                var newDay = 2;
+                timeTable.days[0].day = newDay;
 
                 return timeTable.save(function(err) {
                     should.not.exist(err);
@@ -94,7 +99,7 @@ describe('<Unit Test>', function() {
                         should.not.exist(err);
 
                         expect(_timeTable.equals(timeTable)).to.equal(true);
-                        expect(_timeTable.name).to.equal(update.name);
+                        expect(_timeTable.days[0].day).to.equal(newDay);
 
                         done();
                     });

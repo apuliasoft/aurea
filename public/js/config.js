@@ -149,6 +149,16 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: 'views/timeTables/create.html'
     })
 
+    .state('edit time table', {
+        url: '/quadriOrari/:timeTableId/modifica',
+        templateUrl: 'views/timeTables/edit.html'
+    })
+
+    .state('time table by id', {
+        url: '/quadriOrari/:timeTableId',
+        templateUrl: 'views/timeTables/view.html'
+    })
+
     .state('home', {
         url: '/',
         templateUrl: 'views/index.html'
