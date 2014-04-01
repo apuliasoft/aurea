@@ -81,7 +81,7 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
         });
 
         return timeTable;
-    }
+    };
 
     $scope.create = function () {
         var timeTable = $scope.timeTable;
@@ -154,7 +154,7 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
         });
 
         return timeTable;
-    }
+    };
 
     $scope.findOne = function () {
         $scope.timeTable = TimeTable.get({
@@ -167,5 +167,5 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
 
     $scope.isNotEmptySlot = function (slot) {
         return slot.start && slot.end;
-    }
+    };
 }]);
