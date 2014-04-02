@@ -6,12 +6,14 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-
 /**
  * SchoolClass Schema
  */
 var SchoolClassSchema = new Schema({
-    name: String
+    name: {
+        type: String,
+        required: true
+    }
     //students: [Schema.ObjectId]
     //academicYear: Schema.ObjectId
 });
@@ -19,13 +21,9 @@ var SchoolClassSchema = new Schema({
 /**
  * Validations
  */
-SchoolClassSchema.path('name').validate(function(name) {
-    return name.length;
-}, 'Name cannot be blank');
 
 /**
  * Statics
  */
-
 
 mongoose.model('SchoolClass', SchoolClassSchema);

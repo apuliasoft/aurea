@@ -12,14 +12,17 @@ var mongoose = require('mongoose'),
 var TimeTableSchema = new Schema({
     // accademicYear: Schema.ObjectId
     days: [{
+        _id: false,
         day: {
             type: Number,
             min: 0, //da lunedì
             max: 6, //a domenica
             required: true
+
         },
         // Gli slot sono ordinati dalla prima all'ultima ora
         slots: [{
+            _id: false,
             start:{
                 type: Number,
                 min: 0, //mezzanotte

@@ -11,7 +11,10 @@ var mongoose = require('mongoose'),
  * Teaching Schema
  */
 var TeachingSchema = new Schema({
-    name: String
+    name: {
+        type: String,
+        required: true
+    }
     //class: Schema.ObjectId
     //teacher: Schema.ObjectId
 });
@@ -19,9 +22,6 @@ var TeachingSchema = new Schema({
 /**
  * Validations
  */
-TeachingSchema.path('name').validate(function(name) {
-    return name.length;
-}, 'Name cannot be blank');
 
 /**
  * Statics

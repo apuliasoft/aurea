@@ -17,7 +17,13 @@ describe('<Unit Test>', function() {
     describe('Model School:', function() {
         beforeEach(function(done) {
             school = new School({
-                name: 'Istituto Tecnico'
+                name: 'Istituto Tecnico',
+                complexes: [{
+                    street: 'Via Qualunque 1',
+                    zipCode: '12345',
+                    city: 'Chissadove',
+                    province: 'AZ'
+                }]
             });
 
             school.save(function(err) {
