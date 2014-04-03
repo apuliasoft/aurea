@@ -24,6 +24,9 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', fun
     }, {
         'title': 'Quadri Orari',
         'link': 'quadriOrari'
+    },{
+        'title': 'Registro di Classe',
+        'link': 'registroDiClasse'
     }];
     
     $scope.isCollapsed = false;
