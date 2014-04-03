@@ -12,7 +12,8 @@ angular.module('aurea', [
     'aurea.academicYears',
     'aurea.schoolClasses',
     'aurea.teachings',
-    'aurea.timeTables'
+    'aurea.timeTables',
+    'aurea.classRegistry'
 ]);
 
 angular.module('aurea.system', []);
@@ -23,3 +24,4 @@ angular.module('aurea.academicYears', []);
 angular.module('aurea.schoolClasses', []);
 angular.module('aurea.teachings', []);
 angular.module('aurea.timeTables', []);
+angular.module('aurea.classRegistry', []);
