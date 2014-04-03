@@ -22,7 +22,7 @@ var StudentSchema = new Schema({
         type: Date,
         required: true
     }
-    // school: Schema.ObjectId
+    // complex: Schema.ObjectId
 });
 
 /**

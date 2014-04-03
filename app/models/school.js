@@ -14,26 +14,7 @@ var SchoolSchema = new Schema({
     name: {
         type: String,
         required: true
-    },
-    complexes: [{
-        _id: false,
-        street: {
-            type: String,
-            required: true
-        },
-        zipCode: {
-            type: String,
-            required: true
-        },
-        city: {
-            type: String,
-            required: true
-        },
-        province: {
-            type: String,
-            required: true
-        }
-    }]
+    }
 });
 
 /**
