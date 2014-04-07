@@ -20,14 +20,12 @@ var UserSchema = new Schema({
         type: String,
         unique: true
     },
+    roles: [{
+        type: String,
+        enum: ['admin', 'manager', 'teacher', 'student', 'parent']
+    }],
     hashed_password: String,
-    provider: String,
-    salt: String,
-    facebook: {},
-    twitter: {},
-    github: {},
-    google: {},
-    linkedin: {}
+    salt: String
 });
 
 /**
@@ -48,40 +46,14 @@ var validatePresenceOf = function(value) {
     return value && value.length;
 };
 
-// the below 4 validations only apply if you are signing up traditionally
-UserSchema.path('name').validate(function(name) {
-    // if you are authenticating by any of the oauth strategies, don't validate
-    if (!this.provider) return true;
-    return (typeof name === 'string' && name.length > 0);
-}, 'Name cannot be blank');
-
-UserSchema.path('email').validate(function(email) {
-    // if you are authenticating by any of the oauth strategies, don't validate
-    if (!this.provider) return true;
-    return (typeof email === 'string' && email.length > 0);
-}, 'Email cannot be blank');
-
-UserSchema.path('username').validate(function(username) {
-    // if you are authenticating by any of the oauth strategies, don't validate
-    if (!this.provider) return true;
-    return (typeof username === 'string' && username.length > 0);
-}, 'Username cannot be blank');
-
-UserSchema.path('hashed_password').validate(function(hashed_password) {
-    // if you are authenticating by any of the oauth strategies, don't validate
-    if (!this.provider) return true;
-    return (typeof hashed_password === 'string' && hashed_password.length > 0);
-}, 'Password cannot be blank');
-
-
 /**
  * Pre-save hook
  */
 UserSchema.pre('save', function(next) {
-    if (!this.isNew) return next();
-
-    if (!validatePresenceOf(this.password) && !this.provider)
-        next(new Error('Invalid password'));
+    if (this.isNew && !validatePresenceOf(this.password))
+        next(new Error('Inserire una password valida'));
+    else if (this.roles.length === 0)
+        next(new Error('Inserire almeno un ruolo password'));
     else
         next();
 });
@@ -90,6 +62,17 @@ UserSchema.pre('save', function(next) {
  * Methods
  */
 UserSchema.methods = {
+    /**
+     * HasRole - check if the user has required role
+     *
+     * @param {String} plainText
+     * @return {Boolean}
+     * @api public
+     */
+    hasRole: function(role) {
+        return (this.roles.indexOf(role) !== -1);
+    },
+
     /**
      * Authenticate - check if the passwords are the same
      *

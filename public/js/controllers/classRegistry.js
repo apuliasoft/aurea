@@ -9,28 +9,36 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
     };
 
     $scope.init = function () {
+
         $scope.classRegistry = {
             day: new Date(),
             slots: [
-                {notes: ['Santoro è monello',''], substitution: false},
-                {notes: [''], substitution: false},
-                {notes: [''], substitution: false},
-                {notes: [''], substitution: false},
-                {notes: [''], substitution: false},
-                {notes: [''], substitution: false}
+                {notes: [{value: ''}], substitution: false},
+                {notes: [{value: ''}], substitution: false},
+                {notes: [{value: ''}], substitution: false},
+                {notes: [{value: ''}], substitution: false},
+                {notes: [{value: ''}], substitution: false},
+                {notes: [{value: ''}], substitution: false}
             ]
         };
     };
 
-    $scope.updateNotes = function (i, notes, note) {
-        notes = $scope.classRegistry.slots[0].notes;
-        console.log($scope.classRegistry);
 
-        if(i == notes.length -1 && note !== ''){
-            console.log('dentro');
-            notes.push(Math.random());
+    $scope.addLastNote = function (notes) {
+        //Aggiungo una nota alla fine se necessario
+        if (notes[notes.length-1].value !== '') {
+            notes.push({value: ''});
         }
-
-        return true;
     };
+
+    $scope.cleanNotes = function (notes) {
+        //Rimuovo tutte le note vuote
+        for (var i = 0; i < notes.length-1; i++) {
+            if (notes[i].value === '') {
+                notes.splice(i, 1);
+                i--;
+            }
+        }
+    };
+
 }]);

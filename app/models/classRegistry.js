@@ -15,11 +15,11 @@ var ClassRegistrySchema = new Schema({
         type: Date,
         required: true
     },
+    // absences: [{ type: Schema.Types.ObjectId, ref: 'Student' }],
     slots: [{
         _id: false,
         number: { type: Number, required: true },
         // teaching: { type: Schema.Types.ObjectId, ref: 'Teaching' },
-        // absences: [{ type: Schema.Types.ObjectId, ref: 'Student' }],
         notes: [String],
         subject: String,
         substitution: {

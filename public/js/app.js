@@ -6,6 +6,7 @@ angular.module('aurea', [
     'ui.bootstrap',
     'ui.router',
     'aurea.system',
+    'aurea.users',
     'aurea.schools',
     'aurea.teachers',
     'aurea.students',
@@ -17,6 +18,7 @@ angular.module('aurea', [
 ]);
 
 angular.module('aurea.system', []);
+angular.module('aurea.users', []);
 angular.module('aurea.schools', []);
 angular.module('aurea.teachers', []);
 angular.module('aurea.students', []);

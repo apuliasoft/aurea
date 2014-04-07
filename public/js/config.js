@@ -9,6 +9,26 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
     // states for my app
     $stateProvider
 
+    .state('all users', {
+        url: '/utenti',
+        templateUrl: 'views/users/list.html'
+    })
+
+    .state('create user', {
+        url: '/utenti/crea',
+        templateUrl: 'views/users/create.html'
+    })
+
+    .state('edit user', {
+        url: '/utenti/:userId/modifica',
+        templateUrl: 'views/users/edit.html'
+    })
+
+    .state('user by id', {
+        url: '/utenti/:userId',
+        templateUrl: 'views/users/view.html'
+    })
+
     .state('all schools', {
         url: '/scuole',
         templateUrl: 'views/schools/list.html'

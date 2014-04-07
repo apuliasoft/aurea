@@ -1,31 +1,35 @@
 <section data-ng-controller="ClassRegistryCtrl" data-ng-init="init()">
+
     <h2>Registro Di Classe</h2>
     <h3>{{ classRegistry.day | date:'EEEE, d MMMM yyyy' }}</h3>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Ora</th>
-                <th>Supplenza?</th>
-                <th>Materia</th>
-                <th>Assenti</th>
-                <th>Argomento</th>
-                <th>Note</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr data-ng-repeat="slot in classRegistry.slots">
-                <td>{{$index+1}}</td>
-                <td><input type="checkbox" data-ng-model="slot.substitution"></td>
-                <td>Non implementato</td>
-                <td>Non implementato</td>
-                <td><input type="text" data-ng-model="slot.subject"></td>
-                <td>
-                    <div ng-repeat="note in slot.notes">
-                        <input type="text" data-ng-model="note" data-ng-keypress="updateNotes($index, slot.notes, note)">
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ora</th>
+                    <th>Supplenza?</th>
+                    <th>Materia</th>
+                    <th>Assenti</th>
+                    <th>Argomento</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="slot in classRegistry.slots">
+                    <td>{{$index+1}}</td>
+                    <td><input type="checkbox" data-ng-model="slot.substitution"></td>
+                    <td>Non implementato</td>
+                    <td>Non implementato</td>
+                    <td><input type="text" data-ng-model="slot.subject"></td>
+                    <td>
+                        <div data-ng-repeat="note in slot.notes">
+                            <input data-ng-model="note.value" data-ng-keypress="addLastNote(slot.notes)" data-ng-blur="cleanNotes(slot.notes)">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
 </section>
