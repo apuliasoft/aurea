@@ -1,9 +1,11 @@
 <section data-ng-controller="ClassRegistryCtrl" data-ng-init="init()">
 
     <h2>Registro Di Classe</h2>
+    <button class="btn" data-ng-click="yesterday()">Ieri</button>
+    <button class="btn" data-ng-click="tomorrow()">domani</button>
     <h3>{{ classRegistry.day | date:'EEEE, d MMMM yyyy' }}</h3>
 
-    <form>
+    <form data-ng-submit="save()" novalidate>
         <table class="table">
             <thead>
                 <tr>
@@ -22,14 +24,15 @@
                     <td>Non implementato</td>
                     <td>Non implementato</td>
                     <td><input type="text" data-ng-model="slot.subject"></td>
-                    <td>
-                        <div data-ng-repeat="note in slot.notes">
-                            <input data-ng-model="note.value" data-ng-keypress="addLastNote(slot.notes)" data-ng-blur="cleanNotes(slot.notes)">
-                        </div>
-                    </td>
+                    <td><input type="text" data-ng-model="slot.notes"></td>
                 </tr>
             </tbody>
         </table>
+
+        <hr>
+
+        <button type="submit" class="btn btn-primary">Salva</button>
+
     </form>
 
 </section>

@@ -1,44 +1,67 @@
 'use strict';
 
-angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope', '$stateParams', '$location', function ($scope, $stateParams, $location) {
+angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', 'ClassRegistry', function ($scope, $stateParams, $location, $filter, ClassRegistry) {
 
-    $scope.edit = function (timeTable) {
-        if (timeTable) {
-            $location.path('quadriOrari/' + timeTable._id + '/modifica');
-        }
-    };
+    function getDateFromUrl () {
+        var dateArray = $stateParams.classRegistryDate.split('-');
+        return new Date(/*year*/dateArray[2], /*month*/dateArray[1]-1, /*day*/dateArray[0]);
+    }
 
     $scope.init = function () {
 
-        $scope.classRegistry = {
-            day: new Date(),
-            slots: [
-                {notes: [{value: ''}], substitution: false},
-                {notes: [{value: ''}], substitution: false},
-                {notes: [{value: ''}], substitution: false},
-                {notes: [{value: ''}], substitution: false},
-                {notes: [{value: ''}], substitution: false},
-                {notes: [{value: ''}], substitution: false}
-            ]
-        };
-    };
+        var day = getDateFromUrl();
 
+        $scope.classRegistry = ClassRegistry.get({
+            classRegistryDate: day
+        });
+        $scope.classRegistry.$promise.then(function(tempClassRegistry){
+            if (!tempClassRegistry.day) {
+                $scope.classRegistry = new ClassRegistry();
 
-    $scope.addLastNote = function (notes) {
-        //Aggiungo una nota alla fine se necessario
-        if (notes[notes.length-1].value !== '') {
-            notes.push({value: ''});
-        }
-    };
-
-    $scope.cleanNotes = function (notes) {
-        //Rimuovo tutte le note vuote
-        for (var i = 0; i < notes.length-1; i++) {
-            if (notes[i].value === '') {
-                notes.splice(i, 1);
-                i--;
+                // I mesi sono zero-based
+                $scope.classRegistry.day = day;
+                $scope.classRegistry.slots = [
+                    {substitution: false},
+                    {substitution: false},
+                    {substitution: false},
+                    {substitution: false},
+                    {substitution: false},
+                    {substitution: false}
+                ];
             }
+        });
+    };
+
+    $scope.tomorrow = function () {
+        var day = getDateFromUrl();
+        var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate()+1);
+        $location.path('registroDiClasse/' + $filter('date')(newDay, 'd-M-yyyy'));
+    };
+
+    $scope.yesterday = function () {
+        var day = getDateFromUrl();
+        var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate()-1);
+        $location.path('registroDiClasse/' + $filter('date')(newDay, 'd-M-yyyy'));
+    };
+
+    $scope.onUpdate = function (classRegistry) {
+        console.log('Aggiornato con successo:');
+        console.log(classRegistry);
+    };
+
+    $scope.save = function () {
+        var classRegistry = $scope.classRegistry;
+
+        if (!classRegistry.updated) {
+            classRegistry.updated = [];
         }
+        classRegistry.updated.push(new Date().getTime());
+
+        classRegistry._day = $filter('date')(classRegistry.day, 'yyyy-M-d');
+
+        classRegistry.$update(function (response) {
+            $scope.onUpdate(response);
+        });
     };
 
 }]);

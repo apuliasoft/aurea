@@ -179,8 +179,8 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: 'views/timeTables/view.html'
     })
 
-    .state('class registry', {
-        url: '/registroDiClasse',
+    .state('class registry by date', {
+        url: '/registroDiClasse/:classRegistryDate',
         templateUrl: 'views/classRegistry/edit.html'
     })
 
