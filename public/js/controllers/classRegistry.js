@@ -7,20 +7,35 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
         return new Date(/*year*/dateArray[2], /*month*/dateArray[1]-1, /*day*/dateArray[0]);
     }
 
+    function getEmptyClassRegistry () {
+        return {
+            day: '...',
+            slots: [
+                {substitution: false},
+                {substitution: false},
+                {substitution: false},
+                {substitution: false},
+                {substitution: false},
+                {substitution: false}
+        ]};
+    }
+
     $scope.init = function () {
+
+        $scope.classRegistry = getEmptyClassRegistry();
 
         var day = getDateFromUrl();
 
-        $scope.classRegistry = ClassRegistry.get({
+        var tempClassRegistry = ClassRegistry.get({
             classRegistryDate: day
         });
-        $scope.classRegistry.$promise.then(function(tempClassRegistry){
+        tempClassRegistry.$promise.then(function(tempClassRegistry){
             if (!tempClassRegistry.day) {
-                $scope.classRegistry = new ClassRegistry();
+                tempClassRegistry = new ClassRegistry();
 
                 // I mesi sono zero-based
-                $scope.classRegistry.day = day;
-                $scope.classRegistry.slots = [
+                tempClassRegistry.day = day;
+                tempClassRegistry.slots = [
                     {substitution: false},
                     {substitution: false},
                     {substitution: false},
@@ -29,6 +44,7 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
                     {substitution: false}
                 ];
             }
+            $scope.classRegistry = tempClassRegistry;
         });
     };
 

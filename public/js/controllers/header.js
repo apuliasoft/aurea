@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', function ($scope, Global) {
+angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', function ($scope, Global, $filter) {
     $scope.global = Global;
 
     $scope.menu = [{
@@ -29,7 +29,7 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', fun
         'link': 'quadriOrari'
     },{
         'title': 'Registro di Classe',
-        'link': 'registroDiClasse'
+        'link': 'registroDiClasse/' + $filter('date')(new Date(), 'd-M-yyyy')
     }];
     
     $scope.isCollapsed = false;
