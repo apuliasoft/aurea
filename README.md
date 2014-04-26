@@ -2,6 +2,7 @@ Aurea: un registro elettronico aperto
 =====================================
 
 [![Build Status](https://travis-ci.org/apuliasoft/aurea.png?branch=master)](https://travis-ci.org/apuliasoft/aurea)
+[![Dependencies Status](https://david-dm.org/apuliasoft/aurea.png)](https://david-dm.org/apuliasoft/aurea)
 
 ![logo name payoff](https://f.cloud.github.com/assets/666044/1408450/51af2684-3d82-11e3-94cc-97a9a0949c62.png)
 
