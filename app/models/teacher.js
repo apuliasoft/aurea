@@ -17,8 +17,11 @@ var TeacherSchema = new Schema({
     lastName: {
         type: String,
         required: true
+    },
+    complex: {
+        type: Schema.Types.ObjectId,
+        ref: 'Complex'
     }
-    // complex: Schema.ObjectId
 });
 
 /**

@@ -26,8 +26,11 @@ var ComplexSchema = new Schema({
     province: {
         type: String,
         required: true
+    },
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: 'School'
     }
-    // school: Schema.ObjectId
 });
 
 /**

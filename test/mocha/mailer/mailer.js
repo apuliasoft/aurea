@@ -14,7 +14,7 @@ describe('<Unit Test>', function () {
 
             // il timeout standard e' di 2 sec
             it('Should send an email', function(done){
-                mailer.sendEmail('stocazzo', 'n.sanitate@gmail.com', 'prova', '<b>Questa è una prova</b>', function (err, response) {
+                mailer.sendEmail('prova', 'n.sanitate@gmail.com', 'prova', '<b>Questa è una prova</b>', function (err, response) {
                     console.log(response);
                     should.not.exist(err);
                     done();

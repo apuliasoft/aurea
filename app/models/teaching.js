@@ -14,9 +14,15 @@ var TeachingSchema = new Schema({
     name: {
         type: String,
         required: true
+    },
+    schoolClass: {
+        type: Schema.Types.ObjectId,
+        ref: 'SchoolClass'
+    },
+    teacher: {
+        type: Schema.Types.ObjectId,
+        ref: 'Teacher'
     }
-    //class: Schema.ObjectId
-    //teacher: Schema.ObjectId
 });
 
 /**

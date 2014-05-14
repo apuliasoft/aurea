@@ -13,9 +13,15 @@ var SchoolClassSchema = new Schema({
     name: {
         type: String,
         required: true
+    },
+    students: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Student'
+    }],
+    academicYear: {
+        type: Schema.Types.ObjectId,
+        ref: 'AcademicYear'
     }
-    //students: [Schema.ObjectId]
-    //academicYear: Schema.ObjectId
 });
 
 /**

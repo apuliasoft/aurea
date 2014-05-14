@@ -17,7 +17,8 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
                 {substitution: false},
                 {substitution: false},
                 {substitution: false}
-        ]};
+            ]
+        };
     }
 
     $scope.init = function () {

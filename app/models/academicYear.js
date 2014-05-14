@@ -22,8 +22,11 @@ var AcademicYearSchema = new Schema({
     endDate: {
         type: Date,
         required: true
+    },
+    complex: {
+        type: Schema.Types.ObjectId,
+        ref: 'Complex'
     }
-    // complex: Schema.ObjectId
 });
 
 /**

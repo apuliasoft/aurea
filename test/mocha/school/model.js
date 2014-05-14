@@ -30,18 +30,18 @@ describe('<Unit Test>', function() {
 
         describe('Method Find', function() {
             it('should be able to find all schools', function(done) {
-                return School.find({}, function(err, schools) {
+                return School.find({}, function(err, result) {
                     should.not.exist(err);
-                    expect(schools.length).to.equal(1);
-                    expect(schools[0].equals(school)).to.equal(true);
+                    expect(result.length).to.equal(1);
+                    expect(result[0].equals(school)).to.equal(true);
                     done();
                 });
             });
 
             it('should be able to find a school by id', function(done) {
-                return School.findById(school._id, function(err, school) {
+                return School.findById(school._id, function(err, result) {
                     should.not.exist(err);
-                    expect(school.equals(school)).to.equal(true);
+                    expect(result.equals(school)).to.equal(true);
                     done();
                 });
             });
@@ -73,11 +73,11 @@ describe('<Unit Test>', function() {
                 return school.save(function(err) {
                     should.not.exist(err);
 
-                    School.findOne(school._id, function(err, school) {
+                    School.findOne(school._id, function(err, result) {
                         should.not.exist(err);
 
-                        expect(school.equals(school)).to.equal(true);
-                        expect(school.name).to.equal(update.name);
+                        expect(result.equals(school)).to.equal(true);
+                        expect(result.name).to.equal(update.name);
 
                         done();
                     });
@@ -89,9 +89,9 @@ describe('<Unit Test>', function() {
             it('should be able to remove a school', function(done) {
                 return school.remove(function(err) {
                     should.not.exist(err);
-                    School.findById(school._id, function(err, school) {
+                    School.findById(school._id, function(err, result) {
                         should.not.exist(err);
-                        should.not.exist(school);
+                        should.not.exist(result);
                         done();
                     });
                 });
@@ -99,7 +99,7 @@ describe('<Unit Test>', function() {
         });
 
         afterEach(function(done) {
-            School.remove().exec();
+            school.remove();
             done();
         });
         after(function(done) {

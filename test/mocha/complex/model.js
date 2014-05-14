@@ -6,45 +6,66 @@
 var should = require('should'),
   mongoose = require('mongoose'),
   Complex = mongoose.model('Complex'),
+  School = mongoose.model('School'),
   _ = require('lodash'),
 /*jshint -W079 */ expect = require('chai').expect;
 
 //Globals
 var complex;
+var school;
 
 //The tests
 describe('<Unit Test>', function() {
     describe('Model Complex:', function() {
         beforeEach(function(done) {
-            complex = new Complex({
-                street: 'Via Qualunque 1',
-                zipCode: '12345',
-                city: 'Chissadove',
-                province: 'AZ'
+            school = new School({
+                name: 'Istituto Tecnico'
             });
 
-            complex.save(function(err) {
-                if(err) {
+            school.save(function(err) {
+                if (err) {
                     done(err);
                 }
-                done();
+                complex = new Complex({
+                    street: 'Via Qualunque 1',
+                    zipCode: '12345',
+                    city: 'Chissadove',
+                    province: 'AZ',
+                    school: school
+                });
+
+                complex.save(function(err){
+                    if (err){
+                        done(err);
+                    }
+                    done();
+                });
             });
         });
 
         describe('Method Find', function() {
             it('should be able to find all complexs', function(done) {
-                return Complex.find({}, function(err, complexs) {
+                return Complex.find({}, function(err, result) {
                     should.not.exist(err);
-                    expect(complexs.length).to.equal(1);
-                    expect(complexs[0].equals(complex)).to.equal(true);
+                    expect(result.length).to.equal(1);
+                    expect(result[0].equals(complex)).to.equal(true);
                     done();
                 });
             });
 
             it('should be able to find a complex by id', function(done) {
-                return Complex.findById(complex._id, function(err, complex) {
+                return Complex.findById(complex._id, function(err, result) {
                     should.not.exist(err);
-                    expect(complex.equals(complex)).to.equal(true);
+                    expect(result.equals(complex)).to.equal(true);
+                    done();
+                });
+            });
+
+            it('should be able to find a complex\'s school', function(done) {
+                return Complex.findById(complex._id).populate('school').exec(function(err, result) {
+                    should.not.exist(err);
+                    var resultSchool = new School(result.school);
+                    expect(resultSchool.equals(school)).to.equal(true);
                     done();
                 });
             });
@@ -106,14 +127,14 @@ describe('<Unit Test>', function() {
                 return complex.save(function(err) {
                     should.not.exist(err);
 
-                    Complex.findOne(complex._id, function(err, complex) {
+                    Complex.findOne(complex._id, function(err, result) {
                         should.not.exist(err);
 
-                        expect(complex.equals(complex)).to.equal(true);
-                        expect(complex.street).to.equal(update.street);
-                        expect(complex.zipCode).to.equal(update.zipCode);
-                        expect(complex.city).to.equal(update.city);
-                        expect(complex.province).to.equal(update.province);
+                        expect(result.equals(complex)).to.equal(true);
+                        expect(result.street).to.equal(update.street);
+                        expect(result.zipCode).to.equal(update.zipCode);
+                        expect(result.city).to.equal(update.city);
+                        expect(result.province).to.equal(update.province);
 
                         done();
                     });
@@ -125,9 +146,9 @@ describe('<Unit Test>', function() {
             it('should be able to remove a complex', function(done) {
                 return complex.remove(function(err) {
                     should.not.exist(err);
-                    Complex.findById(complex._id, function(err, complex) {
+                    Complex.findById(complex._id, function(err, result) {
                         should.not.exist(err);
-                        should.not.exist(complex);
+                        should.not.exist(result);
                         done();
                     });
                 });
@@ -135,11 +156,13 @@ describe('<Unit Test>', function() {
         });
 
         afterEach(function(done) {
-            Complex.remove().exec();
+            complex.remove();
+            school.remove();
             done();
         });
         after(function(done) {
             Complex.remove().exec();
+            School.remove().exec();
             done();
         });
     });

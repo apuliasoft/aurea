@@ -6,51 +6,95 @@
 var should = require('should'),
     mongoose = require('mongoose'),
     AcademicYear = mongoose.model('AcademicYear'),
+    School = mongoose.model('School'),
+    Complex = mongoose.model('Complex'),
     _ = require('lodash'),
     /*jshint -W079 */ expect = require('chai').expect;
 
 //Globals
 var academicYear;
+var complex;
+var school;
 
 //The tests
 describe('<Unit Test>', function() {
     describe('Model AcademicYear:', function() {
         beforeEach(function(done) {
-            academicYear = new AcademicYear({
-                name: '2013/2014',
-                startDate: 1234567890000,
-                endDate: 2345678910000
+            school = new School({
+                name: 'Istituto Tecnico'
             });
 
-            academicYear.save(function(err) {
-                if(err) {
+            school.save(function(err){
+                if (err){
                     done(err);
                 }
-                done();
+                complex = new Complex({
+                    street: 'Via Qualunque 1',
+                    zipCode: '12345',
+                    city: 'Chissadove',
+                    province: 'AZ',
+                    school: school
+                });
+                complex.save(function(err){
+                    if (err){
+                        done(err);
+                    }
+                    academicYear = new AcademicYear({
+                        name: '2013/2014',
+                        startDate: 1234567890000,
+                        endDate: 2345678910000,
+                        complex: complex
+                    });
+                    academicYear.save(function(err) {
+                        if(err) {
+                            done(err);
+                        }
+                        done();
+                    });
+                });
             });
         });
 
         describe('Method Find', function() {
             it('should be able to find all academic years', function(done) {
-                return AcademicYear.find({}, function(err, academicYears) {
+                return AcademicYear.find({}, function(err, result) {
                     should.not.exist(err);
-                    expect(academicYears.length).to.equal(1);
-                    expect(academicYears[0].equals(academicYear)).to.equal(true);
+                    expect(result.length).to.equal(1);
+                    expect(result[0].equals(academicYear)).to.equal(true);
                     done();
                 });
             });
 
             it('should be able to find a academic year by id', function(done) {
-                return AcademicYear.findById(academicYear._id, function(err, academicYear) {
+                return AcademicYear.findById(academicYear._id, function(err, result) {
                     should.not.exist(err);
-                    expect(academicYear.equals(academicYear)).to.equal(true);
+                    expect(result.equals(academicYear)).to.equal(true);
                     done();
+                });
+            });
+
+            it('should be able to find a academic year\'s complex', function(done) {
+                return AcademicYear.findById(academicYear._id).populate('complex').exec(function(err, result) {
+                    should.not.exist(err);
+                    var resultComplex = new Complex(result.complex);
+                    expect(resultComplex.equals(complex)).to.equal(true);
+                    done();
+                });
+            });
+
+            it('should be able to find a academic year\'s school', function(done) {
+                return AcademicYear.findById(academicYear._id).populate('complex').exec(function(err, result) {
+                    Complex.populate(result.complex, {path: 'school'}, function(err, result){
+                        should.not.exist(err);
+                        expect(result.school.equals(school)).to.equal(true);
+                        done();
+                    });
                 });
             });
         });
 
         describe('Method Save', function() {
-            it('should be able to save a academic year', function(done) {
+            it('should be able to save an academic year', function(done) {
                 return academicYear.save(function (err) {
                     should.not.exist(err);
                     done();
@@ -95,13 +139,13 @@ describe('<Unit Test>', function() {
                 return academicYear.save(function(err) {
                     should.not.exist(err);
 
-                    AcademicYear.findOne(academicYear._id, function(err, academicYear) {
+                    AcademicYear.findOne(academicYear._id, function(err, result) {
                         should.not.exist(err);
 
-                        expect(academicYear.equals(academicYear)).to.equal(true);
-                        expect(academicYear.name).to.equal(update.name);
-                        expect(academicYear.startDate.getTime()).to.equal(update.startDate);
-                        expect(academicYear.endDate.getTime()).to.equal(update.endDate);
+                        expect(result.equals(academicYear)).to.equal(true);
+                        expect(result.name).to.equal(update.name);
+                        expect(result.startDate.getTime()).to.equal(update.startDate);
+                        expect(result.endDate.getTime()).to.equal(update.endDate);
 
                         done();
                     });
@@ -113,9 +157,9 @@ describe('<Unit Test>', function() {
             it('should be able to remove a academicYear', function(done) {
                 return academicYear.remove(function(err) {
                     should.not.exist(err);
-                    AcademicYear.findById(academicYear._id, function(err, academicYear) {
+                    AcademicYear.findById(academicYear._id, function(err, result) {
                         should.not.exist(err);
-                        should.not.exist(academicYear);
+                        should.not.exist(result);
                         done();
                     });
                 });
@@ -123,11 +167,15 @@ describe('<Unit Test>', function() {
         });
 
         afterEach(function(done) {
-            AcademicYear.remove().exec();
+            academicYear.remove();
+            complex.remove();
+            school.remove();
             done();
         });
         after(function(done) {
             AcademicYear.remove().exec();
+            Complex.remove().exec();
+            School.remove().exec();
             done();
         });
     });
