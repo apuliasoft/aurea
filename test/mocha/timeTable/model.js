@@ -107,8 +107,6 @@ describe('<Unit Test>', function() {
                 return TimeTable.findById(timeTable._id, function(err, timetableResult) {
                     should.not.exist(err);
 
-                    //console.log(timetableResult);
-
                     AcademicYear.findById(timetableResult.academicYear, function(err, academicYearResult){
                         should.not.exist(err);
                         expect(academicYearResult.complex).to.eql(complex._id);

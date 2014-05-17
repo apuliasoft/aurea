@@ -5,6 +5,7 @@
  */
 var should = require('should'),
     mongoose = require('mongoose'),
+    ClassRegistry = mongoose.model('ClassRegistry'),
     Teaching = mongoose.model('Teaching'),
     Teacher = mongoose.model('Teacher'),
     SchoolClass = mongoose.model('SchoolClass'),
@@ -16,6 +17,7 @@ var should = require('should'),
     /*jshint -W079 */ expect = require('chai').expect;
 
 //Globals
+var classRegistry;
 var teaching;
 var teacher;
 var schoolClass;
@@ -95,7 +97,26 @@ describe('<Unit Test>', function() {
                                         if(err) {
                                             done(err);
                                         }
-                                        done();
+                                        classRegistry = new ClassRegistry({
+                                            schoolClass: schoolClass,
+                                            day: 1234567890000,
+                                            absences: [student],
+                                            slots: [{
+                                                number: 1,
+                                                teaching: teaching,
+                                                notes: 'nota1',
+                                                subject: 'I promessi sposi',
+                                                substitution: false,
+                                                supportTeachers: [teacher],
+                                                assistantTeachers: [teacher]
+                                            }]
+                                        });
+                                        classRegistry.save(function(err){
+                                            if(err) {
+                                                done(err);
+                                            }
+                                            done();
+                                        });
                                     });
                                 });
                             });
@@ -106,119 +127,100 @@ describe('<Unit Test>', function() {
         });
 
         describe('Method Find', function() {
-            it('should be able to find all teachings', function(done) {
-                return Teaching.find({}, function(err, teachingsResult) {
+            it('should be able to find all class registries', function(done) {
+                return ClassRegistry.find({}, function(err, classRegistriesResult) {
                     should.not.exist(err);
-                    expect(teachingsResult.length).to.equal(1);
-                    expect(teachingsResult[0].equals(teaching)).to.equal(true);
+                    expect(classRegistriesResult.length).to.equal(1);
+                    expect(classRegistriesResult[0].equals(classRegistry)).to.equal(true);
                     done();
                 });
             });
 
-            it('should be able to find a teaching by id', function(done) {
-                return Teaching.findById(teaching._id, function(err, teachingResult) {
+            it('should be able to find a class registry by id', function(done) {
+                return ClassRegistry.findById(classRegistry._id, function(err, classRegistryResult) {
                     should.not.exist(err);
-                    expect(teachingResult.equals(teaching)).to.equal(true);
+                    expect(classRegistryResult.equals(classRegistry)).to.equal(true);
                     done();
                 });
             });
 
-            it('should be able to find a teaching\'s teacher', function(done) {
-                return Teaching.findById(teaching._id, function(err, teachingResult) {
+            it('should be able to find a class registry\'s school class', function(done) {
+                return ClassRegistry.findById(classRegistry._id, function(err, classRegistryResult) {
                     should.not.exist(err);
-                    expect(teachingResult.teacher).to.eql(teacher._id);
+                    expect(classRegistryResult.schoolClass).to.eql(schoolClass._id);
                     done();
                 });
             });
 
-            it('should be able to find a teaching\'s school class', function(done) {
-                return Teaching.findById(teaching._id, function(err, teachingResult) {
+            it('should be able to find a class registry\'s absent students', function(done) {
+                return ClassRegistry.findById(classRegistry._id, function(err, classRegistryResult) {
                     should.not.exist(err);
-                    expect(teachingResult.schoolClass).to.eql(schoolClass._id);
+                    expect(classRegistryResult.absences).to.have.length(1);
+                    expect(classRegistryResult.absences[0]).to.eql(student._id);
                     done();
                 });
             });
 
-            it('should be able to find a teaching\'s students', function(done) {
-                return Teaching.findById(teaching._id, function(err, teachingResult) {
+            it('should be able to find a class registry\'s slots', function(done) {
+                return ClassRegistry.findById(classRegistry._id, function(err, classRegistryResult) {
                     should.not.exist(err);
-                    SchoolClass.findById(teachingResult.schoolClass, function(err, schoolClassResult){
-                        should.not.exist(err);
-                        expect(schoolClassResult.students).to.have.length(1);
-                        expect(schoolClassResult.students[0]).to.eql(student._id);
-                        done();
-                    });
-                });
-            });
-
-            it('should be able to find a teaching\'s academicYear', function(done) {
-                return Teaching.findById(teaching._id, function(err, teachingResult) {
-                    should.not.exist(err);
-                    SchoolClass.findById(teachingResult.schoolClass, function(err, schoolClassResult){
-                        should.not.exist(err);
-                        expect(schoolClassResult.academicYear).to.eql(academicYear._id);
-                        done();
-                    });
-                });
-            });
-
-            it('should be able to find a teaching\'s complex', function(done) {
-                return Teaching.findById(teaching._id, function(err, teachingResult) {
-                    should.not.exist(err);
-                    Teacher.findById(teachingResult.teacher, function(err, teacherResult){
-                        should.not.exist(err);
-                        expect(teacherResult.complex).to.eql(complex._id);
-                        done();
-                    });
-                });
-            });
-
-            it('should be able to find a teaching\'s school', function(done) {
-                return Teaching.findById(teaching._id, function(err, teachingResult) {
-                    should.not.exist(err);
-                    Teacher.findById(teachingResult.teacher, function(err, teacherResult){
-                        should.not.exist(err);
-                        Complex.findById(teacherResult.complex, function(err, complexResult){
-                            should.not.exist(err);
-                            expect(complexResult.school).to.eql(school._id);
-                            done();
-                        });
-                    });
+                    expect(classRegistryResult.slots).to.have.length(1);
+                    expect(classRegistryResult.slots[0].teaching).to.eql(teaching._id);
+                    expect(classRegistryResult.slots[0].supportTeachers[0]).to.eql(teacher._id);
+                    done();
                 });
             });
         });
 
         describe('Method Save', function() {
-            it('should be able to save a teaching', function(done) {
-                return teaching.save(function (err) {
+            it('should be able to save a class registry', function(done) {
+                return classRegistry.save(function (err) {
                     should.not.exist(err);
                     done();
                 });
             });
 
-            it('should be able to show an error when try to save without name', function(done) {
-                teaching.name = '';
+            it('should be able to show an error when try to save without day', function(done) {
+                classRegistry.day = NaN;
 
-                return teaching.save(function (err) {
+                return classRegistry.save(function (err) {
                     should.exist(err);
                     done();
                 });
             });
 
-            it('should be able to update a teaching', function(done) {
-                var update = {
-                    name: 'Matematica'
-                };
-                teaching = _.extend(teaching, update);
+            it('should be able to show an error when try to save without slot number', function(done) {
+                classRegistry.slots[0].number = null;
 
-                return teaching.save(function(err) {
+                return classRegistry.save(function (err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to show an error when try to save without slot substitution', function(done) {
+                classRegistry.slots[0].substitution = null;
+
+                return classRegistry.save(function (err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to update a class registry', function(done) {
+                var update = {
+                    day: 1234987650000
+                };
+                classRegistry = _.extend(classRegistry, update);
+
+                return classRegistry.save(function(err) {
                     should.not.exist(err);
 
-                    Teaching.findOne(teaching._id, function(err, teachingResult) {
+                    ClassRegistry.findOne(classRegistry._id, function(err, classRegistryResult) {
                         should.not.exist(err);
 
-                        expect(teachingResult.equals(teaching)).to.equal(true);
-                        expect(teachingResult.name).to.equal(update.name);
+                        expect(classRegistryResult.equals(classRegistry)).to.equal(true);
+                        expect(classRegistryResult.day).to.eql(new Date(update.day));
 
                         done();
                     });
@@ -227,12 +229,12 @@ describe('<Unit Test>', function() {
         });
 
         describe('Method Remove', function() {
-            it('should be able to remove a teaching', function(done) {
-                return teaching.remove(function(err) {
+            it('should be able to remove a class registry', function(done) {
+                return classRegistry.remove(function(err) {
                     should.not.exist(err);
-                    Teaching.findById(teaching._id, function(err, teachingResult) {
+                    ClassRegistry.findById(classRegistry._id, function(err, classRegistryResult) {
                         should.not.exist(err);
-                        should.not.exist(teachingResult);
+                        should.not.exist(classRegistryResult);
                         done();
                     });
                 });
@@ -240,6 +242,7 @@ describe('<Unit Test>', function() {
         });
 
         afterEach(function(done) {
+            classRegistry.remove();
             teaching.remove();
             teacher.remove();
             schoolClass.remove();
@@ -250,6 +253,7 @@ describe('<Unit Test>', function() {
             done();
         });
         after(function(done) {
+            ClassRegistry.remove().exec();
             Teaching.remove().exec();
             Teacher.remove().exec();
             SchoolClass.remove().exec();

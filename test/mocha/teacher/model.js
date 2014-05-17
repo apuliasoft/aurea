@@ -20,11 +20,6 @@ var school;
 describe('<Unit Test>', function() {
     describe('Model Teacher:', function() {
         beforeEach(function(done) {
-            teacher = new Teacher({
-                firstName: 'Pinco',
-                lastName: 'Pallino'
-            });
-
             school = new School({
                 name: 'Istituto Tecnico'
             });
