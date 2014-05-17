@@ -6,11 +6,15 @@
 var should = require('should'),
     mongoose = require('mongoose'),
     Teacher = mongoose.model('Teacher'),
+    School = mongoose.model('School'),
+    Complex = mongoose.model('Complex'),
     _ = require('lodash'),
     /*jshint -W079 */ expect = require('chai').expect;
 
 //Globals
 var teacher;
+var complex;
+var school;
 
 //The tests
 describe('<Unit Test>', function() {
@@ -21,28 +25,70 @@ describe('<Unit Test>', function() {
                 lastName: 'Pallino'
             });
 
-            teacher.save(function(err) {
-                if(err) {
+            school = new School({
+                name: 'Istituto Tecnico'
+            });
+
+            school.save(function(err){
+                if (err){
                     done(err);
                 }
-                done();
+                complex = new Complex({
+                    street: 'Via Qualunque 1',
+                    zipCode: '12345',
+                    city: 'Chissadove',
+                    province: 'AZ',
+                    school: school
+                });
+                complex.save(function(err){
+                    if (err){
+                        done(err);
+                    }
+                    teacher = new Teacher({
+                        firstName: 'Pinco',
+                        lastName: 'Pallino',
+                        complex: complex
+                    });
+                    teacher.save(function(err) {
+                        if(err) {
+                            done(err);
+                        }
+                        done();
+                    });
+                });
             });
         });
 
         describe('Method Find', function() {
             it('should be able to find all teachers', function(done) {
-                return Teacher.find({}, function(err, teachers) {
+                return Teacher.find({}, function(err, result) {
                     should.not.exist(err);
-                    expect(teachers.length).to.equal(1);
-                    expect(teachers[0].equals(teacher)).to.equal(true);
+                    expect(result.length).to.equal(1);
+                    expect(result[0].equals(teacher)).to.equal(true);
                     done();
                 });
             });
 
             it('should be able to find a teacher by id', function(done) {
-                return Teacher.findById(teacher._id, function(err, teacher) {
+                return Teacher.findById(teacher._id, function(err, result) {
                     should.not.exist(err);
-                    expect(teacher.equals(teacher)).to.equal(true);
+                    expect(result.equals(teacher)).to.equal(true);
+                    done();
+                });
+            });
+
+            it('should be able to find a teacher\'s complex', function(done) {
+                return Teacher.findById(teacher._id, function(err, result) {
+                    should.not.exist(err);
+                    expect(result.complex).to.eql(complex._id);
+                    done();
+                });
+            });
+
+            it('should be able to find a teacher\'s school', function(done) {
+                return Teacher.findById(teacher._id).populate('complex').exec(function(err, result) {
+                    should.not.exist(err);
+                    expect(result.complex.school).to.eql(school._id);
                     done();
                 });
             });
@@ -84,12 +130,12 @@ describe('<Unit Test>', function() {
                 return teacher.save(function(err) {
                     should.not.exist(err);
 
-                    Teacher.findOne(teacher._id, function(err, teacher) {
+                    Teacher.findOne(teacher._id, function(err, result) {
                         should.not.exist(err);
 
-                        expect(teacher.equals(teacher)).to.equal(true);
-                        expect(teacher.firstName).to.equal(update.firstName);
-                        expect(teacher.lastName).to.equal(update.lastName);
+                        expect(result.equals(teacher)).to.equal(true);
+                        expect(result.firstName).to.equal(update.firstName);
+                        expect(result.lastName).to.equal(update.lastName);
 
                         done();
                     });
@@ -101,9 +147,9 @@ describe('<Unit Test>', function() {
             it('should be able to remove a teacher', function(done) {
                 return teacher.remove(function(err) {
                     should.not.exist(err);
-                    Teacher.findById(teacher._id, function(err, teacher) {
+                    Teacher.findById(teacher._id, function(err, result) {
                         should.not.exist(err);
-                        should.not.exist(teacher);
+                        should.not.exist(result);
                         done();
                     });
                 });
@@ -111,11 +157,15 @@ describe('<Unit Test>', function() {
         });
 
         afterEach(function(done) {
-            Teacher.remove().exec();
+            teacher.remove();
+            complex.remove();
+            school.remove();
             done();
         });
         after(function(done) {
             Teacher.remove().exec();
+            Complex.remove().exec();
+            School.remove().exec();
             done();
         });
     });

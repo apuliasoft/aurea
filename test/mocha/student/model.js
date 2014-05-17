@@ -6,44 +6,86 @@
 var should = require('should'),
     mongoose = require('mongoose'),
     Student = mongoose.model('Student'),
+    School = mongoose.model('School'),
+    Complex = mongoose.model('Complex'),
     _ = require('lodash'),
     /*jshint -W079 */ expect = require('chai').expect;
 
 //Globals
 var student;
+var complex;
+var school;
 
 //The tests
 describe('<Unit Test>', function() {
     describe('Model Student:', function() {
         beforeEach(function(done) {
-            student = new Student({
-                firstName: 'Pinco',
-                lastName: 'Pallino',
-                birthDate: 1234567890000
+
+            school = new School({
+                name: 'Istituto Tecnico'
             });
 
-            student.save(function(err) {
-                if(err) {
+            school.save(function(err){
+                if (err){
                     done(err);
                 }
-                done();
+                complex = new Complex({
+                    street: 'Via Qualunque 1',
+                    zipCode: '12345',
+                    city: 'Chissadove',
+                    province: 'AZ',
+                    school: school
+                });
+                complex.save(function(err){
+                    if (err){
+                        done(err);
+                    }
+                    student = new Student({
+                        firstName: 'Pinco',
+                        lastName: 'Pallino',
+                        birthDate: 1234567890000,
+                        complex: complex
+                    });
+                    student.save(function(err) {
+                        if(err) {
+                            done(err);
+                        }
+                        done();
+                    });
+                });
             });
         });
 
         describe('Method Find', function() {
             it('should be able to find all students', function(done) {
-                return Student.find({}, function(err, students) {
+                return Student.find({}, function(err, result) {
                     should.not.exist(err);
-                    expect(students.length).to.equal(1);
-                    expect(students[0].equals(student)).to.equal(true);
+                    expect(result.length).to.equal(1);
+                    expect(result[0].equals(student)).to.equal(true);
                     done();
                 });
             });
 
             it('should be able to find a student by id', function(done) {
-                return Student.findById(student._id, function(err, student) {
+                return Student.findById(student._id, function(err, result) {
                     should.not.exist(err);
-                    expect(student.equals(student)).to.equal(true);
+                    expect(result.equals(student)).to.equal(true);
+                    done();
+                });
+            });
+
+            it('should be able to find a student\'s complex', function(done) {
+                return Student.findById(student._id, function(err, result) {
+                    should.not.exist(err);
+                    expect(result.complex).to.eql(complex._id);
+                    done();
+                });
+            });
+
+            it('should be able to find a student\'s school', function(done) {
+                return Student.findById(student._id).populate('complex').exec(function(err, result) {
+                    should.not.exist(err);
+                    expect(result.complex.school).to.eql(school._id);
                     done();
                 });
             });
@@ -95,13 +137,13 @@ describe('<Unit Test>', function() {
                 return student.save(function(err) {
                     should.not.exist(err);
 
-                    Student.findOne(student._id, function(err, student) {
+                    Student.findOne(student._id, function(err, result) {
                         should.not.exist(err);
 
-                        expect(student.equals(student)).to.equal(true);
-                        expect(student.firstName).to.equal(update.firstName);
-                        expect(student.lastName).to.equal(update.lastName);
-                        expect(student.birthDate.getTime()).to.equal(update.birthDate);
+                        expect(result.equals(student)).to.equal(true);
+                        expect(result.firstName).to.equal(update.firstName);
+                        expect(result.lastName).to.equal(update.lastName);
+                        expect(result.birthDate.getTime()).to.equal(update.birthDate);
 
                         done();
                     });
@@ -113,9 +155,9 @@ describe('<Unit Test>', function() {
             it('should be able to remove a student', function(done) {
                 return student.remove(function(err) {
                     should.not.exist(err);
-                    Student.findById(student._id, function(err, student) {
+                    Student.findById(student._id, function(err, result) {
                         should.not.exist(err);
-                        should.not.exist(student);
+                        should.not.exist(result);
                         done();
                     });
                 });
@@ -123,11 +165,15 @@ describe('<Unit Test>', function() {
         });
 
         afterEach(function(done) {
-            Student.remove().exec();
+            student.remove();
+            complex.remove();
+            school.remove();
             done();
         });
         after(function(done) {
             Student.remove().exec();
+            Complex.remove().exec();
+            School.remove().exec();
             done();
         });
     });

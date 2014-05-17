@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
  * Time Table Schema
  */
 var TimeTableSchema = new Schema({
-    accademicYear: {
+    academicYear: {
         type: Schema.Types.ObjectId,
         ref: 'AcademicYear'
     },
