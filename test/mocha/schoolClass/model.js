@@ -76,7 +76,7 @@ describe('<Unit Test>', function() {
                                 done();
                             });
                         });
-                    })
+                    });
                 });
             });
         });
@@ -123,20 +123,6 @@ describe('<Unit Test>', function() {
                         should.not.exist(err);
                         expect(academicYearResult.complex).to.eql(complex._id);
                         done();
-                    });
-                });
-            });
-
-            it('should be able to find a school class\'s school', function(done) {
-                return SchoolClass.findById(schoolClass._id, function(err, schoolClassResult) {
-                    should.not.exist(err);
-                    AcademicYear.findById(schoolClassResult.academicYear, function(err, academicYearResult){
-                        should.not.exist(err);
-                        Complex.findById(academicYearResult.complex, function(err, complexResult){
-                            should.not.exist(err);
-                            expect(complexResult.school).to.eql(school._id);
-                            done();
-                        });
                     });
                 });
             });

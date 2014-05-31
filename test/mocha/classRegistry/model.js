@@ -121,7 +121,7 @@ describe('<Unit Test>', function() {
                                 });
                             });
                         });
-                    })
+                    });
                 });
             });
         });

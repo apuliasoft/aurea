@@ -6,25 +6,39 @@
 var should = require('should'),
     mongoose = require('mongoose'),
     School = mongoose.model('School'),
+    Complex = mongoose.model('Complex'),
     _ = require('lodash'),
     /*jshint -W079 */ expect = require('chai').expect;
 
 //Globals
 var school;
+var complex;
 
 //The tests
 describe('<Unit Test>', function() {
     describe('Model School:', function() {
         beforeEach(function(done) {
-            school = new School({
-                name: 'Istituto Tecnico'
+            complex = new Complex({
+                street: 'Via Qualunque 1',
+                zipCode: '12345',
+                city: 'Chissadove',
+                province: 'AZ'
             });
 
-            school.save(function(err) {
-                if(err) {
+            complex.save(function(err){
+                if (err){
                     done(err);
                 }
-                done();
+                school = new School({
+                    name: 'Istituto Tecnico',
+                    complexes: [complex]
+                });
+                school.save(function(err) {
+                    if(err) {
+                        done(err);
+                    }
+                    done();
+                });
             });
         });
 
@@ -42,6 +56,16 @@ describe('<Unit Test>', function() {
                 return School.findById(school._id, function(err, result) {
                     should.not.exist(err);
                     expect(result.equals(school)).to.equal(true);
+                    done();
+                });
+            });
+
+            it('should be able to find a school\'s complexes', function(done) {
+                return School.findById(school._id).populate('complexes').exec(function(err, schoolResult) {
+                    should.not.exist(err);
+                    var resultComplexes = schoolResult.complexes;
+                    expect(resultComplexes).to.have.length(1);
+                    expect(resultComplexes[0].equals(complex)).to.equal(true);
                     done();
                 });
             });

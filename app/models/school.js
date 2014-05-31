@@ -14,7 +14,11 @@ var SchoolSchema = new Schema({
     name: {
         type: String,
         required: true
-    }
+    },
+    complexes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Complex'
+    }]
 });
 
 /**

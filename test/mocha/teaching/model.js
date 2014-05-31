@@ -100,7 +100,7 @@ describe('<Unit Test>', function() {
                                 });
                             });
                         });
-                    })
+                    });
                 });
             });
         });
@@ -169,20 +169,6 @@ describe('<Unit Test>', function() {
                         should.not.exist(err);
                         expect(teacherResult.complex).to.eql(complex._id);
                         done();
-                    });
-                });
-            });
-
-            it('should be able to find a teaching\'s school', function(done) {
-                return Teaching.findById(teaching._id, function(err, teachingResult) {
-                    should.not.exist(err);
-                    Teacher.findById(teachingResult.teacher, function(err, teacherResult){
-                        should.not.exist(err);
-                        Complex.findById(teacherResult.complex, function(err, complexResult){
-                            should.not.exist(err);
-                            expect(complexResult.school).to.eql(school._id);
-                            done();
-                        });
                     });
                 });
             });

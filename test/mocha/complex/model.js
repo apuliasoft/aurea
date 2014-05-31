@@ -60,15 +60,6 @@ describe('<Unit Test>', function() {
                     done();
                 });
             });
-
-            it('should be able to find a complex\'s school', function(done) {
-                return Complex.findById(complex._id).populate('school').exec(function(err, result) {
-                    should.not.exist(err);
-                    var resultSchool = new School(result.school);
-                    expect(resultSchool.equals(school)).to.equal(true);
-                    done();
-                });
-            });
         });
 
         describe('Method Save', function() {
