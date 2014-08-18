@@ -1,9 +1,9 @@
 'use strict';
 
 (function() {
-    // AcademicYears Controller Spec
+    // Users Controller Spec
     describe('Aurea controllers', function() {
-        describe('AcademicYearsCtrl', function() {
+        describe('UsersCtrl', function() {
             // The $resource service augments the response object with methods for updating and deleting the resource.
             // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
             // the responses exactly. To solve the problem, we use a newly-defined toEqualData Jasmine matcher.
@@ -21,7 +21,7 @@
             beforeEach(module('aurea'));
 
             // Initialize the controller and a mock scope
-            var AcademicYearsCtrl,
+            var UsersCtrl,
                 scope,
                 $httpBackend,
                 $stateParams,
@@ -34,7 +34,7 @@
 
                 scope = $rootScope.$new();
 
-                AcademicYearsCtrl = $controller('AcademicYearsCtrl', {
+                UsersCtrl = $controller('UsersCtrl', {
                     $scope: scope
                 });
 
@@ -46,228 +46,234 @@
 
             }));
 
-            it('$scope.list() should locate to list academic years URL', function() {
+            it('$scope.list() should locate to list users URL', function() {
 
                 // run controller
                 scope.list();
 
                 // test URL location to list
-                expect($location.path()).toBe('/anni-accademici');
+                expect($location.path()).toBe('/utenti');
             });
 
-            it('$scope.new() should locate to create academic year form URL', function() {
+            it('$scope.new() should locate to create user form URL', function() {
 
                 // run controller
                 scope.new();
 
                 // test URL location to create form
-                expect($location.path()).toBe('/anni-accademici/crea');
+                expect($location.path()).toBe('/utenti/crea');
             });
 
-            it('$scope.view() should locate to view academic year URL', function() {
+            it('$scope.view() should locate to view user URL', function() {
 
                 // fixture object to view
-                var viewAcademicYearData = function () {
+                var viewUserData = function () {
                     return {
                         _id: '525cf20451979dea2c000001'
                     };
                 };
 
                 // run controller
-                scope.view(viewAcademicYearData());
+                scope.view(viewUserData());
 
                 // test URL location to view
-                expect($location.path()).toBe('/anni-accademici/' + viewAcademicYearData()._id);
+                expect($location.path()).toBe('/utenti/' + viewUserData()._id);
             });
 
-            it('$scope.edit() should locate to edit academic year form URL', function() {
+            it('$scope.edit() should locate to edit user form URL', function() {
 
                 // fixture object to edit
-                var editAcademicYearData = function () {
+                var editUserData = function () {
                     return {
                         _id: '525cf20451979dea2c000001'
                     };
                 };
 
                 // run controller
-                scope.edit(editAcademicYearData());
+                scope.edit(editUserData());
 
                 // test URL location to view
-                expect($location.path()).toBe('/anni-accademici/' + editAcademicYearData()._id + '/modifica');
+                expect($location.path()).toBe('/utenti/' + editUserData()._id + '/modifica');
             });
 
-            it('$scope.find() should create an array with at least one academic year object ' +
+            it('$scope.find() should create an array with at least one user object ' +
                 'fetched from XHR', function() {
 
                 // fixture expected GET request
-                var responseAcademicYearData = function() {
+                var responseUserData = function() {
                     return [{
                         _id: '1234567890abcdef12345678',
-                        name: '2013/2014',
-                        startDate: 1234567890000,
-                        endDate: 2345678910000,
+                        name: 'Pinco Pallino',
+                        email: 'pinco.pallino@email.com',
+                        username: 'pinco.pallino',
+                        role: ['manger'],
                         __v: 0
                     }];
                 };
 
                 // test GET happens correctly
-                $httpBackend.expectGET('academicYears').respond(responseAcademicYearData());
+                $httpBackend.expectGET('users').respond(responseUserData());
 
                 // run controller
                 scope.find();
                 $httpBackend.flush();
 
                 // test scope value
-                expect(scope.academicYears).toEqualData(responseAcademicYearData());
+                expect(scope.users).toEqualData(responseUserData());
 
             });
 
-            it('$scope.findOne() should create an array with one academic year object fetched ' +
-                'from XHR using a academicYearId URL parameter', function () {
+            it('$scope.findOne() should create an array with one user object fetched ' +
+                'from XHR using a userId URL parameter', function () {
 
                 // fixture URL parameter
-                $stateParams.academicYearId = '1234567890abcdef12345678';
+                $stateParams.userId = '1234567890abcdef12345678';
 
                 // fixture expected GET request
-                var responseAcademicYearData = function () {
+                var responseUserData = function () {
                     return {
                         _id: '1234567890abcdef12345678',
-                        name: '2013/2014',
-                        startDate: 1234567890000,
-                        endDate: 2345678910000,
+                        name: 'Pinco Pallino',
+                        email: 'pinco.pallino@email.com',
+                        username: 'pinco.pallino',
+                        role: ['manger'],
                         __v: 0
                     };
                 };
 
                 // test GET happens correctly
-                var urlRegex = new RegExp('academicYears/([0-9a-fA-F]{24})');
-                $httpBackend.expectGET(urlRegex).respond(responseAcademicYearData());
+                var urlRegex = new RegExp('users/([0-9a-fA-F]{24})');
+                $httpBackend.expectGET(urlRegex).respond(responseUserData());
 
                 // run controller
                 scope.findOne();
                 $httpBackend.flush();
 
                 // test scope value
-                expect(scope.academicYear).toEqualData(responseAcademicYearData());
+                expect(scope.user).toEqualData(responseUserData());
 
             });
 
-            it('$scope.init() should create an array with one void academic year object', function() {
+            it('$scope.init() should create an array with one void user object', function() {
 
                 // run controller
                 scope.init();
 
                 // test scope value
-                expect(!!scope.academicYear).toBe(true);
+                expect(!!scope.user).toBe(true);
             });
 
             it('$scope.create() with valid form data should send a POST request ' +
                 'with the form input values and then ' +
-                'locate to new object URL', inject(function (AcademicYear) {
+                'locate to new object URL', inject(function (User) {
 
                 // fixture to send in POST request
-                var postAcademicYearData = function () {
+                var postUserData = function () {
                     return {
-                        name: '2013/2014',
-                        startDate: 1234567890000,
-                        endDate: 2345678910000
+                        name: 'Pinco Pallino',
+                        email: 'pinco.pallino@email.com',
+                        username: 'pinco.pallino',
+                        role: ['manger'],
                     };
                 };
 
                 // fixture expected from POST request
-                var responseAcademicYearData = function () {
+                var responseUserData = function () {
                     return {
                         _id: '1234567890abcdef12345678',
-                        name: '2013/2014',
-                        startDate: 1234567890000,
-                        endDate: 2345678910000,
+                        name: 'Pinco Pallino',
+                        email: 'pinco.pallino@email.com',
+                        username: 'pinco.pallino',
+                        role: ['manger'],
                         __v: 0
                     };
                 };
 
                 // fixture mock form input values
-                scope.academicYear = new AcademicYear(postAcademicYearData());
+                scope.user = new User(postUserData());
 
                 // test post request is sent
-                $httpBackend.expectPOST('academicYears', postAcademicYearData()).respond(responseAcademicYearData());
+                $httpBackend.expectPOST('users', postUserData()).respond(responseUserData());
 
                 // Run controller
                 scope.create();
                 $httpBackend.flush();
 
                 // test form input(s) are reset
-                expect(scope.academicYear).toEqualData(new AcademicYear());
+                expect(scope.user).toEqualData(new User());
 
                 // test URL location to new object
-                expect($location.path()).toBe('/anni-accademici/' + responseAcademicYearData()._id);
+                expect($location.path()).toBe('/utenti/' + responseUserData()._id);
             }));
 
-            it('$scope.update() should update a valid academic year', inject(function (AcademicYear) {
+            it('$scope.update() should update a valid user', inject(function (User) {
 
                 // fixture to send in PUT request
-                var putAcademicYearData = function () {
+                var putUserData = function () {
                     return {
                         _id: '1234567890abcdef12345678',
-                        name: '2013/2014',
-                        startDate: 1234567890000,
-                        endDate: 2345678910000,
+                        name: 'Pinco Pallino',
+                        email: 'pinco.pallino@email.com',
+                        username: 'pinco.pallino',
+                        role: ['manger'],
                         __v: 0
                     };
                 };
 
                 // fixture expected from PUT request
-                var responseAcademicYearData = function() {
+                var responseUserData = function() {
                     return {
                         _id: '1234567890abcdef12345678',
-                        name: '2014/2015',
-                        startDate: 2345678910000,
-                        endDate: 3456789120000,
+                        name: 'Abra Cadabra',
+                        email: 'abra.cadabra@email.com',
+                        username: 'abra.cadabra',
+                        role: ['manger'],
                         __v: 1
                     };
                 };
 
-                // mock academicYear object from form
-                var academicYear = new AcademicYear(putAcademicYearData());
+                // mock user object from form
+                var user = new User(putUserData());
 
-                // mock academicYear in scope
-                scope.academicYear = academicYear;
+                // mock user in scope
+                scope.user = user;
 
                 // test PUT happens correctly
-                var urlRegex = new RegExp('academicYears/[0-9a-fA-F]{24}');
-                $httpBackend.expectPUT(urlRegex).respond(responseAcademicYearData());
+                var urlRegex = new RegExp('users/[0-9a-fA-F]{24}');
+                $httpBackend.expectPUT(urlRegex).respond(responseUserData());
 
                 // run controller
                 scope.update();
                 $httpBackend.flush();
 
                 // test URL location to new object
-                expect($location.path()).toBe('/anni-accademici/' + responseAcademicYearData()._id);
+                expect($location.path()).toBe('/utenti/' + responseUserData()._id);
 
             }));
 
-            it('$scope.remove() should send a DELETE request with a valid academicYearId' +
-                'and remove the academicYear from the scope', inject(function (AcademicYear) {
+            it('$scope.remove() should send a DELETE request with a valid userId' +
+                'and remove the user from the scope', inject(function (User) {
 
                 // fixture to send in DELETE request
-                var academicYear = new AcademicYear({
+                var user = new User({
                     _id: '1234567890abcdef12345678'
                 });
 
-                // mock academicYear in scope
-                scope.academicYears = [];
-                scope.academicYears.push(academicYear);
+                // mock user in scope
+                scope.users = [];
+                scope.users.push(user);
 
                 // test expected DELETE request
-                var urlRegex = new RegExp('academicYears/[0-9a-fA-F]{24}');
+                var urlRegex = new RegExp('users/[0-9a-fA-F]{24}');
                 $httpBackend.expectDELETE(urlRegex).respond(204);
 
                 // run controller
-                scope.remove(academicYear);
+                scope.remove(user);
                 $httpBackend.flush();
 
-                // test after successful delete URL location academicYears list
-                expect(scope.academicYears.length).toBe(0);
-                expect($location.path()).toBe('/anni-accademici');
+                // test after successful delete URL location users list
+                expect(scope.users.length).toBe(0);
+                expect($location.path()).toBe('/utenti');
 
             }));
         });

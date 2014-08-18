@@ -6,29 +6,29 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
     ];
 
     $scope.list = function () {
-        $location.path('quadriOrari');
+        $location.path('quadri-orari');
     };
 
     $scope.new = function () {
-        $location.path('quadriOrari/crea');
+        $location.path('quadri-orari/crea');
     };
 
     $scope.view = function (timeTable) {
         if (timeTable) {
-            $location.path('quadriOrari/' + timeTable._id);
+            $location.path('quadri-orari/' + timeTable._id);
         }
     };
 
     $scope.edit = function (timeTable) {
         if (timeTable) {
-            $location.path('quadriOrari/' + timeTable._id + '/modifica');
+            $location.path('quadri-orari/' + timeTable._id + '/modifica');
         }
     };
 
     $scope.init = function () {
         $scope.timeTable = new TimeTable();
         /* Inizializzo il Quadro Orario con 6 giorni della settimana
-           e 6 slot per ogni giorno */
+         e 6 slot per ogni giorno */
         $scope.timeTable.days = [];
         for (var i=0; i<6; i++) {
             $scope.timeTable.days.push({
@@ -43,44 +43,19 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
                 ]
                 //TODO in produzione sostituire il blocco sottostante con quello presente sopra
                 /*slots: [
-                    {start: undefined, end: undefined},
-                    {start: undefined, end: undefined},
-                    {start: undefined, end: undefined},
-                    {start: undefined, end: undefined},
-                    {start: undefined, end: undefined},
-                    {start: undefined, end: undefined}
-                ]*/
+                 {start: undefined, end: undefined},
+                 {start: undefined, end: undefined},
+                 {start: undefined, end: undefined},
+                 {start: undefined, end: undefined},
+                 {start: undefined, end: undefined},
+                 {start: undefined, end: undefined}
+                 ]*/
             });
         }
     };
 
-    /**
-     * Elimina gli slot vuoti e converte il formato degli slot orari.
-     * @param timeTable
-     */
-    var serializeData = function (timeTable) {
-        // converte il tipo Time da string del tipo 09:00 al numero totale di minuti
-        var convertTime = function(time) {
-            var timeArr = time.split(':');
-            return parseInt(timeArr[0])*60 + parseInt(timeArr[1]);
-        };
-
-        timeTable.days = timeTable.days.map(function(day){
-            day.slots = day.slots.filter(function(slot) {
-                return slot.start && slot.end;
-            });
-
-            day.slots = day.slots.map(function(slot){
-                return {
-                    start: convertTime(slot.start),
-                    end: convertTime(slot.end)
-                };
-            });
-
-            return day;
-        });
-
-        return timeTable;
+    $scope.isNotEmptySlot = function (slot) {
+        return slot.start && slot.end;
     };
 
     $scope.create = function () {
@@ -91,14 +66,6 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
             $scope.view(response);
         });
         $scope.init();
-    };
-
-    $scope.remove = function (timeTable) {
-        if (timeTable) {
-            timeTable.$remove();
-            _.remove($scope.timeTables, timeTable);
-            $scope.list();
-        }
     };
 
     $scope.update = function () {
@@ -115,8 +82,54 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
         });
     };
 
+    $scope.remove = function (timeTable) {
+        if (timeTable) {
+            timeTable.$remove();
+            _.remove($scope.timeTables, timeTable);
+            $scope.list();
+        }
+    };
+
     $scope.find = function () {
         $scope.timeTables = TimeTable.query();
+    };
+
+    $scope.findOne = function () {
+        $scope.timeTable = TimeTable.get({
+            timeTableId: $stateParams.timeTableId
+        });
+        $scope.timeTable.$promise.then(function(tempTimeTable){
+            $scope.timeTable = deserializeData(tempTimeTable);
+        });
+    };
+
+    /**
+     * Elimina gli slot vuoti e converte il formato degli slot orari.
+     * @param timeTable
+     */
+    var serializeData = function (timeTable) {
+        // converte il tipo Time da string del tipo 09:00 al numero totale di minuti
+        var convertTime = function(time) {
+            var timeArr = time.split(':');
+            return parseInt(timeArr[0])*60 + parseInt(timeArr[1]);
+        };
+
+        timeTable.days = _.map(timeTable.days, function(day){
+            day.slots = _.filter(day.slots, function(slot) {
+                return $scope.isNotEmptySlot(slot);
+            });
+
+            day.slots = _.map(day.slots, function(slot){
+                return {
+                    start: convertTime(slot.start),
+                    end: convertTime(slot.end)
+                };
+            });
+
+            return day;
+        });
+
+        return timeTable;
     };
 
     /**
@@ -135,9 +148,9 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
             return hours + ':' + minutes;
         };
 
-        timeTable.days = timeTable.days.map(function(day){
+        timeTable.days = _.map(timeTable.days, function(day){
 
-            day.slots = day.slots.map(function(slot){
+            day.slots = _.map(day.slots, function(slot){
                 return {
                     start: convertTime(slot.start),
                     end: convertTime(slot.end)
@@ -152,18 +165,5 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
         });
 
         return timeTable;
-    };
-
-    $scope.findOne = function () {
-        $scope.timeTable = TimeTable.get({
-            timeTableId: $stateParams.timeTableId
-        });
-        $scope.timeTable.$promise.then(function(tempTimeTable){
-            $scope.timeTable = deserializeData(tempTimeTable);
-        });
-    };
-
-    $scope.isNotEmptySlot = function (slot) {
-        return slot.start && slot.end;
     };
 }]);

@@ -100,22 +100,22 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
     })
 
     .state('all academic years', {
-        url: '/aa',
+        url: '/anni-accademici',
         templateUrl: 'views/academicYears/list.html'
     })
 
     .state('create academic year', {
-        url: '/aa/crea',
+        url: '/anni-accademici/crea',
         templateUrl: 'views/academicYears/create.html'
     })
 
     .state('edit academic year', {
-        url: '/aa/:academicYearId/modifica',
+        url: '/anni-accademici/:academicYearId/modifica',
         templateUrl: 'views/academicYears/edit.html'
     })
 
     .state('academic year by id', {
-        url: '/aa/:academicYearId',
+        url: '/anni-accademici/:academicYearId',
         templateUrl: 'views/academicYears/view.html'
     })
 
@@ -160,27 +160,27 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
     })
 
     .state('all time tables', {
-        url: '/quadriOrari',
+        url: '/quadri-orari',
         templateUrl: 'views/timeTables/list.html'
     })
 
     .state('create time table', {
-        url: '/quadriOrari/crea',
+        url: '/quadri-orari/crea',
         templateUrl: 'views/timeTables/create.html'
     })
 
     .state('edit time table', {
-        url: '/quadriOrari/:timeTableId/modifica',
+        url: '/quadri-orari/:timeTableId/modifica',
         templateUrl: 'views/timeTables/edit.html'
     })
 
     .state('time table by id', {
-        url: '/quadriOrari/:timeTableId',
+        url: '/quadri-orari/:timeTableId',
         templateUrl: 'views/timeTables/view.html'
     })
 
     .state('class registry by date', {
-        url: '/registroDiClasse/:classRegistryDate',
+        url: '/registri-di-classe/:classRegistryDate',
         templateUrl: 'views/classRegistry/edit.html'
     })
 

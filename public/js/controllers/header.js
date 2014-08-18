@@ -17,7 +17,7 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
         'link': 'alunni'
     }, {
         'title': 'Anni accademici',
-        'link': 'aa'
+        'link': 'anni-accademici'
     }, {
         'title': 'Classi',
         'link': 'classi'
@@ -26,10 +26,10 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
         'link': 'insegnamenti'
     }, {
         'title': 'Quadri Orari',
-        'link': 'quadriOrari'
+        'link': 'quadri-orari'
     },{
         'title': 'Registro di Classe',
-        'link': 'registroDiClasse/' + $filter('date')(new Date(), 'd-M-yyyy')
+        'link': 'registri-di-classe/' + $filter('date')(new Date(), 'd-M-yyyy')
     }];
     
     $scope.isCollapsed = false;

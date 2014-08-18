@@ -10,22 +10,22 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
     ];
 
     $scope.list = function () {
-        $location.path('aa');
+        $location.path('anni-accademici');
     };
 
     $scope.new = function () {
-        $location.path('aa/crea');
+        $location.path('anni-accademici/crea');
     };
 
     $scope.view = function (academicYear) {
         if (academicYear) {
-            $location.path('aa/' + academicYear._id);
+            $location.path('anni-accademici/' + academicYear._id);
         }
     };
 
     $scope.edit = function (academicYear) {
         if (academicYear) {
-            $location.path('aa/' + academicYear._id + '/modifica');
+            $location.path('anni-accademici/' + academicYear._id + '/modifica');
         }
     };
 

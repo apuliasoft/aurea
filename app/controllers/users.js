@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
+    generatePassword = require('password-generator'),
     _ = require('lodash');
 
 /**
@@ -19,6 +20,7 @@ exports.authCallback = function(req, res) {
  */
 exports.create = function(req, res) {
     var user = new User(req.body);
+    user.password = generatePassword(18, false);
 
     user.save(function(err) {
         if (err) {
