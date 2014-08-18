@@ -16,6 +16,13 @@ exports.authCallback = function(req, res) {
 };
 
 /**
+ * Check if the user is logged
+ */
+exports.loggedin = function(req, res) {
+    res.end('0');
+};
+
+/**
  * Create user
  */
 exports.create = function(req, res) {

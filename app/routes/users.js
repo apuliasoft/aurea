@@ -11,6 +11,7 @@ module.exports = function(app) {
     app.get('/users/me', users.me);*/
 
     // Setting up the users api
+    app.get('/loggedin', users.loggedin),
     app.get('/users', users.all);
     app.post('/users', users.create);
     app.get('/users/:userId', users.show);
