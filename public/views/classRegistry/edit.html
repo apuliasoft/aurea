@@ -1,38 +1,49 @@
 <section data-ng-controller="ClassRegistryCtrl" data-ng-init="init()">
 
-    <h2>Registro Di Classe</h2>
-    <button class="btn" data-ng-click="yesterday()">Ieri</button>
-    <button class="btn" data-ng-click="tomorrow()">domani</button>
-    <h3>{{ classRegistry.day | date:'EEEE, d MMMM yyyy' }}</h3>
+  <h2>Registro Di Classe</h2>
+  <button class="btn" data-ng-click="yesterday()">Ieri</button>
+  <button class="btn" data-ng-click="tomorrow()">domani</button>
+  <h3>{{ classRegistry.day | date:'EEEE, d MMMM yyyy' }}</h3>
 
-    <form data-ng-submit="save()" novalidate>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Ora</th>
-                    <th>Supplenza?</th>
-                    <th>Materia</th>
-                    <th>Assenti</th>
-                    <th>Argomento</th>
-                    <th>Note</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-ng-repeat="slot in classRegistry.slots">
-                    <td>{{$index+1}}</td>
-                    <td><input type="checkbox" data-ng-model="slot.substitution"></td>
-                    <td>Non implementato</td>
-                    <td>Non implementato</td>
-                    <td><input type="text" data-ng-model="slot.subject"></td>
-                    <td><input type="text" data-ng-model="slot.notes"></td>
-                </tr>
-            </tbody>
-        </table>
+  <form data-ng-submit="save()" novalidate>
 
-        <hr>
+    <div class="form-group">
+      <label for="schoolClass" class="control-label">Classe</label>
+      <select data-ng-model="classRegistry.schoolClass" id="schoolClass" name="schoolClass" class="form-control"
+              placeholder="Classe" data-ng-options="schoolClass._id as schoolClass.name for schoolClass in schoolClasses"></select>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Salva</button>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Ora</th>
+        <th>Supplenza</th>
+        <th>Materia</th>
+        <th>Argomento</th>
+        <th>Note</th>
+        <th>Assenti</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr data-ng-repeat="slot in classRegistry.slots | orderBy:'number'">
+        <td>{{ slot.number }}</td>
+        <td><input type="checkbox" data-ng-model="slot.substitution"></td>
+        <td>Non implementato</td>
+        <td><input type="text" data-ng-model="slot.subject"></td>
+        <td><input type="text" data-ng-model="slot.notes"></td>
+        <td data-ng-if="$first" rowspan="{{ classRegistry.slots.length }}">
+          <select size="15" id="absences" multiple data-ng-multiple="true"
+                  data-ng-model="classRegistry.absences" data-ng-options="student._id as student | name for student in students">
+          </select>
+        </td>
+      </tr>
+      </tbody>
+    </table>
 
-    </form>
+    <hr>
+
+    <button type="submit" class="btn btn-primary">Salva</button>
+
+  </form>
 
 </section>

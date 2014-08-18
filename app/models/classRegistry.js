@@ -32,12 +32,12 @@ var ClassRegistrySchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Teaching'
         },
-        notes: String,
         subject: String,
+        notes: String,
         substitution: {
-            type: Boolean,
-            required: true
-        },
+            type: Schema.Types.ObjectId,
+            ref: 'Teacher'
+        }, // supplenza
         supportTeachers: [{
             type: Schema.Types.ObjectId,
             ref: 'Teacher'
@@ -46,6 +46,34 @@ var ClassRegistrySchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Teacher'
         }] // sostegno
+    }],
+    lateEntrances: [{
+        _id: false,
+        student: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: 'Student'
+        },
+        timestamp: {
+            type: Number,
+            min: 0, //mezzanotte
+            max: 1439, //le 23:59
+            required: true
+        }
+    }],
+    earlyLeaves: [{
+        _id: false,
+        student: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: 'Student'
+        },
+        timestamp: {
+            type: Number,
+            min: 0, //mezzanotte
+            max: 1439, //le 23:59
+            required: true
+        }
     }]
 });
 

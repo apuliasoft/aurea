@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'SchoolClass', 'AcademicYear', 'Student', function ($scope, $stateParams, $location, _, Global, SchoolClass, AcademicYear, Student) {
+angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'SchoolClass', 'AcademicYear', 'Student', function ($scope, $stateParams, $location, $filter, _, Global, SchoolClass, AcademicYear, Student) {
     $scope.global = Global;
 
     $scope.columns = [
@@ -28,11 +28,7 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
             return student._id === studentId;
         });
 
-        return student && $scope.getFullName(student);
-    };
-
-    $scope.getFullName = function(student){
-        return student.firstName + ' ' + student.lastName;
+        return student && $filter('name')(student);
     };
 
     $scope.list = function () {

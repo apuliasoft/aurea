@@ -16,7 +16,7 @@
     <div class="form-group">
       <label for="students" class="control-label">Studenti</label>
       <select class="form-control" size="15" id="students" multiple data-ng-multiple="true"
-              data-ng-model="schoolClass.students" data-ng-options="student._id as getFullName(student) for student in students">
+              data-ng-model="schoolClass.students" data-ng-options="student._id as student | name for student in students">
       </select>
     </div>
 
