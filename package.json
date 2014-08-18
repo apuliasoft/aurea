@@ -81,7 +81,7 @@
     "assetmanager": "^0.1.1",
     "chai": "~1.9.1",
     "grunt-concurrent": "latest",
-    "grunt-coveralls": "^0.3.0",git 
+    "grunt-coveralls": "^0.3.0",
     "grunt-karma": "^0.6.2",
     "grunt-mocha-test": "latest",
     "karma": "^0.10.4",
