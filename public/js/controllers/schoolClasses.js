@@ -28,7 +28,11 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
             return student._id === studentId;
         });
 
-        return student && student.firstName + ' ' + student.lastName;
+        return student && $scope.getFullName(student);
+    };
+
+    $scope.getFullName = function(student){
+        return student.firstName + ' ' + student.lastName;
     };
 
     $scope.list = function () {

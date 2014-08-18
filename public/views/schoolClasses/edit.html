@@ -8,12 +8,15 @@
       <input type="text" data-ng-model="schoolClass.name" id="name" name="name" class="form-control" placeholder="Nome">
     </div>
 
-
+    <div class="form-group">
+      <label for="academicYear" class="control-label">Anno Accademico</label>
+      <select data-ng-model="schoolClass.academicYear" id="academicYear" name="academicYear" class="form-control" placeholder="Anno Accademico" data-ng-options="academicYear._id as academicYear.name for academicYear in academicYears"></select>
+    </div>
 
     <div class="form-group">
       <label for="students" class="control-label">Studenti</label>
       <select class="form-control" size="15" id="students" multiple data-ng-multiple="true"
-              data-ng-model="schoolClass.students" data-ng-options="student._id as student.firstName student.lastName for student in students">
+              data-ng-model="schoolClass.students" data-ng-options="student._id as getFullName(student) for student in students">
       </select>
     </div>
 
