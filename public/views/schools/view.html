@@ -5,7 +5,7 @@
     <dt>Nome</dt>
     <dd>{{ school.name }}</dd>
     <dl data-ng-repeat="complex in school.complexes">
-      <dt>Plesso #{{$index+1}}</dt>
+      <dt>{{ complex.name }}</dt>
       <dd>
         <address>
           {{ complex | address }}

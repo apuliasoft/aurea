@@ -69,7 +69,7 @@ exports.update = function(req, res, next) {
 
         //TODO con il save, si può fare l'upsert??
 
-        //FIXME attenzione!! eliminare i complenni non più referenziati!!
+        // FIXME attenzione!! eliminare i complessi non più referenziati!!
 
         // FIXME se è stato aggiunto un plesso non ho l'_id
         // Sostituisco i complessi con i loro ID

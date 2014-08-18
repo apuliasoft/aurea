@@ -19,6 +19,11 @@
       <div data-ng-form name="complexForm" class="panel-body">
 
         <div class="form-group">
+          <label for="name_{{$index}}" class="control-label">Nome</label>
+          <input type="text" data-ng-model="complex.name" id="name_{{$index}}" name="name" class="form-control" placeholder="Nome">
+        </div>
+
+        <div class="form-group">
           <label for="street_{{$index}}" class="control-label">Via</label>
           <input type="text" data-ng-model="complex.street" id="street_{{$index}}" name="street" class="form-control" placeholder="Via">
         </div>

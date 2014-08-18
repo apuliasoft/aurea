@@ -11,6 +11,10 @@ var mongoose = require('mongoose'),
  * Complex Schema
  */
 var ComplexSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
     street: {
         type: String,
         required: true
