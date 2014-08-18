@@ -19,7 +19,7 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
         });
 
         return complex && complex.name;
-    }
+    };
 
     $scope.list = function () {
         $location.path('alunni');
