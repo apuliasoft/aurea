@@ -2,13 +2,20 @@
 
 // User routes use users controller
 var users = require('../controllers/users');
+var passport = require('passport');
 
 module.exports = function(app) {
 
-    /*app.get('/signin', users.signin);
-    app.get('/signup', users.signup);
-    app.get('/signout', users.signout);
-    app.get('/users/me', users.me);*/
+    // Setting the local strategy route
+    app.get('/loggedin', users.loggedin);
+    app.post('/login',
+      passport.authenticate('local'),
+      function(req, res) {
+          // If this function gets called, authentication was successful.
+          // `req.user` contains the authenticated user.
+          //res.redirect('/users/' + req.user.username);
+          res.end('1');
+      });
 
     // Setting up the users api
     app.get('/users', users.all);
@@ -19,10 +26,4 @@ module.exports = function(app) {
 
     // Setting up the userId param
     app.param('userId', users.user);
-
-    // Setting the local strategy route
-   /* app.post('/users/session', passport.authenticate('local', {
-        failureRedirect: '/signin',
-        failureFlash: true
-    }), users.session);*/
 };

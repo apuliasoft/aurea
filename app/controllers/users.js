@@ -16,11 +16,23 @@ exports.authCallback = function(req, res) {
 };
 
 /**
+ * Check if the user is logged
+ */
+exports.loggedin = function(req, res) {
+    if (req.user)
+        res.end('1');
+    else
+        res.end('0');
+};
+
+/**
  * Create user
  */
 exports.create = function(req, res) {
     var user = new User(req.body);
-    user.password = generatePassword(18, false);
+    var password = generatePassword(18, false);
+    user.password = password;
+    console.log('password generata: ' + password);
 
     user.save(function(err) {
         if (err) {
