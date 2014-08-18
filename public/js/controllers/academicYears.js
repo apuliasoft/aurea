@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'AcademicYear', function ($scope, $stateParams, $location, _, Global, AcademicYear) {
+angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'AcademicYear', 'Complex', function ($scope, $stateParams, $location, _, Global, AcademicYear, Complex) {
     $scope.global = Global;
 
     $scope.columns = [
@@ -8,6 +8,18 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         {name:'startDate', label:'Data inizio', filter:'date'},
         {name:'endDate', label:'Data fine', filter:'date'}
     ];
+
+    if(!$scope.complexes) {
+        $scope.complexes = Complex.query();
+    }
+
+    $scope.getComplexName = function(complexId) {
+        var complex = _.find($scope.complexes, function(complex) {
+            return complex._id === complexId;
+        });
+
+        return complex && complex.name;
+    };
 
     $scope.list = function () {
         $location.path('anni-accademici');

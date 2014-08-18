@@ -18,6 +18,11 @@
       <input type="date" data-ng-model="academicYear.endDate" id="endDate" name="endDate" class="form-control" placeholder="Data fine">
     </div>
 
+    <div class="form-group">
+      <label for="complex" class="control-label">Plesso</label>
+      <select data-ng-model="academicYear.complex" id="complex" name="complex" class="form-control" placeholder="Plesso" data-ng-options="complex._id as complex.name for complex in complexes"></select>
+    </div>
+
     <hr>
 
     <button type="submit" class="btn btn-primary">Crea</button>

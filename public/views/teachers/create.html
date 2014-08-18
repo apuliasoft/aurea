@@ -13,6 +13,11 @@
       <input type="text" data-ng-model="teacher.lastName" id="lastName" name="lastName" class="form-control" placeholder="Cognome">
     </div>
 
+    <div class="form-group">
+      <label for="complex" class="control-label">Plesso</label>
+      <select data-ng-model="teacher.complex" id="complex" name="complex" class="form-control" placeholder="Plesso" data-ng-options="complex._id as complex.name for complex in complexes"></select>
+    </div>
+
     <hr>
 
     <button type="submit" class="btn btn-primary">Crea</button>
