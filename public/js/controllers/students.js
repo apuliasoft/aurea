@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Student', function ($scope, $stateParams, $location, _, Global, Student) {
+angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'Student', 'Complex', function ($scope, $stateParams, $location, $filter, _, Global, Student, Complex) {
     $scope.global = Global;
 
     $scope.columns = [
@@ -8,6 +8,18 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
         {name:'lastName', label:'Cognome'},
         {name:'birthDate', label:'Data di nascita', filter:'date'}
     ];
+
+    if(!$scope.complexes) {
+        $scope.complexes = Complex.query();
+    }
+
+    $scope.getComplexName = function(complexId) {
+        var complex = _.find($scope.complexes, function(complex) {
+            return complex._id === complexId;
+        });
+
+        return complex && complex.name;
+    };
 
     $scope.list = function () {
         $location.path('alunni');
@@ -68,6 +80,9 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
     $scope.findOne = function() {
         $scope.student = Student.get({
             studentId: $stateParams.studentId
+        },
+        function(student){
+            student.birthDate = $filter('date')(student.birthDate, 'yyyy-MM-dd');
         });
     };
 }]);

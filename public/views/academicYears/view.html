@@ -8,6 +8,8 @@
     <dd>{{ academicYear.startDate | date }}</dd>
     <dt>Data fine</dt>
     <dd>{{ academicYear.endDate | date }}</dd>
+    <dt>Plesso</dt>
+    <dd>{{ getComplexName(academicYear.complex) }}</dd>
   </dl>
 
   <button data-ng-click="edit(academicYear)" class="btn btn-default">Modifica anno accademico</button>

@@ -1,19 +1,28 @@
 <section data-ng-controller="TimeTablesCtrl" data-ng-init="findOne()">
-    <h2>Dettaglio quadro orario</h2>
+  <h2>Dettaglio quadro orario</h2>
 
-    <div class="row">
-        <div class="col-md-4" data-ng-repeat="dayTimeTable in timeTable.days">
-            <hr>
-            <p><b>{{(dayTimeTable.day+1) | day}}</b></p>
-            <div class="row" data-ng-repeat="slot in dayTimeTable.slots | filter:isNotEmptySlot">
-                <span class="col-md-4">{{($index+1) | ordinalNumber}} ora</span>
-                <div class="col-md-8">
-                    dalle <b>{{slot.start}}</b>
-                    alle <b>{{slot.end}}</b>
-                </div>
-            </div>
+  <dl class="dl-horizontal">
+    <dt>Anno Accademico</dt>
+    <dd>{{ getAcademicYearName(timeTable.academicYear) }}</dd>
+  </dl>
+
+  <div class="row">
+    <div class="col-md-4" data-ng-repeat="dayTimeTable in timeTable.days">
+      <hr>
+      <p><b>{{(dayTimeTable.day+1) | day}}</b></p>
+
+      <div class="row" data-ng-repeat="slot in dayTimeTable.slots | filter:isNotEmptySlot">
+        <span class="col-md-4">{{($index+1) | ordinalNumber}} ora</span>
+
+        <div class="col-md-8">
+          dalle <b>{{slot.start}}</b>
+          alle <b>{{slot.end}}</b>
         </div>
+      </div>
     </div>
+  </div>
 
-    <button data-ng-click="edit(timeTable)" class="btn btn-default">Modifica quadro orario</button>
+  <hr>
+
+  <button data-ng-click="edit(timeTable)" class="btn btn-default">Modifica quadro orario</button>
 </section>

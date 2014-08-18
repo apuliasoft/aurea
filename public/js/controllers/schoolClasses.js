@@ -1,11 +1,39 @@
 'use strict';
 
-angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'SchoolClass', function ($scope, $stateParams, $location, _, Global, SchoolClass) {
+angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'SchoolClass', 'AcademicYear', 'Student', function ($scope, $stateParams, $location, _, Global, SchoolClass, AcademicYear, Student) {
     $scope.global = Global;
 
     $scope.columns = [
         {name:'name', label:'Nome'}
     ];
+
+    if(!$scope.academicYears) {
+        $scope.academicYears = AcademicYear.query();
+    }
+
+    if(!$scope.students) {
+        $scope.students = Student.query();
+    }
+
+    $scope.getAcademicYearName = function(academicYearId) {
+        var academicYear = _.find($scope.academicYears, function(academicYear) {
+            return academicYear._id === academicYearId;
+        });
+
+        return academicYear && academicYear.name;
+    };
+
+    $scope.getStudentFullName = function(studentId) {
+        var student = _.find($scope.students, function(student) {
+            return student._id === studentId;
+        });
+
+        return student && $scope.getFullName(student);
+    };
+
+    $scope.getFullName = function(student){
+        return student.firstName + ' ' + student.lastName;
+    };
 
     $scope.list = function () {
         $location.path('classi');

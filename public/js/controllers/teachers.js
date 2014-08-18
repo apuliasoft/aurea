@@ -8,6 +8,18 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
         {name:'lastName', label:'Cognome'}
     ];
 
+    if(!$scope.complexes) {
+        $scope.complexes = Complex.query();
+    }
+
+    $scope.getComplexName = function(complexId) {
+        var complex = _.find($scope.complexes, function(complex) {
+            return complex._id === complexId;
+        });
+
+        return complex && complex.name;
+    };
+
     $scope.list = function () {
         $location.path('insegnanti');
     };

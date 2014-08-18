@@ -1,9 +1,21 @@
 'use strict';
 
-angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$stateParams', '$location', '_', 'TimeTable', function ($scope, $stateParams, $location, _, TimeTable) {
+angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$stateParams', '$location', '_', 'TimeTable', 'AcademicYear', function ($scope, $stateParams, $location, _, TimeTable, AcademicYear) {
     $scope.columns = [
         {name: '_id', label: 'ID'}
     ];
+
+    if(!$scope.academicYear) {
+        $scope.academicYears = AcademicYear.query();
+    }
+
+    $scope.getAcademicYearName = function(academicYearId) {
+        var academicYear = _.find($scope.academicYears, function(academicYear) {
+            return academicYear._id === academicYearId;
+        });
+
+        return academicYear && academicYear.name;
+    };
 
     $scope.list = function () {
         $location.path('quadri-orari');
@@ -97,9 +109,9 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
     $scope.findOne = function () {
         $scope.timeTable = TimeTable.get({
             timeTableId: $stateParams.timeTableId
-        });
-        $scope.timeTable.$promise.then(function(tempTimeTable){
-            $scope.timeTable = deserializeData(tempTimeTable);
+        },
+        function(timeTable){
+            timeTable = deserializeData(timeTable);
         });
     };
 

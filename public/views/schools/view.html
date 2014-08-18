@@ -6,11 +6,7 @@
     <dd>{{ school.name }}</dd>
     <dl data-ng-repeat="complex in school.complexes">
       <dt>{{ complex.name }}</dt>
-      <dd>
-        <address>
-          {{ complex | address }}
-        </address>
-      </dd>
+      <dd>{{ complex | address }}</dd>
     </dl>
   </dl>
 

@@ -8,6 +8,7 @@ angular.module('aurea', [
     'aurea.system',
     'aurea.users',
     'aurea.schools',
+    'aurea.complexes',
     'aurea.teachers',
     'aurea.students',
     'aurea.academicYears',
@@ -20,6 +21,7 @@ angular.module('aurea', [
 angular.module('aurea.system', []);
 angular.module('aurea.users', []);
 angular.module('aurea.schools', []);
+angular.module('aurea.complexes', []);
 angular.module('aurea.teachers', []);
 angular.module('aurea.students', []);
 angular.module('aurea.academicYears', []);
