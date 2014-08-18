@@ -20,7 +20,7 @@
 
     <div class="form-group">
       <label for="complex" class="control-label">Plesso</label>
-      <select data-ng-model="student.complex" id="complex" name="complex" class="form-control" placeholder="Plesso" data-ng-options="complexes" />
+      <select data-ng-model="student.complex" id="complex" name="complex" class="form-control" placeholder="Plesso" data-ng-options="complex._id as complex.name for complex in complexes"></select>
     </div>
 
     <hr>

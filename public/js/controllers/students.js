@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Student', 'Complex', function ($scope, $stateParams, $location, _, Global, Student, Complex) {
+angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'Student', 'Complex', function ($scope, $stateParams, $location, $filter, _, Global, Student, Complex) {
     $scope.global = Global;
 
     $scope.columns = [
@@ -80,6 +80,9 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
     $scope.findOne = function() {
         $scope.student = Student.get({
             studentId: $stateParams.studentId
+        },
+        function(student){
+            student.birthDate = $filter('date')(student.birthDate, 'yyyy-MM-dd');
         });
     };
 }]);

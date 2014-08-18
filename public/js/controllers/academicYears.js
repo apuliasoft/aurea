@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'AcademicYear', 'Complex', function ($scope, $stateParams, $location, _, Global, AcademicYear, Complex) {
+angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'AcademicYear', 'Complex', function ($scope, $stateParams, $location, $filter, _, Global, AcademicYear, Complex) {
     $scope.global = Global;
 
     $scope.columns = [
@@ -80,6 +80,10 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
     $scope.findOne = function() {
         $scope.academicYear = AcademicYear.get({
             academicYearId: $stateParams.academicYearId
+        },
+        function(academicYear){
+            academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
+            academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
         });
     };
 }]);
