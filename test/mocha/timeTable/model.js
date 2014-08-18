@@ -107,26 +107,10 @@ describe('<Unit Test>', function() {
                 return TimeTable.findById(timeTable._id, function(err, timetableResult) {
                     should.not.exist(err);
 
-                    //console.log(timetableResult);
-
                     AcademicYear.findById(timetableResult.academicYear, function(err, academicYearResult){
                         should.not.exist(err);
                         expect(academicYearResult.complex).to.eql(complex._id);
                         done();
-                    });
-                });
-            });
-
-            it('should be able to find a time table\'s school', function(done) {
-                return TimeTable.findById(timeTable._id, function(err, timetableResult) {
-                    should.not.exist(err);
-                    AcademicYear.findById(timetableResult.academicYear, function(err, academicYearResult){
-                        should.not.exist(err);
-                        Complex.findById(academicYearResult.complex, function(err, complexResult){
-                            should.not.exist(err);
-                            expect(complexResult.school).to.eql(school._id);
-                            done();
-                        });
                     });
                 });
             });

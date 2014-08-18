@@ -81,16 +81,6 @@ describe('<Unit Test>', function() {
                     done();
                 });
             });
-
-            it('should be able to find a academic year\'s school', function(done) {
-                return AcademicYear.findById(academicYear._id).populate('complex').exec(function(err, result) {
-                    Complex.populate(result.complex, {path: 'school'}, function(err, result){
-                        should.not.exist(err);
-                        expect(result.school.equals(school)).to.equal(true);
-                        done();
-                    });
-                });
-            });
         });
 
         describe('Method Save', function() {

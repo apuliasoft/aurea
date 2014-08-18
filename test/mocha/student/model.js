@@ -81,14 +81,6 @@ describe('<Unit Test>', function() {
                     done();
                 });
             });
-
-            it('should be able to find a student\'s school', function(done) {
-                return Student.findById(student._id).populate('complex').exec(function(err, result) {
-                    should.not.exist(err);
-                    expect(result.complex.school).to.eql(school._id);
-                    done();
-                });
-            });
         });
 
         describe('Method Save', function() {

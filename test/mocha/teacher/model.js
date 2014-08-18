@@ -20,11 +20,6 @@ var school;
 describe('<Unit Test>', function() {
     describe('Model Teacher:', function() {
         beforeEach(function(done) {
-            teacher = new Teacher({
-                firstName: 'Pinco',
-                lastName: 'Pallino'
-            });
-
             school = new School({
                 name: 'Istituto Tecnico'
             });
@@ -81,14 +76,6 @@ describe('<Unit Test>', function() {
                 return Teacher.findById(teacher._id, function(err, result) {
                     should.not.exist(err);
                     expect(result.complex).to.eql(complex._id);
-                    done();
-                });
-            });
-
-            it('should be able to find a teacher\'s school', function(done) {
-                return Teacher.findById(teacher._id).populate('complex').exec(function(err, result) {
-                    should.not.exist(err);
-                    expect(result.complex.school).to.eql(school._id);
                     done();
                 });
             });
