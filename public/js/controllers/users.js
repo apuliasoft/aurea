@@ -42,7 +42,6 @@ angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams',
 
     $scope.create = function () {
         var user = $scope.user;
-        user.password = 'password';
 
         user.$save(function (response) {
             $scope.view(response);

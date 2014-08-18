@@ -52,7 +52,7 @@
                 scope.list();
 
                 // test URL location to list
-                expect($location.path()).toBe('/aa');
+                expect($location.path()).toBe('/anni-accademici');
             });
 
             it('$scope.new() should locate to create academic year form URL', function() {
@@ -61,7 +61,7 @@
                 scope.new();
 
                 // test URL location to create form
-                expect($location.path()).toBe('/aa/crea');
+                expect($location.path()).toBe('/anni-accademici/crea');
             });
 
             it('$scope.view() should locate to view academic year URL', function() {
@@ -77,7 +77,7 @@
                 scope.view(viewAcademicYearData());
 
                 // test URL location to view
-                expect($location.path()).toBe('/aa/' + viewAcademicYearData()._id);
+                expect($location.path()).toBe('/anni-accademici/' + viewAcademicYearData()._id);
             });
 
             it('$scope.edit() should locate to edit academic year form URL', function() {
@@ -93,7 +93,7 @@
                 scope.edit(editAcademicYearData());
 
                 // test URL location to view
-                expect($location.path()).toBe('/aa/' + editAcademicYearData()._id + '/modifica');
+                expect($location.path()).toBe('/anni-accademici/' + editAcademicYearData()._id + '/modifica');
             });
 
             it('$scope.find() should create an array with at least one academic year object ' +
@@ -199,7 +199,7 @@
                 expect(scope.academicYear).toEqualData(new AcademicYear());
 
                 // test URL location to new object
-                expect($location.path()).toBe('/aa/' + responseAcademicYearData()._id);
+                expect($location.path()).toBe('/anni-accademici/' + responseAcademicYearData()._id);
             }));
 
             it('$scope.update() should update a valid academic year', inject(function (AcademicYear) {
@@ -241,7 +241,7 @@
                 $httpBackend.flush();
 
                 // test URL location to new object
-                expect($location.path()).toBe('/aa/' + responseAcademicYearData()._id);
+                expect($location.path()).toBe('/anni-accademici/' + responseAcademicYearData()._id);
 
             }));
 
@@ -267,7 +267,7 @@
 
                 // test after successful delete URL location academicYears list
                 expect(scope.academicYears.length).toBe(0);
-                expect($location.path()).toBe('/aa');
+                expect($location.path()).toBe('/anni-accademici');
 
             }));
         });

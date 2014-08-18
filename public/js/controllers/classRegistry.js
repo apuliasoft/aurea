@@ -52,13 +52,13 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
     $scope.tomorrow = function () {
         var day = getDateFromUrl();
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate()+1);
-        $location.path('registroDiClasse/' + $filter('date')(newDay, 'd-M-yyyy'));
+        $location.path('registri-di-classe/' + $filter('date')(newDay, 'd-M-yyyy'));
     };
 
     $scope.yesterday = function () {
         var day = getDateFromUrl();
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate()-1);
-        $location.path('registroDiClasse/' + $filter('date')(newDay, 'd-M-yyyy'));
+        $location.path('registri-di-classe/' + $filter('date')(newDay, 'd-M-yyyy'));
     };
 
     $scope.onUpdate = function (classRegistry) {
