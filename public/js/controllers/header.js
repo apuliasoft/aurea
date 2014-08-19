@@ -4,6 +4,9 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
     $scope.global = Global;
 
     $scope.menu = [{
+        'title': 'Logout',
+        'link': 'logout'
+    }, {
         'title': 'Utenti',
         'link': 'utenti'
     }, {

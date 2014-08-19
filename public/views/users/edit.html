@@ -20,8 +20,7 @@
 
       <div class="form-group">
           <label for="roles" class="control-label">Ruoli</label>
-          <select class="form-control" size="10" id="roles" multiple data-ng-multiple="true"
-                  data-ng-model="user.roles" data-ng-options="key as value for (key, value) in roles">
+          <select class="form-control" size="10" id="roles" data-ng-model="user.role" data-ng-options="key as value for (key, value) in roles">
           </select>
       </div>
 
@@ -32,7 +31,5 @@
     <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
 
   </form>
-
-    <button ng-click="prints()">prints</button>
 
 </section>

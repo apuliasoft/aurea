@@ -3,6 +3,7 @@
 // User routes use users controller
 var users = require('../controllers/users');
 var passport = require('passport');
+var auth = require('./middlewares/authorization');
 
 module.exports = function(app) {
 
@@ -16,11 +17,16 @@ module.exports = function(app) {
           //res.redirect('/users/' + req.user.username);
           res.end('1');
       });
+    app.post('/logout', function(req, res){
+        throw new Exception();
+        req.logout();
+        res.end();
+    });
 
     // Setting up the users api
-    app.get('/users', users.all);
+    app.get('/users', auth.check, users.all);
     app.post('/users', users.create);
-    app.get('/users/:userId', users.show);
+    app.get('/users/:userId', auth.check, users.show);
     app.put('/users/:userId', users.update);
     app.del('/users/:userId', users.destroy);
 

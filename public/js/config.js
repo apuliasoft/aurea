@@ -24,6 +24,19 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
 
     };
 
+    var logout = function($q, $timeout, $http, $location) {
+        // Initialize a new promise
+        var deferred = $q.defer();
+
+        // Make an AJAX call to logout user
+        $http.post('/logout').success(function() {
+            $timeout(deferred.reject);
+            $location.url('/login');
+        });
+
+        return deferred.promise;
+    };
+
     // For unmatched routes:
     $urlRouterProvider.otherwise('/');
 
@@ -33,6 +46,13 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
     .state('login user', {
         url: '/login',
         templateUrl: 'views/login.html'
+    })
+
+    .state('logout user', {
+        url: '/logout',
+        resolve: {
+            logout: logout
+        }
     })
 
     .state('all users', {
