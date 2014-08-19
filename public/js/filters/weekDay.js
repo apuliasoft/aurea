@@ -4,7 +4,7 @@
  * Trasforma un numero in formato numerico nel corrispondente
  * giorno della settimana in formato di stringa
  **/
-angular.module('aurea').filter('day', [function() {
+angular.module('aurea').filter('weekDay', [function() {
     return function (input) {
         var day = 'Giorno non valido!';
         switch (input) {

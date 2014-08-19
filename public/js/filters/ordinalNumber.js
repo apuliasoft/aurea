@@ -29,6 +29,9 @@ angular.module('aurea').filter('ordinalNumber', [function() {
             case 7:
                 number = 'Settima';
                 break;
+            case 8:
+                number = 'Ottava';
+                break;
         }
         return number;
     };
