@@ -10,22 +10,14 @@ var mongoose = require('mongoose'),
 /**
  * Find a class registry by date
  */
-exports.classRegistry = function(req, res, next, day) {
-    ClassRegistry.findOne({ day: new Date(day) }, function(err, classRegistry) {
-        if (err) return next(err);
-
-        if (classRegistry) {
-            req.classRegistry = classRegistry;
-        }
-
-        next();
-    });
-};
+function classRegistry(classId, date, callback) {
+    ClassRegistry.findOne({ schoolClass: classId, date: new Date(date) }, callback);
+}
 
 /**
  * Create or Update a class registry by year
  */
-exports.createOrUpdate = function(req, res) {
+exports.createOrUpdate = function (req, res) {
     var classRegistry = req.classRegistry;
 
     if (!classRegistry) {
@@ -47,6 +39,8 @@ exports.createOrUpdate = function(req, res) {
 /**
  * Show a class registry
  */
-exports.show = function(req, res) {
-    res.jsonp(req.classRegistry || {});
+exports.show = function (req, res) {
+    classRegistry(req.params.classId, req.params.date, function (err, classRegistry) {
+        res.jsonp(classRegistry || {});
+    });
 };

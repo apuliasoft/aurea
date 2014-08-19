@@ -46,13 +46,13 @@ describe('<Unit Test>', function() {
                         endDate: 2345678910000,
                         complex: complex,
                         timeTable: [{
-                            day: 0,
+                            weekDay: 1,
                             slots:[
                                 {start:540, end: 600},
                                 {start:600, end: 660}
                             ]
                         },{
-                            day: 1,
+                            weekDay: 2,
                             slots:[
                                 {start:540, end: 600},
                                 {start:600, end: 660}
@@ -133,7 +133,7 @@ describe('<Unit Test>', function() {
             });
 
             it('should be able to show an error when try to save with a day greater than 6', function(done) {
-                academicYear.timeTable[0].day = 8;
+                academicYear.timeTable[0].weekDay = 8;
 
                 return academicYear.save(function (err) {
                     should.exist(err);
@@ -159,13 +159,13 @@ describe('<Unit Test>', function() {
                     startDate: 2345678910000,
                     endDate: 3456789120000,
                     timeTable: [{
-                        day: 1,
+                        weekDay: 1,
                         slots:[
                             {start:580, end: 600},
                             {start:600, end: 620}
                         ]
                     },{
-                        day: 2,
+                        weekDay: 3,
                         slots:[
                             {start:580, end: 600},
                             {start:600, end: 620}

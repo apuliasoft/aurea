@@ -13,7 +13,7 @@
   </dl>
 
   <div class="row">
-    <div class="col-md-4" data-ng-repeat="day in timeTable.days">
+    <div class="col-md-4" data-ng-repeat="day in academicYear.timeTable">
       <hr>
       <p><b>{{ day.weekDay | weekDay}}</b></p>
 
@@ -27,6 +27,8 @@
       </div>
     </div>
   </div>
+
+  <hr>
 
   <button data-ng-click="edit(academicYear)" class="btn btn-default">Modifica anno accademico</button>
 </section>

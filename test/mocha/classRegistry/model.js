@@ -55,7 +55,20 @@ describe('<Unit Test>', function() {
                         name: '2013/2014',
                         startDate: 1234567890000,
                         endDate: 2345678910000,
-                        complex: complex
+                        complex: complex,
+                        timeTable: [{
+                            weekDay: 1,
+                            slots:[
+                                {start:540, end: 600},
+                                {start:600, end: 660}
+                            ]
+                        },{
+                            weekDay: 2,
+                            slots:[
+                                {start:540, end: 600},
+                                {start:600, end: 660}
+                            ]
+                        }]
                     });
                     academicYear.save(function(err){
                         if (err) {
@@ -100,7 +113,7 @@ describe('<Unit Test>', function() {
                                         }
                                         classRegistry = new ClassRegistry({
                                             schoolClass: schoolClass,
-                                            day: 1234567890000,
+                                            date: 1234567890000,
                                             absences: [student],
                                             slots: [{
                                                 number: 1,
@@ -181,8 +194,8 @@ describe('<Unit Test>', function() {
                 });
             });
 
-            it('should be able to show an error when try to save without day', function(done) {
-                classRegistry.day = NaN;
+            it('should be able to show an error when try to save without date', function(done) {
+                classRegistry.date = NaN;
 
                 return classRegistry.save(function (err) {
                     should.exist(err);
@@ -201,7 +214,7 @@ describe('<Unit Test>', function() {
 
             it('should be able to update a class registry', function(done) {
                 var update = {
-                    day: 1234987650000
+                    date: 1234987650000
                 };
                 classRegistry = _.extend(classRegistry, update);
 
@@ -212,7 +225,7 @@ describe('<Unit Test>', function() {
                         should.not.exist(err);
 
                         expect(classRegistryResult.equals(classRegistry)).to.equal(true);
-                        expect(classRegistryResult.day).to.eql(new Date(update.day));
+                        expect(classRegistryResult.date).to.eql(new Date(update.date));
 
                         done();
                     });

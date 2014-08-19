@@ -11,6 +11,8 @@ module.exports = function(app) {
     app.put('/academicYears/:academicYearId', academicYears.update);
     app.del('/academicYears/:academicYearId', academicYears.destroy);
 
+    app.get('/academicYears/getTimeTable', academicYears.getTimeTable);
+
     // Finish with setting up the academicYearId param
     app.param('academicYearId', academicYears.academicYear);
 

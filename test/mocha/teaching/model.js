@@ -53,7 +53,20 @@ describe('<Unit Test>', function() {
                         name: '2013/2014',
                         startDate: 1234567890000,
                         endDate: 2345678910000,
-                        complex: complex
+                        complex: complex,
+                        timeTable: [{
+                            weekDay: 1,
+                            slots:[
+                                {start:540, end: 600},
+                                {start:600, end: 660}
+                            ]
+                        },{
+                            weekDay: 2,
+                            slots:[
+                                {start:540, end: 600},
+                                {start:600, end: 660}
+                            ]
+                        }]
                     });
                     academicYear.save(function(err){
                         if (err) {

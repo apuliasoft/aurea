@@ -14,7 +14,7 @@ var ClassRegistrySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'SchoolClass'
     },
-    day: {
+    date: {
         type: Date,
         required: true
     },

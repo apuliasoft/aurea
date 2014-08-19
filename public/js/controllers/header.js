@@ -24,12 +24,9 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
     }, {
         'title': 'Insegnamenti',
         'link': 'insegnamenti'
-    }, {
-        'title': 'Quadri Orari',
-        'link': 'quadri-orari'
     },{
         'title': 'Registro di Classe',
-        'link': 'registri-di-classe/' + $filter('date')(new Date(), 'd-M-yyyy')
+        'link': 'registri-di-classe/53f1ffd35f8fddfd599e6c9b/' + $filter('date')(new Date(), 'yyyy-MM-dd')
     }];
     
     $scope.isCollapsed = false;

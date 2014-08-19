@@ -86,3 +86,10 @@ exports.all = function(req, res) {
         }
     });
 };
+
+/**
+ * List of academic years
+ */
+exports.getTimeTable = function(req, res) {
+    res.jsonp(req.academicYear.timeTable);
+};

@@ -5,10 +5,7 @@ var classRegistry = require('../controllers/classRegistry');
 
 module.exports = function(app) {
 
-    app.get('/classRegistries/:classRegistryDate', classRegistry.show);
-    app.put('/classRegistries/:classRegistryDate', classRegistry.createOrUpdate);
-
-    // Finish with setting up the academicYearId param
-    app.param('classRegistryDate', classRegistry.classRegistry);
+    app.get('/classRegistries/:classId/:date', classRegistry.show);
+    app.put('/classRegistries/:classId/:date', classRegistry.createOrUpdate);
 
 };

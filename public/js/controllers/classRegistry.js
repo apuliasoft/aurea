@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'ClassRegistry', 'SchoolClass', 'Teacher', 'Teaching', 'Student', function ($scope, $stateParams, $location, $filter, _, ClassRegistry, SchoolClass, Teacher, Teaching, Student) {
+angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'ClassRegistry', 'SchoolClass', 'Teacher', 'Teaching', 'Student', 'Global', function ($scope, $stateParams, $location, $filter, _, ClassRegistry, SchoolClass, Teacher, Teaching, Student, Global) {
 
     if (!$scope.schoolClasses) {
         $scope.schoolClasses = SchoolClass.query();
@@ -14,17 +14,56 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
         $scope.teachings = Teaching.query();
     }
 
-    if(!$scope.students) {
+    if (!$scope.students) {
         $scope.students = Student.query();
     }
 
-    function getDateFromUrl() {
-        var dateArray = $stateParams.classRegistryDate.split('-');
-        return new Date(/*year*/dateArray[2], /*month*/dateArray[1] - 1, /*day*/dateArray[0]);
-    }
+    /**
+     * Converte il formato degli orari.
+     * @param classRegistry
+     */
+    var serializeData = function (classRegistry) {
 
-    function getEmptyClassRegistry() {
-        return {
+        classRegistry.lateEntrances = _.map(classRegistry.lateEntrances, function (lateEntrance) {
+            lateEntrance.timestamp = $filter('minute')(lateEntrance.timestamp);
+            return lateEntrance;
+        });
+
+        classRegistry.earlyLeaves = _.map(classRegistry.earlyLeaves, function (earlyLeave) {
+            earlyLeave.timestamp = $filter('minute')(earlyLeave.timestamp);
+            return earlyLeave;
+        });
+
+        return classRegistry;
+    };
+
+    /**
+     * Converte il formato degli orari.
+     * @param classRegistry
+     */
+    var deserializeData = function (classRegistry) {
+
+        classRegistry.lateEntrances = _.map(classRegistry.lateEntrances, function (lateEntrance) {
+            lateEntrance.timestamp = $filter('time')(lateEntrance.timestamp);
+            return lateEntrance;
+        });
+
+        classRegistry.earlyLeaves = _.map(classRegistry.earlyLeaves, function (earlyLeave) {
+            earlyLeave.timestamp = $filter('time')(earlyLeave.timestamp);
+            return earlyLeave;
+        });
+
+        return classRegistry;
+    };
+
+    $scope.init = function () {
+
+        var classId = $stateParams.classId;
+        var date = new Date($stateParams.date);
+
+        $scope.classRegistry = {
+            schoolClass: classId,
+            date: date,
             slots: [
                 {number: 1},
                 {number: 2},
@@ -34,24 +73,16 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
                 {number: 6}
             ]
         };
-    }
 
-    $scope.init = function () {
-
-        $scope.classRegistry = getEmptyClassRegistry();
-
-        var day = getDateFromUrl();
-
-        var tempClassRegistry = ClassRegistry.get({
-            classRegistryDate: day
-        });
-        tempClassRegistry.$promise.then(function (tempClassRegistry) {
-            if (!tempClassRegistry.day) {
-                tempClassRegistry = new ClassRegistry();
+        ClassRegistry.get({
+            classId: classId,
+            date: date.toISOString()
+        }).$promise.then(function (classRegistry) {
+            if (!classRegistry.date) {
+                classRegistry = new ClassRegistry();
 
                 // I mesi sono zero-based
-                tempClassRegistry.day = day;
-                tempClassRegistry.slots = [
+                classRegistry.slots = [
                     {number: 1},
                     {number: 2},
                     {number: 3},
@@ -60,61 +91,61 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
                     {number: 6}
                 ];
             }
-            $scope.classRegistry = tempClassRegistry;
+
+            classRegistry = deserializeData(classRegistry);
+
+            $scope.classRegistry = classRegistry;
         });
     };
 
     $scope.tomorrow = function () {
-        var day = getDateFromUrl();
+        var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
-        $location.path('registri-di-classe/' + $filter('date')(newDay, 'd-M-yyyy'));
+        $location.path('registri-di-classe/' + $stateParams.classId + '/' + $filter('date')(newDay, 'yyyy-MM-dd'));
     };
 
     $scope.yesterday = function () {
-        var day = getDateFromUrl();
+        var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() - 1);
-        $location.path('registri-di-classe/' + $filter('date')(newDay, 'd-M-yyyy'));
-    };
-
-    $scope.onUpdate = function (classRegistry) {
-        console.log('Aggiornato con successo:');
-        console.log(classRegistry);
+        $location.path('registri-di-classe/' + $stateParams.classId + '/' + $filter('date')(newDay, 'yyyy-MM-dd'));
     };
 
     $scope.save = function () {
         var classRegistry = $scope.classRegistry;
+        classRegistry = serializeData(classRegistry);
 
         if (!classRegistry.updated) {
             classRegistry.updated = [];
         }
         classRegistry.updated.push(new Date().getTime());
 
-        classRegistry._day = $filter('date')(classRegistry.day, 'yyyy-M-d');
+        classRegistry._classId = $stateParams.classId;
+        classRegistry._date = classRegistry.date.toISOString();
 
-        classRegistry.$update(function (response) {
-            $scope.onUpdate(response);
+        classRegistry.$update(function () {
+            classRegistry = deserializeData(classRegistry);
         });
     };
 
-    $scope.addLateEntrance = function() {
-        if(!$scope.classRegistry.lateEntrances) {
+    $scope.addLateEntrance = function () {
+        if (!$scope.classRegistry.lateEntrances) {
             $scope.classRegistry.lateEntrances = [];
         }
         $scope.classRegistry.lateEntrances.push({});
     };
 
-    $scope.deleteLateEntrance = function(lateEntrance) {
+    $scope.deleteLateEntrance = function (lateEntrance) {
         _.remove($scope.classRegistry.lateEntrances, lateEntrance);
     };
 
-    $scope.addEarlyLeave = function() {
-        if(!$scope.classRegistry.earlyLeaves) {
+    $scope.addEarlyLeave = function () {
+        if (!$scope.classRegistry.earlyLeaves) {
             $scope.classRegistry.earlyLeaves = [];
         }
         $scope.classRegistry.earlyLeaves.push({});
     };
 
-    $scope.deleteEarlyLeaves = function(earlyLeave) {
+    $scope.deleteEarlyLeave = function (earlyLeave) {
         _.remove($scope.classRegistry.earlyLeaves, earlyLeave);
     };
 }]);
