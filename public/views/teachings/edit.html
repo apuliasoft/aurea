@@ -8,6 +8,16 @@
       <input type="text" data-ng-model="teaching.name" id="name" name="name" class="form-control" placeholder="Nome">
     </div>
 
+    <div class="form-group">
+      <label for="teacher" class="control-label">Insegnante</label>
+      <select data-ng-model="teaching.teacher" id="teacher" name="teacher" class="form-control" placeholder="Insegnante" data-ng-options="teacher._id as getFullName(teacher) for teacher in teachers"></select>
+    </div>
+
+    <div class="form-group">
+      <label for="schoolClass" class="control-label">Classe</label>
+      <select data-ng-model="teaching.schoolClass" id="schoolClass" name="schoolClass" class="form-control" placeholder="Classe" data-ng-options="schoolClass._id as schoolClass.name for schoolClass in schoolClasses"></select>
+    </div>
+
     <hr>
 
     <button type="submit" class="btn btn-primary">Salva</button>
