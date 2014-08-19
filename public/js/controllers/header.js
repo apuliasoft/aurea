@@ -30,6 +30,9 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
     },{
         'title': 'Registro di Classe',
         'link': 'registri-di-classe/' + $filter('date')(new Date(), 'd-M-yyyy')
+    },{
+        'title': 'Registro Personale',
+        'link': 'registri-personali/' + $filter('date')(new Date(), 'd-M-yyyy')
     }];
     
     $scope.isCollapsed = false;
