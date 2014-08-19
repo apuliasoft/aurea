@@ -4,6 +4,7 @@
 var users = require('../controllers/users');
 var passport = require('passport');
 var auth = require('./middlewares/authorization');
+var _ = require('lodash');
 
 module.exports = function(app) {
 
@@ -14,8 +15,7 @@ module.exports = function(app) {
       function(req, res) {
           // If this function gets called, authentication was successful.
           // `req.user` contains the authenticated user.
-          //res.redirect('/users/' + req.user.username);
-          res.end('1');
+          res.jsonp(_.pick(req.user, ['_id', 'name', 'username', 'eamil', 'role']));
       });
     app.post('/logout', function(req, res){
         req.logout();

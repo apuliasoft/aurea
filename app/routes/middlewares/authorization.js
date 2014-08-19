@@ -7,8 +7,21 @@ var authorizations = [
         role: 'admin',
         method: '*',
         path: '*'
+    },
+    {
+        role: 'student',
+        method: 'GET',
+        path: '/users/:userId',
+        custom: function () {
+            return true;
+        }
     }
 ];
+
+
+
+
+////////////////////
 
 function match(authorization, path, role, method) {
     return (

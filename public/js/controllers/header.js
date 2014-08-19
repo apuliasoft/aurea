@@ -1,39 +1,74 @@
 'use strict';
 
-angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', function ($scope, Global, $filter) {
+angular.module('aurea.system').controller('HeaderCtrl', ['$scope', '$rootScope', 'Global', '$filter', function ($scope, $rootScope, Global, $filter) {
     $scope.global = Global;
 
-    $scope.menu = [{
-        'title': 'Logout',
-        'link': 'logout'
-    }, {
-        'title': 'Utenti',
-        'link': 'utenti'
-    }, {
-        'title': 'Scuole',
-        'link': 'scuole'
-    }, {
-        'title': 'Insegnanti',
-        'link': 'insegnanti'
-    }, {
-        'title': 'Alunni',
-        'link': 'alunni'
-    }, {
-        'title': 'Anni accademici',
-        'link': 'anni-accademici'
-    }, {
-        'title': 'Classi',
-        'link': 'classi'
-    }, {
-        'title': 'Insegnamenti',
-        'link': 'insegnamenti'
-    }, {
-        'title': 'Quadri Orari',
-        'link': 'quadri-orari'
-    },{
-        'title': 'Registro di Classe',
-        'link': 'registri-di-classe/' + $filter('date')(new Date(), 'd-M-yyyy')
-    }];
+    $scope.$watch('global.user', function(){
+        updateMenu();
+    });
+
+    function updateMenu() {
+        $scope.menu = [];
+
+        if (!Global.isLoggedin()) return;
+
+        if (Global.isAdmin()) {
+            $scope.menu.push({
+                'title': 'Utenti',
+                'link': 'utenti',
+                'ngif': Global.isAdmin
+            });
+        }
+
+        $scope.menu.push({
+            'title': 'Scuole',
+            'link': 'scuole',
+            'ngif': Global.isAdmin
+        });
+
+        $scope.menu.push({
+            'title': 'Insegnanti',
+            'link': 'insegnanti',
+            'ngif': Global.isAdmin
+        });
+
+        $scope.menu.push({
+            'title': 'Alunni',
+            'link': 'alunni',
+            'ngif': Global.isAdmin
+        });
+
+        $scope.menu.push({
+            'title': 'Anni accademici',
+            'link': 'anni-accademici',
+            'ngif': Global.isAdmin
+        });
+
+        $scope.menu.push({
+            'title': 'Classi',
+            'link': 'classi',
+            'ngif': Global.isAdmin
+        });
+
+        $scope.menu.push({
+            'title': 'Insegnamenti',
+            'link': 'insegnamenti',
+            'ngif': Global.isAdmin
+        });
+
+        $scope.menu.push({
+            'title': 'Quadri Orari',
+            'link': 'quadri-orari',
+            'ngif': Global.isAdmin
+        });
+
+        $scope.menu.push({
+            'title': 'Registro di Classe',
+            'link': 'registri-di-classe/' + $filter('date')(new Date(), 'd-M-yyyy'),
+            'ngif': Global.isAdmin
+        });
+    }
+
     
     $scope.isCollapsed = false;
 }]);

@@ -20,7 +20,7 @@ exports.authCallback = function(req, res) {
  */
 exports.loggedin = function(req, res) {
     if (req.user)
-        res.end('1');
+        res.jsonp(_.pick(req.user, ['_id', 'name', 'username', 'eamil', 'role']));
     else
         res.end('0');
 };
