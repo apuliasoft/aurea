@@ -3,8 +3,21 @@
 var _ = require('lodash');
 
 var authorizations = [
-  [ 'admin', 'get', 'users' ]
+    {
+        role: 'admin',
+        method: '*',
+        path: '*'
+    }
 ];
+
+function match(authorization, path, role, method) {
+    return (
+        (authorization.role === '*' || authorization.role === role) &&
+        (authorization.method === '*' || authorization.method === method) &&
+        (authorization.path === '*' || authorization.path === path) &&
+        (authorization.custom === undefined || authorization.custom())
+    );
+}
 
 exports.check = function(req, res, next) {
     if (!req.user) next();
@@ -12,14 +25,13 @@ exports.check = function(req, res, next) {
     var isAuthorized = false;
 
     _.forEach(authorizations, function(authorization){
-       ;//if () //TODO controllare se il ruolo, metodo e risorsa compongono la riga di autorizzazione
+        if (match(authorization, req.route.path, req.user.role, req.method)) {
+            isAuthorized = true;
+        }
     });
 
-    // console.log(req.route.path);
-    // console.log(req.user.roles);
-    // console.log(req.method);
-
-
-
-    next();
+    if (isAuthorized)
+        next();
+    else
+        res.send(401, 'Non sei autorizzato ad accedere a questa risorsa');
 };
