@@ -4,17 +4,17 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
     $scope.global = Global;
 
     $scope.columns = [
-        {name:'name', label:'Nome'},
-        {name:'startDate', label:'Data inizio', filter:'date'},
-        {name:'endDate', label:'Data fine', filter:'date'}
+        {name: 'name', label: 'Nome'},
+        {name: 'startDate', label: 'Data inizio', filter: 'date'},
+        {name: 'endDate', label: 'Data fine', filter: 'date'}
     ];
 
-    if(!$scope.complexes) {
+    if (!$scope.complexes) {
         $scope.complexes = Complex.query();
     }
 
-    $scope.getComplexName = function(complexId) {
-        var complex = _.find($scope.complexes, function(complex) {
+    $scope.getComplexName = function (complexId) {
+        var complex = _.find($scope.complexes, function (complex) {
             return complex._id === complexId;
         });
 
@@ -43,17 +43,45 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
 
     $scope.init = function () {
         $scope.academicYear = new AcademicYear();
+        $scope.academicYear.timeTable = _.map(_.range(1, 7), function (num) {
+            return {
+                weekDay: num,
+                slots: [
+                    {start: '08:00', end: '09:00'},
+                    {start: '09:00', end: '10:00'},
+                    {start: '10:00', end: '11:00'},
+                    {start: '11:00', end: '12:00'},
+                    {start: '12:00', end: '13:00'},
+                    {start: '13:00', end: '14:00'}
+                ]
+                //TODO in produzione sostituire il blocco sottostante con quello presente sopra
+                /*slots: [
+                 {start: undefined, end: undefined},
+                 {start: undefined, end: undefined},
+                 {start: undefined, end: undefined},
+                 {start: undefined, end: undefined},
+                 {start: undefined, end: undefined},
+                 {start: undefined, end: undefined}
+                 ]*/
+            };
+        });
     };
 
-    $scope.create = function() {
+    $scope.isNotEmptySlot = function (slot) {
+        return slot.start && slot.end;
+    };
+
+    $scope.create = function () {
         var academicYear = $scope.academicYear;
+        academicYear.timeTable = serializeData(academicYear.timeTable);
+
         academicYear.$save(function (response) {
             $scope.view(response);
         });
         $scope.init();
     };
 
-    $scope.remove = function(academicYear) {
+    $scope.remove = function (academicYear) {
         if (academicYear) {
             academicYear.$remove();
             _.remove($scope.academicYears, academicYear);
@@ -61,8 +89,10 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         }
     };
 
-    $scope.update = function() {
+    $scope.update = function () {
         var academicYear = $scope.academicYear;
+        academicYear.timeTable = serializeData(academicYear.timeTable);
+
         if (!academicYear.updated) {
             academicYear.updated = [];
         }
@@ -73,17 +103,68 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         });
     };
 
-    $scope.find = function() {
+    $scope.find = function () {
         $scope.academicYears = AcademicYear.query();
     };
 
-    $scope.findOne = function() {
-        $scope.academicYear = AcademicYear.get({
+    $scope.findOne = function () {
+        AcademicYear.get({
             academicYearId: $stateParams.academicYearId
-        },
-        function(academicYear){
-            academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
-            academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
+        }).$promise.then(function (academicYear) {
+                academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
+                academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
+                academicYear.timeTable = deserializeData(academicYear.timeTable);
+
+                $scope.academicYear = academicYear;
+            });
+    };
+
+    /**
+     * Elimina gli slot vuoti e converte il formato degli slot orari.
+     * @param timeTable
+     */
+    var serializeData = function (timeTable) {
+
+        timeTable = _.map(timeTable, function (day) {
+            day.slots = _.filter(day.slots, function (slot) {
+                return $scope.isNotEmptySlot(slot);
+            });
+
+            day.slots = _.map(day.slots, function (slot) {
+                return {
+                    start: $filter('minute')(slot.start),
+                    end: $filter('minute')(slot.end)
+                };
+            });
+
+            return day;
         });
+
+        return timeTable;
+    };
+
+    /**
+     * Aggiunge gli slot vuoti se necessatio e converte il formato degli slot orari.
+     * @param timeTable
+     */
+    var deserializeData = function (timeTable) {
+
+        timeTable = _.map(timeTable, function (day) {
+
+            day.slots = _.map(day.slots, function (slot) {
+                return {
+                    start: $filter('time')(slot.start),
+                    end: $filter('time')(slot.end)
+                };
+            });
+
+            for (var i = 0; i < (6 - day.slots.length); i++) {
+                day.slots.push({start: undefined, end: undefined});
+            }
+
+            return day;
+        });
+
+        return timeTable;
     };
 }]);
