@@ -1,8 +1,8 @@
 'use strict';
 
 //Setting up route
-angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
-  function($stateProvider, $urlRouterProvider) {
+angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
+  function($stateProvider, $urlRouterProvider, $httpProvider) {
 
     var checkLoggedin = function($q, $timeout, $http, $location, Global) {
         // Initialize a new promise
@@ -41,6 +41,32 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
         return deferred.promise;
     };
 
+    $httpProvider.responseInterceptors.push(['$rootScope', '$q', '$location', function (scope, $q, $location) {
+
+        function success(response) {
+            return response;
+        }
+
+        function error(response) {
+            var status = response.status;
+
+            if (status == 401) {
+                //window.location = "./#!/401";
+//                window.location = "./#!/studenti";
+                $location.url('/401');
+                return;
+            }
+            // otherwise
+            return $q.reject(response);
+
+        }
+
+        return function (promise) {
+            return promise.then(success, error);
+        }
+
+    }]);
+
     // For unmatched routes:
     $urlRouterProvider.otherwise('/');
 
@@ -57,6 +83,11 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
         resolve: {
             logout: logout
         }
+    })
+
+    .state('not authorized', {
+        url: '/401',
+        templateUrl: 'views/401.html'
     })
 
     .state('all users', {
