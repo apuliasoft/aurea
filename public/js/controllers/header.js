@@ -67,8 +67,12 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', '$rootScope',
             'link': 'registri-di-classe/' + $filter('date')(new Date(), 'd-M-yyyy'),
             'ngif': Global.isAdmin
         });
+
+        $scope.menu.push({
+              'title': 'Registro Personale',
+              'link': 'registri-personali/' + $filter('date')(new Date(), 'd-M-yyyy')
+        });
     }
 
-    
     $scope.isCollapsed = false;
 }]);

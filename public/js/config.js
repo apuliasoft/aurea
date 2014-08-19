@@ -360,6 +360,14 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
           }
     })
 
+    .state('teaching registry by date', {
+        url: '/registri-personali/:teachingRegistryDate',
+        templateUrl: 'views/teachingRegistry/edit.html',
+          resolve: {
+              loggedin: checkLoggedin
+          }
+    })
+
     .state('home', {
         url: '/',
         templateUrl: 'views/index.html',

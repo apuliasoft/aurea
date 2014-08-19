@@ -1,0 +1,143 @@
+<section data-ng-controller="TeachingRegistryCtrl" data-ng-init="init()">
+
+  <h2>Registro Personale</h2>
+  <button class="btn" data-ng-click="yesterday()">Ieri</button>
+  <button class="btn" data-ng-click="tomorrow()">domani</button>
+  <h3>{{ teachingRegistry.day | date:'EEEE, d MMMM yyyy' }}</h3>
+
+  <!-- Insegnamento -->
+
+
+  <form data-ng-submit="save()" novalidate>
+
+    <!-- Insegnamento -->
+    <div class="form-group">
+      <label for="teaching" class="control-label">Insegnamento</label>
+      <select data-ng-model="teachingRegistry.teaching" id="teaching" name="teaching" class="form-control"
+              data-ng-options="teaching._id as teaching.name for teaching in teachings"></select>
+    </div>
+
+    <div class="form-group">
+      <label for="votes" class="control-label">Voti</label>
+      <table id="votes" class="table">
+        <thead>
+        <tr>
+          <th>Studente</th>
+          <th>Voto</th>
+          <th>Modalità</th>
+          <th>Parziali</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="vote in teachingRegistry.votes">
+          <!--STUDENTE-->
+          <td>
+            <select data-ng-model="vote.student" class="form-control"
+                    data-ng-options="student._id as student | name for student in students"></select>
+          </td>
+          <!--VOTO-->
+          <td>
+            <input type="text" data-ng-model="vote.vote" class="form-control"
+                   placeholder="Voto">
+          </td>
+          <!--MODALITA' VOTO-->
+          <td>
+            <input type="text" data-ng-model="vote.mode" class="form-control"
+                   placeholder="Modalità">
+          </td>
+          <!--PARZIALI-->
+          <td>
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Criterio</th>
+                <th>Voto</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr data-ng-repeat="partial in vote.partials">
+                <!--CRITERIO-->
+                <td>
+                  <input type="text" data-ng-model="partial.criterion" class="form-control"
+                         placeholder="Criterio">
+                </td>
+                <!--VOTO-->
+                <td>
+                  <input type="text" data-ng-model="partial.vote" class="form-control"
+                         placeholder="Voto">
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger" ng-click="removePartial(vote, partial)"><i
+                      class="fa fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+            </table>
+            <button type="button" class="btn btn-default" data-ng-click="addPartial(vote)"><i class="fa fa-plus"></i>
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger" ng-click="removeVote(vote)"><i class="fa fa-times"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-default" data-ng-click="addVote()"><i class="fa fa-plus"></i></button>
+
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <label for="absences" class="control-label">Assenze</label>
+      <table id="absences" class="table">
+        <thead>
+        <tr>
+          <th>Studente</th>
+          <th>Ore</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="absence in teachingRegistry.absences">
+          <!--STUDENTE-->
+          <td>
+            <select data-ng-model="absence.student" class="form-control"
+                    data-ng-options="student._id as student | name for student in students"></select>
+          </td>
+          <!--ORE-->
+          <td>
+            <input type="number" data-ng-model="absence.slots" class="form-control" placeholder="Ore">
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger" ng-click="removeAbsence(absence)"><i class="fa fa-times"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-default" data-ng-click="addAbsence()"><i class="fa fa-plus"></i></button>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <label for="annotations" class="control-label">Annotazioni</label>
+      <textarea id="annotations" class="form-control" rows="3" data-ng-model="teachingRegistry.annotations" ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="notes" class="control-label">Note</label>
+      <textarea id="notes" class="form-control" rows="3" data-ng-model="teachingRegistry.notes"></textarea>
+    </div>
+
+    <hr>
+
+    <button type="submit" class="btn btn-primary">Salva</button>
+
+  </form>
+
+</section>
