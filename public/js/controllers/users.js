@@ -10,10 +10,11 @@ angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams',
     ];
 
     $scope.roles = {
-        manager: 'Dirigente',
-        teacher: 'Insegnante',
         student: 'Studente',
-        parent: 'Genitore'
+        teacher: 'Insegnante',
+        parent: 'Genitore',
+        manager: 'Dirigente',
+        admin: 'Amministratore'
     };
 
     $scope.list = function () {
@@ -38,6 +39,7 @@ angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams',
 
     $scope.init = function () {
         $scope.user = new User();
+        $scope.user.role = 'student';
     };
 
     $scope.create = function () {

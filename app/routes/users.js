@@ -3,6 +3,8 @@
 // User routes use users controller
 var users = require('../controllers/users');
 var passport = require('passport');
+var auth = require('./middlewares/authorization');
+var _ = require('lodash');
 
 module.exports = function(app) {
 
@@ -13,14 +15,17 @@ module.exports = function(app) {
       function(req, res) {
           // If this function gets called, authentication was successful.
           // `req.user` contains the authenticated user.
-          //res.redirect('/users/' + req.user.username);
-          res.end('1');
+          res.jsonp(_.pick(req.user, ['_id', 'name', 'username', 'eamil', 'role']));
       });
+    app.post('/logout', function(req, res){
+        req.logout();
+        res.end();
+    });
 
     // Setting up the users api
-    app.get('/users', users.all);
+    app.get('/users', auth.check, users.all);
     app.post('/users', users.create);
-    app.get('/users/:userId', users.show);
+    app.get('/users/:userId', auth.check, users.show);
     app.put('/users/:userId', users.update);
     app.del('/users/:userId', users.destroy);
 

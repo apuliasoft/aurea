@@ -4,17 +4,20 @@
 angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
 
-    var checkLoggedin = function($q, $timeout, $http, $location) {
+    var checkLoggedin = function($q, $timeout, $http, $location, Global) {
         // Initialize a new promise
         var deferred = $q.defer();
 
         // Make an AJAX call to check if the user is logged in
         $http.get('/loggedin').success(function(user) {
             // Authenticated
-            if (user !== '0') $timeout(deferred.resolve);
+            if (user !== '0')
+            {
+                $timeout(deferred.resolve);
+                Global.user = user;
 
-            // Not Authenticated
-            else {
+            } else { // Not Authenticated
+                Global.user = {};
                 $timeout(deferred.reject);
                 $location.url('/login');
             }
@@ -22,6 +25,20 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
 
       return deferred.promise;
 
+    };
+
+    var logout = function($q, $timeout, $http, $location, Global) {
+        // Initialize a new promise
+        var deferred = $q.defer();
+
+        // Make an AJAX call to logout user
+        $http.post('/logout').success(function() {
+            Global.user = {};
+            $timeout(deferred.reject);
+            $location.url('/login');
+        });
+
+        return deferred.promise;
     };
 
     // For unmatched routes:
@@ -33,6 +50,13 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider',
     .state('login user', {
         url: '/login',
         templateUrl: 'views/login.html'
+    })
+
+    .state('logout user', {
+        url: '/logout',
+        resolve: {
+            logout: logout
+        }
     })
 
     .state('all users', {

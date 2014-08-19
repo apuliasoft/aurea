@@ -20,7 +20,7 @@ exports.authCallback = function(req, res) {
  */
 exports.loggedin = function(req, res) {
     if (req.user)
-        res.end('1');
+        res.jsonp(_.pick(req.user, ['_id', 'name', 'username', 'eamil', 'role']));
     else
         res.end('0');
 };
@@ -47,7 +47,7 @@ exports.create = function(req, res) {
  * Update a User
  */
 exports.update = function(req, res) {
-    var user = req.user;
+    var user = req.userRes;
 
     user = _.extend(user, req.body);
 
@@ -64,7 +64,7 @@ exports.update = function(req, res) {
  * Send User
  */
 exports.show = function(req, res) {
-    res.jsonp(req.user);
+    res.jsonp(req.userRes);
 };
 
 /**
@@ -77,7 +77,7 @@ exports.user = function(req, res, next, id) {
     .exec(function(err, user) {
         if (err) return next(err);
         if (!user) return next(new Error('Failed to load User ' + id));
-        req.user = user;
+        req.userRes = user;
         next();
     });
 };
@@ -99,7 +99,7 @@ exports.all = function(req, res) {
  * Delete a user
  */
 exports.destroy = function(req, res) {
-    var user = req.user;
+    var user = req.userRes;
 
     user.remove(function(err) {
         if (err) {
