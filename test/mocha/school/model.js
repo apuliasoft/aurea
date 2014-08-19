@@ -19,6 +19,7 @@ describe('<Unit Test>', function() {
     describe('Model School:', function() {
         beforeEach(function(done) {
             complex = new Complex({
+                name: 'Liceo Scientifico',
                 street: 'Via Qualunque 1',
                 zipCode: '12345',
                 city: 'Chissadove',

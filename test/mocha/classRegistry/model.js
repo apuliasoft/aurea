@@ -28,7 +28,7 @@ var school;
 
 //The tests
 describe('<Unit Test>', function() {
-    describe('Model Teaching:', function() {
+    describe('Model ClassRegistry:', function() {
         beforeEach(function(done) {
 
             school = new School({
@@ -40,6 +40,7 @@ describe('<Unit Test>', function() {
                     done(err);
                 }
                 complex = new Complex({
+                    name: 'Liceo Scientifico',
                     street: 'Via Qualunque 1',
                     zipCode: '12345',
                     city: 'Chissadove',
@@ -106,7 +107,7 @@ describe('<Unit Test>', function() {
                                                 teaching: teaching,
                                                 notes: 'nota1',
                                                 subject: 'I promessi sposi',
-                                                substitution: false,
+                                                substitution: teacher,
                                                 supportTeachers: [teacher],
                                                 assistantTeachers: [teacher]
                                             }]
@@ -191,15 +192,6 @@ describe('<Unit Test>', function() {
 
             it('should be able to show an error when try to save without slot number', function(done) {
                 classRegistry.slots[0].number = null;
-
-                return classRegistry.save(function (err) {
-                    should.exist(err);
-                    done();
-                });
-            });
-
-            it('should be able to show an error when try to save without slot substitution', function(done) {
-                classRegistry.slots[0].substitution = null;
 
                 return classRegistry.save(function (err) {
                     should.exist(err);

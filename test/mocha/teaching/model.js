@@ -38,6 +38,7 @@ describe('<Unit Test>', function() {
                     done(err);
                 }
                 complex = new Complex({
+                    name: 'Liceo Scientifico',
                     street: 'Via Qualunque 1',
                     zipCode: '12345',
                     city: 'Chissadove',

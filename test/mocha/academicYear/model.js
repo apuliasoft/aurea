@@ -29,6 +29,7 @@ describe('<Unit Test>', function() {
                     done(err);
                 }
                 complex = new Complex({
+                    name: 'Liceo Scientifico',
                     street: 'Via Qualunque 1',
                     zipCode: '12345',
                     city: 'Chissadove',
@@ -43,7 +44,20 @@ describe('<Unit Test>', function() {
                         name: '2013/2014',
                         startDate: 1234567890000,
                         endDate: 2345678910000,
-                        complex: complex
+                        complex: complex,
+                        timeTable: [{
+                            day: 0,
+                            slots:[
+                                {start:540, end: 600},
+                                {start:600, end: 660}
+                            ]
+                        },{
+                            day: 1,
+                            slots:[
+                                {start:540, end: 600},
+                                {start:600, end: 660}
+                            ]
+                        }]
                     });
                     academicYear.save(function(err) {
                         if(err) {
@@ -118,11 +132,45 @@ describe('<Unit Test>', function() {
                 });
             });
 
+            it('should be able to show an error when try to save with a day greater than 6', function(done) {
+                academicYear.timeTable[0].day = 8;
+
+                return academicYear.save(function (err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to show an error when try to save a slot with a wrong type', function(done) {
+                academicYear.timeTable[0].slots.push({
+                    start: 10,
+                    end: '10:00'
+                });
+
+                return academicYear.save(function (err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+
             it('should be able to update a academicYear', function(done) {
                 var update = {
                     name: '2014/2015',
                     startDate: 2345678910000,
-                    endDate: 3456789120000
+                    endDate: 3456789120000,
+                    timeTable: [{
+                        day: 1,
+                        slots:[
+                            {start:580, end: 600},
+                            {start:600, end: 620}
+                        ]
+                    },{
+                        day: 2,
+                        slots:[
+                            {start:580, end: 600},
+                            {start:600, end: 620}
+                        ]
+                    }]
                 };
                 academicYear = _.extend(academicYear, update);
 
