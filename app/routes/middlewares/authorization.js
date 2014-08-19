@@ -9,11 +9,11 @@ var authorizations = [
         path: '*'
     },
     {
-        role: 'student',
+        role: '*',
         method: 'GET',
         path: '/users/:userId',
-        custom: function () {
-            return true;
+        custom: function (req) {
+            return req.user._id.toString() === req.params.userId;
         }
     }
 ];
@@ -23,12 +23,12 @@ var authorizations = [
 
 ////////////////////
 
-function match(authorization, path, role, method) {
+function match(req, authorization, path, role, method) {
     return (
         (authorization.role === '*' || authorization.role === role) &&
         (authorization.method === '*' || authorization.method === method) &&
         (authorization.path === '*' || authorization.path === path) &&
-        (authorization.custom === undefined || authorization.custom())
+        (authorization.custom === undefined || authorization.custom(req))
     );
 }
 
@@ -38,7 +38,7 @@ exports.check = function(req, res, next) {
     var isAuthorized = false;
 
     _.forEach(authorizations, function(authorization){
-        if (match(authorization, req.route.path, req.user.role, req.method)) {
+        if (match(req, authorization, req.route.path, req.user.role, req.method)) {
             isAuthorized = true;
         }
     });

@@ -7,8 +7,8 @@
             <a href="#!/{{item.link}}">{{item.title}}</a>
         </li>
     </ul>
-    <ul class="navbar-nav nav pull-right" data-ng-hide="global.authenticated">
-        <li><a href="Login">Login</a>
+    <ul class="navbar-nav nav pull-right" data-ng-hide="global.isLoggedin()">
+        <li><a href="/#!login">Login</a>
         </li>
     </ul>
     <ul class="navbar-nav nav pull-right" data-ng-show="global.isLoggedin()">
@@ -18,7 +18,7 @@
 			</a>
             <ul class="dropdown-menu">
                 <li><a href="/#!logout">Logout</a></li>
-                <li><a href="/#!profile">Profilo</a></li>
+                <li><a href="/#!/utenti/{{global.user._id}}">Profilo</a></li>
             </ul>
         </li>
     </ul>

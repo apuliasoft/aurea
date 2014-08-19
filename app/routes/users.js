@@ -25,7 +25,7 @@ module.exports = function(app) {
     // Setting up the users api
     app.get('/users', auth.check, users.all);
     app.post('/users', users.create);
-    app.get('/users/:userId', users.show);
+    app.get('/users/:userId', auth.check, users.show);
     app.put('/users/:userId', users.update);
     app.del('/users/:userId', users.destroy);
 
