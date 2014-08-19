@@ -1,16 +1,16 @@
 'use strict';
 
-angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$stateParams', '$location', '_', 'TimeTable', 'AcademicYear', function ($scope, $stateParams, $location, _, TimeTable, AcademicYear) {
+angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'TimeTable', 'AcademicYear', function ($scope, $stateParams, $location, $filter, _, TimeTable, AcademicYear) {
     $scope.columns = [
         {name: '_id', label: 'ID'}
     ];
 
-    if(!$scope.academicYear) {
+    if (!$scope.academicYear) {
         $scope.academicYears = AcademicYear.query();
     }
 
-    $scope.getAcademicYearName = function(academicYearId) {
-        var academicYear = _.find($scope.academicYears, function(academicYear) {
+    $scope.getAcademicYearName = function (academicYearId) {
+        var academicYear = _.find($scope.academicYears, function (academicYear) {
             return academicYear._id === academicYearId;
         });
 
@@ -42,7 +42,7 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
         /* Inizializzo il Quadro Orario con 6 giorni della settimana
          e 6 slot per ogni giorno */
         $scope.timeTable.days = [];
-        for (var i=0; i<6; i++) {
+        for (var i = 0; i < 6; i++) {
             $scope.timeTable.days.push({
                 day: i,
                 slots: [
@@ -107,11 +107,10 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
     };
 
     $scope.findOne = function () {
-        $scope.timeTable = TimeTable.get({
+        TimeTable.get({
             timeTableId: $stateParams.timeTableId
-        },
-        function(timeTable){
-            timeTable = deserializeData(timeTable);
+        }).$promise.then(function (timeTable) {
+            $scope.timeTable = deserializeData(timeTable);
         });
     };
 
@@ -119,22 +118,17 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
      * Elimina gli slot vuoti e converte il formato degli slot orari.
      * @param timeTable
      */
-    var serializeData = function (timeTable) {
-        // converte il tipo Time da string del tipo 09:00 al numero totale di minuti
-        var convertTime = function(time) {
-            var timeArr = time.split(':');
-            return parseInt(timeArr[0])*60 + parseInt(timeArr[1]);
-        };
+    var serializeData = function (timeTable) {
 
-        timeTable.days = _.map(timeTable.days, function(day){
-            day.slots = _.filter(day.slots, function(slot) {
+        timeTable.days = _.map(timeTable.days, function (day) {
+            day.slots = _.filter(day.slots, function (slot) {
                 return $scope.isNotEmptySlot(slot);
             });
 
-            day.slots = _.map(day.slots, function(slot){
+            day.slots = _.map(day.slots, function (slot) {
                 return {
-                    start: convertTime(slot.start),
-                    end: convertTime(slot.end)
+                    start: $filter('minute')(slot.start),
+                    end: $filter('minute')(slot.end)
                 };
             });
 
@@ -148,28 +142,18 @@ angular.module('aurea.timeTables').controller('TimeTablesCtrl', ['$scope', '$sta
      * Aggiunge gli slot vuoti se necessatio e converte il formato degli slot orari.
      * @param timeTable
      */
-    var deserializeData = function (timeTable) {
-        // converte il tipo Time dal numero totale di minuti a string del tipo 09:00
-        var convertTime = function(time) {
-            var hours = Math.floor(time/60);
-            hours = hours<10 ? '0'+hours : ''+hours;
+    var deserializeData = function (timeTable) {
 
-            var minutes = time%60;
-            minutes = minutes<10 ? '0'+minutes : ''+minutes;
+        timeTable.days = _.map(timeTable.days, function (day) {
 
-            return hours + ':' + minutes;
-        };
-
-        timeTable.days = _.map(timeTable.days, function(day){
-
-            day.slots = _.map(day.slots, function(slot){
+            day.slots = _.map(day.slots, function (slot) {
                 return {
-                    start: convertTime(slot.start),
-                    end: convertTime(slot.end)
+                    start: $filter('time')(slot.start),
+                    end: $filter('time')(slot.end)
                 };
             });
 
-            for (var i=0; i<(6-day.slots.length); i++) {
+            for (var i = 0; i < (6 - day.slots.length); i++) {
                 day.slots.push({start: undefined, end: undefined});
             }
 

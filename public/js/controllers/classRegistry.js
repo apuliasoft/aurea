@@ -96,4 +96,25 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
         });
     };
 
+    $scope.addLateEntrance = function() {
+        if(!$scope.classRegistry.lateEntrances) {
+            $scope.classRegistry.lateEntrances = [];
+        }
+        $scope.classRegistry.lateEntrances.push({});
+    };
+
+    $scope.deleteLateEntrance = function(lateEntrance) {
+        _.remove($scope.classRegistry.lateEntrances, lateEntrance);
+    };
+
+    $scope.addEarlyLeave = function() {
+        if(!$scope.classRegistry.earlyLeaves) {
+            $scope.classRegistry.earlyLeaves = [];
+        }
+        $scope.classRegistry.earlyLeaves.push({});
+    };
+
+    $scope.deleteEarlyLeaves = function(earlyLeave) {
+        _.remove($scope.classRegistry.earlyLeaves, earlyLeave);
+    };
 }]);
