@@ -10,7 +10,10 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
     ];
 
     if (!$scope.complexes) {
-        $scope.complexes = Complex.query();
+        $scope.complexes = Complex.query({
+            //TODO: inserire la scuola dell'utente corrente
+            schoolId: '53f4c40d144b870000e06bb4'
+        });
     }
 
     $scope.getComplexName = function (complexId) {

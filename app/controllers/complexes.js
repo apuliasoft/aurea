@@ -73,7 +73,13 @@ exports.destroy = function(req, res) {
  * Show an complex 
  */
 exports.show = function(req, res) {
-    res.jsonp(req.complex);
+    Complex.findById(req.params.complexId, function(err, complex) {
+        if (err) return next(err);
+        if (!complex) return next(new Error('Failed to load complex ' + req.params.complexId));
+        if (complex.school.toString() !== req.params.schoolId) return next(new Error('The complex ' + id + ' is not related to school ' + req.params.schoolId));
+
+        res.jsonp(complex);
+    });
 };
 
 /**

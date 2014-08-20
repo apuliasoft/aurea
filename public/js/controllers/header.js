@@ -4,18 +4,23 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
     $scope.global = Global;
 
     if (!$scope.complexes) {
-        $scope.complexes = Complex.query();
+        $scope.complexes = Complex.query({
+            //TODO: inserire la scuola dell'utente corrente
+            schoolId: '53f4c40d144b870000e06bb4'
+        });
     }
 
     $scope.$watch('global.complex', function () {
 
-        var academicYear  = Global.getAcademicYear();
-        var complex = Global.getComplex();
-        if(academicYear && academicYear.complex !== complex._id){
-            Global.removeAcademicYear();
-        }
+        if (Global.getComplex()) {
+            var academicYear = Global.getAcademicYear();
+            var complex = Global.getComplex();
+            if (academicYear && academicYear.complex !== complex._id) {
+                Global.removeAcademicYear();
+            }
 
-        updateAcademicYears();
+            updateAcademicYears();
+        }
     });
 
     $scope.$watch('global.user', function () {
@@ -24,7 +29,7 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
 
     function updateAcademicYears() {
         $scope.academicYears = AcademicYear.query({
-            complexId: Global.getComplex()._id
+            complexId: Global.getComplex() && Global.getComplex()._id
         });
     }
 
