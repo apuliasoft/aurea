@@ -20,10 +20,11 @@ var UserSchema = new Schema({
         type: String,
         unique: true
     },
-    roles: [{
+    role: {
         type: String,
+        required: true,
         enum: ['admin', 'manager', 'teacher', 'student', 'parent']
-    }],
+    },
     hashed_password: String,
     salt: String
 });
@@ -52,8 +53,6 @@ var validatePresenceOf = function(value) {
 UserSchema.pre('save', function(next) {
     if (this.isNew && !validatePresenceOf(this.password))
         next(new Error('Inserire una password valida'));
-    else if (this.roles.length === 0)
-        next(new Error('Inserire almeno un ruolo password'));
     else
         next();
 });
@@ -70,7 +69,7 @@ UserSchema.methods = {
      * @api public
      */
     hasRole: function(role) {
-        return (this.roles.indexOf(role) !== -1);
+        return (this.role === role);
     },
 
     /**

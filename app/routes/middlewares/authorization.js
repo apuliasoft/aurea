@@ -1,11 +1,50 @@
 'use strict';
 
-/**
- * Generic require login routing middleware
- */
-exports.requiresLogin = function(req, res, next) {
-    if (!req.isAuthenticated()) {
-        return res.send(401, 'User is not authorized');
+var _ = require('lodash');
+
+var authorizations = [
+    {
+        role: 'admin',
+        method: '*',
+        path: '*'
+    },
+    {
+        role: '*',
+        method: 'GET',
+        path: '/users/:userId',
+        custom: function (req) {
+            return req.user._id.toString() === req.params.userId;
+        }
     }
-    next();
+];
+
+
+
+
+////////////////////
+
+function match(req, authorization, path, role, method) {
+    return (
+        (authorization.role === '*' || authorization.role === role) &&
+        (authorization.method === '*' || authorization.method === method) &&
+        (authorization.path === '*' || authorization.path === path) &&
+        (authorization.custom === undefined || authorization.custom(req))
+    );
+}
+
+exports.check = function(req, res, next) {
+    if (!req.user) next();
+
+    var isAuthorized = false;
+
+    _.forEach(authorizations, function(authorization){
+        if (match(req, authorization, req.route.path, req.user.role, req.method)) {
+            isAuthorized = true;
+        }
+    });
+
+    if (isAuthorized)
+        next();
+    else
+        res.send(401, 'Non sei autorizzato ad accedere a questa risorsa');
 };

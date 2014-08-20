@@ -24,7 +24,7 @@ User.findOne(
         admin.username = 'admin';
         admin.email = 'admin@aurea.it';
         admin.password = 'admin';
-        admin.roles = ['admin'];
+        admin.role = 'admin';
 
         admin.save(function(){
             db.connection.close();

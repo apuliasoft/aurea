@@ -14,7 +14,6 @@ angular.module('aurea.users').controller('LoginCtrl', ['$scope', '$rootScope', '
           .success(function(response) {
             // authentication OK
               $scope.loginError = 0;
-              $rootScope.user = response.user;
               $rootScope.$emit('loggedin');
               if (response.redirect) {
                   if (window.location.href === response.redirect) {
