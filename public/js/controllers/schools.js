@@ -1,9 +1,7 @@
 'use strict';
 
-angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Provinces', 'School', function ($scope, $stateParams, $location, _, Global, Provinces, School) {
+angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Complex', 'School', function ($scope, $stateParams, $location, _, Global, Complex, School) {
     $scope.global = Global;
-
-    $scope.provinces = Provinces.getProvinces();
 
     $scope.columns = [
         {name:'name', label:'Nome'}
@@ -30,16 +28,7 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
     };
 
     $scope.init = function () {
-        $scope.school = new School({complexes:[]});
-        $scope.addComplex();
-    };
-
-    $scope.addComplex = function () {
-        $scope.school.complexes.push({});
-    };
-
-    $scope.removeComplex = function (complex) {
-        _.remove($scope.school.complexes, complex);
+        $scope.school = new School();
     };
 
     $scope.create = function() {
@@ -77,10 +66,49 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
     };
 
     $scope.findOne = function() {
-        School.get({
-            schoolId: $stateParams.schoolId
-        }, function(school) {
-            $scope.school = school;
-        });
+        $scope.school = School.get({schoolId: $stateParams.schoolId});
+    };
+
+    $scope.findComplexes = function() {
+        $scope.complexes = Complex.query({schoolId: $stateParams.schoolId});
+    };
+
+    $scope.addComplex = function(school){
+        if (school) {
+            $location.path('scuole/' + school._id + '/plessi/crea');
+        }
     };
 }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
