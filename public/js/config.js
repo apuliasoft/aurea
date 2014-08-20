@@ -351,7 +351,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
     })
 
     .state('class registry by date', {
-        url: '/registri-di-classe/:classRegistryDate',
+        url: '/registri-di-classe/:classId/:date',
         templateUrl: 'views/classRegistry/edit.html',
           resolve: {
               loggedin: checkLoggedin

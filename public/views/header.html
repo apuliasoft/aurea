@@ -1,25 +1,28 @@
 <div data-ng-controller="HeaderCtrl">
-    <ul class="navbar-nav nav">
-        <li>
-            <a class="navbar-brand" href="/">AUREA</a>
-        </li>
-        <li data-ng-repeat="item in menu" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
-            <a href="#!/{{item.link}}">{{item.title}}</a>
-        </li>
-    </ul>
-    <ul class="navbar-nav nav pull-right" data-ng-hide="global.isLoggedin()">
-        <li><a href="/#!login">Login</a>
-        </li>
-    </ul>
-    <ul class="navbar-nav nav pull-right" data-ng-show="global.isLoggedin()">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-				{{global.user.name}} <b class="caret"></b>
-			</a>
-            <ul class="dropdown-menu">
-                <li><a href="/#!logout">Logout</a></li>
-                <li><a href="/#!/utenti/{{global.user._id}}">Profilo</a></li>
-            </ul>
-        </li>
-    </ul>
+  <ul class="navbar-nav nav">
+    <li>
+      <a class="navbar-brand" href="/">AUREA</a>
+    </li>
+    <li data-ng-repeat="item in menu" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+      <a href="#!/{{item.link}}">{{item.title}}</a>
+    </li>
+  </ul>
+  <ul class="navbar-nav nav pull-right" data-ng-hide="global.isLoggedin()">
+    <li><a href="/#!login">Login</a>
+    </li>
+  </ul>
+  <ul class="navbar-nav nav pull-right" data-ng-show="global.isLoggedin()">
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        {{global.user.name}} <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="/#!logout">Logout</a></li>
+        <li><a href="/#!/utenti/{{global.user._id}}">Profilo</a></li>
+      </ul>
+    </li>
+  </ul>
+  <ul class="navbar-nav nav pull-right">
+    <li>{{ global.academicYear.name }}</li>
+  </ul>
 </div>
