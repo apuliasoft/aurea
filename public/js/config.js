@@ -50,9 +50,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
         function error(response) {
             var status = response.status;
 
-            if (status == 401) {
-                //window.location = "./#!/401";
-//                window.location = "./#!/studenti";
+            if (status === 401) {
                 $location.url('/401');
                 return;
             }
@@ -63,7 +61,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
 
         return function (promise) {
             return promise.then(success, error);
-        }
+        };
 
     }]);
 

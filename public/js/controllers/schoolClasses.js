@@ -11,9 +11,15 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
         $scope.academicYears = AcademicYear.query();
     }
 
-    if(!$scope.students) {
-        $scope.students = Student.query();
-    }
+    $scope.addStudent = function(student) {
+        $scope.chosenStudents.push(student);
+        $scope.chosableStudents = _.without($scope.chosableStudents, student);
+    };
+
+    $scope.removeStudent = function(student) {
+        $scope.chosableStudents.push(student);
+        $scope.chosenStudents = _.without($scope.chosenStudents, student);
+    };
 
     $scope.getAcademicYearName = function(academicYearId) {
         var academicYear = _.find($scope.academicYears, function(academicYear) {
@@ -53,10 +59,19 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
 
     $scope.init = function () {
         $scope.schoolClass = new SchoolClass();
+
+        $scope.chosableStudents = Student.query();
+        $scope.chosenStudents = [];
     };
 
     $scope.create = function() {
         var schoolClass = $scope.schoolClass;
+        schoolClass.students = _.map($scope.chosenStudents, function(student){
+            return student._id;
+        });
+
+        console.log(schoolClass);
+
         schoolClass.$save(function (response) {
             $scope.view(response);
         });
@@ -77,6 +92,9 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
             schoolClass.updated = [];
         }
         schoolClass.updated.push(new Date().getTime());
+        schoolClass.students = _.map($scope.chosenStudents, function(student){
+            return student._id;
+        });
 
         schoolClass.$update(function (response) {
             $scope.view(response);
@@ -91,5 +109,44 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
         $scope.schoolClass = SchoolClass.get({
             schoolClassId: $stateParams.schoolClassId
         });
+
+        $scope.schoolClass.$promise.then(function(){
+            $scope.chosableStudents = Student.query();
+
+            $scope.chosableStudents.$promise.then(function(){
+
+                $scope.chosenStudents = _.filter($scope.chosableStudents, function(student) {
+                    return _.contains($scope.schoolClass.students, student._id);
+                });
+
+                $scope.chosableStudents = _.difference($scope.chosableStudents, $scope.chosenStudents);
+            });
+        });
     };
 }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

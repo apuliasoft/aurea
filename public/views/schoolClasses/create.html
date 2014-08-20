@@ -1,30 +1,49 @@
 <section data-ng-controller="SchoolClassesCtrl" data-ng-init="init()">
   <h2>Crea classe</h2>
 
-  <form name="schoolClassForm" role="form" data-ng-submit="create()" novalidate>
+    <form name="schoolClassForm" role="form" data-ng-submit="create()" novalidate>
 
-    <div class="form-group">
-      <label for="name" class="control-label">Nome</label>
-      <input type="text" data-ng-model="schoolClass.name" id="name" name="name" class="form-control" placeholder="Nome">
-    </div>
+        <div class="form-group">
+            <label for="name" class="control-label">Nome</label>
+            <input type="text" data-ng-model="schoolClass.name" id="name" name="name" class="form-control" placeholder="Nome">
+        </div>
 
-    <div class="form-group">
-      <label for="academicYear" class="control-label">Anno Accademico</label>
-      <select data-ng-model="schoolClass.academicYear" id="academicYear" name="academicYear" class="form-control" placeholder="Anno Accademico" data-ng-options="academicYear._id as academicYear.name for academicYear in academicYears"></select>
-    </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <h2>Tutti gli alunni</h2>
+                <div class="row">
+                    <div class="col-xs-4" ng-repeat="student in chosableStudents">
+                        <div class="thumbnail">
+                            <p>{{student.lastName}}</p>
+                            <p>{{student.firstName}}</p>
+                            <p>{{student.birthDate | date}}</p>
+                            <button class="btn-mini" ng-click="addStudent(student)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <div class="form-group">
-      <label for="students" class="control-label">Studenti</label>
-      <select class="form-control" size="15" id="students" multiple data-ng-multiple="true"
-              data-ng-model="schoolClass.students" data-ng-options="student._id as student | name for student in students">
-      </select>
-    </div>
+            <div class="col-xs-6">
+                <h2>Alunni selezionati</h2>
+                <div class="row">
+                    <div class="col-xs-4" ng-repeat="student in chosenStudents">
+                        <div class="thumbnail">
+                            <p>{{student.lastName}}</p>
+                            <p>{{student.firstName}}</p>
+                            <p>{{student.birthDate | date}}</p>
+                            <button class="btn-mini" ng-click="removeStudent(student)">-</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <hr>
+        <hr>
 
-    <button type="submit" class="btn btn-primary">Crea</button>
+        <button type="submit" class="btn btn-primary">Crea</button>
 
-    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+        <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
 
-  </form>
+    </form>
+
 </section>
