@@ -21,6 +21,7 @@ var SchoolClassSchema = new Schema({
     academicYear: {
         type: Schema.Types.ObjectId,
         ref: 'AcademicYear'
+        //FIXME dovrebbe essere required?!
     }
 });
 
