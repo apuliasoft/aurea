@@ -1,3 +1,7 @@
-<section>
-	<h1>Aurea: un registro elettronico aperto</h1>
+<section data-ng-controller="IndexCtrl">
+  <h1>Aurea: un registro elettronico aperto</h1>
+
+  <ul class="list-unstyled">
+    <li data-ng-repeat="academicYear in academicYears"><button class="btn btn-default" data-ng-click="setAcademicYear(academicYear)">{{ academicYear.name }}</button></li>
+  </ul>
 </section>

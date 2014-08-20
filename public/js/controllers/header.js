@@ -57,12 +57,6 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
         });
 
         $scope.menu.push({
-            'title': 'Quadri Orari',
-            'link': 'quadri-orari',
-            'ngif': Global.isAdmin
-        });
-
-        $scope.menu.push({
             'title': 'Registro di Classe',
             'link': 'registri-di-classe/53f1ffd35f8fddfd599e6c9b/' + $filter('date')(new Date(), 'yyyy-MM-dd'),
             'ngif': Global.isAdmin

@@ -61,40 +61,21 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
         var classId = $stateParams.classId;
         var date = new Date($stateParams.date);
 
-        $scope.classRegistry = {
+        $scope.classRegistry = new ClassRegistry({
             schoolClass: classId,
             date: date,
-            slots: [
-                {number: 1},
-                {number: 2},
-                {number: 3},
-                {number: 4},
-                {number: 5},
-                {number: 6}
-            ]
-        };
+            slots: _.map(Global.academicYear.timeTable, function(day) {
+                return { number: day.number};
+            })
+        });
+
+        Global.academicYear.timeTable
 
         ClassRegistry.get({
             classId: classId,
             date: date.toISOString()
         }).$promise.then(function (classRegistry) {
-            if (!classRegistry.date) {
-                classRegistry = new ClassRegistry();
-
-                // I mesi sono zero-based
-                classRegistry.slots = [
-                    {number: 1},
-                    {number: 2},
-                    {number: 3},
-                    {number: 4},
-                    {number: 5},
-                    {number: 6}
-                ];
-            }
-
-            classRegistry = deserializeData(classRegistry);
-
-            $scope.classRegistry = classRegistry;
+            $scope.classRegistry = deserializeData(classRegistry);
         });
     };
 
