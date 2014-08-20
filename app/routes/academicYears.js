@@ -13,6 +13,8 @@ module.exports = function(app) {
 
     app.get('/academicYears/getTimeTable', academicYears.getTimeTable);
 
+    app.get('/complexes/:complexId/academicYears', academicYears.getByComplex);
+
     // Finish with setting up the academicYearId param
     app.param('academicYearId', academicYears.academicYear);
 

@@ -1,9 +1,13 @@
 'use strict';
 
-angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', function ($scope, Global, $filter) {
+angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', '$localStorage', 'Complex', 'AcademicYear', function ($scope, Global, $filter, $localStorage, Complex, AcademicYear) {
     $scope.global = Global;
 
-    $scope.$watch('global.user', function(){
+    if (!$scope.complexes) {
+        $scope.complexes = Complex.query();
+    }
+
+    $scope.$watch('global.user', function () {
         updateMenu();
     });
 
@@ -63,10 +67,14 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
         });
 
         $scope.menu.push({
-              'title': 'Registro Personale',
-              'link': 'registri-personali/' + $filter('date')(new Date(), 'd-M-yyyy')
+            'title': 'Registro Personale',
+            'link': 'registri-personali/' + $filter('date')(new Date(), 'd-M-yyyy')
         });
     }
 
     $scope.isCollapsed = false;
+
+
+
+
 }]);

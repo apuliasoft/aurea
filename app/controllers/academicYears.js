@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
     AcademicYear = mongoose.model('AcademicYear'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    ObjectId = mongoose.Types.ObjectId;
 
 
 /**
@@ -92,4 +93,17 @@ exports.all = function(req, res) {
  */
 exports.getTimeTable = function(req, res) {
     res.jsonp(req.academicYear.timeTable);
+};
+
+/**
+ * Get all academic Years by complex id
+ */
+exports.getByComplex = function(req, res) {
+    AcademicYear.find({complex: new ObjectId(req.params.complexId)}, function(err, academicYears){
+        if (err) {
+            res.jsonp(400, err);
+        } else {
+            res.jsonp(academicYears);
+        }
+    });
 };
