@@ -15,7 +15,9 @@ exports.complex = function(req, res, next, id) {
     Complex.findById(id, function(err, complex) {
         if (err) return next(err);
         if (!complex) return next(new Error('Failed to load complex ' + id));
-        req.Complex = complex;
+        if (complex.school.toString() !== req.params.schoolId) return next(new Error('The complex ' + id + ' is not related to school ' + req.params.schoolId));
+
+        req.complex = complex;
         next();
     });
 };
@@ -39,9 +41,9 @@ exports.create = function(req, res) {
  * Update an complex 
  */
 exports.update = function(req, res) {
-    var complex = req.Complex;
+    var complex = req.complex;
 
-    complex = _.extend(Complex, req.body);
+    complex = _.extend(complex, req.body);
 
     complex.save(function(err) {
         if (err) {
@@ -56,7 +58,7 @@ exports.update = function(req, res) {
  * Delete an complex 
  */
 exports.destroy = function(req, res) {
-    var complex = req.Complex;
+    var complex = req.complex;
 
     complex.remove(function(err) {
         if (err) {
@@ -71,14 +73,14 @@ exports.destroy = function(req, res) {
  * Show an complex 
  */
 exports.show = function(req, res) {
-    res.jsonp(req.Complex);
+    res.jsonp(req.complex);
 };
 
 /**
  * List of complexes
  */
 exports.all = function(req, res) {
-    Complex.find({}, function(err, complexes) {
+    Complex.find({school: req.params.schoolId}, function(err, complexes) {
         if (err) {
             res.jsonp(400, err);
         } else {

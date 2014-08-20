@@ -1,4 +1,4 @@
-<section data-ng-controller="SchoolsCtrl" data-ng-init="findOne();findComplexes();">
+<section data-ng-controller="SchoolsCtrl" data-ng-init="findOne()">
     <h2>Dettaglio scuola</h2>
 
     <dl class="dl-horizontal">
@@ -14,13 +14,11 @@
 
     <hr/>
 
-    <h2>Plessi</h2>
-
     <div class="row">
         <div class="col-xs-3" data-ng-repeat="complex in complexes">
             <a class="thumbnail btn">
                 <p>{{complex.name}}</p>
-                <p>{{complex | address}}</p>
+                <p>{{complex.street | address}}</p>
             </a>
         </div>
         <div class="col-xs-3">

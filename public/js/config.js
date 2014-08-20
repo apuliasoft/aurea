@@ -4,6 +4,7 @@
 angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
   function($stateProvider, $urlRouterProvider, $httpProvider) {
 
+      // FIXME sistemarlo ai fini della minificazione
     var checkLoggedin = function($q, $timeout, $http, $location, Global) {
         // Initialize a new promise
         var deferred = $q.defer();
@@ -132,10 +133,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
         url: '/scuole/crea',
         templateUrl: 'views/schools/create.html',
         resolve: {
-            loggedin: checkLoggedin,
-            provices: function (Provinces) {
-                return Provinces.loadProvinces();
-            }
+            loggedin: checkLoggedin
         }
     })
 
@@ -144,9 +142,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
         templateUrl: 'views/schools/edit.html',
         resolve: {
             loggedin: checkLoggedin,
-            provices: function (Provinces) {
+            provices: ['Provinces', function (Provinces) {
                 return Provinces.loadProvinces();
-            }
+            }]
         }
     })
 
@@ -156,6 +154,17 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
           resolve: {
               loggedin: checkLoggedin
           }
+    })
+
+    .state('create complex', {
+        url: '/scuole/:schoolId/plessi/crea',
+        templateUrl: 'views/complexes/create.html',
+        resolve: {
+        loggedin: checkLoggedin,
+            provices: function (Provinces) {
+                return Provinces.loadProvinces();
+            }
+        }
     })
 
     .state('all teachers', {
