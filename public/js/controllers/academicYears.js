@@ -104,12 +104,15 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
     };
 
     $scope.find = function () {
-        $scope.academicYears = AcademicYear.query();
+        $scope.academicYears = AcademicYear.query({
+            complexId: Global.getComplex()._id
+        });
     };
 
     $scope.findOne = function () {
         AcademicYear.get({
-            academicYearId: $stateParams.academicYearId
+            academicYearId: $stateParams.academicYearId,
+            complexId: Global.getComplex()._id
         }).$promise.then(function (academicYear) {
                 academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
                 academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');

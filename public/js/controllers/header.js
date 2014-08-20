@@ -7,9 +7,26 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
         $scope.complexes = Complex.query();
     }
 
+    $scope.$watch('global.complex', function () {
+
+        var academicYear  = Global.getAcademicYear();
+        var complex = Global.getComplex();
+        if(academicYear && academicYear.complex !== complex._id){
+            Global.removeAcademicYear();
+        }
+
+        updateAcademicYears();
+    });
+
     $scope.$watch('global.user', function () {
         updateMenu();
     });
+
+    function updateAcademicYears() {
+        $scope.academicYears = AcademicYear.query({
+            complexId: Global.getComplex()._id
+        });
+    }
 
     function updateMenu() {
         $scope.menu = [];
@@ -73,8 +90,6 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
     }
 
     $scope.isCollapsed = false;
-
-
 
 
 }]);
