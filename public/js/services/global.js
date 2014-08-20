@@ -1,9 +1,10 @@
 'use strict';
 
 //Global service for global variables
-angular.module('aurea.system').factory('Global', [
-    function () {
+angular.module('aurea.system').factory('Global',  ['$sessionStorage',
+    function ($sessionStorage) {
         var _this = this;
+
         _this._data = {
 
             user: {},
@@ -32,6 +33,14 @@ angular.module('aurea.system').factory('Global', [
 
             isParent: function () {
                 return _this._data.isLoggedin() && _this._data.user.role === 'parent';
+            },
+
+            setComplex: function(complex){
+                $sessionStorage.complex = complex;
+            },
+
+            getComplex: function(){
+                return $sessionStorage.complex;
             }
 
         };
