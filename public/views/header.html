@@ -13,18 +13,18 @@
           {{ global.getComplex().name || 'Seleziona il plesso'}} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li data-ng-repeat="complex in complexes" data-ng-click="global.setComplex(complex)"><a href="#"> {{ complex.name }} </a></li>
+          <li data-ng-repeat="complex in complexes" data-ng-click="global.setComplex(complex)"><a href=""> {{ complex.name }} </a></li>
         </ul>
       </div>
     </li>
 
     <li>
       <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-ng-disabled="!global.getComplex()">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-ng-disabled="!global.getComplex() || academicYears.length==0">
           {{ global.getAcademicYear().name || 'Seleziona l\'anno accademico'}} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li data-ng-repeat="academicYear in academicYears" data-ng-click="global.setAcademicYear(academicYear)"><a href="#"> {{ academicYear.name }} </a></li>
+          <li data-ng-repeat="academicYear in academicYears" data-ng-click="global.setAcademicYear(academicYear)"><a href=""> {{ academicYear.name }} </a></li>
         </ul>
       </div>
     </li>
@@ -53,8 +53,5 @@
         <li><a href="/#!/utenti/{{global.user._id}}">Profilo</a></li>
       </ul>
     </li>
-  </ul>
-  <ul class="navbar-nav nav pull-right">
-    <li>{{ global.academicYear.name }}</li>
   </ul>
 </div>

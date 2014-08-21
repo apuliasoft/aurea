@@ -2,8 +2,9 @@
 
 //Academic year service used for academic years REST endpoint
 angular.module('aurea.academicYears').factory('AcademicYear', ['$resource', function($resource) {
-    return $resource('academicYears/:academicYearId', {
-        academicYearId: '@_id'
+    return $resource('complexes/:complexId/academicYears/:academicYearId', {
+        academicYearId: '@_id',
+        complexId: '@complex'
     }, {
         update: {
             method: 'PUT'

@@ -12,6 +12,6 @@ module.exports = function(app) {
     app.del('/schools/:schoolId/complexes/:complexId', complexes.destroy);
 
     // Finish with setting up the complexId param
-    app.param('complexId', complexes.complex);
+    // app.param('complexId', complexes.complex);
 
 };

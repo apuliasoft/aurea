@@ -79,7 +79,7 @@ exports.show = function(req, res) {
  * List of academic years
  */
 exports.all = function(req, res) {
-    AcademicYear.find({}, function(err, academicYears) {
+    AcademicYear.find({complex: new ObjectId(req.params.complexId)}, function(err, academicYears) {
         if (err) {
             res.jsonp(400, err);
         } else {
@@ -93,17 +93,4 @@ exports.all = function(req, res) {
  */
 exports.getTimeTable = function(req, res) {
     res.jsonp(req.academicYear.timeTable);
-};
-
-/**
- * Get all academic Years by complex id
- */
-exports.getByComplex = function(req, res) {
-    AcademicYear.find({complex: new ObjectId(req.params.complexId)}, function(err, academicYears){
-        if (err) {
-            res.jsonp(400, err);
-        } else {
-            res.jsonp(academicYears);
-        }
-    });
 };
