@@ -8,18 +8,6 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
         {name:'lastName', label:'Cognome'}
     ];
 
-    if(!$scope.complexes) {
-        $scope.complexes = Complex.query();
-    }
-
-    $scope.getComplexName = function(complexId) {
-        var complex = _.find($scope.complexes, function(complex) {
-            return complex._id === complexId;
-        });
-
-        return complex && complex.name;
-    };
-
     $scope.list = function () {
         $location.path('insegnanti');
     };
@@ -42,6 +30,7 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
 
     $scope.init = function () {
         $scope.teacher = new Teacher();
+        $scope.teacher.complex = Global.getComplex()._id;
     };
 
     $scope.create = function(isValid) {
@@ -77,12 +66,15 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
     };
 
     $scope.find = function() {
-        $scope.teachers = Teacher.query();
+        $scope.teachers = Teacher.query({
+            complexId: Global.getComplex()._id
+        });
     };
 
     $scope.findOne = function() {
         $scope.teacher = Teacher.get({
-            teacherId: $stateParams.teacherId
+            teacherId: $stateParams.teacherId,
+            complexId: Global.getComplex()._id
         });
     };
 }]);

@@ -17,7 +17,7 @@ var mongoose = require('mongoose'),
 var getStudent = function (studentId, complexId, callback) {
     Student.findById(studentId, function (err, student) {
         if (err) return next(err);
-        if (!student) return next(new Error('Failed to load student ' + id));
+        if (!student) return next(new Error('Failed to load student ' + studentId));
         if (student.complex.toString() !== complexId) return next(new Error('The student ' + studentId + ' is not related to complex ' + complexId));
 
         callback(student);
