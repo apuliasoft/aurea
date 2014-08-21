@@ -22,6 +22,15 @@ var StudentSchema = new Schema({
         type: Date,
         required: true
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    parents: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     complex: {
         type: Schema.Types.ObjectId,
         ref: 'Complex'

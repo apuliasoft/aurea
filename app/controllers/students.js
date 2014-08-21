@@ -4,81 +4,103 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Student = mongoose.model('Student'),
-    _ = require('lodash');
+  Student = mongoose.model('Student'),
+  generatePassword = require('password-generator'),
+  _ = require('lodash');
 
 
 /**
  * Find student by id
  */
-exports.student = function(req, res, next, id) {
-    Student.findById(id, function(err, student) {
+var getStudent = function (studentId, complexId, callback) {
+    Student.findById(studentId, function (err, student) {
         if (err) return next(err);
         if (!student) return next(new Error('Failed to load student ' + id));
-        req.student = student;
-        next();
+        if (student.complex.toString() !== complexId) return next(new Error('The student ' + studentId + ' is not related to complex ' + complexId));
+
+        callback(student);
     });
 };
 
 /**
- * Create an student 
+ * Create an student
  */
-exports.create = function(req, res) {
+exports.create = function (req, res) {
     var student = new Student(req.body);
 
-    student.save(function(err) {
-        if (err) {
-            res.jsonp(400, err);
-        } else {
-            res.jsonp(student);
-        }
+    var user = new User();
+    user.name = student.firstName + ' ' + student.lastName;
+    user.email = req.body.email;
+    user.role = 'student';
+
+    var password = generatePassword(18, false);
+    user.password = password;
+    console.log('password generata: ' + password);
+
+    async.parallel([
+          student.save,
+          user.save
+      ],
+      function (err, results) {
+          // the results array will equal ['one','two'] even though
+          // the second function had a shorter timeout.
+          console.log(err);
+          console.log(result);
+
+          if (err) {
+              res.jsonp(400, err);
+          } else {
+              res.jsonp(results[0]);
+          }
+      });
+};
+
+/**
+ * Update an student
+ */
+exports.update = function (req, res) {
+    getStudent(req.params.studentId, req.params.complexId, function (student) {
+        student = _.extend(student, req.body);
+
+        student.save(function (err) {
+            if (err) {
+                res.jsonp(400, err);
+            } else {
+                res.jsonp(student);
+            }
+        });
     });
 };
 
 /**
- * Update an student 
+ * Delete an student
  */
-exports.update = function(req, res) {
-    var student = req.student;
-
-    student = _.extend(student, req.body);
-
-    student.save(function(err) {
-        if (err) {
-            res.jsonp(400, err);
-        } else {
-            res.jsonp(student);
-        }
+exports.destroy = function (req, res) {
+    getStudent(req.params.studentId, req.params.complexId, function (student) {
+        student.remove(function (err) {
+            if (err) {
+                res.jsonp(400, err);
+            } else {
+                res.jsonp(student);
+            }
+        });
     });
 };
 
 /**
- * Delete an student 
+ * Show an student
  */
-exports.destroy = function(req, res) {
-    var student = req.student;
-
-    student.remove(function(err) {
-        if (err) {
-            res.jsonp(400, err);
-        } else {
-            res.jsonp(student);
-        }
+exports.show = function (req, res) {
+    getStudent(req.params.studentId, req.params.complexId, function (student) {
+        res.jsonp(student);
     });
-};
-
-/**
- * Show an student 
- */
-exports.show = function(req, res) {
-    res.jsonp(req.student);
 };
 
 /**
  * List of students
  */
-exports.all = function(req, res) {
-    Student.find({}, function(err, student) {
+exports.all = function (req, res) {
+    Student.find({complex: req.params.complexId}, function (err, student) {
         if (err) {
             res.jsonp(400, err);
         } else {

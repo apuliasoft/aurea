@@ -48,17 +48,17 @@ angular.module('aurea.complexes').controller('ComplexesCtrl', ['$scope', '$state
 //        }
 //    };
 //
-//    $scope.update = function() {
-//        var school = $scope.school;
-//        if (!school.updated) {
-//            school.updated = [];
-//        }
-//        school.updated.push(new Date().getTime());
-//
-//        school.$update(function (response) {
-//            $scope.view(response);
-//        });
-//    };
+    $scope.update = function() {
+        var complex = $scope.complex;
+        if (!complex.updated) {
+            complex.updated = [];
+        }
+        complex.updated.push(new Date().getTime());
+
+        complex.$update(function (response) {
+            $scope.goToSchool(response.school);
+        });
+    };
 //
 //    $scope.find = function() {
 //        School.query(function(schools) {
@@ -66,13 +66,12 @@ angular.module('aurea.complexes').controller('ComplexesCtrl', ['$scope', '$state
 //        });
 //    };
 //
-//    $scope.findOne = function() {
-//        School.get({
-//            schoolId: $stateParams.schoolId
-//        }, function(school) {
-//            $scope.school = school;
-//        });
-//    };
+    $scope.findOne = function() {
+        $scope.complex = Complex.get({
+            schoolId: $stateParams.schoolId,
+            complexId: $stateParams.complexId
+        });
+    };
 }]);
 
 

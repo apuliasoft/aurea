@@ -4,7 +4,7 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
     $scope.global = Global;
 
     $scope.columns = [
-        {name:'name', label:'Nome'}
+        {name: 'name', label: 'Nome'}
     ];
 
     $scope.list = function () {
@@ -31,7 +31,7 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
         $scope.school = new School();
     };
 
-    $scope.create = function() {
+    $scope.create = function () {
         var school = $scope.school;
         school.$save(function (response) {
             $scope.view(response);
@@ -39,7 +39,7 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
         $scope.init();
     };
 
-    $scope.remove = function(school) {
+    $scope.remove = function (school) {
         if (school) {
             school.$remove();
             _.remove($scope.schools, school);
@@ -47,7 +47,7 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
         }
     };
 
-    $scope.update = function() {
+    $scope.update = function () {
         var school = $scope.school;
         if (!school.updated) {
             school.updated = [];
@@ -59,24 +59,26 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
         });
     };
 
-    $scope.find = function() {
-        School.query(function(schools) {
+    $scope.find = function () {
+        School.query(function (schools) {
             $scope.schools = schools;
         });
     };
 
-    $scope.findOne = function() {
+    $scope.findOne = function () {
         $scope.school = School.get({schoolId: $stateParams.schoolId});
     };
 
-    $scope.findComplexes = function() {
+    $scope.findComplexes = function () {
         $scope.complexes = Complex.query({schoolId: $stateParams.schoolId});
     };
 
-    $scope.addComplex = function(school){
-        if (school) {
-            $location.path('scuole/' + school._id + '/plessi/crea');
-        }
+    $scope.goToCreateComplex = function (schoolId) {
+        $location.path('scuole/' + schoolId + '/plessi/crea');
+    };
+
+    $scope.goToEditComplex = function (schoolId,complexId) {
+        $location.path('scuole/' + schoolId + '/plessi/' + complexId + '/modifica');
     };
 }]);
 

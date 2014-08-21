@@ -18,13 +18,13 @@
 
     <div class="row">
         <div class="col-xs-3" data-ng-repeat="complex in complexes">
-            <a class="thumbnail btn">
+            <a class="thumbnail btn" data-ng-click="goToEditComplex(school._id,complex._id)">
                 <p>{{complex.name}}</p>
                 <p>{{complex | address}}</p>
             </a>
         </div>
         <div class="col-xs-3">
-            <a class="thumbnail btn" data-ng-click="addComplex(school)">
+            <a class="thumbnail btn" data-ng-click="goToCreateComplex(school._id)">
                 <i class="fa fa-plus"></i>
             </a>
         </div>

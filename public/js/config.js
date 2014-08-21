@@ -167,6 +167,17 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
         }
     })
 
+    .state('edit complex', {
+      url: '/scuole/:schoolId/plessi/:complexId/modifica',
+      templateUrl: 'views/complexes/edit.html',
+      resolve: {
+          loggedin: checkLoggedin,
+          provices: function (Provinces) {
+              return Provinces.loadProvinces();
+          }
+      }
+    })
+
     .state('all teachers', {
         url: '/insegnanti',
         templateUrl: 'views/teachers/list.html',

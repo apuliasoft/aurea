@@ -18,6 +18,11 @@ var TeacherSchema = new Schema({
         type: String,
         required: true
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     complex: {
         type: Schema.Types.ObjectId,
         ref: 'Complex'

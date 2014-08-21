@@ -1,33 +1,37 @@
 <section data-ng-controller="StudentsCtrl" data-ng-init="init()">
-  <h2>Crea alunno</h2>
+    <h2>Crea alunno</h2>
 
-  <form name="studentForm" role="form" data-ng-submit="create()" novalidate>
+    <form name="studentForm" role="form" data-ng-submit="create()" novalidate>
 
-    <div class="form-group">
-      <label for="firstName" class="control-label">Nome</label>
-      <input type="text" data-ng-model="student.firstName" id="firstName" name="firstName" class="form-control" placeholder="Nome">
-    </div>
+        <div class="form-group">
+            <label for="firstName" class="control-label">Nome</label>
+            <input type="text" data-ng-model="student.firstName" id="firstName" name="firstName" class="form-control"
+                   placeholder="Nome">
+        </div>
 
-    <div class="form-group">
-      <label for="lastName" class="control-label">Cognome</label>
-      <input type="text" data-ng-model="student.lastName" id="lastName" name="lastName" class="form-control" placeholder="Cognome">
-    </div>
+        <div class="form-group">
+            <label for="lastName" class="control-label">Cognome</label>
+            <input type="text" data-ng-model="student.lastName" id="lastName" name="lastName" class="form-control"
+                   placeholder="Cognome">
+        </div>
 
-    <div class="form-group">
-      <label for="birthDate" class="control-label">Data di nascita</label>
-      <input type="date" data-ng-model="student.birthDate" id="birthDate" name="birthDate" class="form-control" placeholder="Data di nascita">
-    </div>
+        <div class="form-group">
+            <label for="email" class="control-label">Email</label>
+            <input type="email" data-ng-model="student.email" id="email" name="email" class="form-control"
+                   placeholder="Email">
+        </div>
 
-    <div class="form-group">
-      <label for="complex" class="control-label">Plesso</label>
-      <select data-ng-model="student.complex" id="complex" name="complex" class="form-control" placeholder="Plesso" data-ng-options="complex._id as complex.name for complex in complexes"></select>
-    </div>
+        <div class="form-group">
+            <label for="birthDate" class="control-label">Data di nascita</label>
+            <input type="date" data-ng-model="student.birthDate" id="birthDate" name="birthDate" class="form-control"
+                   placeholder="Data di nascita">
+        </div>
 
-    <hr>
+        <hr>
 
-    <button type="submit" class="btn btn-primary">Crea</button>
+        <button type="submit" class="btn btn-primary">Crea</button>
 
-    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+        <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
 
-  </form>
+    </form>
 </section>

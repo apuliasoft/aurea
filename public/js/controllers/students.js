@@ -42,7 +42,7 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
     };
 
     $scope.init = function () {
-        $scope.student = new Student();
+        $scope.student = new Student({complex: Global.getComplex()});
     };
 
     $scope.create = function() {

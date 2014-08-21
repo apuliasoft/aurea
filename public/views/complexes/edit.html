@@ -1,18 +1,40 @@
-<section data-ng-controller="SchoolsCtrl" data-ng-init="findOne()">
-  <h2>Modifica scuola</h2>
+<section data-ng-controller="ComplexesCtrl" data-ng-init="findOne()">
+    <h2>Modifica Complesso</h2>
 
-  <form name="schoolForm" role="form" data-ng-submit="update()" novalidate>
+    <form name="complexForm" role="form" data-ng-submit="update()" novalidate>
 
-    <div class="form-group">
-      <label for="name" class="control-label">Nome</label>
-      <input type="text" data-ng-model="school.name" id="name" name="name" class="form-control" placeholder="Nome">
-    </div>
+        <div class="form-group">
+            <label for="name" class="control-label">Nome</label>
+            <input type="text" data-ng-model="complex.name" id="name" name="name" class="form-control" placeholder="Nome">
+        </div>
 
-    <hr>
+        <div class="form-group">
+            <label for="street" class="control-label">Via</label>
+            <input type="text" data-ng-model="complex.street" id="street" name="street" class="form-control" placeholder="Via">
+        </div>
 
-    <button type="submit" class="btn btn-primary">Salva</button>
+        <div class="form-group">
+            <label for="zipCode" class="control-label">CAP</label>
+            <input type="text" data-ng-model="complex.zipCode" id="zipCode" name="zipCode" class="form-control" placeholder="CAP">
+        </div>
 
-    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+        <div class="form-group">
+            <label for="city" class="control-label">Città</label>
+            <input type="text" data-ng-model="complex.city" id="city" name="city" class="form-control" placeholder="Città">
+        </div>
 
-  </form>
+        <div class="form-group">
+            <label for="province" class="control-label">Provincia</label>
+            <select data-ng-model="complex.province" id="province" name="province" class="form-control">
+                <option data-ng-repeat="province in provinces" value="{{province.code}}">{{province.name}}</option>
+            </select>
+        </div>
+
+        <hr>
+
+        <button type="submit" class="btn btn-primary">Salva</button>
+
+        <button type="button" data-ng-click="goToSchool(complex.school)" class="btn btn-default">Annulla</button>
+
+    </form>
 </section>
