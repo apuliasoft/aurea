@@ -45,6 +45,7 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
 
     $scope.init = function () {
         $scope.academicYear = new AcademicYear();
+        $scope.academicYear.complex = Global.getComplex()._id;
         $scope.academicYear.timeTable = _.map(_.range(1, 7), function (num) {
             return {
                 weekDay: num,
