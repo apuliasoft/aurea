@@ -1,0 +1,23 @@
+<section data-ng-controller="ParentsCtrl" data-ng-init="init()">
+    <h2>Crea Genitore</h2>
+
+    <form name="parentForm" role="form" data-ng-submit="create()" novalidate>
+
+        <div class="form-group">
+            <label for="name" class="control-label">Nome</label>
+            <input type="text" data-ng-model="parent.name" id="name" name="name" class="form-control" placeholder="Nome">
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="control-label">Email</label>
+            <input type="email" data-ng-model="parent.email" id="email" name="email" class="form-control" placeholder="Email">
+        </div>
+
+        <hr>
+
+        <button type="submit" class="btn btn-primary">Crea</button>
+
+        <button type="button" data-ng-click="goToSchool(parent.school)" class="btn btn-default">Annulla</button>
+
+    </form>
+</section>

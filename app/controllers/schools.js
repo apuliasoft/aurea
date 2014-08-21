@@ -5,7 +5,6 @@
  */
 var mongoose = require('mongoose'),
     School = mongoose.model('School'),
-    Complex = mongoose.model('Complex'),
     _ = require('lodash'),
     async = require('async');
 

@@ -14,13 +14,14 @@ var mongoose = require('mongoose'),
 /**
  * Find student by id
  */
-var getStudent = function (studentId, complexId, callback) {
+var getStudent = function (studentId, callback) {
     Student.findById(studentId, function (err, student) {
-        if (err) return next(err);
-        if (!student) return next(new Error('Failed to load student ' + id));
-        if (student.complex.toString() !== complexId) return next(new Error('The student ' + studentId + ' is not related to complex ' + complexId));
+        if (err) return callback(err);
+        if (!student) return callback(new Error('Failed to load student ' + id));
+        // TODO: spostare in RBAC
+        // if (student.complex.toString() !== complexId) return callback(new Error('The student ' + studentId + ' is not related to complex ' + complexId));
 
-        callback(student);
+        callback(null, student);
     });
 };
 
@@ -40,20 +41,15 @@ exports.create = function (req, res) {
     console.log('password generata: ' + password);
 
     async.waterfall([
-        function(callback) {
-            user.save(callback)
-        },
-        function(user, rowAffected, callback) {
-            student.user = user._id;
-            student.save(callback);
-        }
+          function (callback) {
+              user.save(callback);
+          },
+          function (user, rowAffected, callback) {
+              student.user = user._id;
+              student.save(callback);
+          }
       ],
       function (err, result) {
-          // the results array will equal ['one','two'] even though
-          // the second function had a shorter timeout.
-          console.log(err);
-          console.log(result);
-
           if (err) {
               res.jsonp(400, err);
           } else {
@@ -66,7 +62,9 @@ exports.create = function (req, res) {
  * Update an student
  */
 exports.update = function (req, res) {
-    getStudent(req.params.studentId, req.params.complexId, function (student) {
+    getStudent(req.params.studentId, function (err, student) {
+        if (err) return res.jsonp(400, err);
+
         student = _.extend(student, req.body);
 
         student.save(function (err) {
@@ -83,7 +81,9 @@ exports.update = function (req, res) {
  * Delete an student
  */
 exports.destroy = function (req, res) {
-    getStudent(req.params.studentId, req.params.complexId, function (student) {
+    getStudent(req.params.studentId, function (err, student) {
+        if (err) return res.jsonp(400, err);
+
         student.remove(function (err) {
             if (err) {
                 res.jsonp(400, err);
@@ -98,8 +98,12 @@ exports.destroy = function (req, res) {
  * Show an student
  */
 exports.show = function (req, res) {
-    getStudent(req.params.studentId, req.params.complexId, function (student) {
-        res.jsonp(student);
+    getStudent(req.params.studentId, function (err, student) {
+        if (err) {
+            res.jsonp(400, err);
+        } else {
+            res.jsonp(student);
+        }
     });
 };
 
@@ -115,3 +119,49 @@ exports.all = function (req, res) {
         }
     });
 };
+
+exports.allParents = function (req, res) {
+    async.waterfall([
+          function (callback) {
+              Student.findById(req.params.studentId, callback);
+          },
+          function (student, callback) {
+              User.find({'_id': { $in: student.parents} }, callback);
+          }
+      ],
+      function (err, result) {
+          if (err) {
+              res.jsonp(400, err);
+          } else {
+              res.jsonp(result);
+          }
+      });
+};
+
+exports.createParent = function (req, res) {
+    var user = new User(req.body);
+    user.role = 'parent';
+
+    var password = generatePassword(18, false);
+    user.password = password;
+    console.log('password generata: ' + password);
+
+    async.waterfall([
+          function (callback) {
+              user.save(callback);
+          },
+          function (user, rowAffected, callback) {
+              getStudent(req.params.studentId, function (err, student) {
+                  student.parents.push(user._id)
+                  student.save(callback);
+              });
+          }
+      ],
+      function (err, result) {
+          if (err) {
+              res.jsonp(400, err);
+          } else {
+              res.jsonp(result);
+          }
+      });
+}
