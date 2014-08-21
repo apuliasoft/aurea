@@ -4,33 +4,33 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
     $scope.global = Global;
 
     $scope.columns = [
-        {name:'name', label:'Nome'}
+        {name: 'name', label: 'Nome'}
     ];
 
-    if(!$scope.academicYears) {
+    if (!$scope.academicYears) {
         $scope.academicYears = AcademicYear.query();
     }
 
-    $scope.addStudent = function(student) {
+    $scope.addStudent = function (student) {
         $scope.chosenStudents.push(student);
         $scope.chosableStudents = _.without($scope.chosableStudents, student);
     };
 
-    $scope.removeStudent = function(student) {
+    $scope.removeStudent = function (student) {
         $scope.chosableStudents.push(student);
         $scope.chosenStudents = _.without($scope.chosenStudents, student);
     };
 
-    $scope.getAcademicYearName = function(academicYearId) {
-        var academicYear = _.find($scope.academicYears, function(academicYear) {
+    $scope.getAcademicYearName = function (academicYearId) {
+        var academicYear = _.find($scope.academicYears, function (academicYear) {
             return academicYear._id === academicYearId;
         });
 
         return academicYear && academicYear.name;
     };
 
-    $scope.getStudentFullName = function(studentId) {
-        var student = _.find($scope.students, function(student) {
+    $scope.getStudentFullName = function (studentId) {
+        var student = _.find($scope.students, function (student) {
             return student._id === studentId;
         });
 
@@ -64,21 +64,23 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
         $scope.chosenStudents = [];
     };
 
-    $scope.create = function() {
-        var schoolClass = $scope.schoolClass;
-        schoolClass.students = _.map($scope.chosenStudents, function(student){
-            return student._id;
-        });
+    $scope.create = function (isValid) {
+        if (isValid) {
+            var schoolClass = $scope.schoolClass;
+            schoolClass.students = _.map($scope.chosenStudents, function (student) {
+                return student._id;
+            });
 
-        console.log(schoolClass);
+            console.log(schoolClass);
 
-        schoolClass.$save(function (response) {
-            $scope.view(response);
-        });
-        $scope.init();
+            schoolClass.$save(function (response) {
+                $scope.view(response);
+            });
+            $scope.init();
+        }
     };
 
-    $scope.remove = function(schoolClass) {
+    $scope.remove = function (schoolClass) {
         if (schoolClass) {
             schoolClass.$remove();
             _.remove($scope.schoolClasses, schoolClass);
@@ -86,36 +88,38 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
         }
     };
 
-    $scope.update = function() {
-        var schoolClass = $scope.schoolClass;
-        if (!schoolClass.updated) {
-            schoolClass.updated = [];
-        }
-        schoolClass.updated.push(new Date().getTime());
-        schoolClass.students = _.map($scope.chosenStudents, function(student){
-            return student._id;
-        });
+    $scope.update = function (isValid) {
+        if (isValid) {
+            var schoolClass = $scope.schoolClass;
+            if (!schoolClass.updated) {
+                schoolClass.updated = [];
+            }
+            schoolClass.updated.push(new Date().getTime());
+            schoolClass.students = _.map($scope.chosenStudents, function (student) {
+                return student._id;
+            });
 
-        schoolClass.$update(function (response) {
-            $scope.view(response);
-        });
+            schoolClass.$update(function (response) {
+                $scope.view(response);
+            });
+        }
     };
 
-    $scope.find = function() {
+    $scope.find = function () {
         $scope.schoolClasses = SchoolClass.query();
     };
 
-    $scope.findOne = function() {
+    $scope.findOne = function () {
         $scope.schoolClass = SchoolClass.get({
             schoolClassId: $stateParams.schoolClassId
         });
 
-        $scope.schoolClass.$promise.then(function(){
+        $scope.schoolClass.$promise.then(function () {
             $scope.chosableStudents = Student.query();
 
-            $scope.chosableStudents.$promise.then(function(){
+            $scope.chosableStudents.$promise.then(function () {
 
-                $scope.chosenStudents = _.filter($scope.chosableStudents, function(student) {
+                $scope.chosenStudents = _.filter($scope.chosableStudents, function (student) {
                     return _.contains($scope.schoolClass.students, student._id);
                 });
 

@@ -1,53 +1,68 @@
 <section data-ng-controller="AcademicYearsCtrl" data-ng-init="init()">
-  <h2>Crea anno accademico</h2>
+    <h2>Crea anno accademico</h2>
 
-  <form name="academicYearForm" role="form" data-ng-submit="create()" novalidate>
+    <form name="academicYearForm" role="form" data-ng-submit="create(academicYearForm.$valid)" novalidate>
 
-    <div class="form-group">
-      <label for="name" class="control-label">Nome</label>
-      <input type="text" data-ng-model="academicYear.name" id="name" name="name" class="form-control"
-             placeholder="Nome">
-    </div>
+        <div class="form-group"
+             data-ng-class="{ 'has-error' : academicYearForm.name.$invalid && !academicYearForm.name.$pristine }">
+            <label for="name" class="control-label">Nome</label>
+            <input type="text" data-ng-model="academicYear.name" id="name" name="name" class="form-control"
+                   placeholder="Nome" required>
 
-    <div class="form-group">
-      <label for="startDate" class="control-label">Data inizio</label>
-      <input type="date" data-ng-model="academicYear.startDate" id="startDate" name="startDate" class="form-control"
-             placeholder="Data inizio">
-    </div>
-
-    <div class="form-group">
-      <label for="endDate" class="control-label">Data fine</label>
-      <input type="date" data-ng-model="academicYear.endDate" id="endDate" name="endDate" class="form-control"
-             placeholder="Data fine">
-    </div>
-
-    <div class="form-group">
-      <label for="complex" class="control-label">Plesso</label>
-      <select data-ng-model="academicYear.complex" id="complex" name="complex" class="form-control" placeholder="Plesso"
-              data-ng-options="complex._id as complex.name for complex in complexes"></select>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4" data-ng-repeat="day in academicYear.timeTable">
-        <hr>
-        <p><b>{{day.weekDay | weekDay}}</b></p>
-
-        <div class="row" data-ng-repeat="slot in day.slots">
-          <span class="col-md-4">{{($index+1) | ordinalNumber}} ora</span>
-
-          <div class="col-md-8">
-            dalle <input type="time" data-ng-model="slot.start">
-            alle <input type="time" data-ng-model="slot.end">
-          </div>
+            <p ng-show="academicYearForm.name.$invalid && !academicYearForm.name.$pristine" class="help-block">Il nome è
+                obbligatorio.</p>
         </div>
-      </div>
-    </div>
 
-    <hr>
+        <div class="form-group"
+             data-ng-class="{ 'has-error' : academicYearForm.startDate.$invalid && !academicYearForm.startDate.$pristine }">
+            <label for="startDate" class="control-label">Data inizio</label>
+            <input type="date" data-ng-model="academicYear.startDate" id="startDate" name="startDate"
+                   class="form-control"
+                   placeholder="Data inizio" required>
 
-    <button type="submit" class="btn btn-primary">Crea</button>
+            <p ng-show="academicYearForm.startDate.$invalid && !academicYearForm.startDate.$pristine"
+               class="help-block">La data di inizio è
+                obbligatoria.</p>
+        </div>
 
-    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+        <div class="form-group"
+             data-ng-class="{ 'has-error' : academicYearForm.endDate.$invalid && !academicYearForm.endDate.$pristine }">
+            <label for="endDate" class="control-label">Data fine</label>
+            <input type="date" data-ng-model="academicYear.endDate" id="endDate" name="endDate" class="form-control"
+                   placeholder="Data fine" required>
 
-  </form>
+            <p ng-show="academicYearForm.endDate.$invalid && !academicYearForm.endDate.$pristine" class="help-block">La
+                data di fine è
+                obbligatoria.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="complex" class="control-label">Plesso</label>
+            <select data-ng-model="academicYear.complex" id="complex" name="complex" class="form-control"
+                    data-ng-options="complex._id as complex.name for complex in complexes"></select>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4" data-ng-repeat="day in academicYear.timeTable">
+                <hr>
+                <p><b>{{day.weekDay | weekDay}}</b></p>
+
+                <div class="row" data-ng-repeat="slot in day.slots">
+                    <span class="col-md-4">{{($index+1) | ordinalNumber}} ora</span>
+
+                    <div class="col-md-8">
+                        dalle <input type="time" data-ng-model="slot.start">
+                        alle <input type="time" data-ng-model="slot.end">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <button type="submit" class="btn btn-primary" data-ng-disabled="academicYearForm.$invalid">Crea</button>
+
+        <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+
+    </form>
 </section>
