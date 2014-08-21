@@ -22,11 +22,12 @@
                 è obbligatorio.</p>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" data-ng-class="{ 'has-error' : studentForm.birthDate.$invalid && !studentForm.birthDate.$pristine }">
             <label for="birthDate" class="control-label">Data di nascita</label>
             <input type="date" data-ng-model="student.birthDate" id="birthDate" name="birthDate" class="form-control"
-                   placeholder="Data di nascita">
+                   placeholder="Data di nascita" required>
 
+            <p ng-show="studentForm.birthDate.$invalid && !studentForm.birthDate.$pristine" class="help-block">La data di nascita è obbligatoria.</p>
         </div>
 
         <hr>
