@@ -15,7 +15,7 @@ var mongoose = require('mongoose'),
 exports.academicYear = function(req, res, next) {
     AcademicYear.findById(req.params.academicYearId, function(err, academicYear) {
         if (err) return next(err);
-        if (!academicYear) return next(new Error('Failed to load academic year ' + id));
+        if (!academicYear) return next(new Error('Failed to load academic year ' + req.params.academicYearId));
         req.academicYear = academicYear;
         next();
     });

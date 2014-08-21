@@ -11,6 +11,8 @@ module.exports = function(app) {
     app.put('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId', schoolClasses.schoolClass, schoolClasses.update);
     app.del('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId', schoolClasses.destroy);
 
+    app.get('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/students', schoolClasses.allStudents);
+
     // Finish with setting up the schoolClassId param
     // app.param('schoolClassId', schoolClasses.schoolClass);
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'SchoolClass', 'AcademicYear', 'Student', function ($scope, $stateParams, $location, $filter, _, Global, SchoolClass, AcademicYear, Student) {
+angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'SchoolClass', 'AcademicYear', 'Student', 'ClassStudent', function ($scope, $stateParams, $location, $filter, _, Global, SchoolClass, AcademicYear, Student, ClassStudent) {
     $scope.global = Global;
 
     $scope.columns = [
@@ -15,14 +15,6 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
     $scope.removeStudent = function (student) {
         $scope.chosableStudents.push(student);
         $scope.chosenStudents = _.without($scope.chosenStudents, student);
-    };
-
-    $scope.getStudentFullName = function (studentId) {
-        var student = _.find($scope.students, function (student) {
-            return student._id === studentId;
-        });
-
-        return student && $filter('name')(student);
     };
 
     $scope.list = function () {
@@ -46,9 +38,18 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
     };
 
     $scope.init = function () {
-        $scope.schoolClass = new SchoolClass();
+        $scope.schoolClass = new SchoolClass({
+              complex: Global.getComplex()._id,
+              school: Global.getSchool()._id,
+              academicYear: Global.getAcademicYear()._id
+          }
+        );
 
-        $scope.chosableStudents = Student.query();
+
+        $scope.chosableStudents = Student.query({
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id
+        });
         $scope.chosenStudents = [];
     };
 
@@ -110,15 +111,28 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
         });
 
         $scope.schoolClass.$promise.then(function () {
-            $scope.chosableStudents = Student.query();
+            $scope.classStudents = ClassStudent.query({
+                schoolClassId: $scope.schoolClass._id,
+                complexId: Global.getComplex()._id,
+                schoolId: Global.getSchool()._id,
+                academicYearId: Global.getAcademicYear()._id
+            });
 
-            $scope.chosableStudents.$promise.then(function () {
+            $scope.classStudents.$promise.then(function () {
 
-                $scope.chosenStudents = _.filter($scope.chosableStudents, function (student) {
-                    return _.contains($scope.schoolClass.students, student._id);
+                $scope.chosableStudents = Student.query({
+                    complexId: Global.getComplex()._id,
+                    schoolId: Global.getSchool()._id
                 });
 
-                $scope.chosableStudents = _.difference($scope.chosableStudents, $scope.chosenStudents);
+                $scope.chosableStudents.$promise.then(function () {
+
+                    $scope.chosenStudents = _.filter($scope.chosableStudents, function (student) {
+                        return _.contains($scope.schoolClass.students, student._id);
+                    });
+
+                    $scope.chosableStudents = _.difference($scope.chosableStudents, $scope.chosenStudents);
+                });
             });
         });
     };

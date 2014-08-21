@@ -5,6 +5,8 @@
  */
 var mongoose = require('mongoose'),
     SchoolClass = mongoose.model('SchoolClass'),
+    Student = mongoose.model('Student'),
+    async = require('async'),
     _ = require('lodash');
 
 
@@ -85,4 +87,22 @@ exports.all = function(req, res) {
             res.jsonp(schoolClass);
         }
     });
+};
+
+exports.allStudents = function (req, res) {
+    async.waterfall([
+          function (callback) {
+              SchoolClass.findById(req.params.schoolClassId, callback);
+          },
+          function (schoolClass, callback) {
+              Student.find({'_id': { $in: schoolClass.students} }, callback);
+          }
+      ],
+      function (err, result) {
+          if (err) {
+              res.jsonp(400, err);
+          } else {
+              res.jsonp(result);
+          }
+      });
 };

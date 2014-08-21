@@ -30,7 +30,10 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
     };
 
     $scope.init = function () {
-        $scope.student = new Student({complex: Global.getComplex()._id});
+        $scope.student = new Student({
+            complex: Global.getComplex()._id,
+            school: Global.getSchool()._id
+        });
     };
 
     $scope.create = function(isValid) {
@@ -66,13 +69,17 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
     };
 
     $scope.find = function() {
-        $scope.students = Student.query({complexId: Global.getComplex()._id});
+        $scope.students = Student.query({
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id
+        });
     };
 
     $scope.findOne = function() {
         $scope.student = Student.get({
             studentId: $stateParams.studentId,
-            complexId: Global.getComplex()._id
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id
         },
         function(student){
             student.birthDate = $filter('date')(student.birthDate, 'yyyy-MM-dd');

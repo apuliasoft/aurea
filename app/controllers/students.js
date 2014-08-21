@@ -28,7 +28,7 @@ exports.student = function(req, res, next) {
     Student.findById(req.params.studentId, function(err, student) {
         if (err) return next(err);
         if (!student) return next(new Error('Failed to load student ' + req.params.studentId));
-        req.schoolClass = student;
+        req.student = student;
         next();
     });
 };
