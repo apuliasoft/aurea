@@ -5,17 +5,17 @@
  */
 var mongoose = require('mongoose'),
     Complex = mongoose.model('Complex'),
+    ObjectId = mongoose.Types.ObjectId,
     _ = require('lodash');
 
 
 /**
  * Find complex by id
  */
-exports.complex = function(req, res, next, id) {
-    Complex.findById(id, function(err, complex) {
+exports.complex = function(req, res, next) {
+    Complex.findOne({_id: ObjectId(req.params.complexId), school: ObjectId(req.params.schoolId)}, function(err, complex) {
         if (err) return next(err);
-        if (!complex) return next(new Error('Failed to load complex ' + id));
-        if (complex.school.toString() !== req.params.schoolId) return next(new Error('The complex ' + id + ' is not related to school ' + req.params.schoolId));
+        if (!complex) return next(new Error('Failed to load complex ' + req.params.complexId));
 
         req.complex = complex;
         next();
@@ -73,13 +73,7 @@ exports.update = function(req, res) {
  * Show an complex 
  */
 exports.show = function(req, res) {
-    Complex.findById(req.params.complexId, function(err, complex) {
-        if (err) return next(err);
-        if (!complex) return next(new Error('Failed to load complex ' + req.params.complexId));
-        if (complex.school.toString() !== req.params.schoolId) return next(new Error('The complex ' + id + ' is not related to school ' + req.params.schoolId));
-
-        res.jsonp(complex);
-    });
+    res.jsonp(req.complex);
 };
 
 /**

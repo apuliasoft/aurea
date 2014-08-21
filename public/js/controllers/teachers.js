@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Teacher', 'Complex', function ($scope, $stateParams, $location, _, Global, Teacher, Complex) {
+angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Teacher', function ($scope, $stateParams, $location, _, Global, Teacher) {
     $scope.global = Global;
 
     $scope.columns = [
@@ -30,6 +30,7 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
 
     $scope.init = function () {
         $scope.teacher = new Teacher();
+        $scope.teacher.school = Global.getSchool()._id;
         $scope.teacher.complex = Global.getComplex()._id;
     };
 
@@ -67,14 +68,16 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
 
     $scope.find = function() {
         $scope.teachers = Teacher.query({
-            complexId: Global.getComplex()._id
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id
         });
     };
 
     $scope.findOne = function() {
         $scope.teacher = Teacher.get({
             teacherId: $stateParams.teacherId,
-            complexId: Global.getComplex()._id
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id
         });
     };
 }]);
