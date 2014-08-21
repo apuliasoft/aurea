@@ -8,8 +8,6 @@
     <dd>{{ student.lastName }}</dd>
     <dt>Data di nascita</dt>
     <dd>{{ student.birthDate | date }}</dd>
-    <dt>Plesso</dt>
-    <dd>{{ getComplexName(student.complex) }}</dd>
   </dl>
 
   <button data-ng-click="edit(student)" class="btn btn-default">Modifica alunno</button>

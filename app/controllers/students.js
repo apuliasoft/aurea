@@ -5,6 +5,8 @@
  */
 var mongoose = require('mongoose'),
   Student = mongoose.model('Student'),
+  User = mongoose.model('User'),
+  async = require('async'),
   generatePassword = require('password-generator'),
   _ = require('lodash');
 
@@ -37,11 +39,16 @@ exports.create = function (req, res) {
     user.password = password;
     console.log('password generata: ' + password);
 
-    async.parallel([
-          student.save,
-          user.save
+    async.waterfall([
+        function(callback) {
+            user.save(callback)
+        },
+        function(user, rowAffected, callback) {
+            student.user = user._id;
+            student.save(callback);
+        }
       ],
-      function (err, results) {
+      function (err, result) {
           // the results array will equal ['one','two'] even though
           // the second function had a shorter timeout.
           console.log(err);
@@ -50,7 +57,7 @@ exports.create = function (req, res) {
           if (err) {
               res.jsonp(400, err);
           } else {
-              res.jsonp(results[0]);
+              res.jsonp(result);
           }
       });
 };
