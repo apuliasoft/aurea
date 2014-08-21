@@ -42,6 +42,8 @@ exports.create = function (req, res) {
     var user = new User();
     user.name = student.firstName + ' ' + student.lastName;
     user.email = req.body.email;
+    user.school = req.body.school;
+    user.complex = req.body.complex;
     user.role = 'student';
 
     var password = generatePassword(18, false);

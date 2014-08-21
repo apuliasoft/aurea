@@ -8,6 +8,7 @@ var authorizations = [
         method: '*',
         path: '*'
     },
+
     // User
     {
         role: '*',
@@ -75,13 +76,14 @@ var authorizations = [
         method: 'PUT',
         path: '/schools/:schoolId/complexes/:complexId',
         custom: function (req) {
-            return req.user.school === req.params.schoolId
+            return req.complex
+              && req.user.school === req.params.schoolId
               && req.user.school === req.complex.school
               && req.complex.school === req.body.school;
         }
     },
     {
-        role: '*',
+        role: ['student','teacher','parent'],
         method: 'GET',
         path: '/schools/:schoolId/complexes/:complexId',
         custom: function (req) {
@@ -104,8 +106,8 @@ var authorizations = [
         method: 'POST',
         path: '/schools/:schoolId/complexes/:complexId/academicYears',
         custom: function (req) {
-            return req.user.school === req.params.schoolId
-              && req.user.school === req.body.school;
+            return req.user.school.toString() === req.params.schoolId
+              && req.user.school.toString() === req.body.school;
         }
     },
     {
@@ -113,7 +115,7 @@ var authorizations = [
         method: ['GET', 'DELETE'],
         path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId',
         custom: function (req) {
-            return req.user.school === req.params.schoolId;
+            return req.user.school.toString() === req.params.schoolId;
         }
     },
     {
@@ -121,27 +123,96 @@ var authorizations = [
         method: 'PUT',
         path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId',
         custom: function (req) {
-            return req.user.school === req.params.schoolId
-              && req.user.school === req.complex.school
-              && req.complex.school === req.body.school;
+            return req.academicYear
+              && req.user.school.toString() === req.params.schoolId
+              && req.user.school.toString() === req.academicYear.school.toString()
+              && req.academicYear.school.toString() === req.body.school;
         }
     },
     {
-        role: '*',
+        role: ['student','teacher','parent'],
         method: 'GET',
         path: '/schools/:schoolId/complexes/:complexId/academicYears/',
         custom: function (req) {
-            return req.user.school === req.params.schoolId
-              && req.user.complex === req.params.complexId;
+            return req.user.school.toString() === req.params.schoolId
+              && req.user.complex.toString() === req.params.complexId;
         }
     },
     {
-        role: '*',
+        role: ['student','teacher','parent'],
         method: 'GET',
         path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId',
         custom: function (req) {
-            return req.user.school === req.params.schoolId
-              && req.user.complex === req.params.complexId;
+            return req.user.school.toString() === req.params.schoolId
+              && req.user.complex.toString() === req.params.complexId;
+        }
+    },
+
+    // Teacher
+    {
+        role: 'manager',
+        method: 'GET',
+        path: '/schools/:schoolId/complexes/:complexId/teachers',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId;
+        }
+    },
+    {
+        role: 'manager',
+        method: 'POST',
+        path: '/schools/:schoolId/complexes/:complexId/teachers',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId
+                && req.user.school.toString() === req.body.school;
+        }
+    },
+    {
+        role: 'manager',
+        method: ['GET', 'DELETE'],
+        path: '/schools/:schoolId/complexes/:complexId/teachers/:teacherId',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId;
+        }
+    },
+    {
+        role: 'manager',
+        method: 'PUT',
+        path: '/schools/:schoolId/complexes/:complexId/teachers/:teacherId',
+        custom: function (req) {
+            return req.teacher
+                && req.user.school.toString() === req.params.schoolId
+                && req.user.school.toString() === req.teacher.school.toString()
+                && req.teacher.school.toString() === req.body.school;
+        }
+    },
+    {
+        role: ['student','teacher','parent'],
+        method: 'GET',
+        path: '/schools/:schoolId/complexes/:complexId/teachers/',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId
+                && req.user.complex.toString() === req.params.complexId;
+        }
+    },
+    {
+        role: ['student','teacher','parent'],
+        method: 'GET',
+        path: '/schools/:schoolId/complexes/:complexId/teachers/:teacherId',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId
+                && req.user.complex.toString() === req.params.complexId;
+        }
+    },
+    {
+        role: 'teacher',
+        method: 'PUT',
+        path: '/schools/:schoolId/complexes/:complexId/teachers/:teacherId',
+        custom: function (req) {
+            return req.teacher
+                && req.user.school.toString() === req.params.schoolId
+                && req.user.school.toString() === req.teacher.school.toString()
+                && req.teacher.school.toString() === req.body.school
+                && req.user._id.toString() === req.teacher.user.toString();
         }
     }
 ];
@@ -161,13 +232,13 @@ function match(req, authorization, path, role, method) {
 exports.check = function (req, res, next) {
     if (!req.user) next(); // TODO: se non sono loggato dovrebbe dare errore
 
-    var isAuthorized = false;
-
-    _.forEach(authorizations, function (authorization) {
+    var isAuthorized = _.find(authorizations, function (authorization) {
         if (match(req, authorization, req.route.path, req.user.role, req.method)) {
-            isAuthorized = true;
+            return true;
         }
     });
+
+    console.log(isAuthorized);
 
     if (isAuthorized)
         next();

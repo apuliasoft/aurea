@@ -2,9 +2,10 @@
 
 //Teacher service used for teachers REST endpoint
 angular.module('aurea.teachers').factory('Teacher', ['$resource', function($resource) {
-    return $resource('complexes/:complexId/teachers/:teacherId', {
+    return $resource('schools/:schoolId/complexes/:complexId/teachers/:teacherId', {
         teacherId: '@_id',
-        complexId: '@complex'
+        complexId: '@complex',
+        schoolId: '@school'
     }, {
         update: {
             method: 'PUT'
