@@ -1,19 +1,18 @@
 'use strict';
 
 // Academic years routes use academicYears controller
-var academicYears = require('../controllers/academicYears');
+var academicYears = require('../controllers/academicYears'),
+  auth = require('./middlewares/authorization');
 
 module.exports = function(app) {
 
-    app.get('/complexes/:complexId/academicYears', academicYears.all);
-    app.post('/complexes/:complexId/academicYears', academicYears.create);
-    app.get('/complexes/:complexId/academicYears/:academicYearId', academicYears.show);
-    app.put('/complexes/:complexId/academicYears/:academicYearId', academicYears.update);
-    app.del('/complexes/:complexId/academicYears/:academicYearId', academicYears.destroy);
-
-    app.get('/academicYears/getTimeTable', academicYears.getTimeTable);
+    app.get('/schools/:schoolId/complexes/:complexId/academicYears', auth.check, academicYears.all);
+    app.post('/schools/:schoolId/complexes/:complexId/academicYears', auth.check, academicYears.create);
+    app.get('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId', academicYears.academicYear, auth.check, academicYears.show);
+    app.put('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId', academicYears.academicYear, auth.check, academicYears.update);
+    app.del('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId', auth.check, academicYears.destroy);
 
     // Finish with setting up the academicYearId param
-    app.param('academicYearId', academicYears.academicYear);
+    // app.param('academicYearId', academicYears.academicYear);
 
 };

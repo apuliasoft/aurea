@@ -27,7 +27,7 @@ var AcademicYearSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'School'
     },
-    comnplex: {
+    complex: {
         type: Schema.Types.ObjectId,
         ref: 'Complex'
     },

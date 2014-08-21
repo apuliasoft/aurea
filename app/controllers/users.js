@@ -52,6 +52,9 @@ exports.update = function(req, res, next) {
     if (user.role !== req.body.role)
         return next(new Error('Non e\' possibile cambiare il ruolo dell\'utente'));
 
+    if (!req.body.password) {
+        delete req.body.password;
+    }
 
     user = _.extend(user, req.body);
 

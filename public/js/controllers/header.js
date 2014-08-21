@@ -45,7 +45,8 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
 
     function updateAcademicYears() {
         $scope.academicYears = AcademicYear.query({
-            complexId: Global.getComplex() && Global.getComplex()._id
+            complexId: Global.getComplex() && Global.getComplex()._id,
+            schoolId: Global.getSchool() && Global.getSchool()._id
         });
     }
 
