@@ -12,8 +12,8 @@ var mongoose = require('mongoose'),
 /**
  * Find academic year by id
  */
-exports.academicYear = function(req, res, next, id) {
-    AcademicYear.findById(id, function(err, academicYear) {
+exports.academicYear = function(req, res, next) {
+    AcademicYear.findById(req.params.academicYearId, function(err, academicYear) {
         if (err) return next(err);
         if (!academicYear) return next(new Error('Failed to load academic year ' + id));
         req.academicYear = academicYear;
@@ -86,11 +86,4 @@ exports.all = function(req, res) {
             res.jsonp(academicYears);
         }
     });
-};
-
-/**
- * List of academic years
- */
-exports.getTimeTable = function(req, res) {
-    res.jsonp(req.academicYear.timeTable);
 };

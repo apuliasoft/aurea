@@ -39,7 +39,8 @@ angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams',
 
     $scope.init = function () {
         $scope.user = new User();
-        $scope.user.role = 'student';
+        $scope.user.school = Global.getSchool()._id;
+        $scope.user.role = 'manager';
     };
 
     $scope.create = function () {

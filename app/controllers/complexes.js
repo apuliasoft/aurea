@@ -57,17 +57,17 @@ exports.update = function(req, res) {
 /**
  * Delete an complex 
  */
-exports.destroy = function(req, res) {
-    var complex = req.complex;
-
-    complex.remove(function(err) {
-        if (err) {
-            res.jsonp(400, err);
-        } else {
-            res.jsonp(complex);
-        }
-    });
-};
+//exports.destroy = function(req, res) {
+//    var complex = req.complex;
+//
+//    complex.remove(function(err) {
+//        if (err) {
+//            res.jsonp(400, err);
+//        } else {
+//            res.jsonp(complex);
+//        }
+//    });
+//};
 
 /**
  * Show an complex 

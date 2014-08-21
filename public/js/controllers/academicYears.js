@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'AcademicYear', 'Complex', function ($scope, $stateParams, $location, $filter, _, Global, AcademicYear, Complex) {
+angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'AcademicYear', function ($scope, $stateParams, $location, $filter, _, Global, AcademicYear) {
     $scope.global = Global;
 
     $scope.columns = [
@@ -8,20 +8,6 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         {name: 'startDate', label: 'Data inizio', filter: 'date'},
         {name: 'endDate', label: 'Data fine', filter: 'date'}
     ];
-
-    if (!$scope.complexes) {
-        $scope.complexes = Complex.query({
-            schoolId: Global.getSchool()._id
-        });
-    }
-
-    $scope.getComplexName = function (complexId) {
-        var complex = _.find($scope.complexes, function (complex) {
-            return complex._id === complexId;
-        });
-
-        return complex && complex.name;
-    };
 
     $scope.list = function () {
         $location.path('anni-accademici');
@@ -45,6 +31,7 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
 
     $scope.init = function () {
         $scope.academicYear = new AcademicYear();
+        $scope.academicYear.school = Global.getSchool()._id;
         $scope.academicYear.complex = Global.getComplex()._id;
         $scope.academicYear.timeTable = _.map(_.range(1, 7), function (num) {
             return {
@@ -112,14 +99,16 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
 
     $scope.find = function () {
         $scope.academicYears = AcademicYear.query({
-            complexId: Global.getComplex()._id
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id
         });
     };
 
     $scope.findOne = function () {
         AcademicYear.get({
             academicYearId: $stateParams.academicYearId,
-            complexId: Global.getComplex()._id
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id
         }).$promise.then(function (academicYear) {
                 academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
                 academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
