@@ -46,8 +46,12 @@ exports.create = function(req, res) {
 /**
  * Update a User
  */
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
     var user = req.userRes;
+
+    if (user.role !== req.body.role)
+        return next(new Error('Non e\' possibile cambiare il ruolo dell\'utente'));
+
 
     user = _.extend(user, req.body);
 

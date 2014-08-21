@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    crypto = require('crypto');
+    crypto = require('crypto'),
+    _ = require('lodash');
 
 /**
  * User Schema
@@ -23,6 +24,14 @@ var UserSchema = new Schema({
         type: String,
         required: true,
         enum: ['admin', 'manager', 'teacher', 'student', 'parent']
+    },
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: 'School'
+    },
+    comnplex: {
+        type: Schema.Types.ObjectId,
+        ref: 'Complex'
     },
     hashed_password: String,
     salt: String
@@ -50,26 +59,18 @@ var validatePresenceOf = function(value) {
  * Pre-save hook
  */
 UserSchema.pre('save', function(next) {
-    if (this.isNew && !validatePresenceOf(this.password))
+    if (this.isNew && !validatePresenceOf(this.password)) {
+        console.log(' ===== 1 ');
         next(new Error('Inserire una password valida'));
-    else
+    } else{
         next();
+    }
 });
 
 /**
  * Methods
  */
 UserSchema.methods = {
-    /**
-     * HasRole - check if the user has required role
-     *
-     * @param {String} plainText
-     * @return {Boolean}
-     * @api public
-     */
-    hasRole: function(role) {
-        return (this.role === role);
-    },
 
     /**
      * Authenticate - check if the passwords are the same

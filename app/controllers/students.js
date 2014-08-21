@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
   Student = mongoose.model('Student'),
   User = mongoose.model('User'),
+  Complex = mongoose.model('Complex'),
   async = require('async'),
   generatePassword = require('password-generator'),
   _ = require('lodash');
@@ -42,6 +43,11 @@ exports.create = function (req, res) {
 
     async.waterfall([
           function (callback) {
+              Complex.findById(student.complex, callback);
+          },
+          function (complex, callback) {
+              user.school = complex.school;
+              user.complex = complex._id;
               user.save(callback);
           },
           function (user, rowAffected, callback) {
@@ -62,6 +68,8 @@ exports.create = function (req, res) {
  * Update an student
  */
 exports.update = function (req, res) {
+
+
     getStudent(req.params.studentId, function (err, student) {
         if (err) return res.jsonp(400, err);
 

@@ -12,22 +12,22 @@ require('./app/models/user.js');
 var User = mongoose.model('User');
 
 User.findOne(
-    {email: 'admin@aurea.it'},
-    function (err, user) {
-        if (user) {
-            db.connection.close();
-            return;
-        }
+  {email: 'admin@aurea.it'},
+  function (err, user) {
+      if (user) {
+          db.connection.close();
+          return;
+      }
 
-        var admin = new User();
-        admin.name = 'admin';
-        admin.username = 'admin';
-        admin.email = 'admin@aurea.it';
-        admin.password = 'admin';
-        admin.role = 'admin';
+      var admin = new User();
+      admin.name = 'admin';
+      admin.username = 'admin';
+      admin.email = 'admin@aurea.it';
+      admin.password = 'admin';
+      admin.role = 'admin';
 
-        admin.save(function(){
-            db.connection.close();
-        });
-    }
+      admin.save(function(){
+          db.connection.close();
+      });
+  }
 );
