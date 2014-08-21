@@ -9,6 +9,8 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage',
 
             user: {},
 
+            school: {},
+
             complex: {},
 
             academicYear: {},
@@ -37,6 +39,15 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage',
                 return _this._data.isLoggedin() && _this._data.user.role === 'parent';
             },
 
+            setSchool: function (school) {
+                _this._data.school = school;
+                $sessionStorage.school = school;
+            },
+
+            getSchool: function () {
+                return $sessionStorage.school;
+            },
+
             setComplex: function (complex) {
                 _this._data.complex = complex;
                 $sessionStorage.complex = complex;
@@ -53,6 +64,10 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage',
 
             getAcademicYear: function () {
                 return $sessionStorage.academicYear;
+            },
+
+            removeComplex: function () {
+                delete $sessionStorage.complex;
             },
 
             removeAcademicYear: function () {

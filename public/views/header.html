@@ -10,6 +10,17 @@
     <li>
       <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          {{ global.getSchool().name || 'Seleziona la scuola'}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li data-ng-repeat="school in schools" data-ng-click="global.setSchool(school)"><a href=""> {{ school.name }} </a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           {{ global.getComplex().name || 'Seleziona il plesso'}} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
