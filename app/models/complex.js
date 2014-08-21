@@ -33,7 +33,8 @@ var ComplexSchema = new Schema({
     },
     school: {
         type: Schema.Types.ObjectId,
-        ref: 'School'
+        ref: 'School',
+        required: true
     }
 });
 

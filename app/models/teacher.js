@@ -23,9 +23,15 @@ var TeacherSchema = new Schema({
         ref: 'User',
         required: true
     },
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: 'School',
+        required: true
+    },
     complex: {
         type: Schema.Types.ObjectId,
-        ref: 'Complex'
+        ref: 'Complex',
+        required: true
     }
 });
 

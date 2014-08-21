@@ -31,9 +31,15 @@ var StudentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     }],
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: 'School',
+        required: true
+    },
     complex: {
         type: Schema.Types.ObjectId,
-        ref: 'Complex'
+        ref: 'Complex',
+        required: true
     }
 });
 

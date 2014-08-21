@@ -18,10 +18,20 @@ var SchoolClassSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Student'
     }],
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: 'School',
+        required: true
+    },
+    complex: {
+        type: Schema.Types.ObjectId,
+        ref: 'Complex',
+        required: true
+    },
     academicYear: {
         type: Schema.Types.ObjectId,
-        ref: 'AcademicYear'
-        //FIXME dovrebbe essere required?!
+        ref: 'AcademicYear',
+        required: true
     }
 });
 

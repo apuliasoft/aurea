@@ -19,8 +19,6 @@ var getStudent = function (studentId, callback) {
     Student.findById(studentId, function (err, student) {
         if (err) return callback(err);
         if (!student) return callback(new Error('Failed to load student ' + id));
-        // TODO: spostare in RBAC
-        // if (student.complex.toString() !== complexId) return callback(new Error('The student ' + studentId + ' is not related to complex ' + complexId));
 
         callback(null, student);
     });

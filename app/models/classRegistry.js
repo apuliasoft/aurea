@@ -18,6 +18,14 @@ var ClassRegistrySchema = new Schema({
         type: Date,
         required: true
     },
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: 'School'
+    },
+    comnplex: {
+        type: Schema.Types.ObjectId,
+        ref: 'Complex'
+    },
     absences: [{
         type: Schema.Types.ObjectId,
         ref: 'Student'
