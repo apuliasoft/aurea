@@ -76,7 +76,8 @@ var authorizations = [
         method: 'PUT',
         path: '/schools/:schoolId/complexes/:complexId',
         custom: function (req) {
-            return req.user.school === req.params.schoolId
+            return req.complex
+              && req.user.school === req.params.schoolId
               && req.user.school === req.complex.school
               && req.complex.school === req.body.school;
         }
@@ -122,8 +123,9 @@ var authorizations = [
         method: 'PUT',
         path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId',
         custom: function (req) {
-            return req.user.school.toString() === req.params.schoolId
-              && req.user.school.toString() === req.complex.school.toString()
+            return req.academicYear
+              && req.user.school.toString() === req.params.schoolId
+              && req.user.school.toString() === req.academicYear.school.toString()
               && req.complex.school.toString() === req.body.school;
         }
     },
