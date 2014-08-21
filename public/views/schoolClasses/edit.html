@@ -1,11 +1,14 @@
 <section data-ng-controller="SchoolClassesCtrl" data-ng-init="findOne()">
     <h2>Modifica classe</h2>
 
-    <form name="schoolClassForm" role="form" data-ng-submit="update()" novalidate>
+    <form name="schoolClassForm" role="form" data-ng-submit="update(schoolClassForm.$valid)" novalidate>
 
-        <div class="form-group">
+        <div class="form-group" data-ng-class="{ 'has-error' : schoolClassForm.name.$invalid && !schoolClassForm.name.$pristine }">
             <label for="name" class="control-label">Nome</label>
-            <input type="text" data-ng-model="schoolClass.name" id="name" name="name" class="form-control" placeholder="Nome">
+            <input type="text" data-ng-model="schoolClass.name" id="name" name="name" class="form-control" placeholder="Nome" required>
+
+            <p ng-show="schoolClassForm.name.$invalid && !schoolClassForm.name.$pristine" class="help-block">Il nome è
+                obbligatorio.</p>
         </div>
 
         <div class="row">
@@ -50,7 +53,7 @@
 
         <hr>
 
-        <button type="submit" class="btn btn-primary">Salva</button>
+        <button type="submit" class="btn btn-primary" data-ng-disabled="schoolClassForm.$invalid">Salva</button>
 
         <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
 

@@ -45,6 +45,7 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
 
     $scope.init = function () {
         $scope.academicYear = new AcademicYear();
+        $scope.academicYear.complex = Global.getComplex()._id;
         $scope.academicYear.timeTable = _.map(_.range(1, 7), function (num) {
             return {
                 weekDay: num,
@@ -73,14 +74,16 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         return slot.start && slot.end;
     };
 
-    $scope.create = function () {
-        var academicYear = $scope.academicYear;
-        academicYear.timeTable = serializeData(academicYear.timeTable);
+    $scope.create = function (isValid) {
+        if(isValid) {
+            var academicYear = $scope.academicYear;
+            academicYear.timeTable = serializeData(academicYear.timeTable);
 
-        academicYear.$save(function (response) {
-            $scope.view(response);
-        });
-        $scope.init();
+            academicYear.$save(function (response) {
+                $scope.view(response);
+            });
+            $scope.init();
+        }
     };
 
     $scope.remove = function (academicYear) {
@@ -91,18 +94,20 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         }
     };
 
-    $scope.update = function () {
-        var academicYear = $scope.academicYear;
-        academicYear.timeTable = serializeData(academicYear.timeTable);
+    $scope.update = function (isValid) {
+        if(isValid) {
+            var academicYear = $scope.academicYear;
+            academicYear.timeTable = serializeData(academicYear.timeTable);
 
-        if (!academicYear.updated) {
-            academicYear.updated = [];
+            if (!academicYear.updated) {
+                academicYear.updated = [];
+            }
+            academicYear.updated.push(new Date().getTime());
+
+            academicYear.$update(function (response) {
+                $scope.view(response);
+            });
         }
-        academicYear.updated.push(new Date().getTime());
-
-        academicYear.$update(function (response) {
-            $scope.view(response);
-        });
     };
 
     $scope.find = function () {

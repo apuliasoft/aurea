@@ -59,12 +59,14 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
         $scope.teaching = new Teaching();
     };
 
-    $scope.create = function() {
-        var teaching = $scope.teaching;
-        teaching.$save(function (response) {
-            $scope.view(response);
-        });
-        $scope.init();
+    $scope.create = function(isValid) {
+        if(isValid) {
+            var teaching = $scope.teaching;
+            teaching.$save(function (response) {
+                $scope.view(response);
+            });
+            $scope.init();
+        }
     };
 
     $scope.remove = function(teaching) {
@@ -75,16 +77,18 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
         }
     };
 
-    $scope.update = function() {
-        var teaching = $scope.teaching;
-        if (!teaching.updated) {
-            teaching.updated = [];
-        }
-        teaching.updated.push(new Date().getTime());
+    $scope.update = function(isValid) {
+        if(isValid) {
+            var teaching = $scope.teaching;
+            if (!teaching.updated) {
+                teaching.updated = [];
+            }
+            teaching.updated.push(new Date().getTime());
 
-        teaching.$update(function (response) {
-            $scope.view(response);
-        });
+            teaching.$update(function (response) {
+                $scope.view(response);
+            });
+        }
     };
 
     $scope.find = function() {

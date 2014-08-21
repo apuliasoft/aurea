@@ -1,28 +1,40 @@
 <section data-ng-controller="TeachersCtrl" data-ng-init="init()">
-  <h2>Crea insegnante</h2>
+    <h2>Crea insegnante</h2>
 
-  <form name="teacherForm" role="form" data-ng-submit="create()" novalidate>
+    <form name="teacherForm" role="form" data-ng-submit="create(teacherForm.$valid)" novalidate>
 
-    <div class="form-group">
-      <label for="firstName" class="control-label">Nome</label>
-      <input type="text" data-ng-model="teacher.firstName" id="firstName" name="firstName" class="form-control" placeholder="Nome">
-    </div>
+        <div class="form-group"
+             data-ng-class="{ 'has-error' : teacherForm.firstName.$invalid && !teacherForm.firstName.$pristine }">
+            <label for="firstName" class="control-label">Nome</label>
+            <input type="text" data-ng-model="teacher.firstName" id="firstName" name="firstName" class="form-control"
+                   placeholder="Nome" required>
 
-    <div class="form-group">
-      <label for="lastName" class="control-label">Cognome</label>
-      <input type="text" data-ng-model="teacher.lastName" id="lastName" name="lastName" class="form-control" placeholder="Cognome">
-    </div>
+            <p ng-show="teacherForm.firstName.$invalid && !teacherForm.firstName.$pristine" class="help-block">Il nome è
+                obbligatorio.</p>
+        </div>
 
-    <div class="form-group">
-      <label for="complex" class="control-label">Plesso</label>
-      <select data-ng-model="teacher.complex" id="complex" name="complex" class="form-control" placeholder="Plesso" data-ng-options="complex._id as complex.name for complex in complexes"></select>
-    </div>
+        <div class="form-group"
+             data-ng-class="{ 'has-error' : teacherForm.lastName.$invalid && !teacherForm.lastName.$pristine }">
+            <label for="lastName" class="control-label">Cognome</label>
+            <input type="text" data-ng-model="teacher.lastName" id="lastName" name="lastName" class="form-control"
+                   placeholder="Cognome" required>
 
-    <hr>
+            <p ng-show="teacherForm.lastName.$invalid && !teacherForm.lastName.$pristine" class="help-block">Il cognome
+                è obbligatorio.</p>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Crea</button>
+        <div class="form-group">
+            <label for="complex" class="control-label">Plesso</label>
+            <select data-ng-model="teacher.complex" id="complex" name="complex" class="form-control"
+                    placeholder="Plesso"
+                    data-ng-options="complex._id as complex.name for complex in complexes"></select>
+        </div>
 
-    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+        <hr>
 
-  </form>
+        <button type="submit" class="btn btn-primary" data-ng-disabled="teacherForm.$invalid">Crea</button>
+
+        <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+
+    </form>
 </section>

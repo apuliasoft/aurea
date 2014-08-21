@@ -31,12 +31,14 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
         $scope.school = new School();
     };
 
-    $scope.create = function () {
-        var school = $scope.school;
-        school.$save(function (response) {
-            $scope.view(response);
-        });
-        $scope.init();
+    $scope.create = function (isValid) {
+        if (isValid) {
+            var school = $scope.school;
+            school.$save(function (response) {
+                $scope.view(response);
+            });
+            $scope.init();
+        }
     };
 
     $scope.remove = function (school) {
@@ -47,16 +49,18 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
         }
     };
 
-    $scope.update = function () {
-        var school = $scope.school;
-        if (!school.updated) {
-            school.updated = [];
-        }
-        school.updated.push(new Date().getTime());
+    $scope.update = function (isValid) {
+        if (isValid) {
+            var school = $scope.school;
+            if (!school.updated) {
+                school.updated = [];
+            }
+            school.updated.push(new Date().getTime());
 
-        school.$update(function (response) {
-            $scope.view(response);
-        });
+            school.$update(function (response) {
+                $scope.view(response);
+            });
+        }
     };
 
     $scope.find = function () {
@@ -77,9 +81,10 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
         $location.path('scuole/' + schoolId + '/plessi/crea');
     };
 
-    $scope.goToEditComplex = function (schoolId,complexId) {
+    $scope.goToEditComplex = function (schoolId, complexId) {
         $location.path('scuole/' + schoolId + '/plessi/' + complexId + '/modifica');
     };
+
 }]);
 
 
