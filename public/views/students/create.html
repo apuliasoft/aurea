@@ -1,24 +1,32 @@
 <section data-ng-controller="StudentsCtrl" data-ng-init="init()">
     <h2>Crea alunno</h2>
 
-    <form name="studentForm" role="form" data-ng-submit="create()" novalidate>
+    <form name="studentForm" role="form" data-ng-submit="create(studentForm.$valid)" novalidate>
 
-        <div class="form-group">
+        <div class="form-group" data-ng-class="{ 'has-error' : studentForm.firstName.$invalid && !studentForm.firstName.$pristine }">
             <label for="firstName" class="control-label">Nome</label>
             <input type="text" data-ng-model="student.firstName" id="firstName" name="firstName" class="form-control"
-                   placeholder="Nome">
+                   placeholder="Nome" required>
+
+            <p ng-show="studentForm.firstName.$invalid && !studentForm.firstName.$pristine" class="help-block">Il nome è
+                obbligatorio.</p>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" data-ng-class="{ 'has-error' : studentForm.lastName.$invalid && !studentForm.lastName.$pristine }">
             <label for="lastName" class="control-label">Cognome</label>
             <input type="text" data-ng-model="student.lastName" id="lastName" name="lastName" class="form-control"
-                   placeholder="Cognome">
+                   placeholder="Cognome" required>
+
+            <p ng-show="studentForm.lastName.$invalid && !studentForm.lastName.$pristine" class="help-block">Il cognome è
+                obbligatorio.</p>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" data-ng-class="{ 'has-error' : studentForm.email.$invalid && !studentForm.email.$pristine }">
             <label for="email" class="control-label">Email</label>
             <input type="email" data-ng-model="student.email" id="email" name="email" class="form-control"
-                   placeholder="Email">
+                   placeholder="Email" required>
+
+            <p ng-show="studentForm.email.$invalid && !studentForm.email.$pristine" class="help-block">Inserire una email valida</p>
         </div>
 
         <div class="form-group">
@@ -29,7 +37,7 @@
 
         <hr>
 
-        <button type="submit" class="btn btn-primary">Crea</button>
+        <button type="submit" class="btn btn-primary" data-ng-disabled="studentForm.$invalid">Crea</button>
 
         <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
 

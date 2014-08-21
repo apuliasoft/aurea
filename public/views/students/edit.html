@@ -1,33 +1,48 @@
 <section data-ng-controller="StudentsCtrl" data-ng-init="findOne()">
-  <h2>Modifica alunno</h2>
+    <h2>Modifica alunno</h2>
 
-  <form name="studentForm" role="form" data-ng-submit="update()" novalidate>
+    <form name="studentForm" role="form" data-ng-submit="update(studentForm.$valid)" novalidate>
 
-    <div class="form-group">
-      <label for="firstName" class="control-label">Nome</label>
-      <input type="text" data-ng-model="student.firstName" id="firstName" name="firstName" class="form-control" placeholder="Nome">
-    </div>
+        <div class="form-group"
+             data-ng-class="{ 'has-error' : studentForm.firstName.$invalid && !studentForm.firstName.$pristine }">
+            <label for="firstName" class="control-label">Nome</label>
+            <input type="text" data-ng-model="student.firstName" id="firstName" name="firstName" class="form-control"
+                   placeholder="Nome" required>
 
-    <div class="form-group">
-      <label for="lastName" class="control-label">Cognome</label>
-      <input type="text" data-ng-model="student.lastName" id="lastName" name="lastName" class="form-control" placeholder="Cognome">
-    </div>
+            <p ng-show="studentForm.firstName.$invalid && !studentForm.firstName.$pristine" class="help-block">Il nome è
+                obbligatorio.</p>
+        </div>
 
-    <div class="form-group">
-      <label for="birthDate" class="control-label">Data di nascita</label>
-      <input type="date" data-ng-model="student.birthDate" id="birthDate" name="birthDate" class="form-control" placeholder="Data di nascita">
-    </div>
+        <div class="form-group">
+            <label for="lastName" class="control-label">Cognome</label>
+            <input type="text" data-ng-model="student.lastName" id="lastName" name="lastName" class="form-control"
+                   placeholder="Cognome" required>
 
-    <div class="form-group">
-      <label for="complex" class="control-label">Plesso</label>
-      <select data-ng-model="student.complex" id="complex" name="complex" class="form-control" placeholder="Plesso" data-ng-options="complex._id as complex.name for complex in complexes"></select>
-    </div>
+            <p ng-show="studentForm.lastName.$invalid && !studentForm.lastName.$pristine" class="help-block">Il cognome
+                è obbligatorio.</p>
+        </div>
 
-    <hr>
+        <div class="form-group">
+            <label for="birthDate" class="control-label">Data di nascita</label>
+            <input type="date" data-ng-model="student.birthDate" id="birthDate" name="birthDate" class="form-control"
+                   placeholder="Data di nascita" required>
 
-    <button type="submit" class="btn btn-primary">Salva</button>
+            <p ng-show="studentForm.email.$invalid && !studentForm.email.$pristine" class="help-block">Inserire una
+                email valida</p>
+        </div>
 
-    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+        <div class="form-group">
+            <label for="complex" class="control-label">Plesso</label>
+            <select data-ng-model="student.complex" id="complex" name="complex" class="form-control"
+                    placeholder="Plesso"
+                    data-ng-options="complex._id as complex.name for complex in complexes"></select>
+        </div>
 
-  </form>
+        <hr>
+
+        <button type="submit" class="btn btn-primary" data-ng-disabled="studentForm.$invalid">Salva</button>
+
+        <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+
+    </form>
 </section>

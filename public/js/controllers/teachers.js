@@ -44,12 +44,14 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
         $scope.teacher = new Teacher();
     };
 
-    $scope.create = function() {
-        var teacher = $scope.teacher;
-        teacher.$save(function (response) {
-            $scope.view(response);
-        });
-        $scope.init();
+    $scope.create = function(isValid) {
+        if (isValid) {
+            var teacher = $scope.teacher;
+            teacher.$save(function (response) {
+                $scope.view(response);
+            });
+            $scope.init();
+        }
     };
 
     $scope.remove = function(teacher) {
@@ -60,16 +62,18 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
         }
     };
 
-    $scope.update = function() {
-        var teacher = $scope.teacher;
-        if (!teacher.updated) {
-            teacher.updated = [];
-        }
-        teacher.updated.push(new Date().getTime());
+    $scope.update = function(isValid) {
+        if (isValid) {
+            var teacher = $scope.teacher;
+            if (!teacher.updated) {
+                teacher.updated = [];
+            }
+            teacher.updated.push(new Date().getTime());
 
-        teacher.$update(function (response) {
-            $scope.view(response);
-        });
+            teacher.$update(function (response) {
+                $scope.view(response);
+            });
+        }
     };
 
     $scope.find = function() {

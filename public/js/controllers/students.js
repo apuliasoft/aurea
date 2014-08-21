@@ -45,12 +45,14 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
         $scope.student = new Student({complex: Global.getComplex()});
     };
 
-    $scope.create = function() {
-        var student = $scope.student;
-        student.$save(function (response) {
-            $scope.view(response);
-        });
-        $scope.init();
+    $scope.create = function(isValid) {
+        if(isValid) {
+            var student = $scope.student;
+            student.$save(function (response) {
+                $scope.view(response);
+            });
+            $scope.init();
+        }
     };
 
     $scope.remove = function(student) {
@@ -61,16 +63,18 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
         }
     };
 
-    $scope.update = function() {
-        var student = $scope.student;
-        if (!student.updated) {
-            student.updated = [];
-        }
-        student.updated.push(new Date().getTime());
+    $scope.update = function(isValid) {
+        if(isValid) {
+            var student = $scope.student;
+            if (!student.updated) {
+                student.updated = [];
+            }
+            student.updated.push(new Date().getTime());
 
-        student.$update(function (response) {
-            $scope.view(response);
-        });
+            student.$update(function (response) {
+                $scope.view(response);
+            });
+        }
     };
 
     $scope.find = function() {
