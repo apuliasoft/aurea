@@ -4,8 +4,6 @@
   <dl class="dl-horizontal">
     <dt>Nome</dt>
     <dd>{{ schoolClass.name }}</dd>
-    <dt>Anno Accademico</dt>
-    <dd>{{ getAcademicYearName(schoolClass.academicYear) }}</dd>
     <dt>Studenti</dt>
     <dd data-ng-repeat="student in schoolClass.students">{{ getStudentFullName(student) }}</dd>
   </dl>

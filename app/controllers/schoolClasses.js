@@ -11,10 +11,10 @@ var mongoose = require('mongoose'),
 /**
  * Find school class by id
  */
-exports.schoolClass = function(req, res, next, id) {
-    SchoolClass.findById(id, function(err, schoolClass) {
+exports.schoolClass = function(req, res, next) {
+    SchoolClass.findById(req.params.schoolClassId, function(err, schoolClass) {
         if (err) return next(err);
-        if (!schoolClass) return next(new Error('Failed to load school class ' + id));
+        if (!schoolClass) return next(new Error('Failed to load school class ' + req.params.schoolClassId));
         req.schoolClass = schoolClass;
         next();
     });

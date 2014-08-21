@@ -7,10 +7,6 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
         {name: 'name', label: 'Nome'}
     ];
 
-    if (!$scope.academicYears) {
-        $scope.academicYears = AcademicYear.query();
-    }
-
     $scope.addStudent = function (student) {
         $scope.chosenStudents.push(student);
         $scope.chosableStudents = _.without($scope.chosableStudents, student);
@@ -19,14 +15,6 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
     $scope.removeStudent = function (student) {
         $scope.chosableStudents.push(student);
         $scope.chosenStudents = _.without($scope.chosenStudents, student);
-    };
-
-    $scope.getAcademicYearName = function (academicYearId) {
-        var academicYear = _.find($scope.academicYears, function (academicYear) {
-            return academicYear._id === academicYearId;
-        });
-
-        return academicYear && academicYear.name;
     };
 
     $scope.getStudentFullName = function (studentId) {
@@ -106,12 +94,19 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
     };
 
     $scope.find = function () {
-        $scope.schoolClasses = SchoolClass.query();
+        $scope.schoolClasses = SchoolClass.query({
+            schoolId: Global.getSchool()._id,
+            complexId: Global.getComplex()._id,
+            academicYearId: Global.getAcademicYear()._id
+        });
     };
 
     $scope.findOne = function () {
         $scope.schoolClass = SchoolClass.get({
-            schoolClassId: $stateParams.schoolClassId
+            schoolClassId: $stateParams.schoolClassId,
+            schoolId: Global.getSchool()._id,
+            complexId: Global.getComplex()._id,
+            academicYearId: Global.getAcademicYear()._id
         });
 
         $scope.schoolClass.$promise.then(function () {
