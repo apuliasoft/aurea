@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'ClassRegistry', 'ClassStudent', function ($scope, $stateParams, $location, $filter, _, Global, ClassRegistry, ClassStudent) {
+angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'ClassRegistry', 'ClassStudent', 'Teacher', function ($scope, $stateParams, $location, $filter, _, Global, ClassRegistry, ClassStudent, Teacher) {
 
     /**
      * Converte il formato degli orari.
@@ -48,6 +48,11 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
             complexId: Global.getComplex()._id,
             schoolId: Global.getSchool()._id,
             academicYearId: Global.getAcademicYear()._id
+        });
+
+        $scope.teachers = Teacher.query({
+            schoolId: Global.getSchool()._id,
+            complexId: Global.getComplex()._id
         });
 
         var date = new Date($stateParams.date);
