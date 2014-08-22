@@ -5,17 +5,19 @@
  */
 var mongoose = require('mongoose'),
     School = mongoose.model('School'),
-    _ = require('lodash'),
-    async = require('async');
+    ObjectId = mongoose.Types.ObjectId,
+    _ = require('lodash');
 
 
 /**
  * Find school by id
  */
-exports.school = function(req, res, next, id) {
-    School.findOne({_id: id}, function(err, school){
+exports.school = function(req, res, next) {
+    School.findOne({
+        _id: new ObjectId(req.params.schoolId)
+    }, function(err, school){
         if (err) return next(err);
-        if (!school) return next(new Error('Failed to load school ' + id));
+        if (!school) return next(new Error('Failed to load school ' + req.params.schoolId));
 
         req.school = school;
         next();
@@ -80,7 +82,7 @@ exports.show = function(req, res) {
  * List of schools
  */
 exports.all = function(req, res) {
-    School.find().populate('complexes').exec(function(err, schools) {
+    School.find(function(err, schools) {
         if (err) {
             res.jsonp(400, err);
         } else {

@@ -1,0 +1,24 @@
+<section data-ng-controller="ComplexesCtrl" data-ng-init="find()">
+  <h1>{{ global.getSchool().name }}</h1>
+
+  <h2>Plessi</h2>
+
+  <div class="row">
+    <div class="col-xs-4" data-ng-repeat="complex in complexes">
+      <div class="thumbnail" data-ng-click="goToEditComplex(school._id,complex._id)">
+        <h3>{{complex.name}}</h3>
+        <p>{{complex | address}}</p>
+
+        <p>
+          <button class="btn btn-primary" role="button" data-ng-click="goToListAcademicYears(complex)"><i
+              class="fa fa-check"></i></button>
+          <button href="#" class="btn btn-default" role="button" data-ng-click="goToEditComplex(complex)"><i
+              class="fa fa-pencil"></i></button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <button data-ng-click="goToCreateComplex()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo plesso</button>
+
+</section>

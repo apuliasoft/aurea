@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
     SchoolClass = mongoose.model('SchoolClass'),
     Student = mongoose.model('Student'),
+    ObjectId = mongoose.Types.ObjectId,
     async = require('async'),
     _ = require('lodash');
 
@@ -14,7 +15,12 @@ var mongoose = require('mongoose'),
  * Find school class by id
  */
 exports.schoolClass = function(req, res, next) {
-    SchoolClass.findById(req.params.schoolClassId, function(err, schoolClass) {
+    SchoolClass.findOne({
+        _id: new ObjectId(req.params.schoolClassId),
+        academicYear: new ObjectId(req.params.academicYearId),
+        complex: new ObjectId(req.params.complexId),
+        school: new ObjectId(req.params.schoolId)
+    }, function(err, schoolClass) {
         if (err) return next(err);
         if (!schoolClass) return next(new Error('Failed to load school class ' + req.params.schoolClassId));
         req.schoolClass = schoolClass;
@@ -80,7 +86,11 @@ exports.show = function(req, res) {
  * List of school classes
  */
 exports.all = function(req, res) {
-    SchoolClass.find({}, function(err, schoolClass) {
+    SchoolClass.find({
+        academicYear: new ObjectId(req.params.academicYearId),
+        complex: new ObjectId(req.params.complexId),
+        school: new ObjectId(req.params.schoolId)
+    }, function(err, schoolClass) {
         if (err) {
             res.jsonp(400, err);
         } else {

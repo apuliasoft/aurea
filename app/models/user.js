@@ -5,8 +5,7 @@
  */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    crypto = require('crypto'),
-    _ = require('lodash');
+    crypto = require('crypto');
 
 /**
  * User Schema
@@ -25,13 +24,13 @@ var UserSchema = new Schema({
         required: true,
         enum: ['admin', 'manager', 'teacher', 'student', 'parent']
     },
-    school: {
-        type: Schema.Types.ObjectId,
-        ref: 'School'
-    },
     complex: {
         type: Schema.Types.ObjectId,
         ref: 'Complex'
+    },
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: 'School'
     },
     hashed_password: String,
     salt: String

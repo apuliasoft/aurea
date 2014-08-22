@@ -12,7 +12,11 @@ var mongoose = require('mongoose'),
  * Find academic year by id
  */
 exports.academicYear = function(req, res, next) {
-    AcademicYear.findOne({_id: ObjectId(req.params.academicYearId), complex: ObjectId(req.params.complexId), school: ObjectId(req.params.schoolId)}, function(err, academicYear) {
+    AcademicYear.findOne({
+        _id: new ObjectId(req.params.academicYearId),
+        complex: new ObjectId(req.params.complexId),
+        school: new ObjectId(req.params.schoolId)
+    }, function(err, academicYear) {
         if (err) return next(err);
         if (!academicYear) return next(new Error('Failed to load academic year ' + req.params.academicYearId));
         req.academicYear = academicYear;
@@ -78,7 +82,10 @@ exports.show = function(req, res) {
  * List of academic years
  */
 exports.all = function(req, res) {
-    AcademicYear.find({complex: new ObjectId(req.params.complexId)}, function(err, academicYears) {
+    AcademicYear.find({
+        complex: new ObjectId(req.params.complexId),
+        school: new ObjectId(req.params.schoolId)
+    }, function(err, academicYears) {
         if (err) {
             res.jsonp(400, err);
         } else {

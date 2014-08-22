@@ -4,40 +4,41 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Teacher = mongoose.model('Teacher'),
+    Parent = mongoose.model('Parent'),
     User = mongoose.model('User'),
     ObjectId = mongoose.Types.ObjectId,
     async = require('async'),
     generatePassword = require('password-generator'),
     _ = require('lodash');
 
+
 /**
- * Find teacher by id
+ * Find parent by id
  */
-exports.teacher = function (req, res, next) {
-    Teacher.findOne({
-        _id: new ObjectId(req.params.teacherId),
+exports.parent = function (req, res, next) {
+    Parent.findOne({
+        _id: new ObjectId(req.params.parentId),
+        student: new ObjectId(req.params.studentId),
         complex: new ObjectId(req.params.complexId),
         school: new ObjectId(req.params.schoolId)
-    }, function (err, teacher) {
+    }, function (err, parent) {
         if (err) return next(err);
-        if (!teacher) return next(new Error('Failed to load teacher ' + req.params.teacherId));
-        req.teacher = teacher;
+        if (!parent) return next(new Error('Failed to load parent ' + req.params.parentId));
+        req.parent = parent;
         next();
     });
 };
 
 /**
- * Create an teacher
+ * Create an parent
  */
 exports.create = function (req, res) {
-
-    var teacher = new Teacher(req.body);
+    var parent = new Parent(req.body);
 
     var user = new User();
-    user.name = teacher.firstName + ' ' + teacher.lastName;
+    user.name = parent.firstName + ' ' + parent.lastName;
     user.email = req.body.email;
-    user.role = 'teacher';
+    user.role = 'parent';
     user.complex = req.body.complex;
     user.school = req.body.school;
 
@@ -50,16 +51,11 @@ exports.create = function (req, res) {
                 user.save(callback);
             },
             function (user, rowAffected, callback) {
-                teacher.user = user._id;
-                teacher.save(callback);
+                parent.user = user._id;
+                parent.save(callback);
             }
         ],
         function (err, result) {
-            // the results array will equal ['one','two'] even though
-            // the second function had a shorter timeout.
-            console.log(err);
-            console.log(result);
-
             if (err) {
                 res.jsonp(400, err);
             } else {
@@ -69,56 +65,57 @@ exports.create = function (req, res) {
 };
 
 /**
- * Update an teacher
+ * Update an parent
  */
 exports.update = function (req, res) {
-    var teacher = req.teacher;
+    var parent = req.parent;
 
-    teacher = _.extend(teacher, req.body);
+    parent = _.extend(parent, req.body);
 
-    teacher.save(function (err) {
+    parent.save(function (err) {
         if (err) {
             res.jsonp(400, err);
         } else {
-            res.jsonp(teacher);
+            res.jsonp(parent);
         }
     });
 };
 
 /**
- * Delete an teacher
+ * Delete a parent
  */
 exports.destroy = function (req, res) {
-    var teacher = req.teacher;
+    var parent = req.parent;
 
-    teacher.remove(function (err) {
+    parent.remove(function (err) {
         if (err) {
             res.jsonp(400, err);
         } else {
-            res.jsonp(teacher);
+            res.jsonp(parent);
         }
     });
 };
 
 /**
- * Show an teacher
+ * Show an parent
  */
 exports.show = function (req, res) {
-    res.jsonp(req.teacher);
+    res.jsonp(req.parent);
 };
 
 /**
- * List of teachers
+ * List of parents
  */
 exports.all = function (req, res) {
-    Teacher.find({
+    parent.find({
+        student: new ObjectId(req.params.studentId),
         complex: new ObjectId(req.params.complexId),
         school: new ObjectId(req.params.schoolId)
-    }, function (err, teacher) {
+    }, function (err, parents) {
         if (err) {
             res.jsonp(400, err);
         } else {
-            res.jsonp(teacher);
+            res.jsonp(parents);
         }
     });
 };

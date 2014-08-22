@@ -23,14 +23,6 @@ var AcademicYearSchema = new Schema({
         type: Date,
         required: true
     },
-    school: {
-        type: Schema.Types.ObjectId,
-        ref: 'School'
-    },
-    complex: {
-        type: Schema.Types.ObjectId,
-        ref: 'Complex'
-    },
     timeTable: [{
         _id: false,
         weekDay: {
@@ -55,7 +47,15 @@ var AcademicYearSchema = new Schema({
                 required: true
             }
         }]
-    }]
+    }],
+    complex: {
+        type: Schema.Types.ObjectId,
+        ref: 'Complex'
+    },
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: 'School'
+    }
 });
 
 /**

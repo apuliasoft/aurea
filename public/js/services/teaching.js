@@ -2,8 +2,12 @@
 
 //Teaching service used for teachings REST endpoint
 angular.module('aurea.teachings').factory('Teaching', ['$resource', function($resource) {
-    return $resource('teachings/:teachingId', {
-        teachingId: '@_id'
+    return $resource('schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId', {
+        teachingId: '@_id',
+        schoolClassId: '@schoolClass',
+        academicYearId: '@academicYear',
+        complexId: '@complex',
+        schoolId: '@school'
     }, {
         update: {
             method: 'PUT'

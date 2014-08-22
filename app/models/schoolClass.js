@@ -18,9 +18,9 @@ var SchoolClassSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Student'
     }],
-    school: {
+    academicYear: {
         type: Schema.Types.ObjectId,
-        ref: 'School',
+        ref: 'AcademicYear',
         required: true
     },
     complex: {
@@ -28,9 +28,9 @@ var SchoolClassSchema = new Schema({
         ref: 'Complex',
         required: true
     },
-    academicYear: {
+    school: {
         type: Schema.Types.ObjectId,
-        ref: 'AcademicYear',
+        ref: 'School',
         required: true
     }
 });

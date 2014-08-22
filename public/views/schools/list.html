@@ -1,7 +1,20 @@
 <section data-ng-controller="SchoolsCtrl" data-ng-init="find()">
   <h2>Scuole</h2>
 
-  <datatable columns="columns" list="schools" view="view(element)" edit="edit(element)" remove="remove(element)"></datatable>
+  <div class="row">
+    <div class="col-xs-4" data-ng-repeat="school in schools">
+      <div class="thumbnail">
+        <h3>{{school.name}}</h3>
 
-  <button data-ng-click="new()" class="btn btn-default"><i class="fa fa-plus"></i> Nuova scuola</button>
+        <p>
+          <button class="btn btn-primary" role="button" data-ng-click="goToListComplexes(school)"><i
+              class="fa fa-check"></i></button>
+          <button href="#" class="btn btn-default" role="button" data-ng-click="goToEditSchool(school)"><i
+              class="fa fa-pencil"></i></button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <button data-ng-click="goToCreateSchool()" class="btn btn-default"><i class="fa fa-plus"></i> Nuova scuola</button>
 </section>
