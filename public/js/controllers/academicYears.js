@@ -3,6 +3,9 @@
 angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'AcademicYear', function ($scope, $stateParams, $location, $filter, _, Global, AcademicYear) {
     $scope.global = Global;
 
+    var toMinute = $filter('minute');
+    var toTime = $filter('time');
+
     $scope.columns = [
         {name: 'name', label: 'Nome'},
         {name: 'startDate', label: 'Data inizio', filter: 'date'},
@@ -41,11 +44,39 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         });
     };
 
-    $scope.addTimeSlot = function(slots) {
-        slots.push({start: _.last(slots) && _.last(slots).end || undefined, end: undefined});
+    $scope.addTimeSlot = function (slots) {
+        var last = _.last(slots);
+        var start = last.end;
+        var lastDuration = toMinute(last.end) - toMinute(last.start)
+        var end = toMinute(last.end) + lastDuration;
+        if (end >= 0 && end < 1440) {
+            end = toTime(end);
+        } else {
+            end = undefined;
+        }
+
+        slots.push({
+            start: start,
+            end: end
+        });
     };
 
-    $scope.removeTimeSlot = function(slots, index) {
+    $scope.addDayTimeSlots = function(timeTable, day) {
+        var lastDay = _.findLast(timeTable, function(day) {
+            return day.slots.length;
+        });
+
+        if (lastDay){
+            day.slots = _.cloneDeep(lastDay.slots);
+        } else {
+            day.slots.push({
+                start: undefined,
+                end: undefined
+            });
+        }
+    };
+
+    $scope.removeTimeSlot = function (slots, index) {
         slots.splice(index, 1);
     };
 
@@ -53,16 +84,16 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         return slot.start && slot.end;
     };
 
-    $scope.slotsFilled = function(slots) {
+    $scope.slotsFilled = function (slots) {
         return _.every(slots, $scope.slotFilled);
     };
 
-    $scope.slotFilled = function(slot) {
+    $scope.slotFilled = function (slot) {
         return slot.start && slot.end;
     };
 
     $scope.create = function (isValid) {
-        if(isValid) {
+        if (isValid) {
             var academicYear = $scope.academicYear;
             academicYear.timeTable = serializeData(academicYear.timeTable);
 
@@ -81,7 +112,7 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
     };
 
     $scope.update = function (isValid) {
-        if(isValid) {
+        if (isValid) {
             var academicYear = $scope.academicYear;
             academicYear.timeTable = serializeData(academicYear.timeTable);
 
@@ -109,12 +140,12 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
             complexId: Global.getComplex()._id,
             schoolId: Global.getSchool()._id
         }).$promise.then(function (academicYear) {
-                academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
-                academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
-                academicYear.timeTable = deserializeData(academicYear.timeTable);
+              academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
+              academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
+              academicYear.timeTable = deserializeData(academicYear.timeTable);
 
-                $scope.academicYear = academicYear;
-            });
+              $scope.academicYear = academicYear;
+          });
     };
 
     /**

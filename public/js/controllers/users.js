@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'User', function ($scope, $stateParams, $location, _, Global, User) {
+angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams', '$location', '_', 'ngToast', 'Global', 'User', function ($scope, $stateParams, $location, _, ngToast, Global, User) {
     $scope.global = Global;
 
     $scope.columns = [
@@ -27,6 +27,7 @@ angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams',
 
     $scope.view = function (user) {
         if (user) {
+            ngToast.create('Visualizza dettagli di ' + user.name);
             $location.path('utenti/' + user._id);
         }
     };
