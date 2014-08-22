@@ -65,7 +65,6 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
             teaching.$save(function (response) {
                 $scope.view(response);
             });
-            $scope.init();
         }
     };
 
