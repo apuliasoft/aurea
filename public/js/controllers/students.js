@@ -42,7 +42,6 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
             student.$save(function (response) {
                 $scope.view(response);
             });
-            $scope.init();
         }
     };
 
