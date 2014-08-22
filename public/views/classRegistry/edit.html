@@ -1,17 +1,25 @@
 <section class="container-fluid" data-ng-controller="ClassRegistryCtrl" data-ng-init="init()">
 
     <div class="row">
-        <div class="col-xs-2">
-            <h3>Alunni</h3>
+        <div class="col-md-3">
+            <div>
+                <h3>Alunni</h3>
+                <div class="btn-group">
+                    <button class="btn btn-danger">A</button>
+                    <button class="btn btn-primary">Entr</button>
+                    <button class="btn btn-warning">Usc</button>
+                </div>
+            </div>
             <ul class="list-group">
-                <li class="list-group-item" data-ng-repeat="student in classStudents">
+                <li class="list-group-item"
+                    data-ng-repeat="student in classStudents | orderBy:['lastName', 'firstName']">
                     <div>
                         <h5>{{ student | name:true}}</h5>
                     </div>
                 </li>
             </ul>
         </div>
-        <div class="col-xs-8">
+        <div class="col-md-9">
 
             <h2>Registro Di Classe</h2>
             <button class="btn" data-ng-click="yesterday()">Ieri</button>
@@ -26,15 +34,15 @@
                         <th>Ora</th>
                         <th>Materia</th>
                         <th>Supplenza</th>
-                        <th>Compresenze</th>
-                        <th>Sostegni</th>
+                        <!--<th>Compresenze</th>-->
+                        <!--<th>Sostegni</th>-->
                         <th>Argomento</th>
                         <th>Note</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr data-ng-repeat="slot in classRegistry.slots | orderBy:'number'">
-                        <td>{{ slot.number | ordinalNumber}} Ora</td>
+                        <td>{{ slot.number | ordinalNumber}}</td>
                         <td>
                             <select data-ng-model="slot.teaching" id="teaching" name="teaching" class="form-control"
                                     data-ng-options="teaching._id as teaching.name for teaching in teachings"></select>
@@ -46,21 +54,21 @@
                                 <option></option>
                             </select>
                         </td>
-                        <td>
-                            <select data-ng-model="slot.assistantTeachers" id="assistantTeachers"
-                                    name="assistantTeachers"
-                                    class="form-control"
-                                    multiple data-ng-multiple="true"
-                                    data-ng-options="teacher._id as teacher | name for teacher in teachers">
-                            </select>
-                        </td>
-                        <td>
-                            <select data-ng-model="slot.supportTeachers" id="supportTeachers" name="supportTeachers"
-                                    class="form-control"
-                                    multiple data-ng-multiple="true"
-                                    data-ng-options="teacher._id as teacher | name for teacher in teachers">
-                            </select>
-                        </td>
+                        <!--<td>-->
+                        <!--<select data-ng-model="slot.assistantTeachers" id="assistantTeachers"-->
+                        <!--name="assistantTeachers"-->
+                        <!--class="form-control"-->
+                        <!--multiple data-ng-multiple="true"-->
+                        <!--data-ng-options="teacher._id as teacher | name for teacher in teachers">-->
+                        <!--</select>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                        <!--<select data-ng-model="slot.supportTeachers" id="supportTeachers" name="supportTeachers"-->
+                        <!--class="form-control"-->
+                        <!--multiple data-ng-multiple="true"-->
+                        <!--data-ng-options="teacher._id as teacher | name for teacher in teachers">-->
+                        <!--</select>-->
+                        <!--</td>-->
                         <td><input type="text" data-ng-model="slot.subject" class="form-control"></td>
                         <td><input type="text" data-ng-model="slot.notes" class="form-control"></td>
                     </tr>
