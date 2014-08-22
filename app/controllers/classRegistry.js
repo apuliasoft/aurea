@@ -4,15 +4,29 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    ClassRegistry = mongoose.model('ClassRegistry'),
-    _ = require('lodash');
+  ClassRegistry = mongoose.model('ClassRegistry'),
+  _ = require('lodash');
 
 /**
  * Find a class registry by date
  */
-function classRegistry(classId, date, callback) {
-    ClassRegistry.findOne({ schoolClass: classId, date: new Date(date) }, callback);
-}
+
+exports.classRegistry = function (req, res, next) {
+    ClassRegistry.findOne({
+          schoolClass: req.params.schoolClassId,
+          date: new Date(req.params.date),
+          school: req.params.schoolId,
+          complex: req.params.complexId,
+          academicYear: req.params.academicYearId
+      },
+      function (err, classRegistry) {
+          if (err) return next(err);
+          if (!classRegistry) return res.jsonp(404, 'non trovato');
+
+          req.classRegistry = classRegistry;
+          next();
+      });
+};
 
 /**
  * Create or Update a class registry by year
@@ -40,7 +54,5 @@ exports.createOrUpdate = function (req, res) {
  * Show a class registry
  */
 exports.show = function (req, res) {
-    classRegistry(req.params.classId, req.params.date, function (err, classRegistry) {
-        res.jsonp(classRegistry || {});
-    });
+    res.jsonp(req.classRegistry);
 };

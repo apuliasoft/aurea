@@ -1,22 +1,6 @@
 'use strict';
 
-angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'ClassRegistry', 'SchoolClass', 'Teacher', 'Teaching', 'Student', function ($scope, $stateParams, $location, $filter, _, ClassRegistry, SchoolClass, Teacher, Teaching, Student) {
-
-    if (!$scope.schoolClasses) {
-        $scope.schoolClasses = SchoolClass.query();
-    }
-
-    if (!$scope.teachers) {
-        $scope.teachers = Teacher.query();
-    }
-
-    if (!$scope.teaching) {
-        $scope.teachings = Teaching.query();
-    }
-
-    if (!$scope.students) {
-        $scope.students = Student.query();
-    }
+angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'ClassRegistry', 'ClassStudent', function ($scope, $stateParams, $location, $filter, _, Global, ClassRegistry, ClassStudent) {
 
     /**
      * Converte il formato degli orari.
@@ -58,37 +42,63 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
 
     $scope.init = function () {
 
-        var classId = $stateParams.classId;
+        // Carico gli studenti della classe
+        $scope.classStudents = ClassStudent.query({
+            schoolClassId: Global.getSchoolClass()._id,
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id,
+            academicYearId: Global.getAcademicYear()._id
+        });
+
         var date = new Date($stateParams.date);
+        var schoolClass = Global.getSchoolClass()._id;
+        var school = Global.getSchool()._id;
+        var complex = Global.getComplex()._id;
+        var academicYear = Global.getAcademicYear()._id;
+        var weekDay = date.getDay() === 0 ? 7 : date.getDay();
+
+        var day = _.find(Global.getAcademicYear().timeTable, function (day) {
+            return day.weekDay === weekDay;
+        });
+
+        var slots = [];
+        if (day) {
+            slots = _.map(day.slots, function (slot, index) {
+                return {number: index + 1};
+            });
+        }
 
         $scope.classRegistry = new ClassRegistry({
-            schoolClass: classId,
+            schoolClass: schoolClass,
             date: date,
-            slots: _.map(Global.academicYear.timeTable, function(day) {
-                return { number: day.number};
-            })
-        });
+            school: school,
+            complex: complex,
+            academicYear: academicYear,
 
-        Global.academicYear.timeTable
+            slots: slots
+        });
 
         ClassRegistry.get({
-            classId: classId,
-            date: date.toISOString()
+            schoolClassId: schoolClass,
+            date: date.toISOString(),
+            schoolId: school,
+            complexId: complex,
+            academicYearId: academicYear
         }).$promise.then(function (classRegistry) {
-            $scope.classRegistry = deserializeData(classRegistry);
-        });
+              $scope.classRegistry = deserializeData(classRegistry);
+          });
     };
 
     $scope.tomorrow = function () {
         var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
-        $location.path('registri-di-classe/' + $stateParams.classId + '/' + $filter('date')(newDay, 'yyyy-MM-dd'));
+        $location.path('registri-di-classe/' + $filter('date')(newDay, 'yyyy-MM-dd'));
     };
 
     $scope.yesterday = function () {
         var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() - 1);
-        $location.path('registri-di-classe/' + $stateParams.classId + '/' + $filter('date')(newDay, 'yyyy-MM-dd'));
+        $location.path('registri-di-classe/' + $filter('date')(newDay, 'yyyy-MM-dd'));
     };
 
     $scope.save = function () {

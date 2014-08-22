@@ -1,118 +1,78 @@
-<section data-ng-controller="ClassRegistryCtrl" data-ng-init="init()">
+<section class="container-fluid" data-ng-controller="ClassRegistryCtrl" data-ng-init="init()">
 
-  <h2>Registro Di Classe</h2>
-  <button class="btn" data-ng-click="yesterday()">Ieri</button>
-  <button class="btn" data-ng-click="tomorrow()">domani</button>
-  <h3>{{ classRegistry.date | date:'EEEE, d MMMM yyyy' }}</h3>
+    <div class="row">
+        <div class="col-xs-2">
+            <h3>Alunni</h3>
+            <ul class="list-group">
+                <li class="list-group-item" data-ng-repeat="student in classStudents">
+                    <div>
+                        <h5>{{ student | name:true}}</h5>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-8">
 
-  <form data-ng-submit="save()" novalidate>
+            <h2>Registro Di Classe</h2>
+            <button class="btn" data-ng-click="yesterday()">Ieri</button>
+            <button class="btn" data-ng-click="tomorrow()">domani</button>
+            <h3>{{ classRegistry.date | date:'EEEE, d MMMM yyyy' }}</h3>
 
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Ora</th>
-        <th>Materia</th>
-        <th>Supplenza</th>
-        <th>Compresenze</th>
-        <th>Sostegni</th>
-        <th>Argomento</th>
-        <th>Note</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr data-ng-repeat="slot in classRegistry.slots | orderBy:'number'">
-        <td>{{ slot.number }}</td>
-        <td>
-          <select data-ng-model="slot.teaching" id="teaching" name="teaching" class="form-control"
-                  data-ng-options="teaching._id as teaching.name for teaching in teachings"></select>
-        </td>
-        <td>
-          <select data-ng-model="slot.substitution" id="substitution" name="substitution" class="form-control"
-                  data-ng-options="teacher._id as teacher | name for teacher in teachers">
-            <option></option>
-          </select>
-        </td>
-        <td>
-          <select data-ng-model="slot.assistantTeachers" id="assistantTeachers" name="assistantTeachers" class="form-control"
-                  multiple data-ng-multiple="true" data-ng-options="teacher._id as teacher | name for teacher in teachers">
-          </select>
-        </td>
-        <td>
-          <select data-ng-model="slot.supportTeachers" id="supportTeachers" name="supportTeachers" class="form-control"
-                  multiple data-ng-multiple="true" data-ng-options="teacher._id as teacher | name for teacher in teachers">
-          </select>
-        </td>
-        <td><input type="text" data-ng-model="slot.subject" class="form-control"></td>
-        <td><input type="text" data-ng-model="slot.notes" class="form-control"></td>
-      </tr>
-      </tbody>
-    </table>
+            <form data-ng-submit="save()" novalidate>
 
-    <hr>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Ora</th>
+                        <th>Materia</th>
+                        <th>Supplenza</th>
+                        <th>Compresenze</th>
+                        <th>Sostegni</th>
+                        <th>Argomento</th>
+                        <th>Note</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="slot in classRegistry.slots | orderBy:'number'">
+                        <td>{{ slot.number | ordinalNumber}} Ora</td>
+                        <td>
+                            <select data-ng-model="slot.teaching" id="teaching" name="teaching" class="form-control"
+                                    data-ng-options="teaching._id as teaching.name for teaching in teachings"></select>
+                        </td>
+                        <td>
+                            <select data-ng-model="slot.substitution" id="substitution" name="substitution"
+                                    class="form-control"
+                                    data-ng-options="teacher._id as teacher | name for teacher in teachers">
+                                <option></option>
+                            </select>
+                        </td>
+                        <td>
+                            <select data-ng-model="slot.assistantTeachers" id="assistantTeachers"
+                                    name="assistantTeachers"
+                                    class="form-control"
+                                    multiple data-ng-multiple="true"
+                                    data-ng-options="teacher._id as teacher | name for teacher in teachers">
+                            </select>
+                        </td>
+                        <td>
+                            <select data-ng-model="slot.supportTeachers" id="supportTeachers" name="supportTeachers"
+                                    class="form-control"
+                                    multiple data-ng-multiple="true"
+                                    data-ng-options="teacher._id as teacher | name for teacher in teachers">
+                            </select>
+                        </td>
+                        <td><input type="text" data-ng-model="slot.subject" class="form-control"></td>
+                        <td><input type="text" data-ng-model="slot.notes" class="form-control"></td>
+                    </tr>
+                    </tbody>
+                </table>
 
-    <div class="form-group">
-      <label for="schoolClass" class="control-label">Assenti</label>
-      <select size="15" id="absences" name="absences" multiple data-ng-multiple="true" class="form-control"
-              data-ng-model="classRegistry.absences"
-              data-ng-options="student._id as student | name for student in students"></select>
+                <hr>
+
+                <button type="submit" class="btn btn-primary">Salva</button>
+
+            </form>
+        </div>
     </div>
-
-    <hr>
-
-    <h3>Entrate posticipate</h3>
-
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Studente</th>
-        <th>Orario</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr data-ng-repeat="lateEntrance in classRegistry.lateEntrances">
-        <td>
-          <select data-ng-model="lateEntrance.student" class="form-control"
-                  data-ng-options="student._id as student | name for student in students"></select>
-        </td>
-        <td><input type="time" data-ng-model="lateEntrance.timestamp" class="form-control"></td>
-        <td><button type="button" class="btn btn-default" data-ng-click="deleteLateEntrance(lateEntrance)">Cancella</button></td>
-      </tr>
-      </tbody>
-    </table>
-
-    <button type="button" class="btn btn-default" data-ng-click="addLateEntrance()">Aggiungi</button>
-
-    <hr>
-
-    <h3>Uscite anticipate</h3>
-
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Studente</th>
-        <th>Orario</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr data-ng-repeat="earlyLeave in classRegistry.earlyLeaves">
-        <td>
-          <select data-ng-model="earlyLeave.student" class="form-control"
-                  data-ng-options="student._id as student | name for student in students"></select>
-        </td>
-        <td><input type="time" data-ng-model="earlyLeave.timestamp" class="form-control"></td>
-        <td><button type="button" class="btn btn-default" data-ng-click="deleteEarlyLeave(earlyLeave)">Cancella</button></td>
-      </tr>
-      </tbody>
-    </table>
-
-    <button type="button" class="btn btn-default" data-ng-click="addEarlyLeave()">Aggiungi</button>
-
-    <hr>
-
-    <button type="submit" class="btn btn-primary">Salva</button>
-
-  </form>
 
 </section>

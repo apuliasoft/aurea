@@ -1,68 +1,87 @@
 <div data-ng-controller="HeaderCtrl">
-  <ul class="nav nav-stacked">
-    <li>
-      <a class="" href="/">AUREA</a>
-    </li>
-  </ul>
-  <hr/>
+    <ul class="nav nav-stacked">
+        <li>
+            <a class="" href="/">AUREA</a>
+        </li>
+    </ul>
+    <hr/>
 
-  <ul class="nav nav-stacked">
-    <li>
-      <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-          {{ global.getSchool().name || 'Seleziona la scuola'}} <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li data-ng-repeat="school in schools" data-ng-click="global.setSchool(school)"><a href=""> {{ school.name }} </a></li>
-        </ul>
-      </div>
-    </li>
+    <ul class="nav nav-stacked">
+        <li>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    {{ global.getSchool().name || 'Seleziona la scuola'}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li data-ng-repeat="school in schools" data-ng-click="global.setSchool(school)"><a href=""> {{
+                        school.name }} </a></li>
+                </ul>
+            </div>
+        </li>
 
-    <li>
-      <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-          {{ global.getComplex().name || 'Seleziona il plesso'}} <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li data-ng-repeat="complex in complexes" data-ng-click="global.setComplex(complex)"><a href=""> {{ complex.name }} </a></li>
-        </ul>
-      </div>
-    </li>
+        <li>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    {{ global.getComplex().name || 'Seleziona il plesso'}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li data-ng-repeat="complex in complexes" data-ng-click="global.setComplex(complex)"><a href=""> {{
+                        complex.name }} </a></li>
+                </ul>
+            </div>
+        </li>
 
-    <li>
-      <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-ng-disabled="!global.getComplex() || academicYears.length==0">
-          {{ global.getAcademicYear().name || 'Seleziona l\'anno accademico'}} <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li data-ng-repeat="academicYear in academicYears" data-ng-click="global.setAcademicYear(academicYear)"><a href=""> {{ academicYear.name }} </a></li>
-        </ul>
-      </div>
-    </li>
+        <li>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                        data-ng-disabled="!global.getComplex() || academicYears.length==0">
+                    {{ global.getAcademicYear().name || 'Seleziona l\'anno accademico'}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li data-ng-repeat="academicYear in academicYears"
+                        data-ng-click="global.setAcademicYear(academicYear)"><a href=""> {{ academicYear.name }} </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
 
-  </ul>
+        <li>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                        data-ng-disabled="!global.getAcademicYear() || schoolClasses.length==0">
+                    {{ global.getSchoolClass().name || 'Seleziona la classe'}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li data-ng-repeat="schoolClass in schoolClasses"
+                        data-ng-click="global.setSchoolClass(schoolClass)"><a href=""> {{ schoolClass.name }} </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
 
-  <ul class="nav nav-stacked">
+    </ul>
 
-    <li data-ng-repeat="item in menu" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
-      <a href="#!/{{item.link}}">{{item.title}}</a>
-    </li>
+    <ul class="nav nav-stacked">
+
+        <li data-ng-repeat="item in menu" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+            <a href="#!/{{item.link}}">{{item.title}}</a>
+        </li>
 
 
-  </ul>
-  <ul class="navbar-nav nav pull-right" data-ng-hide="global.isLoggedin()">
-    <li><a href="/#!login">Login</a>
-    </li>
-  </ul>
-  <ul class="navbar-nav nav pull-right" data-ng-show="global.isLoggedin()">
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        {{global.user.name}} <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu">
-        <li><a href="/#!logout">Logout</a></li>
-        <li><a href="/#!/utenti/{{global.user._id}}">Profilo</a></li>
-      </ul>
-    </li>
-  </ul>
+    </ul>
+    <ul class="navbar-nav nav pull-right" data-ng-hide="global.isLoggedin()">
+        <li><a href="/#!login">Login</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav nav pull-right" data-ng-show="global.isLoggedin()">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {{global.user.name}} <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/#!logout">Logout</a></li>
+                <li><a href="/#!/utenti/{{global.user._id}}">Profilo</a></li>
+            </ul>
+        </li>
+    </ul>
 </div>
