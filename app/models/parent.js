@@ -7,9 +7,9 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 /**
- * Student Schema
+ * Parent Schema
  */
-var StudentSchema = new Schema({
+var ParentSchema = new Schema({
     firstName: {
         type: String,
         required: true
@@ -18,13 +18,14 @@ var StudentSchema = new Schema({
         type: String,
         required: true
     },
-    birthDate: {
-        type: Date,
-        required: true
-    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
+        required: true
+    },
+    student: {
+        type: Schema.Types.ObjectId,
+        ref: 'Student',
         required: true
     },
     complex: {
@@ -47,4 +48,4 @@ var StudentSchema = new Schema({
  * Statics
  */
 
-mongoose.model('Student', StudentSchema);
+mongoose.model('Parent', ParentSchema);

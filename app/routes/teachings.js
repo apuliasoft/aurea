@@ -1,17 +1,18 @@
 'use strict';
 
 // Teachings routes use teachings controller
-var teachings = require('../controllers/teachings');
+var teachings = require('../controllers/teachings'),
+    auth = require('./middlewares/authorization');
 
 module.exports = function(app) {
 
-    app.get('/teachings', teachings.all);
-    app.post('/teachings', teachings.create);
-    app.get('/teachings/:teachingId', teachings.show);
-    app.put('/teachings/:teachingId', teachings.update);
-    app.del('/teachings/:teachingId', teachings.destroy);
+    app.get('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings', auth.check, teachings.all);
+    app.post('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings', auth.check, teachings.create);
+    app.get('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId', teachings.teaching, auth.check, teachings.show);
+    app.put('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId', teachings.teaching, auth.check, teachings.update);
+    app.del('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId', teachings.teaching, auth.check, teachings.destroy);
 
-    // Finish with setting up the teachingId param
-    app.param('teachingId', teachings.teaching);
+    app.get('/schools/:schoolId/complexes/:complexId/teachers/:teacherId/academicYears/:academicYearId/teachings', auth.check, teachings.allByTeacher);
+    app.get('/schools/:schoolId/complexes/:complexId/teachers/:teacherId/academicYears/:academicYearId/teachings/:teachingId', teachings.teachingByTeacher, auth.check, teachings.showByTeacher);
 
 };

@@ -13,7 +13,10 @@ var mongoose = require('mongoose'),
  * Find complex by id
  */
 exports.complex = function(req, res, next) {
-    Complex.findOne({_id: ObjectId(req.params.complexId), school: ObjectId(req.params.schoolId)}, function(err, complex) {
+    Complex.findOne({
+        _id: new ObjectId(req.params.complexId),
+        school: new ObjectId(req.params.schoolId)
+    }, function(err, complex) {
         if (err) return next(err);
         if (!complex) return next(new Error('Failed to load complex ' + req.params.complexId));
 
@@ -57,17 +60,17 @@ exports.update = function(req, res) {
 /**
  * Delete an complex 
  */
-//exports.destroy = function(req, res) {
-//    var complex = req.complex;
-//
-//    complex.remove(function(err) {
-//        if (err) {
-//            res.jsonp(400, err);
-//        } else {
-//            res.jsonp(complex);
-//        }
-//    });
-//};
+exports.destroy = function(req, res) {
+    var complex = req.complex;
+
+    complex.remove(function(err) {
+        if (err) {
+            res.jsonp(400, err);
+        } else {
+            res.jsonp(complex);
+        }
+    });
+};
 
 /**
  * Show an complex 
@@ -80,7 +83,9 @@ exports.show = function(req, res) {
  * List of complexes
  */
 exports.all = function(req, res) {
-    Complex.find({school: req.params.schoolId}, function(err, complexes) {
+    Complex.find({
+        school: new ObjectId(req.params.schoolId)
+    }, function(err, complexes) {
         if (err) {
             res.jsonp(400, err);
         } else {

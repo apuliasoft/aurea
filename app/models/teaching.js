@@ -15,14 +15,9 @@ var TeachingSchema = new Schema({
         type: String,
         required: true
     },
-    school: {
+    teacher: {
         type: Schema.Types.ObjectId,
-        ref: 'School',
-        required: true
-    },
-    complex: {
-        type: Schema.Types.ObjectId,
-        ref: 'Complex',
+        ref: 'Teacher',
         required: true
     },
     schoolClass: {
@@ -30,9 +25,19 @@ var TeachingSchema = new Schema({
         ref: 'SchoolClass',
         required: true
     },
-    teacher: {
+    academicYear: {
         type: Schema.Types.ObjectId,
-        ref: 'Teacher',
+        ref: 'AcademicYear',
+        required: true
+    },
+    complex: {
+        type: Schema.Types.ObjectId,
+        ref: 'Complex',
+        required: true
+    },
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: 'School',
         required: true
     }
 });

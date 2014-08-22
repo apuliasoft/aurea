@@ -4,9 +4,9 @@
 angular.module('aurea.schoolClasses').factory('SchoolClass', ['$resource', function($resource) {
     return $resource('schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId', {
         schoolClassId: '@_id',
-        schoolId: '@school',
+        academicYearId: '@academicYear',
         complexId: '@complex',
-        academicYearId: '@academicYear'
+        schoolId: '@school'
     }, {
         update: {
             method: 'PUT'

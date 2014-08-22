@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Complex', 'School', function ($scope, $stateParams, $location, _, Global, Complex, School) {
+angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'School', 'Complex', function ($scope, $stateParams, $location, _, Global, School, Complex) {
     $scope.global = Global;
 
     $scope.columns = [
