@@ -4,6 +4,7 @@ angular.module('aurea', [
     'ngCookies',
     'ngResource',
     'ngStorage',
+    'ngToast',
     'ui.bootstrap',
     'ui.router',
     'aurea.system',
