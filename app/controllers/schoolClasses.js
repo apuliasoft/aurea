@@ -5,16 +5,18 @@
  */
 var mongoose = require('mongoose'),
     SchoolClass = mongoose.model('SchoolClass'),
+    Student = mongoose.model('Student'),
+    async = require('async'),
     _ = require('lodash');
 
 
 /**
  * Find school class by id
  */
-exports.schoolClass = function(req, res, next, id) {
-    SchoolClass.findById(id, function(err, schoolClass) {
+exports.schoolClass = function(req, res, next) {
+    SchoolClass.findById(req.params.schoolClassId, function(err, schoolClass) {
         if (err) return next(err);
-        if (!schoolClass) return next(new Error('Failed to load school class ' + id));
+        if (!schoolClass) return next(new Error('Failed to load school class ' + req.params.schoolClassId));
         req.schoolClass = schoolClass;
         next();
     });
@@ -85,4 +87,22 @@ exports.all = function(req, res) {
             res.jsonp(schoolClass);
         }
     });
+};
+
+exports.allStudents = function (req, res) {
+    async.waterfall([
+          function (callback) {
+              SchoolClass.findById(req.params.schoolClassId, callback);
+          },
+          function (schoolClass, callback) {
+              Student.find({'_id': { $in: schoolClass.students} }, callback);
+          }
+      ],
+      function (err, result) {
+          if (err) {
+              res.jsonp(400, err);
+          } else {
+              res.jsonp(result);
+          }
+      });
 };

@@ -15,12 +15,21 @@ var mongoose = require('mongoose'),
 /**
  * Find student by id
  */
-var getStudent = function (studentId, callback) {
-    Student.findById(studentId, function (err, student) {
-        if (err) return callback(err);
-        if (!student) return callback(new Error('Failed to load student ' + id));
+//var getStudent = function (studentId, callback) {
+//    Student.findById(studentId, function (err, student) {
+//        if (err) return callback(err);
+//        if (!student) return callback(new Error('Failed to load student ' + id));
+//
+//        callback(null, student);
+//    });
+//};
 
-        callback(null, student);
+exports.student = function(req, res, next) {
+    Student.findById(req.params.studentId, function(err, student) {
+        if (err) return next(err);
+        if (!student) return next(new Error('Failed to load student ' + req.params.studentId));
+        req.student = student;
+        next();
     });
 };
 
@@ -33,6 +42,8 @@ exports.create = function (req, res) {
     var user = new User();
     user.name = student.firstName + ' ' + student.lastName;
     user.email = req.body.email;
+    user.school = req.body.school;
+    user.complex = req.body.complex;
     user.role = 'student';
 
     var password = generatePassword(18, false);
@@ -66,20 +77,16 @@ exports.create = function (req, res) {
  * Update an student
  */
 exports.update = function (req, res) {
+    var student = req.student;
 
+    student = _.extend(student, req.body);
 
-    getStudent(req.params.studentId, function (err, student) {
-        if (err) return res.jsonp(400, err);
-
-        student = _.extend(student, req.body);
-
-        student.save(function (err) {
-            if (err) {
-                res.jsonp(400, err);
-            } else {
-                res.jsonp(student);
-            }
-        });
+    student.save(function(err) {
+        if (err) {
+            res.jsonp(400, err);
+        } else {
+            res.jsonp(student);
+        }
     });
 };
 
@@ -87,16 +94,14 @@ exports.update = function (req, res) {
  * Delete an student
  */
 exports.destroy = function (req, res) {
-    getStudent(req.params.studentId, function (err, student) {
-        if (err) return res.jsonp(400, err);
+    var student = req.student;
 
-        student.remove(function (err) {
-            if (err) {
-                res.jsonp(400, err);
-            } else {
-                res.jsonp(student);
-            }
-        });
+    student.remove(function(err) {
+        if (err) {
+            res.jsonp(400, err);
+        } else {
+            res.jsonp(student);
+        }
     });
 };
 
@@ -104,13 +109,7 @@ exports.destroy = function (req, res) {
  * Show an student
  */
 exports.show = function (req, res) {
-    getStudent(req.params.studentId, function (err, student) {
-        if (err) {
-            res.jsonp(400, err);
-        } else {
-            res.jsonp(student);
-        }
-    });
+    res.jsonp(req.student);
 };
 
 /**

@@ -5,17 +5,16 @@
  */
 var mongoose = require('mongoose'),
     AcademicYear = mongoose.model('AcademicYear'),
-    _ = require('lodash'),
-    ObjectId = mongoose.Types.ObjectId;
-
+    ObjectId = mongoose.Types.ObjectId,
+    _ = require('lodash');
 
 /**
  * Find academic year by id
  */
 exports.academicYear = function(req, res, next) {
-    AcademicYear.findById(req.params.academicYearId, function(err, academicYear) {
+    AcademicYear.findOne({_id: ObjectId(req.params.academicYearId), complex: ObjectId(req.params.complexId), school: ObjectId(req.params.schoolId)}, function(err, academicYear) {
         if (err) return next(err);
-        if (!academicYear) return next(new Error('Failed to load academic year ' + id));
+        if (!academicYear) return next(new Error('Failed to load academic year ' + req.params.academicYearId));
         req.academicYear = academicYear;
         next();
     });

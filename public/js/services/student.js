@@ -2,9 +2,10 @@
 
 //Student service used for students REST endpoint
 angular.module('aurea.students').factory('Student', ['$resource', function($resource) {
-    return $resource('complexes/:complexId/students/:studentId', {
+    return $resource('schools/:schoolId/complexes/:complexId/students/:studentId', {
         studentId: '@_id',
-        complexId: '@complex'
+        complexId: '@complex',
+        schoolId: '@school'
     }, {
         update: {
             method: 'PUT'

@@ -1,15 +1,16 @@
 'use strict';
 
 // Teachers routes use teachers controller
-var teachers = require('../controllers/teachers');
+var teachers = require('../controllers/teachers'),
+    auth = require('./middlewares/authorization');
 
-module.exports = function(app) {
+module.exports = function (app) {
 
-    app.get('/complexes/:complexId/teachers', teachers.all);
-    app.post('/complexes/:complexId/teachers', teachers.create);
-    app.get('/complexes/:complexId/teachers/:teacherId', teachers.show);
-    app.put('/complexes/:complexId/teachers/:teacherId', teachers.update);
-    app.del('/complexes/:complexId/teachers/:teacherId', teachers.destroy);
+    app.get('/schools/:schoolId/complexes/:complexId/teachers', teachers.all);
+    app.post('/schools/:schoolId/complexes/:complexId/teachers', teachers.create);
+    app.get('/schools/:schoolId/complexes/:complexId/teachers/:teacherId', teachers.teacher, auth.check, teachers.show);
+    app.put('/schools/:schoolId/complexes/:complexId/teachers/:teacherId', teachers.teacher, auth.check, teachers.update);
+    app.del('/schools/:schoolId/complexes/:complexId/teachers/:teacherId', teachers.destroy);
 
     // Finish with setting up the teacherId param
     // app.param('teacherId', teachers.teacher);
