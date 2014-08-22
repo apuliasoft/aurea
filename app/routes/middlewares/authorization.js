@@ -162,7 +162,7 @@ function match(req, authorization, path, role, method) {
 }
 
 exports.check = function (req, res, next) {
-    if (!req.user) next(); // TODO: se non sono loggato dovrebbe dare errore
+    if (!req.user) next(new Error('Non puoi accedere, si prega di effettuare il login'));
 
     var isAuthorized = _.find(authorizations, function (authorization) {
         if (match(req, authorization, req.route.path, req.user.role, req.method)) {
