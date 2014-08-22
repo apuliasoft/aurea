@@ -37,7 +37,6 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
             school.$save(function (response) {
                 $scope.view(response);
             });
-            $scope.init();
         }
     };
 

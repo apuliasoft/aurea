@@ -40,7 +40,6 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
             teacher.$save(function (response) {
                 $scope.view(response);
             });
-            $scope.init();
         }
     };
 

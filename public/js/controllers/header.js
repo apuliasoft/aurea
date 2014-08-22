@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', '$localStorage', 'School', 'Complex', 'AcademicYear', function ($scope, Global, $filter, $localStorage, School, Complex, AcademicYear) {
+angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', '$localStorage', 'School', 'Complex', 'AcademicYear', 'SchoolClass', function ($scope, Global, $filter, $localStorage, School, Complex, AcademicYear, SchoolClass) {
     $scope.global = Global;
 
     if (!$scope.schools) {
@@ -33,6 +33,19 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
         }
     });
 
+    $scope.$watch('global.academicYear', function () {
+
+        if (Global.getAcademicYear()) {
+            var schoolClass = Global.getSchoolClass();
+            var academicYear = Global.getAcademicYear();
+            if (schoolClass && schoolClass.academicYear !== academicYear._id) {
+                Global.removeSchoolClass();
+            }
+
+            updateSchoolClasses();
+        }
+    });
+
     $scope.$watch('global.user', function () {
         updateMenu();
     });
@@ -45,6 +58,14 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
 
     function updateAcademicYears() {
         $scope.academicYears = AcademicYear.query({
+            complexId: Global.getComplex() && Global.getComplex()._id,
+            schoolId: Global.getSchool() && Global.getSchool()._id
+        });
+    }
+
+    function updateSchoolClasses() {
+        $scope.schoolClasses = SchoolClass.query({
+            academicYearId: Global.getAcademicYear() && Global.getAcademicYear()._id,
             complexId: Global.getComplex() && Global.getComplex()._id,
             schoolId: Global.getSchool() && Global.getSchool()._id
         });
@@ -101,7 +122,7 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
 
         $scope.menu.push({
             'title': 'Registro di Classe',
-            'link': 'registri-di-classe/53f1ffd35f8fddfd599e6c9b/' + $filter('date')(new Date(), 'yyyy-MM-dd'),
+            'link': 'registri-di-classe/' + $filter('date')(new Date(), 'yyyy-MM-dd'),
             'ngif': Global.isAdmin
         });
 

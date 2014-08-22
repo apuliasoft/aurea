@@ -49,7 +49,6 @@ angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams',
         user.$save(function (response) {
             $scope.view(response);
         });
-        $scope.init();
     };
 
     $scope.remove = function (user) {

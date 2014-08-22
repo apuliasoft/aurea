@@ -22,9 +22,13 @@ var ClassRegistrySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'School'
     },
-    comnplex: {
+    complex: {
         type: Schema.Types.ObjectId,
         ref: 'Complex'
+    },
+    academicYear: {
+        type: Schema.Types.ObjectId,
+        ref: 'AcademicYear'
     },
     absences: [{
         type: Schema.Types.ObjectId,
