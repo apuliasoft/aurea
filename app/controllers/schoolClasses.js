@@ -17,7 +17,7 @@ var mongoose = require('mongoose'),
 exports.schoolClass = function(req, res, next) {
     SchoolClass.findOne({
         _id: new ObjectId(req.params.schoolClassId),
-        academicYear: new ObjectId(req.params.academicYear),
+        academicYear: new ObjectId(req.params.academicYearId),
         complex: new ObjectId(req.params.complexId),
         school: new ObjectId(req.params.schoolId)
     }, function(err, schoolClass) {
@@ -87,7 +87,7 @@ exports.show = function(req, res) {
  */
 exports.all = function(req, res) {
     SchoolClass.find({
-        academicYear: new ObjectId(req.params.academicYear),
+        academicYear: new ObjectId(req.params.academicYearId),
         complex: new ObjectId(req.params.complexId),
         school: new ObjectId(req.params.schoolId)
     }, function(err, schoolClass) {

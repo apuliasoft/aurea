@@ -1,29 +1,26 @@
 'use strict';
 
-angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'School', 'Complex', function ($scope, $stateParams, $location, _, Global, School, Complex) {
+angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'School', function ($scope, $stateParams, $location, _, Global, School) {
     $scope.global = Global;
 
-    $scope.columns = [
-        {name: 'name', label: 'Nome'}
-    ];
-
-    $scope.list = function () {
+    $scope.goToListSchools = function () {
         $location.path('scuole');
     };
 
-    $scope.new = function () {
-        $location.path('scuole/crea');
+    $scope.goToCreateSchool = function () {
+        $location.path('scuole/nuova');
     };
 
-    $scope.view = function (school) {
+    $scope.goToEditSchool = function (school) {
         if (school) {
             $location.path('scuole/' + school._id);
         }
     };
 
-    $scope.edit = function (school) {
+    $scope.goToListComplexes = function (school) {
         if (school) {
-            $location.path('scuole/' + school._id + '/modifica');
+            Global.setSchool(school);
+            $location.path('plessi');
         }
     };
 
@@ -34,17 +31,9 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
     $scope.create = function (isValid) {
         if (isValid) {
             var school = $scope.school;
-            school.$save(function (response) {
-                $scope.view(response);
+            school.$save(function () {
+                $scope.goToListSchools();
             });
-        }
-    };
-
-    $scope.remove = function (school) {
-        if (school) {
-            school.$remove();
-            _.remove($scope.schools, school);
-            $scope.list();
         }
     };
 
@@ -56,9 +45,17 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
             }
             school.updated.push(new Date().getTime());
 
-            school.$update(function (response) {
-                $scope.view(response);
+            school.$update(function () {
+                $scope.goToListSchools();
             });
+        }
+    };
+
+    $scope.remove = function (school) {
+        if (school) {
+            school.$remove();
+            _.remove($scope.schools, school);
+            $scope.goToListSchools();
         }
     };
 
@@ -70,18 +67,6 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
 
     $scope.findOne = function () {
         $scope.school = School.get({schoolId: $stateParams.schoolId});
-    };
-
-    $scope.findComplexes = function () {
-        $scope.complexes = Complex.query({schoolId: $stateParams.schoolId});
-    };
-
-    $scope.goToCreateComplex = function (schoolId) {
-        $location.path('scuole/' + schoolId + '/plessi/crea');
-    };
-
-    $scope.goToEditComplex = function (schoolId, complexId) {
-        $location.path('scuole/' + schoolId + '/plessi/' + complexId + '/modifica');
     };
 
 }]);

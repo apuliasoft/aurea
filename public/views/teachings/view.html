@@ -5,9 +5,7 @@
     <dt>Nome</dt>
     <dd>{{ teaching.name }}</dd>
     <dt>Insegnante</dt>
-    <dd>{{ getTeacherFullName(teaching.teacher) }}</dd>
-    <dt>Classe</dt>
-    <dd>{{ getSchoolClassName(teaching.schoolClass) }}</dd>
+    <dd>{{ teaching.teacher  }}</dd>
   </dl>
 
   <button data-ng-click="edit(teaching)" class="btn btn-default">Modifica insegnamento</button>

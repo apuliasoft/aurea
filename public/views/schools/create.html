@@ -1,23 +1,23 @@
 <section data-ng-controller="SchoolsCtrl" data-ng-init="init()">
-    <h2>Crea scuola</h2>
+  <h2>Crea scuola</h2>
 
-    <form name="schoolForm" role="form" data-ng-submit="create(schoolForm.$valid)" novalidate>
+  <form name="schoolForm" role="form" data-ng-submit="create(schoolForm.$valid)" novalidate>
 
-        <div class="form-group"
-             data-ng-class="{ 'has-error' : schoolForm.name.$invalid && !schoolForm.name.$pristine }">
-            <label for="name" class="control-label">Nome</label>
-            <input type="text" data-ng-model="school.name" id="name" name="name" class="form-control" placeholder="Nome"
-                   required>
+    <div class="form-group"
+         data-ng-class="{ 'has-error' : schoolForm.name.$invalid && !schoolForm.name.$pristine }">
+      <label for="name" class="control-label">Nome</label>
+      <input type="text" data-ng-model="school.name" id="name" name="name" class="form-control" placeholder="Nome"
+             required>
 
-            <p ng-show="schoolForm.name.$invalid && !schoolForm.name.$pristine" class="help-block">Il nome è
-                obbligatorio.</p>
-        </div>
+      <p ng-show="schoolForm.name.$invalid && !schoolForm.name.$pristine" class="help-block">Il nome è
+        obbligatorio.</p>
+    </div>
 
-        <hr>
+    <hr>
 
-        <button type="submit" class="btn btn-primary" data-ng-disabled="schoolForm.$invalid">Crea</button>
+    <button type="submit" class="btn btn-primary" data-ng-disabled="schoolForm.$invalid">Salva</button>
 
-        <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+    <button type="button" data-ng-click="goToListSchools()" class="btn btn-default">Annulla</button>
 
-    </form>
+  </form>
 </section>

@@ -1,19 +1,11 @@
 'use strict';
 
-angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Teaching', 'Teacher', 'SchoolClass' , function ($scope, $stateParams, $location, _, Global, Teaching, Teacher, SchoolClass) {
+angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Teaching', 'Teacher' , function ($scope, $stateParams, $location, _, Global, Teaching, Teacher) {
     $scope.global = Global;
 
     $scope.columns = [
         {name:'name', label:'Nome'}
     ];
-
-    if(!$scope.schoolClasses) {
-        $scope.schoolClasses = SchoolClass.query();
-    }
-
-    if(!$scope.teachers) {
-        $scope.teachers = Teacher.query();
-    }
 
     $scope.getSchoolClassName = function(schoolClassId) {
         var schoolClass = _.find($scope.schoolClasses, function(schoolClass) {
@@ -56,7 +48,16 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
     };
 
     $scope.init = function () {
-        $scope.teaching = new Teaching();
+        $scope.teaching = new Teaching({
+            school: Global.getSchool()._id,
+            complex: Global.getComplex()._id,
+            academicYear: Global.getAcademicYear()._id,
+            schoolClass: Global.getSchoolClass()._id
+        });
+        $scope.teachers = Teacher.query({
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id
+        });
     };
 
     $scope.create = function(isValid) {
@@ -91,11 +92,20 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
     };
 
     $scope.find = function() {
-        $scope.teachings = Teaching.query();
+        $scope.teachings = Teaching.query({
+            schoolId: Global.getSchool()._id,
+            complexId: Global.getComplex()._id,
+            academicYearId: Global.getAcademicYear()._id,
+            schoolClassId: Global.getSchoolClass()._id
+        });
     };
 
     $scope.findOne = function() {
         $scope.teaching = Teaching.get({
+            schoolId: Global.getSchool()._id,
+            complexId: Global.getComplex()._id,
+            academicYearId: Global.getAcademicYear()._id,
+            schoolClassId: Global.getSchoolClass()._id,
             teachingId: $stateParams.teachingId
         });
     };

@@ -14,7 +14,7 @@ var mongoose = require('mongoose'),
  */
 exports.teaching = function(req, res, next) {
     Teaching.findOne({
-        _id: new ObjectId(req.params.schoolClassId),
+        _id: new ObjectId(req.params.teachingId),
         schoolClass: new ObjectId(req.params.schoolClassId),
         academicYear: new ObjectId(req.params.academicYearId),
         complex: new ObjectId(req.params.complexId),
