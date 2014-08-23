@@ -3,51 +3,41 @@
 angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Teacher', function ($scope, $stateParams, $location, _, Global, Teacher) {
     $scope.global = Global;
 
-    $scope.columns = [
-        {name:'firstName', label:'Nome'},
-        {name:'lastName', label:'Cognome'}
-    ];
-
-    $scope.list = function () {
+    $scope.goToListTeachers = function () {
         $location.path('insegnanti');
     };
 
-    $scope.new = function () {
-        $location.path('insegnanti/crea');
+    $scope.goToCreateTeacher = function () {
+        $location.path('insegnanti/nuovo');
     };
 
-    $scope.view = function (teacher) {
+    $scope.goToEditTeacher = function (teacher) {
         if (teacher) {
             $location.path('insegnanti/' + teacher._id);
         }
     };
 
-    $scope.edit = function (teacher) {
-        if (teacher) {
-            $location.path('insegnanti/' + teacher._id + '/modifica');
-        }
+    $scope.goToListAcademicYears = function () {
+        $location.path('anni-accademici');
+    };
+
+    $scope.goToListStudents = function () {
+        $location.path('alunni');
     };
 
     $scope.init = function () {
-        $scope.teacher = new Teacher();
-        $scope.teacher.school = Global.getSchool()._id;
-        $scope.teacher.complex = Global.getComplex()._id;
+        $scope.teacher = new Teacher({
+          school: Global.getSchool()._id,
+          complex: Global.getComplex()._id
+        });
     };
 
     $scope.create = function(isValid) {
         if (isValid) {
             var teacher = $scope.teacher;
-            teacher.$save(function (response) {
-                $scope.view(response);
+            teacher.$save(function () {
+                $scope.goToListTeachers();
             });
-        }
-    };
-
-    $scope.remove = function(teacher) {
-        if (teacher) {
-            teacher.$remove();
-            _.remove($scope.teachers, teacher);
-            $scope.list();
         }
     };
 
@@ -59,9 +49,17 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
             }
             teacher.updated.push(new Date().getTime());
 
-            teacher.$update(function (response) {
-                $scope.view(response);
+            teacher.$update(function () {
+                $scope.goToListTeachers();
             });
+        }
+    };
+
+    $scope.remove = function(teacher) {
+        if (teacher) {
+            teacher.$remove();
+            _.remove($scope.teachers, teacher);
+            $scope.list();
         }
     };
 

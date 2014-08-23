@@ -15,6 +15,8 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage',
 
             academicYear: {},
 
+            student: {},
+
             schoolClass: {},
 
             isLoggedin: function () {
@@ -74,6 +76,19 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage',
 
             removeAcademicYear: function () {
                 delete $sessionStorage.academicYear;
+            },
+
+            setStudent: function (student) {
+                _this._data.student = student;
+                $sessionStorage.student = student;
+            },
+
+            getStudent: function () {
+                return $sessionStorage.student;
+            },
+
+            removeStudent: function () {
+                delete $sessionStorage.student;
             },
 
             setSchoolClass: function (schoolClass) {

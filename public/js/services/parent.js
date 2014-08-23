@@ -6,7 +6,7 @@ angular.module('aurea.parents').factory('Parent', ['$resource', function($resour
         parentId: '@_id',
         studentId: '@student',
         complexId: '@complex',
-        school: '@school'
+        schoolId: '@school'
     }, {
         update: {
             method: 'PUT'

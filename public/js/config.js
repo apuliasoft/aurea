@@ -4,8 +4,7 @@
 angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
-        // FIXME sistemarlo ai fini della minificazione
-        var checkLoggedin = function ($q, $timeout, $http, $location, Global) {
+        var checkLoggedin = ['$q', '$timeout', '$http', '$location', 'Global', function ($q, $timeout, $http, $location, Global) {
             // Initialize a new promise
             var deferred = $q.defer();
 
@@ -25,9 +24,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
 
             return deferred.promise;
 
-        };
+        }];
 
-        var logout = function ($q, $timeout, $http, $location, Global) {
+        var logout = ['$q', '$timeout', '$http', '$location', 'Global', function ($q, $timeout, $http, $location, Global) {
             // Initialize a new promise
             var deferred = $q.defer();
 
@@ -39,7 +38,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             });
 
             return deferred.promise;
-        };
+        }];
 
         $httpProvider.responseInterceptors.push(['$rootScope', '$q', '$location', function (scope, $q, $location) {
 
@@ -50,10 +49,15 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             function error(response) {
                 var status = response.status;
 
-                if (status === 401) {
-                    $location.url('/401');
-                    return;
+                switch (status) {
+                    case 401:
+                        $location.url('/401');
+                        return;
+                    case 404:
+                        $location.url('/404');
+                        return;
                 }
+
                 // otherwise
                 return $q.reject(response);
 
@@ -182,6 +186,30 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
                 }
             })
 
+            .state('all academic years', {
+                url: '/anni-accademici',
+                templateUrl: 'views/academicYears/list.html',
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+
+            .state('create academic year', {
+                url: '/anni-accademici/nuovo',
+                templateUrl: 'views/academicYears/create.html',
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+
+            .state('edit academic year', {
+                url: '/anni-accademici/:academicYearId',
+                templateUrl: 'views/academicYears/edit.html',
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+
             .state('all teachers', {
                 url: '/insegnanti',
                 templateUrl: 'views/teachers/list.html',
@@ -191,7 +219,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             })
 
             .state('create teacher', {
-                url: '/insegnanti/crea',
+                url: '/insegnanti/nuovo',
                 templateUrl: 'views/teachers/create.html',
                 resolve: {
                     loggedin: checkLoggedin
@@ -199,16 +227,8 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             })
 
             .state('edit teacher', {
-                url: '/insegnanti/:teacherId/modifica',
-                templateUrl: 'views/teachers/edit.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-
-            .state('teacher by id', {
                 url: '/insegnanti/:teacherId',
-                templateUrl: 'views/teachers/view.html',
+                templateUrl: 'views/teachers/edit.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
@@ -223,7 +243,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             })
 
             .state('create student', {
-                url: '/alunni/crea',
+                url: '/alunni/nuovo',
                 templateUrl: 'views/students/create.html',
                 resolve: {
                     loggedin: checkLoggedin
@@ -231,23 +251,23 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             })
 
             .state('edit student', {
-                url: '/alunni/:studentId/modifica',
+                url: '/alunni/:studentId',
                 templateUrl: 'views/students/edit.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
             })
 
-            .state('student by id', {
-                url: '/alunni/:studentId',
-                templateUrl: 'views/students/view.html',
+            .state('all parents', {
+                url: '/genitori',
+                templateUrl: 'views/parents/list.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
             })
 
             .state('create parent', {
-                url: '/alunni/:studentId/genitori/crea',
+                url: '/genitori/nuovo',
                 templateUrl: 'views/parents/create.html',
                 resolve: {
                     loggedin: checkLoggedin
@@ -255,40 +275,8 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             })
 
             .state('edit parent', {
-                url: '/alunni/:studentId/genitori/:parentId/modifica',
+                url: '/genitori/:parentId',
                 templateUrl: 'views/parents/edit.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-
-            .state('all academic years', {
-                url: '/anni-accademici',
-                templateUrl: 'views/academicYears/list.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-
-            .state('create academic year', {
-                url: '/anni-accademici/crea',
-                templateUrl: 'views/academicYears/create.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-
-            .state('edit academic year', {
-                url: '/anni-accademici/:academicYearId/modifica',
-                templateUrl: 'views/academicYears/edit.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-
-            .state('academic year by id', {
-                url: '/anni-accademici/:academicYearId',
-                templateUrl: 'views/academicYears/view.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
@@ -311,16 +299,8 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             })
 
             .state('edit school class', {
-                url: '/classi/:schoolClassId/modifica',
-                templateUrl: 'views/schoolClasses/edit.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-
-            .state('school class by id', {
                 url: '/classi/:schoolClassId',
-                templateUrl: 'views/schoolClasses/view.html',
+                templateUrl: 'views/schoolClasses/edit.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
@@ -343,48 +323,8 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             })
 
             .state('edit teaching', {
-                url: '/insegnamenti/:teachingId/modifica',
-                templateUrl: 'views/teachings/edit.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-
-            .state('teaching by id', {
                 url: '/insegnamenti/:teachingId',
-                templateUrl: 'views/teachings/view.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-
-            .state('all time tables', {
-                url: '/quadri-orari',
-                templateUrl: 'views/timeTables/list.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-
-            .state('create time table', {
-                url: '/quadri-orari/crea',
-                templateUrl: 'views/timeTables/create.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-
-            .state('edit time table', {
-                url: '/quadri-orari/:timeTableId/modifica',
-                templateUrl: 'views/timeTables/edit.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-
-            .state('time table by id', {
-                url: '/quadri-orari/:timeTableId',
-                templateUrl: 'views/timeTables/view.html',
+                templateUrl: 'views/teachings/edit.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
