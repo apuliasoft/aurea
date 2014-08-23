@@ -232,17 +232,24 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
     };
 
     $scope.addEarlyLeave = function () {
-
-        var time = _.find($scope.classStudents, function(student){
+        var student = _.find($scope.classStudents, function(student){
             return student.selected;
-        }).earlyLeave;
+        })._id;
+
+        var time = _.find($scope.classRegistry.earlyLeaves, function(earlyLeave){
+            return earlyLeave.student === student;
+        });
+
+        time = time ? time.timestamp : null;
 
         var modalInstance = $modal.open({
             templateUrl: 'selectTime.html',
             controller: SelectTimeCtrl,
             size: 'sm',
             resolve: {
-                time: time
+                time: function(){
+                    return time;
+                }
             }
         });
 
@@ -251,22 +258,27 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
                 return student.selected;
             })._id;
 
-            var classStudent = _.find($scope.classStudents, function(classStudent){
-                return classStudent._id === selectedStudent;
-            });
+//            var classStudent = _.find($scope.classStudents, function(classStudent){
+//                return classStudent._id === selectedStudent;
+//            });
 
-            var timestamp = $filter('minute')(leaveTime);
+            if(leaveTime){
 
-            $scope.classRegistry.earlyLeaves.push({
-                student: selectedStudent,
-                timestamp: leaveTime
-            });
+                $scope.classRegistry.earlyLeaves.push({
+                    student: selectedStudent,
+                    timestamp: leaveTime
+                });
 
-            _.extend(classStudent, {
-                earlyLeave: $filter('time')(timestamp)
-            });
+//                _.extend(classStudent, {
+//                    earlyLeave: $filter('time')(timestamp)
+//                });
 
-            console.log($scope.classStudents);
+            } else {
+                var earlyLeave = _.find($scope.classRegistry.earlyLeaves, function(earlyLeave){
+                    return earlyLeave.student === selectedStudent;
+                });
+                _.remove($scope.classRegistry.earlyLeaves, earlyLeave);
+            }
             $scope.clearSelection();
         });
     };
@@ -277,13 +289,11 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
             return student.selected;
         })._id;
 
-        console.log(student);
-
         var time = _.find($scope.classRegistry.lateEntrances, function(lateEntrance){
             return lateEntrance.student === student;
-        }).timestamp;
+        });
 
-        console.log(time);
+        time = time ? time.timestamp : null;
 
         var modalInstance = $modal.open({
             templateUrl: 'selectTime.html',
@@ -301,9 +311,9 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
                 return student.selected;
             })._id;
 
-            var classStudent = _.find($scope.classStudents, function(classStudent){
-                return classStudent._id === selectedStudent;
-            });
+//            var classStudent = _.find($scope.classStudents, function(classStudent){
+//                return classStudent._id === selectedStudent;
+//            });
 
             if(entranceTime){
 
@@ -312,9 +322,9 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
                     timestamp: entranceTime
                 });
 
-                _.extend(classStudent, {
-                    lateEntrance: $filter('time')(timestamp)
-                });
+//                _.extend(classStudent, {
+//                    lateEntrance: $filter('time')(timestamp)
+//                });
 
 
             } else {
