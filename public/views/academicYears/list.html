@@ -1,7 +1,29 @@
 <section data-ng-controller="AcademicYearsCtrl" data-ng-init="find()">
-  <h2>Anni accademici</h2>
+  <h2>{{ global.getComplex().name }}</h2>
 
-  <datatable columns="columns" list="academicYears" view="view(element)" edit="edit(element)" remove="remove(element)"></datatable>
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#">Anni accademici</a></li>
+    <li><a href="#" data-ng-click="goToListTeachers()">Insegnanti</a></li>
+    <li><a href="#" data-ng-click="goToListStudents()">Alunni</a></li>
+  </ul>
 
-  <button data-ng-click="new()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo anno accademico</button>
+  <div class="row">
+    <div class="col-xs-4" data-ng-repeat="academicYear in academicYears">
+      <div class="thumbnail">
+        <h3>{{academicYear.name}}</h3>
+        <p>{{academicYear.startDate | date}} - {{academicYear.endDate | date}}</p>
+
+        <div class="pull-right">
+          <button class="btn btn-primary" role="button" data-ng-click="goToListSchoolClasses(academicYear)"><i
+              class="fa fa-check"></i></button>
+          <button href="#" class="btn btn-default" role="button" data-ng-click="goToEditAcademicYear(academicYear)"><i
+              class="fa fa-pencil"></i></button>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+  <button data-ng-click="goToCreateAcademicYear()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo anno accademico</button>
 </section>

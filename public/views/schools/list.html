@@ -1,17 +1,23 @@
 <section data-ng-controller="SchoolsCtrl" data-ng-init="find()">
-  <h2>Scuole</h2>
+  <h1>Aurea: un registro elettronico aperto</h1>
+
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#">Scuole</a></li>
+  </ul>
 
   <div class="row">
     <div class="col-xs-4" data-ng-repeat="school in schools">
       <div class="thumbnail">
         <h3>{{school.name}}</h3>
 
-        <p>
+        <div class="pull-right">
           <button class="btn btn-primary" role="button" data-ng-click="goToListComplexes(school)"><i
               class="fa fa-check"></i></button>
           <button href="#" class="btn btn-default" role="button" data-ng-click="goToEditSchool(school)"><i
               class="fa fa-pencil"></i></button>
-        </p>
+        </div>
+
+        <div class="clearfix"></div>
       </div>
     </div>
   </div>

@@ -21,7 +21,7 @@ exports.parent = function (req, res, next) {
         student: new ObjectId(req.params.studentId),
         complex: new ObjectId(req.params.complexId),
         school: new ObjectId(req.params.schoolId)
-    }, function (err, parent) {
+    }).populate('user').exec(function (err, parent) {
         if (err) return next(err);
         if (!parent) return next(new Error('Failed to load parent ' + req.params.parentId));
         req.parent = parent;
@@ -33,18 +33,20 @@ exports.parent = function (req, res, next) {
  * Create an parent
  */
 exports.create = function (req, res) {
+    var user = new User(req.body.user);
+    delete req.body.user;
+
     var parent = new Parent(req.body);
 
-    var user = new User();
     user.name = parent.firstName + ' ' + parent.lastName;
-    user.email = req.body.email;
     user.role = 'parent';
-    user.complex = req.body.complex;
-    user.school = req.body.school;
+    user.complex = parent.complex;
+    user.school = parent.school;
 
     var password = generatePassword(18, false);
     user.password = password;
     console.log('password generata: ' + password);
+
 
     async.waterfall([
             function (callback) {
@@ -68,17 +70,34 @@ exports.create = function (req, res) {
  * Update an parent
  */
 exports.update = function (req, res) {
-    var parent = req.parent;
+    var user = req.parent.user;
+    user = _.extend(user, req.body.user);
 
+    delete req.parent.user;
+    delete req.body.user;
+
+    var parent = req.parent;
     parent = _.extend(parent, req.body);
 
-    parent.save(function (err) {
-        if (err) {
-            res.jsonp(400, err);
-        } else {
-            res.jsonp(parent);
-        }
-    });
+    user.name = parent.firstName + ' ' + parent.lastName;
+
+    async.waterfall([
+            function (callback) {
+                user.save(callback);
+            },
+            function (user, rowAffected, callback) {
+                parent.save(callback);
+            }
+        ],
+        function (err, result) {
+            if (err) {
+                res.jsonp(400, err);
+            } else {
+                parent = result.toObject();
+                parent.user = _.pick(parent.user, ['_id','email']);
+                res.jsonp(parent);
+            }
+        });
 };
 
 /**
@@ -100,18 +119,20 @@ exports.destroy = function (req, res) {
  * Show an parent
  */
 exports.show = function (req, res) {
-    res.jsonp(req.parent);
+    var parent = req.parent.toObject();
+    parent.user = _.pick(parent.user, ['_id','email']);
+    res.jsonp(parent);
 };
 
 /**
  * List of parents
  */
 exports.all = function (req, res) {
-    parent.find({
+    Parent.find({
         student: new ObjectId(req.params.studentId),
         complex: new ObjectId(req.params.complexId),
         school: new ObjectId(req.params.schoolId)
-    }, function (err, parents) {
+    }).populate('user', 'email').exec(function (err, parents) {
         if (err) {
             res.jsonp(400, err);
         } else {

@@ -1,7 +1,27 @@
 <section data-ng-controller="TeachersCtrl" data-ng-init="find()">
-  <h2>Insegnanti</h2>
+  <h2>{{ global.getComplex().name }}</h2>
 
-  <datatable columns="columns" list="teachers" view="view(element)" edit="edit(element)" remove="remove(element)"></datatable>
+  <ul class="nav nav-tabs" role="tablist">
+    <li><a href="#" data-ng-click="goToListAcademicYears()">Anni accademici</a></li>
+    <li class="active"><a href="#">Insegnanti</a></li>
+    <li><a href="#" data-ng-click="goToListStudents()">Alunni</a></li>
+  </ul>
 
-  <button data-ng-click="new()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo insegnante</button>
+  <div class="row">
+    <div class="col-xs-4" data-ng-repeat="teacher in teachers">
+      <div class="thumbnail">
+        <h3>{{teacher | name}}</h3>
+        <p>{{teacher.user.email}}</p>
+
+        <div class="pull-right">
+          <button href="#" class="btn btn-default" role="button" data-ng-click="goToEditTeacher(teacher)"><i
+              class="fa fa-pencil"></i></button>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+  <button data-ng-click="goToCreateTeacher()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo insegnante</button>
 </section>

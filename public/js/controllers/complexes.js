@@ -4,10 +4,6 @@ angular.module('aurea.complexes').controller('ComplexesCtrl', ['$scope', '$state
     $scope.global = Global;
     $scope.provinces = Provinces.getProvinces();
 
-    $scope.goToListSchool = function () {
-        $location.path('scuole/' + Global.getSchool()._id);
-    };
-
     $scope.goToListComplexes = function () {
         $location.path('plessi');
     };

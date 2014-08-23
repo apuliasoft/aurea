@@ -1,32 +1,35 @@
 'use strict';
 
-angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'Student', 'Parent', function ($scope, $stateParams, $location, $filter, _, Global, Student, Parent) {
+angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'Student', function ($scope, $stateParams, $location, $filter, _, Global, Student) {
     $scope.global = Global;
 
-    $scope.columns = [
-        {name:'firstName', label:'Nome'},
-        {name:'lastName', label:'Cognome'},
-        {name:'birthDate', label:'Data di nascita', filter:'date'}
-    ];
-
-    $scope.list = function () {
+    $scope.goToListStudents = function () {
         $location.path('alunni');
     };
 
-    $scope.new = function () {
-        $location.path('alunni/crea');
+    $scope.goToCreateStudent = function () {
+        $location.path('alunni/nuovo');
     };
 
-    $scope.view = function (student) {
+    $scope.goToEditStudent = function (student) {
         if (student) {
             $location.path('alunni/' + student._id);
         }
     };
 
-    $scope.edit = function (student) {
-        if (student) {
-            $location.path('alunni/' + student._id + '/modifica');
-        }
+    $scope.goToListAcademicYears = function () {
+        $location.path('anni-accademici');
+    };
+
+    $scope.goToListTeachers = function () {
+        $location.path('insegnanti');
+    };
+
+    $scope.goToListParents = function (student) {
+      if(student) {
+        Global.setStudent(student);
+        $location.path('genitori');
+      }
     };
 
     $scope.init = function () {
@@ -39,17 +42,9 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
     $scope.create = function(isValid) {
         if(isValid) {
             var student = $scope.student;
-            student.$save(function (response) {
-                $scope.view(response);
+            student.$save(function () {
+                $scope.goToListStudents();
             });
-        }
-    };
-
-    $scope.remove = function(student) {
-        if (student) {
-            student.$remove();
-            _.remove($scope.students, student);
-            $scope.list();
         }
     };
 
@@ -61,9 +56,17 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
             }
             student.updated.push(new Date().getTime());
 
-            student.$update(function (response) {
-                $scope.view(response);
+            student.$update(function () {
+                $scope.goToListStudents();
             });
+        }
+    };
+
+    $scope.remove = function(student) {
+        if (student) {
+            student.$remove();
+            _.remove($scope.students, student);
+            $scope.goToListStudents();
         }
     };
 
@@ -83,17 +86,5 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
         function(student){
             student.birthDate = $filter('date')(student.birthDate, 'yyyy-MM-dd');
         });
-    };
-
-    $scope.findParents = function () {
-        $scope.parents = Parent.query({studentId: $stateParams.studentId});
-    };
-
-    $scope.goToCreateParent = function(studentId) {
-        $location.path('alunni/' + studentId + '/genitori/crea');
-    };
-
-    $scope.goToEditParent = function(studentId, parentId) {
-        $location.path('alunni/' + studentId + '/genitori/' + parentId + '/modifica');
     };
 }]);

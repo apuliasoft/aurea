@@ -9,7 +9,7 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
         var schools = [];
         var school = {};
 
-        var resetSchools = function() {
+        var resetSchools = function () {
             schools = [];
             school = {};
             delete $sessionStorage.schoolId;
@@ -44,7 +44,7 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
         var complexes = [];
         var complex = {};
 
-        var resetComplexes = function() {
+        var resetComplexes = function () {
             complexes = [];
             complex = {};
             delete $sessionStorage.complexId;
@@ -79,6 +79,8 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
 
             academicYear: {},
 
+            student: {},
+
             schoolClass: {},
 
             isLoggedin: function () {
@@ -110,7 +112,7 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
             },
 
             setUser: function (newUser) {
-                if (!_.isEqual(_this._data.user, newUser)){
+                if (!_.isEqual(_this._data.user, newUser)) {
                     resetSchools();
                     _this._data.user = newUser;
                     initSchools();
@@ -134,7 +136,7 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
                 delete $sessionStorage.schoolId;
             },
 
-            getComplexes: function() {
+            getComplexes: function () {
                 return  complexes;
             },
 
@@ -165,6 +167,19 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
                 return $sessionStorage.schoolClass;
             },
 
+            setStudent: function (student) {
+                _this._data.student = student;
+                $sessionStorage.student = student;
+            },
+
+            getStudent: function () {
+                return $sessionStorage.student;
+            },
+
+            removeStudent: function () {
+                delete $sessionStorage.student;
+            },
+
             setSchoolClass: function (schoolClass) {
                 _this._data.schoolClass = schoolClass;
                 $sessionStorage.schoolClass = schoolClass;
@@ -178,4 +193,5 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
 
         return _this._data;
     }
-]);
+])
+;
