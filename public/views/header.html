@@ -13,7 +13,7 @@
                     {{ global.getSchool().name || 'Seleziona la scuola'}} <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li data-ng-repeat="school in schools" data-ng-click="global.setSchool(school)"><a href=""> {{
+                    <li data-ng-repeat="school in global.getSchools()" data-ng-click="global.setSchool(school)"><a href=""> {{
                         school.name }} </a></li>
                 </ul>
             </div>
@@ -25,7 +25,7 @@
                     {{ global.getComplex().name || 'Seleziona il plesso'}} <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li data-ng-repeat="complex in complexes" data-ng-click="global.setComplex(complex)"><a href=""> {{
+                    <li data-ng-repeat="complex in global.getComplexes()" data-ng-click="global.setComplex(complex)"><a href=""> {{
                         complex.name }} </a></li>
                 </ul>
             </div>
@@ -38,7 +38,7 @@
                     {{ global.getAcademicYear().name || 'Seleziona l\'anno accademico'}} <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li data-ng-repeat="academicYear in academicYears"
+                    <li data-ng-repeat="academicYear in global.getAcademicYears()"
                         data-ng-click="global.setAcademicYear(academicYear)"><a href=""> {{ academicYear.name }} </a>
                     </li>
                 </ul>
@@ -52,7 +52,7 @@
                     {{ global.getSchoolClass().name || 'Seleziona la classe'}} <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li data-ng-repeat="schoolClass in schoolClasses"
+                    <li data-ng-repeat="schoolClass in global.getSchoolClasses()"
                         data-ng-click="global.setSchoolClass(schoolClass)"><a href=""> {{ schoolClass.name }} </a>
                     </li>
                 </ul>

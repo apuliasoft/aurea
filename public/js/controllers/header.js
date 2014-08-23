@@ -3,37 +3,69 @@
 angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', '$localStorage', 'School', 'Complex', 'AcademicYear', 'SchoolClass', function ($scope, Global, $filter, $localStorage, School, Complex, AcademicYear, SchoolClass) {
     $scope.global = Global;
 
-    if (!$scope.schools) {
-        $scope.schools = School.query();
-    }
+    $scope.$watch('global.user', function () {
+        updateMenu();
+    });
+
+    /*$scope.$watch('global.user', function () {
+        updateMenu();
+
+        if (!Global.isLoggedin())
+            return;
+
+        if (Global.user.school) {
+            School.get({
+                schoolId: Global.user.school
+            }).$promise
+              .then(function (school) {
+                  $scope.schools = [school];
+                  Global.setSchool(school);
+              });
+        } else {
+            $scope.schools = School.query();
+        }
+
+    });
 
     $scope.$watch('global.school', function () {
+        Global.removeComplex();
+
+        if (!Global.isLoggedin())
+            return;
 
         if (Global.getSchool()) {
-            var complex = Global.getComplex();
-            var school = Global.getSchool();
-            if (complex && complex.school !== school._id) {
-                Global.removeComplex();
+            if (Global.user.complex) {
+                Complex.get({
+                    schoolId: Global.getSchool()._id,
+                    complexId: Global.user.complex
+                }).$promise
+                  .then(function (complex) {
+                      $scope.complexes = [complex];
+                      Global.setComplex(complex);
+                  });
+            } else {
+                $scope.complexes = Complex.query({ schoolId: Global.getSchool()._id });
             }
-
-            updateComplexes();
         }
     });
 
     $scope.$watch('global.complex', function () {
+        Global.removeAcademicYear();
+
+        if (!Global.isLoggedin())
+            return;
 
         if (Global.getComplex()) {
-            var academicYear = Global.getAcademicYear();
-            var complex = Global.getComplex();
-            if (academicYear && academicYear.complex !== complex._id) {
-                Global.removeAcademicYear();
-            }
-
-            updateAcademicYears();
+            $scope.academicYears = AcademicYear.query({
+                schoolId: Global.getSchool() && Global.getSchool()._id,
+                complexId: Global.getComplex() && Global.getComplex()._id
+            });
         }
     });
 
     $scope.$watch('global.academicYear', function () {
+        if (!Global.isLoggedin())
+            return;
 
         if (Global.getAcademicYear()) {
             var schoolClass = Global.getSchoolClass();
@@ -46,30 +78,13 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
         }
     });
 
-    $scope.$watch('global.user', function () {
-        updateMenu();
-    });
-
-    function updateComplexes() {
-        $scope.complexes = Complex.query({
-            schoolId: Global.getSchool() && Global.getSchool()._id
-        });
-    }
-
-    function updateAcademicYears() {
-        $scope.academicYears = AcademicYear.query({
-            complexId: Global.getComplex() && Global.getComplex()._id,
-            schoolId: Global.getSchool() && Global.getSchool()._id
-        });
-    }
-
     function updateSchoolClasses() {
         $scope.schoolClasses = SchoolClass.query({
             academicYearId: Global.getAcademicYear() && Global.getAcademicYear()._id,
             complexId: Global.getComplex() && Global.getComplex()._id,
             schoolId: Global.getSchool() && Global.getSchool()._id
         });
-    }
+    }*/
 
     function updateMenu() {
         $scope.menu = [];

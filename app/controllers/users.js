@@ -4,37 +4,38 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    User = mongoose.model('User'),
-    generatePassword = require('password-generator'),
-    _ = require('lodash');
+  User = mongoose.model('User'),
+  generatePassword = require('password-generator'),
+  _ = require('lodash');
 
 /**
  * Auth callback
  */
-exports.authCallback = function(req, res) {
+exports.authCallback = function (req, res) {
     res.redirect('/');
 };
 
 /**
  * Check if the user is logged
  */
-exports.loggedin = function(req, res) {
-    if (req.user)
-        res.jsonp(_.pick(req.user, ['_id', 'name', 'username', 'eamil', 'role']));
-    else
+exports.loggedin = function (req, res) {
+    if (req.user) {
+        res.jsonp(_.pick(req.user, ['_id', 'name', 'username', 'eamil', 'role', 'school', 'complex']));
+    } else {
         res.end('0');
+    }
 };
 
 /**
  * Create user
  */
-exports.create = function(req, res) {
+exports.create = function (req, res) {
     var user = new User(req.body);
     var password = generatePassword(18, false);
     user.password = password;
     console.log('password generata: ' + password);
 
-    user.save(function(err) {
+    user.save(function (err) {
         if (err) {
             res.jsonp(400, err);
         } else {
@@ -46,7 +47,7 @@ exports.create = function(req, res) {
 /**
  * Update a User
  */
-exports.update = function(req, res, next) {
+exports.update = function (req, res, next) {
     var user = req.userRes;
 
     if (user.role !== req.body.role)
@@ -58,7 +59,7 @@ exports.update = function(req, res, next) {
 
     user = _.extend(user, req.body);
 
-    user.save(function(err) {
+    user.save(function (err) {
         if (err) {
             res.jsonp(400, err);
         } else {
@@ -70,30 +71,30 @@ exports.update = function(req, res, next) {
 /**
  * Send User
  */
-exports.show = function(req, res) {
+exports.show = function (req, res) {
     res.jsonp(req.userRes);
 };
 
 /**
  * Find user by id
  */
-exports.user = function(req, res, next, id) {
+exports.user = function (req, res, next, id) {
     User.findOne({
         _id: id
     })
-    .exec(function(err, user) {
-        if (err) return next(err);
-        if (!user) return next(new Error('Failed to load User ' + id));
-        req.userRes = user;
-        next();
-    });
+      .exec(function (err, user) {
+          if (err) return next(err);
+          if (!user) return next(new Error('Failed to load User ' + id));
+          req.userRes = user;
+          next();
+      });
 };
 
 /**
  * List of Users
  */
-exports.all = function(req, res) {
-    User.find({}, function(err, users) {
+exports.all = function (req, res) {
+    User.find({}, function (err, users) {
         if (err) {
             res.jsonp(400, err);
         } else {
@@ -105,10 +106,10 @@ exports.all = function(req, res) {
 /**
  * Delete a user
  */
-exports.destroy = function(req, res) {
+exports.destroy = function (req, res) {
     var user = req.userRes;
 
-    user.remove(function(err) {
+    user.remove(function (err) {
         if (err) {
             res.jsonp(400, err);
         } else {

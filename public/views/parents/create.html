@@ -1,23 +1,43 @@
 <section data-ng-controller="ParentsCtrl" data-ng-init="init()">
-    <h2>Crea Genitore</h2>
+  <h2>Crea genitore</h2>
 
-    <form name="parentForm" role="form" data-ng-submit="create()" novalidate>
+  <form name="parentForm" role="form" data-ng-submit="create(parentForm.$valid)" novalidate>
 
-        <div class="form-group">
-            <label for="name" class="control-label">Nome</label>
-            <input type="text" data-ng-model="parent.name" id="name" name="name" class="form-control" placeholder="Nome">
-        </div>
+    <div class="form-group"
+         data-ng-class="{ 'has-error' : parentForm.firstName.$invalid && !parentForm.firstName.$pristine }">
+      <label for="firstName" class="control-label">Nome</label>
+      <input type="text" data-ng-model="parent.firstName" id="firstName" name="firstName" class="form-control"
+             placeholder="Nome" required>
 
-        <div class="form-group">
-            <label for="email" class="control-label">Email</label>
-            <input type="email" data-ng-model="parent.email" id="email" name="email" class="form-control" placeholder="Email">
-        </div>
+      <p ng-show="parentForm.firstName.$invalid && !parentForm.firstName.$pristine" class="help-block">Il nome è
+        obbligatorio.</p>
+    </div>
 
-        <hr>
+    <div class="form-group"
+         data-ng-class="{ 'has-error' : parentForm.lastName.$invalid && !parentForm.lastName.$pristine }">
+      <label for="lastName" class="control-label">Cognome</label>
+      <input type="text" data-ng-model="parent.lastName" id="lastName" name="lastName" class="form-control"
+             placeholder="Cognome" required>
 
-        <button type="submit" class="btn btn-primary">Crea</button>
+      <p ng-show="parentForm.lastName.$invalid && !parentForm.lastName.$pristine" class="help-block">Il cognome
+        è obbligatorio.</p>
+    </div>
 
-        <button type="button" data-ng-click="goToSchool(parent.school)" class="btn btn-default">Annulla</button>
+    <div class="form-group"
+         data-ng-class="{ 'has-error' : parentForm.email.$invalid && !parentForm.email.$pristine }">
+      <label for="email" class="control-label">Email</label>
+      <input type="email" data-ng-model="parent.user.email" id="email" name="email" class="form-control"
+             placeholder="Email" required>
 
-    </form>
+      <p ng-show="parentForm.email.$invalid && !parentForm.email.$pristine" class="help-block">Inserire una email
+        valida</p>
+    </div>
+
+    <hr>
+
+    <button type="submit" class="btn btn-primary" data-ng-disabled="parentForm.$invalid">Crea</button>
+
+    <button type="button" data-ng-click="goToListParents()" class="btn btn-default">Annulla</button>
+
+  </form>
 </section>

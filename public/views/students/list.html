@@ -1,7 +1,30 @@
 <section data-ng-controller="StudentsCtrl" data-ng-init="find()">
-  <h2>Alunni</h2>
+  <h2>{{ global.getComplex().name }}</h2>
 
-  <datatable columns="columns" list="students" view="view(element)" edit="edit(element)" remove="remove(element)"></datatable>
+  <ul class="nav nav-tabs" role="tablist">
+    <li><a href="#" data-ng-click="goToListAcademicYears()">Anni accademici</a></li>
+    <li><a href="#" data-ng-click="goToListTeachers()">Insegnanti</a></li>
+    <li class="active"><a href="#">Alunni</a></li>
+  </ul>
 
-  <button data-ng-click="new()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo alunno</button>
+  <div class="row">
+    <div class="col-xs-4" data-ng-repeat="student in students">
+      <div class="thumbnail">
+        <h3>{{student | name}}</h3>
+        <p>{{student.user.email}}</p>
+        <p>{{student.birthDate | date}}</p>
+
+        <div class="pull-right">
+          <button class="btn btn-primary" role="button" data-ng-click="goToListParents(student)"><i
+              class="fa fa-check"></i></button>
+          <button href="#" class="btn btn-default" role="button" data-ng-click="goToEditStudent(student)"><i
+              class="fa fa-pencil"></i></button>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+  <button data-ng-click="goToCreateStudent()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo alunno</button>
 </section>

@@ -1,7 +1,26 @@
 <section data-ng-controller="SchoolClassesCtrl" data-ng-init="find()">
-  <h2>Classi</h2>
+  <h1>{{ global.getAcademicYear().name }}</h1>
 
-  <datatable columns="columns" list="schoolClasses" view="view(element)" edit="edit(element)" remove="remove(element)"></datatable>
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#">Classi</a></li>
+  </ul>
 
-  <button data-ng-click="new()" class="btn btn-default"><i class="fa fa-plus"></i> Nuova classe</button>
+  <div class="row">
+    <div class="col-xs-4" data-ng-repeat="schoolClass in schoolClasses">
+      <div class="thumbnail">
+        <h3>{{schoolClass.name}}</h3>
+
+        <div class="pull-right">
+          <button class="btn btn-primary" role="button" data-ng-click="goToClassRegistry(schoolClass)"><i
+              class="fa fa-check"></i></button>
+          <button href="#" class="btn btn-default" role="button" data-ng-click="goToEditSchoolClass(schoolClass)"><i
+              class="fa fa-pencil"></i></button>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+  <button data-ng-click="goToCreateSchoolClass()" class="btn btn-default"><i class="fa fa-plus"></i> Nuova classe</button>
 </section>

@@ -18,10 +18,6 @@
     Twitter: @FrancescoKujaku
     Location: Bari, Italy
 
-# THANKS
-
-    <name>
-
 # SITE
 
     Last update: 2013/12/13

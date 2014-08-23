@@ -22,8 +22,7 @@
                 <div class="row">
                     <div class="col-xs-4" ng-repeat="student in chosableStudents | filter:searchChosableStudent">
                         <div class="thumbnail">
-                            <p>{{student.lastName}}</p>
-                            <p>{{student.firstName}}</p>
+                            <p>{{student | name}}</p>
                             <p>{{student.birthDate | date}}</p>
                             <button class="btn-mini" ng-click="addStudent(student)">+</button>
                         </div>
@@ -55,7 +54,7 @@
 
         <button type="submit" class="btn btn-primary" data-ng-disabled="schoolClassForm.$invalid">Salva</button>
 
-        <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+        <button type="button" data-ng-click="goToListSchoolClasses()" class="btn btn-default">Annulla</button>
 
     </form>
 
