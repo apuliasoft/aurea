@@ -21,7 +21,6 @@ exports.classRegistry = function (req, res, next) {
       },
       function (err, classRegistry) {
           if (err) return next(err);
-          if (!classRegistry) return res.jsonp(404, 'non trovato');
 
           req.classRegistry = classRegistry;
           next();
@@ -54,5 +53,10 @@ exports.createOrUpdate = function (req, res) {
  * Show a class registry
  */
 exports.show = function (req, res) {
+    var classRegistry = req.classRegistry;
+
+    if(!classRegistry) {
+        res.jsonp(404, 'non trovato');
+    }
     res.jsonp(req.classRegistry);
 };

@@ -1,31 +1,59 @@
 <section class="container-fluid" data-ng-controller="ClassRegistryCtrl" data-ng-init="init()">
 
+    <script type="text/ng-template" id="selectTime.html">
+        <div class="modal-header">
+            <h3 class="modal-title">A che ora?</h3>
+        </div>
+        <div class="modal-body">
+            <input type="time" class="form-control" data-ng-model="data.time">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
     <div class="row">
         <div class="col-md-3">
             <div>
-
                 <div class="btn-group pull-right">
-                    <button class="btn btn-danger">A</button>
-                    <button class="btn btn-primary">E</button>
-                    <button class="btn btn-warning">U</button>
+                    <button class="btn btn-danger" data-ng-click="toggleAbsents()" data-ng-disabled="noneSelected()">A</button>
+                    <button class="btn btn-success" data-ng-click="addLateEntrance()" data-ng-disabled="!isValidEntranceSelection()">E</button>
+                    <button class="btn btn-warning" data-ng-click="addEarlyLeave()" data-ng-disabled="!isValidLeaveSelection()">U</button>
                 </div>
                 <h3>Alunni</h3>
             </div>
-            <ul class="list-group">
-                <li class="list-group-item"
-                    data-ng-repeat="student in classStudents | orderBy:['lastName', 'firstName']">
+            <div class="list-group">
+                <a href="" class="list-group-item"
+                   data-ng-repeat="student in classStudents | orderBy:['lastName', 'firstName']"
+                   data-ng-class="{active: student.selected}"
+                   data-ng-click="toggleStudentSelection(student)"
+                       >
+
                     <div>
-                        <h5>{{ student | name:true}}</h5>
+                        <h6 class="pull-right text-warning" data-ng-if="studentHasLeft(student)"> U</h6>
+                        <h6 class="pull-right text-success" data-ng-if="studentHasEntered(student)" > E </h6>
+                        <h6 class="pull-right text-danger" data-ng-if="studentIsAbsent(student)">A </h6>
+
+                        <h5 class>{{ student | name:true}}</h5>
                     </div>
-                </li>
-            </ul>
+                </a>
+            </div>
         </div>
         <div class="col-md-9">
 
             <h2>Registro Di Classe</h2>
-            <button class="btn" data-ng-click="yesterday()">Ieri</button>
-            <button class="btn" data-ng-click="tomorrow()">domani</button>
-            <h3>{{ classRegistry.date | date:'EEEE, d MMMM yyyy' }}</h3>
+
+            <hr/>
+
+            <div>
+                <button class="btn btn-primary pull-left" data-ng-click="yesterday()"><i
+                        class="fa fa-arrow-circle-left"></i> Precedente
+                </button>
+                <button class="btn btn-primary pull-right" data-ng-click="tomorrow()">Successivo <i
+                        class="fa fa-arrow-circle-right"></i></button>
+                <h3 class="text-center">{{ classRegistry.date | date:'EEEE, d MMMM yyyy' }}</h3>
+            </div>
 
             <form data-ng-submit="save()" novalidate>
 
