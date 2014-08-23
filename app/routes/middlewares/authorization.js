@@ -41,7 +41,7 @@ var authorizations = [
         method: 'GET',
         path: '/schools/:schoolId',
         custom: function (req) {
-            return req.user.school === req.params.schoolId;
+            return req.user.school.toString() === req.params.schoolId;
         }
     },
     {
@@ -49,9 +49,10 @@ var authorizations = [
         method: 'PUT',
         path: '/schools/:schoolId',
         custom: function (req) {
-            return req.user.school === req.params.schoolId;
+            return req.user.school.toString() === req.params.schoolId;
         }
     },
+
 
     // Complex
     {
@@ -67,8 +68,8 @@ var authorizations = [
         method: 'POST',
         path: '/schools/:schoolId/complexes',
         custom: function (req) {
-            return req.user.school === req.params.schoolId &&
-                req.user.school === req.body.school;
+            return req.user.school.toString() === req.params.schoolId &&
+                req.user.school.toString() === req.body.school;
         }
     },
     {
@@ -76,7 +77,7 @@ var authorizations = [
         method: ['GET', 'DELETE'],
         path: '/schools/:schoolId/complexes/:complexId',
         custom: function (req) {
-            return req.user.school === req.params.schoolId;
+            return req.user.school.toString() === req.params.schoolId;
         }
     },
     {
@@ -84,8 +85,8 @@ var authorizations = [
         method: 'PUT',
         path: '/schools/:schoolId/complexes/:complexId',
         custom: function (req) {
-            return req.user.school === req.params.schoolId &&
-                req.user.school === req.complex.school &&
+            return req.user.school.toString() === req.params.schoolId &&
+                req.user.school.toString() === req.complex.school &&
                 req.complex.school === req.body.school;
         }
     },
@@ -94,8 +95,8 @@ var authorizations = [
         method: 'GET',
         path: '/schools/:schoolId/complexes/:complexId',
         custom: function (req) {
-            return req.user.school === req.params.schoolId &&
-                req.user.complex === req.params.complexId;
+            return req.user.school.toString() === req.params.schoolId &&
+                req.user.complex.toString() === req.params.complexId;
         }
     },
 
@@ -498,7 +499,6 @@ var authorizations = [
                 req.teaching.schoolClass.toString() === req.body.schoolClass;
         }
     },
-    ,
     {
         role: 'manager',
         method: 'GET',

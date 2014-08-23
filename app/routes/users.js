@@ -15,7 +15,7 @@ module.exports = function(app) {
       function(req, res) {
           // If this function gets called, authentication was successful.
           // `req.user` contains the authenticated user.
-          res.jsonp(_.pick(req.user, ['_id', 'name', 'username', 'eamil', 'role']));
+          res.jsonp(_.pick(req.user, ['_id', 'name', 'username', 'eamil', 'role', 'school', 'complex']));
       });
     app.post('/logout', function(req, res){
         req.logout();

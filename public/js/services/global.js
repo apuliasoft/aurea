@@ -1,17 +1,81 @@
 'use strict';
 
 //Global service for global variables
-angular.module('aurea.system').factory('Global', ['$sessionStorage',
-    function ($sessionStorage) {
+angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', 'Complex',
+    function ($sessionStorage, School, Complex) {
         var _this = this;
+
+        // ############# SCHOOL #############
+        var schools = [];
+        var school = {};
+
+        var resetSchools = function() {
+            schools = [];
+            school = {};
+            delete $sessionStorage.schoolId;
+            resetComplexes();
+        };
+
+        var setCurrentSchool = function () {
+            var schoolId = _this._data.getUser().school || $sessionStorage.schoolId;
+
+            if (!schoolId)
+                return;
+
+            school = _.find(schools, {_id: schoolId});
+            if (school) {
+                resetComplexes();
+                initComplexes(schoolId);
+            }
+        };
+
+        var initSchools = function () {
+            if (schools.length === 0) {
+                School.query({}, function (data) {
+                    schools = data;
+                    setCurrentSchool();
+                });
+            } else {
+                setCurrentSchool();
+            }
+        };
+
+        // ############# COMPLEX #############
+        var complexes = [];
+        var complex = {};
+
+        var resetComplexes = function() {
+            complexes = [];
+            complex = {};
+            delete $sessionStorage.complexId;
+        };
+
+        var setCurrentComplex = function () {
+            var complexId = _this._data.getUser().complex || $sessionStorage.complexId;
+
+            if (!complexId)
+                return;
+
+            complex = _.find(complexes, {_id: complexId});
+            if (complex) {
+                ;//initAcademicYears(schoolId, complexId);
+            }
+        };
+
+        var initComplexes = function (schoolId) {
+            if (complexes.length === 0) {
+                Complex.query({schoolId: schoolId}, function (data) {
+                    complexes = data;
+                    setCurrentComplex();
+                });
+            } else {
+                setCurrentComplex();
+            }
+        };
 
         _this._data = {
 
             user: {},
-
-            school: {},
-
-            complex: {},
 
             academicYear: {},
 
@@ -41,22 +105,50 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage',
                 return _this._data.isLoggedin() && _this._data.user.role === 'parent';
             },
 
-            setSchool: function (school) {
-                _this._data.school = school;
-                $sessionStorage.school = school;
+            getUser: function () {
+                return _this._data.user;
+            },
+
+            setUser: function (newUser) {
+                if (!_.isEqual(_this._data.user, newUser)){
+                    resetSchools();
+                    _this._data.user = newUser;
+                    initSchools();
+                }
+            },
+
+            getSchools: function () {
+                return schools;
             },
 
             getSchool: function () {
-                return $sessionStorage.school;
+                return school;
             },
 
-            setComplex: function (complex) {
-                _this._data.complex = complex;
-                $sessionStorage.complex = complex;
+            setSchool: function (school) {
+                $sessionStorage.schoolId = school._id;
+                setCurrentSchool();
+            },
+
+            removeSchool: function () {
+                delete $sessionStorage.schoolId;
+            },
+
+            getComplexes: function() {
+                return  complexes;
             },
 
             getComplex: function () {
-                return $sessionStorage.complex;
+                return complex;
+            },
+
+            setComplex: function (complex) {
+                $sessionStorage.complexId = complex._id;
+                setCurrentComplex();
+            },
+
+            getAcademicYear: function () {
+                return $sessionStorage.academicYear;
             },
 
             setAcademicYear: function (academicYear) {
@@ -64,16 +156,13 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage',
                 $sessionStorage.academicYear = academicYear;
             },
 
-            getAcademicYear: function () {
-                return $sessionStorage.academicYear;
-            },
-
-            removeComplex: function () {
-                delete $sessionStorage.complex;
-            },
-
             removeAcademicYear: function () {
+                _this._data.academicYear = {};
                 delete $sessionStorage.academicYear;
+            },
+
+            getSchoolClass: function () {
+                return $sessionStorage.schoolClass;
             },
 
             setSchoolClass: function (schoolClass) {
@@ -81,11 +170,8 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage',
                 $sessionStorage.schoolClass = schoolClass;
             },
 
-            getSchoolClass: function () {
-                return $sessionStorage.schoolClass;
-            },
-
             removeSchoolClass: function () {
+                _this._data.schoolClass = {};
                 delete $sessionStorage.schoolClass;
             }
         };

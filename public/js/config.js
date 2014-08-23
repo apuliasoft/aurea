@@ -5,7 +5,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
     function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
         // FIXME sistemarlo ai fini della minificazione
-        var checkLoggedin = function ($q, $timeout, $http, $location, Global) {
+        var checkLoggedin = function ($q, $timeout, $http, $location, _, Global) {
             // Initialize a new promise
             var deferred = $q.defer();
 
@@ -13,11 +13,12 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             $http.get('/loggedin').success(function (user) {
                 // Authenticated
                 if (user !== '0') {
+                    Global.setUser(user);
                     $timeout(deferred.resolve);
-                    Global.user = user;
-
                 } else { // Not Authenticated
-                    Global.user = {};
+                    if (Global.user != {}) {
+                        Global.user = {};
+                    }
                     $timeout(deferred.reject);
                     $location.url('/login');
                 }
@@ -27,13 +28,56 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
 
         };
 
+        var checkSchoolSelected = ['$q', '$timeout', 'ngToast', 'Global', function($q, $timeout, ngToast, Global) {
+            var deferred = $q.defer();
+
+            if (Global.getSchool()) {
+                $timeout(deferred.resolve);
+            } else {
+                ngToast.create('Si prega di selezionare una scuola');
+                $timeout(deferred.reject);
+            }
+
+            return deferred.promise;
+        }];
+
+        var checkComplexSelected = ['$q', '$timeout', 'ngToast', 'Global', function($q, $timeout, ngToast, Global) {
+            var deferred = $q.defer();
+
+            if (Global.getComplex()) {
+                $timeout(deferred.resolve);
+            } else {
+                ngToast.create('Si prega di selezionare un plesso');
+                $timeout(deferred.reject);
+            }
+
+            return deferred.promise;
+        }];
+
+        var checkAcademicYearSelected = ['$q', '$timeout', 'ngToast', 'Global', function($q, $timeout, ngToast, Global) {
+            var deferred = $q.defer();
+
+            if (Global.getComplex()) {
+                $timeout(deferred.resolve);
+            } else {
+                ngToast.create('Si prega di selezionare un anno accademico');
+                $timeout(deferred.reject);
+            }
+
+            return deferred.promise;
+        }];
+
         var logout = function ($q, $timeout, $http, $location, Global) {
+            //FIXME sarebbe meglio se al logout tutto il servizio Global
+            //      fosse reinizializzato perchè se cambia utente allora
+            //      cambia tutto il contesto dell'applicazione
+
             // Initialize a new promise
             var deferred = $q.defer();
 
             // Make an AJAX call to logout user
             $http.post('/logout').success(function () {
-                Global.user = {};
+                Global.setUser({});
                 $timeout(deferred.reject);
                 $location.url('/login');
             });
@@ -156,7 +200,8 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
                 url: '/plessi',
                 templateUrl: 'views/complexes/list.html',
                 resolve: {
-                    loggedin: checkLoggedin
+                    loggedin: checkLoggedin,
+                    school: checkSchoolSelected
                 }
             })
 
@@ -218,7 +263,8 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
                 url: '/alunni',
                 templateUrl: 'views/students/list.html',
                 resolve: {
-                    loggedin: checkLoggedin
+                    loggedin: checkLoggedin,
+                    schoolSelected: checkSchoolSelected
                 }
             })
 
