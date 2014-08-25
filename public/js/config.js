@@ -30,11 +30,14 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
         var checkSchoolSelected = ['$q', '$timeout', 'ngToast', 'Global', function ($q, $timeout, ngToast, Global) {
             var deferred = $q.defer();
 
-            if (Global.getSchool()) {
-                $timeout(deferred.resolve);
-            } else {
-                ngToast.create('Si prega di selezionare una scuola');
+            if (_.isEmpty(Global.getSchool())) {
+                ngToast.create({
+                    content: 'Si prega di selezionare una scuola',
+                    class: 'warning'
+                });
                 $timeout(deferred.reject);
+            } else {
+                $timeout(deferred.resolve);
             }
 
             return deferred.promise;
@@ -43,11 +46,14 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
         var checkComplexSelected = ['$q', '$timeout', 'ngToast', 'Global', function ($q, $timeout, ngToast, Global) {
             var deferred = $q.defer();
 
-            if (Global.getComplex()) {
-                $timeout(deferred.resolve);
-            } else {
-                ngToast.create('Si prega di selezionare un plesso');
+            if (_.isEmpty(Global.getComplex())) {
+                ngToast.create({
+                    content: 'Si prega di selezionare un plesso',
+                    class: 'warning'
+                });
                 $timeout(deferred.reject);
+            } else {
+                $timeout(deferred.resolve);
             }
 
             return deferred.promise;
@@ -56,11 +62,14 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
         var checkAcademicYearSelected = ['$q', '$timeout', 'ngToast', 'Global', function ($q, $timeout, ngToast, Global) {
             var deferred = $q.defer();
 
-            if (Global.getComplex()) {
-                $timeout(deferred.resolve);
-            } else {
-                ngToast.create('Si prega di selezionare un anno accademico');
+            if (_.isEmpty(Global.getComplex())) {
+                ngToast.create({
+                    content: 'Si prega di selezionare un anno accademico',
+                    class: 'warning'
+                });
                 $timeout(deferred.reject);
+            } else {
+                $timeout(deferred.resolve);
             }
 
             return deferred.promise;
@@ -210,6 +219,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               templateUrl: 'views/complexes/create.html',
               resolve: {
                   loggedin: checkLoggedin,
+                  school: checkSchoolSelected,
                   provices: function (Provinces) {
                       return Provinces.loadProvinces();
                   }
@@ -221,6 +231,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               templateUrl: 'views/complexes/edit.html',
               resolve: {
                   loggedin: checkLoggedin,
+                  school: checkSchoolSelected,
                   provices: function (Provinces) {
                       return Provinces.loadProvinces();
                   }
@@ -231,7 +242,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               url: '/anni-accademici',
               templateUrl: 'views/academicYears/list.html',
               resolve: {
-                  loggedin: checkLoggedin
+                  loggedin: checkLoggedin,
+                  school: checkSchoolSelected,
+                  complex: checkComplexSelected
               }
           })
 
@@ -239,7 +252,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               url: '/anni-accademici/nuovo',
               templateUrl: 'views/academicYears/create.html',
               resolve: {
-                  loggedin: checkLoggedin
+                  loggedin: checkLoggedin,
+                  school: checkSchoolSelected,
+                  complex: checkComplexSelected
               }
           })
 
@@ -247,7 +262,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               url: '/anni-accademici/:academicYearId',
               templateUrl: 'views/academicYears/edit.html',
               resolve: {
-                  loggedin: checkLoggedin
+                  loggedin: checkLoggedin,
+                  school: checkSchoolSelected,
+                  complex: checkComplexSelected
               }
           })
 
@@ -255,7 +272,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               url: '/insegnanti',
               templateUrl: 'views/teachers/list.html',
               resolve: {
-                  loggedin: checkLoggedin
+                  loggedin: checkLoggedin,
+                  school: checkSchoolSelected,
+                  complex: checkComplexSelected
               }
           })
 
@@ -263,7 +282,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               url: '/insegnanti/nuovo',
               templateUrl: 'views/teachers/create.html',
               resolve: {
-                  loggedin: checkLoggedin
+                  loggedin: checkLoggedin,
+                  school: checkSchoolSelected,
+                  complex: checkComplexSelected
               }
           })
 
@@ -271,7 +292,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               url: '/insegnanti/:teacherId',
               templateUrl: 'views/teachers/edit.html',
               resolve: {
-                  loggedin: checkLoggedin
+                  loggedin: checkLoggedin,
+                  school: checkSchoolSelected,
+                  complex: checkComplexSelected
               }
           })
 
@@ -280,7 +303,8 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               templateUrl: 'views/students/list.html',
               resolve: {
                   loggedin: checkLoggedin,
-                  schoolSelected: checkSchoolSelected
+                  school: checkSchoolSelected,
+                  complex: checkComplexSelected
               }
           })
 
@@ -288,7 +312,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               url: '/alunni/nuovo',
               templateUrl: 'views/students/create.html',
               resolve: {
-                  loggedin: checkLoggedin
+                  loggedin: checkLoggedin,
+                  school: checkSchoolSelected,
+                  complex: checkComplexSelected
               }
           })
 
@@ -296,7 +322,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               url: '/alunni/:studentId',
               templateUrl: 'views/students/edit.html',
               resolve: {
-                  loggedin: checkLoggedin
+                  loggedin: checkLoggedin,
+                  school: checkSchoolSelected,
+                  complex: checkComplexSelected
               }
           })
 
@@ -304,7 +332,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               url: '/genitori',
               templateUrl: 'views/parents/list.html',
               resolve: {
-                  loggedin: checkLoggedin
+                  loggedin: checkLoggedin,
+                  school: checkSchoolSelected,
+                  complex: checkComplexSelected
               }
           })
 

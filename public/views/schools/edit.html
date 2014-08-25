@@ -1,5 +1,4 @@
 <section data-ng-controller="SchoolsCtrl" data-ng-init="findOne()">
-  <h2>Modifica scuola</h2>
 
   <form name="schoolForm" role="form" data-ng-submit="update(schoolForm.$valid)" novalidate>
 
@@ -13,11 +12,10 @@
         obbligatorio.</p>
     </div>
 
-    <hr>
-
-    <button type="submit" class="btn btn-primary" data-ng-disabled="schoolForm.$invalid">Salva</button>
-
-    <button type="button" data-ng-click="goToListSchools()" class="btn btn-default">Annulla</button>
+    <div class="toolbar">
+      <button type="submit" class="btn btn-primary" data-ng-disabled="schoolForm.$invalid">Salva</button>
+      <button type="button" data-ng-click="goToListSchools()" class="btn btn-default">Annulla</button>
+    </div>
 
   </form>
 </section>

@@ -1,9 +1,16 @@
 'use strict';
 
 //Global service for global variables
-angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', 'Complex',
-    function ($sessionStorage, School, Complex) {
+angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope', 'School', 'Complex', 'AcademicYear', 'SchoolClass',
+    function ($sessionStorage, $rootScope, School, Complex, AcademicYear, SchoolClass) {
         var _this = this;
+
+        $rootScope.$on('$locationChangeSuccess',
+            function(){
+                _this._data.title = '';
+                _this._data.subtitle = '';
+                _this._data.actions = [];
+            });
 
         // ############# SCHOOL #############
         var schools = [];
@@ -24,7 +31,6 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
 
             school = _.find(schools, {_id: schoolId});
             if (school) {
-                resetComplexes();
                 initComplexes(schoolId);
             }
         };
@@ -48,6 +54,7 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
             complexes = [];
             complex = {};
             delete $sessionStorage.complexId;
+            resetAcademicYears();
         };
 
         var setCurrentComplex = function () {
@@ -58,13 +65,13 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
 
             complex = _.find(complexes, {_id: complexId});
             if (complex) {
-                ;//initAcademicYears(schoolId, complexId);
+                initAcademicYears();
             }
         };
 
-        var initComplexes = function (schoolId) {
+        var initComplexes = function () {
             if (complexes.length === 0) {
-                Complex.query({schoolId: schoolId}, function (data) {
+                Complex.query({schoolId: $sessionStorage.schoolId}, function (data) {
                     complexes = data;
                     setCurrentComplex();
                 });
@@ -73,15 +80,84 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
             }
         };
 
+        // ############# ACADEMIC YEAR #############
+        var academicYears = [];
+        var academicYear = {};
+
+        var resetAcademicYears = function () {
+            academicYears = [];
+            academicYear = {};
+            delete $sessionStorage.academicYearId;
+            resetSchoolClasses();
+        };
+
+        var setCurrentAcademicYear = function () {
+            if (!$sessionStorage.academicYearId)
+                return;
+
+            academicYear = _.find(academicYears, {_id: $sessionStorage.academicYearId});
+            if (academicYear) {
+                initSchoolClasses();
+            }
+        };
+
+        var initAcademicYears = function () {
+            if (academicYears.length === 0) {
+                AcademicYear.query({
+                    schoolId: $sessionStorage.schoolId,
+                    complexId: $sessionStorage.complexId
+                }, function (data) {
+                    academicYears = data;
+                    setCurrentAcademicYear();
+                });
+            } else {
+                setCurrentAcademicYear();
+            }
+        };
+
+        // ############# SCHOOL CLASS #############
+        var schoolClasses = [];
+        var schoolClass = {};
+
+        var resetSchoolClasses = function () {
+            schoolClasses = [];
+            schoolClass = {};
+            delete $sessionStorage.schoolClassId;
+        };
+
+        var setCurrentSchoolClass = function () {
+            if (!$sessionStorage.schoolClassId)
+                return;
+
+            schoolClass = _.find(schoolClasses, {_id: $sessionStorage.schoolClassId});
+        };
+
+        var initSchoolClasses = function () {
+            if (schoolClasses.length === 0) {
+                SchoolClass.query({
+                    schoolId: $sessionStorage.schoolId,
+                    complexId: $sessionStorage.complexId,
+                    academicYearId: $sessionStorage.academicYearId
+                }, function (data) {
+                    schoolClasses = data;
+                    setCurrentSchoolClass();
+                });
+            } else {
+                setCurrentSchoolClass();
+            }
+        };
+
         _this._data = {
 
             user: {},
 
-            academicYear: {},
+            title: 'Aurea',
+
+            subtitle: '',
+
+            actions: [],
 
             student: {},
-
-            schoolClass: {},
 
             isLoggedin: function () {
                 return this.user && this.user._id;
@@ -112,11 +188,12 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
             },
 
             setUser: function (newUser) {
-                if (!_.isEqual(_this._data.user, newUser)) {
+                if (_.isEmpty(newUser)) {
                     resetSchools();
-                    _this._data.user = newUser;
-                    initSchools();
                 }
+
+                _this._data.user = newUser;
+                initSchools();
             },
 
             getSchools: function () {
@@ -128,12 +205,12 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
             },
 
             setSchool: function (school) {
+                if (school._id === $sessionStorage.schoolId)
+                    return;
+
+                resetComplexes();
                 $sessionStorage.schoolId = school._id;
                 setCurrentSchool();
-            },
-
-            removeSchool: function () {
-                delete $sessionStorage.schoolId;
             },
 
             getComplexes: function () {
@@ -145,28 +222,47 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
             },
 
             setComplex: function (complex) {
+                if (complex._id === $sessionStorage.complexId)
+                    return;
+
+                resetAcademicYears();
                 $sessionStorage.complexId = complex._id;
-                setCurrentComplex();
+                setCurrentComplex()
+            },
+
+            getAcademicYears: function () {
+                return academicYears;
             },
 
             getAcademicYear: function () {
-                return $sessionStorage.academicYear;
+                return academicYear;
             },
 
             setAcademicYear: function (academicYear) {
-                _this._data.academicYear = academicYear;
-                $sessionStorage.academicYear = academicYear;
+                if (academicYear._id === $sessionStorage.academicYearId)
+                    return;
+
+                resetSchoolClasses();
+                $sessionStorage.academicYearId = academicYear._id;
+                setCurrentAcademicYear()
             },
 
-            removeAcademicYear: function () {
-                _this._data.academicYear = {};
-                delete $sessionStorage.academicYear;
+            getSchoolClasses: function () {
+                return schoolClasses;
             },
 
             getSchoolClass: function () {
-                return $sessionStorage.schoolClass;
+                return schoolClass;
             },
 
+            setSchoolClass: function (schoolClass) {
+                $sessionStorage.schoolClassId = schoolClass._id;
+                setCurrentSchoolClass();
+            },
+
+
+
+            //FIXME gestire meglio lo studente
             setStudent: function (student) {
                 _this._data.student = student;
                 $sessionStorage.student = student;
@@ -178,16 +274,6 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
 
             removeStudent: function () {
                 delete $sessionStorage.student;
-            },
-
-            setSchoolClass: function (schoolClass) {
-                _this._data.schoolClass = schoolClass;
-                $sessionStorage.schoolClass = schoolClass;
-            },
-
-            removeSchoolClass: function () {
-                _this._data.schoolClass = {};
-                delete $sessionStorage.schoolClass;
             }
         };
 

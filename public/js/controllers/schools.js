@@ -3,10 +3,11 @@
 angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'School', function ($scope, $stateParams, $location, _, Global, School) {
     $scope.global = Global;
 
-    Global.title = 'Aurea';
-    Global.subtitle = 'Scuole';
+    Global.title = 'Scuole';
 
-    Global.actions = [{ name: 'Aggiungi', func: $scope.goToCreateSchool}];
+    Global.actions = [
+        { name: 'Aggiungi', icon: 'plus', func: function() { $scope.goToCreateSchool(); }}
+    ];
 
     $scope.goToListSchools = function () {
         $location.path('scuole');
@@ -33,6 +34,9 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
         $scope.school = new School();
         Global.title = 'Scuole';
         Global.subtitle = 'Nuova';
+        Global.actions = [
+            { name: 'Salva', icon: 'plus', func: function() { $scope.save(); }}
+        ];
     };
 
     $scope.create = function (isValid) {
@@ -78,6 +82,9 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
                 $scope.school = school;
                 Global.title = 'Scuole';
                 Global.subtitle = school.name;
+                Global.actions = [
+                    { name: 'Salva', icon: 'plus', func: function() { $scope.save(); }}
+                ];
             });
     };
 

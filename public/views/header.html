@@ -1,18 +1,19 @@
 <div data-ng-controller="HeaderCtrl">
 
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
+    <div class="container">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-menu">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">Aurea - <small>{{global.title || 'un registro elettronico aperto'}}</small></a>
+        <a class="navbar-brand" href="/">Aurea
+          <small> | un registro elettronico aperto</small>
+        </a>
       </div>
-
-      <div class="collapse navbar-collapse" id="menu">
+      <div class="collapse navbar-collapse" id="header-menu">
         <ul class="nav navbar-nav navbar-right">
           <li data-ng-hide="global.isLoggedin()"><a href="/#!/login">Login</a></li>
           <li class="dropdown" data-ng-show="global.isLoggedin()">
@@ -27,11 +28,9 @@
     </div>
   </nav>
 
-  <div class="btn-group pull-right">
-    <button type="button" class="btn btn-default" data-ng-repeat="action in global.actions" data-ng-click="action.func()">
-      {{action.name}}
-    </button>
-  </div>
+  <h1>{{global.title}}
+    <small>{{global.subtitle}}</small>
+  </h1>
 
   <ol class="breadcrumb" data-ng-show="global.isLoggedin()">
 
@@ -60,8 +59,9 @@
         {{ global.getAcademicYear().name || 'Seleziona l\'anno accademico'}} <b class="caret"></b>
       </a>
       <ul class="dropdown-menu" role="menu">
-        <li data-ng-repeat="academicYear in academicYears" data-ng-click="global.setAcademicYear(academicYear)">
-          <a href="">{{ academicYear.name }}</a>
+        <li data-ng-repeat="academicYear in global.getAcademicYears()"
+            data-ng-click="global.setAcademicYear(academicYear)">
+          <a href="#">{{ academicYear.name }}</a>
         </li>
       </ul>
     </li>
@@ -70,12 +70,29 @@
         {{ global.getSchoolClass().name || 'Seleziona la classe'}} <b class="caret"></b>
       </a>
       <ul class="dropdown-menu" role="menu">
-        <li data-ng-repeat="schoolClass in schoolClasses" data-ng-click="global.setSchoolClass(schoolClass)">
-          <a href="">{{ schoolClass.name }}</a>
+        <li data-ng-repeat="schoolClass in global.getSchoolClasses()"
+            data-ng-click="global.setSchoolClass(schoolClass)">
+          <a href="#">{{ schoolClass.name }}</a>
         </li>
       </ul>
     </li>
 
   </ol>
+
+  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container">
+      <p class="navbar-text">
+        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+      </p>
+
+      <div class="nav navbar-nav navbar-right btn-group">
+        <button data-ng-repeat="action in global.actions"
+                data-ng-class="{'btn btn-primary navbar-btn': $last, 'btn btn-default navbar-btn': !$last}"
+                data-ng-click="action.func()">
+          <i class="fa fa-{{action.icon}}"></i> {{action.name}}
+        </button>
+      </div>
+    </div>
+  </nav>
 
 </div>
