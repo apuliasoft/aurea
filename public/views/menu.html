@@ -1,0 +1,9 @@
+<div data-ng-controller="MenuCtrl">
+
+  <ul class="nav nav-stacked">
+    <li data-ng-repeat="item in menu" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+      <a href="#!/{{item.link}}">{{item.title}}</a>
+    </li>
+  </ul>
+
+</div>

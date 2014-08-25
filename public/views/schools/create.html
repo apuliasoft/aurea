@@ -1,5 +1,4 @@
 <section data-ng-controller="SchoolsCtrl" data-ng-init="init()">
-  <h2>Crea scuola</h2>
 
   <form name="schoolForm" role="form" data-ng-submit="create(schoolForm.$valid)" novalidate>
 
@@ -13,11 +12,18 @@
         obbligatorio.</p>
     </div>
 
-    <hr>
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+      <div class="container">
+        <p class="navbar-text">
+          Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+        </p>
 
-    <button type="submit" class="btn btn-primary" data-ng-disabled="schoolForm.$invalid">Salva</button>
-
-    <button type="button" data-ng-click="goToListSchools()" class="btn btn-default">Annulla</button>
+        <div class="nav navbar-nav navbar-right btn-group">
+          <button type="button" data-ng-click="goToListSchools()" class="btn btn-default navbar-btn">Annulla</button>
+          <button type="submit" data-ng-disabled="schoolForm.$invalid" class="btn btn-primary navbar-btn">Salva</button>
+        </div>
+      </div>
+    </nav>
 
   </form>
 </section>

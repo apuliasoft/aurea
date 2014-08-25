@@ -1,12 +1,7 @@
 <section data-ng-controller="SchoolsCtrl" data-ng-init="find()">
-  <h1>Aurea: un registro elettronico aperto</h1>
-
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="#">Scuole</a></li>
-  </ul>
 
   <div class="row">
-    <div class="col-xs-4" data-ng-repeat="school in schools">
+    <div class="col-xs-3" data-ng-repeat="school in schools">
       <div class="thumbnail">
         <h3>{{school.name}}</h3>
 
@@ -22,5 +17,4 @@
     </div>
   </div>
 
-  <button data-ng-click="goToCreateSchool()" class="btn btn-default"><i class="fa fa-plus"></i> Nuova scuola</button>
 </section>
