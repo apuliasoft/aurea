@@ -29,6 +29,8 @@ angular.module('aurea.complexes').controller('ComplexesCtrl', ['$scope', '$state
         $scope.complex = new Complex({
             school: Global.getSchool()._id
         });
+        Global.title = 'Plessi';
+        Global.subtitle = 'Nuovo';
     };
 
     $scope.create = function(isValid) {
@@ -55,16 +57,28 @@ angular.module('aurea.complexes').controller('ComplexesCtrl', ['$scope', '$state
     };
 
     $scope.find = function() {
-        $scope.complexes = Complex.query({
+        Complex.query({
             schoolId: Global.getSchool()._id
-        });
+        }).$promise
+            .then(function(complexes) {
+                $scope.complexes = complexes;
+
+                Global.title = 'Plessi';
+                Global.subtitle = Global.getSchool().name;
+            });
     };
 
     $scope.findOne = function() {
-        $scope.complex = Complex.get({
+        Complex.get({
             schoolId: Global.getSchool()._id,
             complexId: $stateParams.complexId
-        });
+        }).$promise
+            .then(function(complex) {
+                $scope.complex = complex;
+
+                Global.title = 'Plessi';
+                Global.subtitle = complex.name;
+            });
     };
 }]);
 

@@ -1,23 +1,20 @@
 <section data-ng-controller="AcademicYearsCtrl" data-ng-init="find()">
-  <h2>{{ global.getComplex().name }}</h2>
-
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="#">Anni accademici</a></li>
-    <li><a href="#" data-ng-click="goToListTeachers()">Insegnanti</a></li>
-    <li><a href="#" data-ng-click="goToListStudents()">Alunni</a></li>
-  </ul>
 
   <div class="row">
     <div class="col-xs-4" data-ng-repeat="academicYear in academicYears">
-      <div class="thumbnail">
+      <div class="thumbnail well well-sm">
         <h3>{{academicYear.name}}</h3>
         <p>{{academicYear.startDate | date}} - {{academicYear.endDate | date}}</p>
 
         <div class="pull-right">
-          <button class="btn btn-primary" role="button" data-ng-click="goToListSchoolClasses(academicYear)"><i
-              class="fa fa-check"></i></button>
-          <button href="#" class="btn btn-default" role="button" data-ng-click="goToEditAcademicYear(academicYear)"><i
-              class="fa fa-pencil"></i></button>
+          <div class="btn-group btn-group-xs">
+            <button class="btn btn-default" role="button" data-ng-click="goToEditAcademicYear(academicYear)" title="Modifica">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button class="btn btn-primary" role="button" data-ng-click="goToListSchoolClasses(academicYear)" title="Seleziona">
+              <i class="fa fa-check"></i>
+            </button>
+          </div>
         </div>
 
         <div class="clearfix"></div>
@@ -25,5 +22,18 @@
     </div>
   </div>
 
-  <button data-ng-click="goToCreateAcademicYear()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo anno accademico</button>
+  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container">
+      <p class="navbar-text">
+        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+      </p>
+
+      <div class="nav navbar-nav navbar-right btn-group">
+        <button type="button" data-ng-click="goToCreateAcademicYear()" class="btn btn-primary navbar-btn" title="Aggiungi">
+          <i class="fa fa-plus"></i> Aggiungi
+        </button>
+      </div>
+    </div>
+  </nav>
+
 </section>
