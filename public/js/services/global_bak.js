@@ -200,10 +200,6 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', 'School', '
                 setCurrentSchool();
             },
 
-            setSchool2: function (newSchool) {
-                school = newSchool;
-            },
-
             getComplexes: function () {
                 return  complexes;
             },

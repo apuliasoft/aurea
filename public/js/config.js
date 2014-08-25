@@ -206,11 +206,28 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
           })
 
           .state('all complexes', {
-              url: '/plessi',
+              url: '/scuole/:schoolId/plessi',
               templateUrl: 'views/complexes/list.html',
               resolve: {
                   loggedin: checkLoggedin,
-                  school: checkSchoolSelected
+                  school: ['$q', '$timeout', 'ngToast', '$stateParams', 'School', 'Global', function ($q, $timeout, ngToast, $stateParams, School, Global) {
+                      var deferred = $q.defer();
+
+                      School.get({ schoolId: $stateParams.schoolId}).$promise
+                        .then(function (data) {
+                            Global.setSchool2(data);
+                            $timeout(deferred.resolve);
+                        })
+                        .catch(function () {
+                            ngToast.create({
+                                content: 'Si prega di selezionare una scuola',
+                                class: 'warning'
+                            });
+                            $timeout(deferred.reject);
+                        });
+
+                      return deferred.promise;
+                  }]
               }
           })
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.complexes').controller('ComplexesCtrl', ['$scope', '$stateParams', '$location', '_', 'Provinces', 'Global', 'Complex', function ($scope, $stateParams, $location, _, Provinces, Global, Complex) {
+    angular.module('aurea.complexes').controller('ComplexesCtrl', ['$scope', '$stateParams', '$location', '_', 'Provinces', 'Global', 'Complex', function ($scope, $stateParams, $location, _, Provinces, Global, Complex) {
     $scope.global = Global;
     $scope.provinces = Provinces.getProvinces();
 
