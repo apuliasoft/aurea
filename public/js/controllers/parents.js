@@ -1,27 +1,25 @@
 'use strict';
 
-angular.module('aurea.parents').controller('ParentsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Parent', function ($scope, $stateParams, $location, _, Global, Parent) {
+angular.module('aurea.parents').controller('ParentsCtrl', ['$scope', '$stateParams', 'SmartState', '_', 'Global', 'Parent', function ($scope, $stateParams, SmartState, _, Global, Parent) {
     $scope.global = Global;
 
     $scope.goToListParents = function () {
-        $location.path('genitori');
+        SmartState.go('all parents');
     };
 
     $scope.goToCreateParent = function () {
-      $location.path('genitori/nuovo');
+        SmartState.go('create parent');
     };
 
     $scope.goToEditParent = function(parent) {
-      if(parent) {
-        $location.path('genitori/' + parent._id);
-      }
+        SmartState.go('edit parent', { parentId: parent._id });
     };
 
     $scope.init = function () {
         $scope.parent = new Parent({
-            student: Global.getStudent()._id,
+            school: Global.getSchool()._id,
             complex: Global.getComplex()._id,
-            school: Global.getSchool()._id
+            student: Global.getStudent()._id
         });
     };
 
