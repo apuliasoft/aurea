@@ -1,90 +1,32 @@
 'use strict';
 
-angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', '$localStorage', 'School', 'Complex', 'AcademicYear', 'SchoolClass', function ($scope, Global, $filter, $localStorage, School, Complex, AcademicYear, SchoolClass) {
+angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', '$localStorage', '$state', '$stateParams', function ($scope, Global, $filter, $localStorage, $state, $stateParams) {
     $scope.global = Global;
 
     $scope.$watch('global.user', function () {
         updateMenu();
     });
 
-    /*$scope.$watch('global.user', function () {
-        updateMenu();
-
-        if (!Global.isLoggedin())
-            return;
-
-        if (Global.user.school) {
-            School.get({
-                schoolId: Global.user.school
-            }).$promise
-              .then(function (school) {
-                  $scope.schools = [school];
-                  Global.setSchool(school);
-              });
-        } else {
-            $scope.schools = School.query();
-        }
-
-    });
-
-    $scope.$watch('global.school', function () {
-        Global.removeComplex();
-
-        if (!Global.isLoggedin())
-            return;
-
-        if (Global.getSchool()) {
-            if (Global.user.complex) {
-                Complex.get({
-                    schoolId: Global.getSchool()._id,
-                    complexId: Global.user.complex
-                }).$promise
-                  .then(function (complex) {
-                      $scope.complexes = [complex];
-                      Global.setComplex(complex);
-                  });
-            } else {
-                $scope.complexes = Complex.query({ schoolId: Global.getSchool()._id });
-            }
-        }
-    });
-
-    $scope.$watch('global.complex', function () {
-        Global.removeAcademicYear();
-
-        if (!Global.isLoggedin())
-            return;
-
-        if (Global.getComplex()) {
-            $scope.academicYears = AcademicYear.query({
-                schoolId: Global.getSchool() && Global.getSchool()._id,
-                complexId: Global.getComplex() && Global.getComplex()._id
-            });
-        }
-    });
-
-    $scope.$watch('global.academicYear', function () {
-        if (!Global.isLoggedin())
-            return;
-
-        if (Global.getAcademicYear()) {
-            var schoolClass = Global.getSchoolClass();
-            var academicYear = Global.getAcademicYear();
-            if (schoolClass && schoolClass.academicYear !== academicYear._id) {
-                Global.removeSchoolClass();
-            }
-
-            updateSchoolClasses();
-        }
-    });
-
-    function updateSchoolClasses() {
-        $scope.schoolClasses = SchoolClass.query({
-            academicYearId: Global.getAcademicYear() && Global.getAcademicYear()._id,
-            complexId: Global.getComplex() && Global.getComplex()._id,
-            schoolId: Global.getSchool() && Global.getSchool()._id
+    $scope.goToSchool = function (school) {
+        $state.go('all complexes', {
+            schoolId: school._id
         });
-    }*/
+    };
+
+    $scope.goToComplex = function (complex) {
+        $state.go('all academic years', {
+            schoolId: $stateParams.schoolId,
+            complexId: complex._id
+        });
+    };
+
+    $scope.goToAcademicYear = function (academicYear) {
+        $state.go('all school classes', {
+            schoolId: $stateParams.schoolId,
+            complexId: $stateParams.complexId,
+            academicYearId: academicYear._id
+        });
+    };
 
     function updateMenu() {
         $scope.menu = [];

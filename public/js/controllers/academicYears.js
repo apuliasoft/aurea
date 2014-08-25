@@ -1,38 +1,33 @@
 'use strict';
 
-angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'AcademicYear', function ($scope, $stateParams, $location, $filter, _, Global, AcademicYear) {
+angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope', '$stateParams', 'SmartState', '$filter', '_', 'Global', 'AcademicYear', function ($scope, $stateParams, SmartState, $filter, _, Global, AcademicYear) {
     $scope.global = Global;
 
     var toMinute = $filter('minute');
     var toTime = $filter('time');
 
     $scope.goToListAcademicYears = function () {
-        $location.path('anni-accademici');
+        SmartState.go('all academic years');
     };
 
     $scope.goToCreateAcademicYear = function () {
-        $location.path('anni-accademici/nuovo');
+        SmartState.go('create academic year');
     };
 
     $scope.goToEditAcademicYear = function (academicYear) {
-        if (academicYear) {
-            $location.path('anni-accademici/' + academicYear._id);
-        }
+        SmartState.go('edit academic year', { academicYearId: academicYear._id });
     };
 
     $scope.goToListTeachers = function () {
-        $location.path('insegnanti');
+        SmartState.go('all teachers');
     };
 
     $scope.goToListStudents = function () {
-        $location.path('alunni');
+        SmartState.go('all students');
     };
 
     $scope.goToListSchoolClasses = function (academicYear) {
-        if (academicYear) {
-            Global.setAcademicYear(academicYear);
-            $location.path('classi');
-        }
+        SmartState.go('all school classes');
     };
 
     $scope.init = function () {

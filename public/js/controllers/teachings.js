@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'Teaching', 'Teacher' , function ($scope, $stateParams, $location, _, Global, Teaching, Teacher) {
+angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$stateParams', 'SmartState', '_', 'Global', 'Teaching', 'Teacher' , function ($scope, $stateParams, SmartState, _, Global, Teaching, Teacher) {
     $scope.global = Global;
 
     $scope.columns = [
@@ -28,17 +28,15 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
     };
 
     $scope.list = function () {
-        $location.path('insegnamenti');
+        SmartState.go('all teachings');
     };
 
     $scope.new = function () {
-        $location.path('insegnamenti/crea');
+        SmartState.go('create teaching');
     };
 
     $scope.view = function (teaching) {
-        if (teaching) {
-            $location.path('insegnamenti/' + teaching._id);
-        }
+        SmartState.go('edit teaching', { teachingId: teaching._id });
     };
 
     $scope.edit = function (teaching) {

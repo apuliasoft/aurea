@@ -39,7 +39,7 @@
         {{ global.getSchool().name || 'Seleziona la scuola'}} <b class="caret"></b>
       </a>
       <ul class="dropdown-menu" role="menu">
-        <li data-ng-repeat="school in global.getSchools()" data-ng-click="global.setSchool(school)">
+        <li data-ng-repeat="school in global.getSchools()" data-ng-click="goToSchool(school)">
           <a href="#">{{ school.name }}</a>
         </li>
       </ul>
@@ -49,7 +49,7 @@
         {{ global.getComplex().name || 'Seleziona il plesso'}} <b class="caret"></b>
       </a>
       <ul class="dropdown-menu" role="menu">
-        <li data-ng-repeat="complex in global.getComplexes()" data-ng-click="global.setComplex(complex)">
+        <li data-ng-repeat="complex in global.getComplexes()" data-ng-click="goToComplex(complex)">
           <a href="#">{{ complex.name }}</a>
         </li>
       </ul>
@@ -60,7 +60,7 @@
       </a>
       <ul class="dropdown-menu" role="menu">
         <li data-ng-repeat="academicYear in global.getAcademicYears()"
-            data-ng-click="global.setAcademicYear(academicYear)">
+            data-ng-click="goToAcademicYear(academicYear)">
           <a href="#">{{ academicYear.name }}</a>
         </li>
       </ul>

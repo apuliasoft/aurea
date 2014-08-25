@@ -1,28 +1,23 @@
 'use strict';
 
-    angular.module('aurea.complexes').controller('ComplexesCtrl', ['$scope', '$stateParams', '$location', '_', 'Provinces', 'Global', 'Complex', function ($scope, $stateParams, $location, _, Provinces, Global, Complex) {
+    angular.module('aurea.complexes').controller('ComplexesCtrl', ['$scope', '$stateParams', 'SmartState', '_', 'Provinces', 'Global', 'Complex', function ($scope, $stateParams, SmartState, _, Provinces, Global, Complex) {
     $scope.global = Global;
     $scope.provinces = Provinces.getProvinces();
 
     $scope.goToListComplexes = function () {
-        $location.path('plessi');
+        SmartState.go('all complexes');
     };
 
     $scope.goToCreateComplex = function () {
-        $location.path('plessi/nuovo');
+        SmartState.go('create complex');
     };
 
     $scope.goToEditComplex = function (complex) {
-        if (complex) {
-            $location.path('plessi/' + complex._id);
-        }
+        SmartState.go('edit complex', { complexId: complex._id });
     };
 
     $scope.goToListAcademicYears = function (complex) {
-        if (complex) {
-            Global.setComplex(complex);
-            $location.path('anni-accademici');
-        }
+        SmartState.go('all academic years', { complexId: complex._id });
     };
 
     $scope.init = function () {

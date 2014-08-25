@@ -1,35 +1,30 @@
 'use strict';
 
-angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'Student', function ($scope, $stateParams, $location, $filter, _, Global, Student) {
+angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$stateParams', 'SmartState', '$filter', '_', 'Global', 'Student', function ($scope, $stateParams, SmartState, $filter, _, Global, Student) {
     $scope.global = Global;
 
     $scope.goToListStudents = function () {
-        $location.path('alunni');
+        SmartState.go('all students');
     };
 
     $scope.goToCreateStudent = function () {
-        $location.path('alunni/nuovo');
+        SmartState.go('create student');
     };
 
     $scope.goToEditStudent = function (student) {
-        if (student) {
-            $location.path('alunni/' + student._id);
-        }
+        SmartState.go('edit student', { studentId: student._id });
     };
 
     $scope.goToListAcademicYears = function () {
-        $location.path('anni-accademici');
+        SmartState.go('all academic years');
     };
 
     $scope.goToListTeachers = function () {
-        $location.path('insegnanti');
+        SmartState.go('all teachers');
     };
 
     $scope.goToListParents = function (student) {
-      if(student) {
-        Global.setStudent(student);
-        $location.path('genitori');
-      }
+        SmartState.go('all parents', { studentId: student._id });
     };
 
     $scope.init = function () {

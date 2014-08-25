@@ -1,27 +1,25 @@
 'use strict';
 
-angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'Global', 'SchoolClass', 'AcademicYear', 'Student', 'ClassStudent', function ($scope, $stateParams, $location, $filter, _, Global, SchoolClass, AcademicYear, Student, ClassStudent) {
+angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope', '$stateParams', 'SmartState', '$filter', '_', 'Global', 'SchoolClass', 'AcademicYear', 'Student', 'ClassStudent', function ($scope, $stateParams, SmartState, $filter, _, Global, SchoolClass, AcademicYear, Student, ClassStudent) {
     $scope.global = Global;
 
     $scope.goToListSchoolClasses = function () {
-        $location.path('classi');
+        SmartState.go('all school classes');
     };
 
     $scope.goToCreateSchoolClass = function () {
-        $location.path('classi/crea');
+        SmartState.go('create school classe');
     };
 
     $scope.goToEditSchoolClass = function (schoolClass) {
-        if (schoolClass) {
-            $location.path('classi/' + schoolClass._id);
-        }
+        SmartState.go('edit school classe', { schoolClassId: schoolClass._id });
     };
 
     $scope.goToClassRegistry = function (schoolClass) {
-        if (schoolClass) {
-            Global.setSchoolClass(schoolClass);
-            $location.path('registri-di-classe/' + $filter('date')(new Date(), 'yyyy-MM-dd'));
-        }
+        SmartState.go('class registry by date', {
+            schoolClassId: schoolClass._id,
+            date: $filter('date')(new Date(), 'yyyy-MM-dd')
+        });
     };
 
     $scope.init = function () {

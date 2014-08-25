@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$stateParams', '$location', '_', 'Global', 'School', function ($scope, $stateParams, $location, _, Global, School) {
+angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$stateParams', '$location', 'SmartState', '_', 'Global', 'School', function ($scope, $stateParams, $location, SmartState, _, Global, School) {
     $scope.global = Global;
 
     Global.title = 'Scuole';
@@ -10,24 +10,19 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
     ];
 
     $scope.goToListSchools = function () {
-        $location.path('scuole');
+        SmartState.go('all schools');
     };
 
     $scope.goToCreateSchool = function () {
-        $location.path('scuole/nuova');
+        SmartState.go('create school');
     };
 
     $scope.goToEditSchool = function (school) {
-        if (school) {
-            $location.path('scuole/' + school._id);
-        }
+        SmartState.go('edit school', { schoolId: school._id });
     };
 
     $scope.goToListComplexes = function (school) {
-        if (school) {
-            Global.setSchool(school);
-            $location.path('plessi');
-        }
+        SmartState.go('all complexes', { schoolId: school._id });
     };
 
     $scope.init = function () {
