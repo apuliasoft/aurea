@@ -99,10 +99,10 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
             academicYearId: Global.getAcademicYear()._id
         }).$promise
             .then(function (schoolClasses) {
-                $scope.schoolClasses = schoolClasses;
-
                 Global.title = 'Classi';
                 Global.subtitle = Global.getAcademicYear().name;
+
+                $scope.schoolClasses = schoolClasses;
             });
     };
 
@@ -114,10 +114,10 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
             academicYearId: Global.getAcademicYear()._id
         }).$promise
             .then(function (schoolClass) {
-                $scope.schoolClass = schoolClass;
-
                 Global.title = 'Classi';
                 Global.subtitle = schoolClass.name;
+
+                $scope.schoolClass = schoolClass;
 
                 Student.query({
                     complexId: Global.getComplex()._id,

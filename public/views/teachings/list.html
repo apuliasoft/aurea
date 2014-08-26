@@ -1,7 +1,35 @@
 <section data-ng-controller="TeachingsCtrl" data-ng-init="find()">
-  <h2>Insegnamenti</h2>
 
-  <datatable columns="columns" list="teachings" view="view(element)" edit="edit(element)" remove="remove(element)"></datatable>
+  <div class="row">
+    <div class="col-xs-4" data-ng-repeat="teaching in teachings">
+      <div class="thumbnail well well-sm">
+        <h3>{{teaching.name}}</h3>
 
-  <button data-ng-click="new()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo insegnamento</button>
+        <div class="pull-right">
+          <div class="btn-group btn-group-xs">
+            <button class="btn btn-default" role="button" data-ng-click="goToEditTeaching(teaching)" title="Modifica">
+              <i class="fa fa-pencil"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container">
+      <p class="navbar-text">
+        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+      </p>
+
+      <div class="nav navbar-nav navbar-right btn-group">
+        <button type="button" data-ng-click="goToCreateTeaching()" class="btn btn-primary navbar-btn" title="Aggiungi">
+          <i class="fa fa-plus"></i> Aggiungi
+        </button>
+      </div>
+    </div>
+  </nav>
+
 </section>

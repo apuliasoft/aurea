@@ -3,27 +3,7 @@
 angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$stateParams', 'SmartState', '_', 'Global', 'Teaching', 'Teacher' , function ($scope, $stateParams, SmartState, _, Global, Teaching, Teacher) {
     $scope.global = Global;
 
-    $scope.getSchoolClassName = function(schoolClassId) {
-        var schoolClass = _.find($scope.schoolClasses, function(schoolClass) {
-            return schoolClass._id === schoolClassId;
-        });
-
-        return schoolClass && schoolClass.name;
-    };
-
-    $scope.getTeacherFullName = function(teacherId) {
-        var teacher = _.find($scope.teachers, function(teacher) {
-            return teacher._id === teacherId;
-        });
-
-        return teacher && $scope.getFullName(teacher);
-    };
-
-    $scope.getFullName = function(teacher){
-        return teacher.firstName + ' ' + teacher.lastName;
-    };
-
-    $scope.goToListTeaching = function () {
+    $scope.goToListTeachings = function () {
         SmartState.go('all teachings');
     };
 
@@ -31,7 +11,7 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
         SmartState.go('create teaching');
     };
 
-    $scope.goToEditTeachng = function (teaching) {
+    $scope.goToEditTeaching = function (teaching) {
         SmartState.go('edit teaching', { teachingId: teaching._id });
     };
 
@@ -42,14 +22,20 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
             academicYear: Global.getAcademicYear()._id,
             schoolClass: Global.getSchoolClass()._id
         });
-        $scope.teachers = Teacher.query({
+        Teacher.query({
             complexId: Global.getComplex()._id,
             schoolId: Global.getSchool()._id
-        });
+        }).$promise
+            .then(function (teachers) {
+                Global.title = 'Insegnamenti';
+                Global.subtitle = 'Nuovo';
+
+                $scope.teachers = teachers;
+            });
     };
 
-    $scope.create = function(isValid) {
-        if(isValid) {
+    $scope.create = function (isValid) {
+        if (isValid) {
             var teaching = $scope.teaching;
             teaching.$save(function (response) {
                 $scope.view(response);
@@ -57,16 +43,8 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
         }
     };
 
-    $scope.remove = function(teaching) {
-        if (teaching) {
-            teaching.$remove();
-            _.remove($scope.teachings, teaching);
-            $scope.list();
-        }
-    };
-
-    $scope.update = function(isValid) {
-        if(isValid) {
+    $scope.update = function (isValid) {
+        if (isValid) {
             var teaching = $scope.teaching;
             if (!teaching.updated) {
                 teaching.updated = [];
@@ -79,22 +57,42 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
         }
     };
 
-    $scope.find = function() {
-        $scope.teachings = Teaching.query({
+    $scope.remove = function (teaching) {
+        if (teaching) {
+            teaching.$remove();
+            _.remove($scope.teachings, teaching);
+            $scope.list();
+        }
+    };
+
+    $scope.find = function () {
+        Teaching.query({
             schoolId: Global.getSchool()._id,
             complexId: Global.getComplex()._id,
             academicYearId: Global.getAcademicYear()._id,
             schoolClassId: Global.getSchoolClass()._id
-        });
+        }).$promise
+            .then(function (teachings) {
+                Global.title = 'Insegnamenti';
+                Global.subtitle = Global.getSchoolClass().name;
+
+                $scope.teachings = teachings;
+            });
     };
 
-    $scope.findOne = function() {
-        $scope.teaching = Teaching.get({
+    $scope.findOne = function () {
+        Teaching.get({
             schoolId: Global.getSchool()._id,
             complexId: Global.getComplex()._id,
             academicYearId: Global.getAcademicYear()._id,
             schoolClassId: Global.getSchoolClass()._id,
             teachingId: $stateParams.teachingId
-        });
+        }).$promise
+            .then(function (teaching) {
+                Global.title = 'Insegnamenti';
+                Global.subtitle = teaching.name;
+
+                $scope.teaching = teaching;
+            });
     };
 }]);

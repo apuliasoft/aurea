@@ -66,10 +66,10 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
             schoolId: Global.getSchool()._id
         }).$promise
             .then(function (students) {
-                $scope.students = students;
-
                 Global.title = 'Alunni';
                 Global.subtitle = Global.getComplex().name;
+
+                $scope.students = students;
             });
     };
 
@@ -80,12 +80,12 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
                 schoolId: Global.getSchool()._id
             }).$promise
             .then(function (student) {
+                Global.title = 'Alunni';
+                Global.subtitle = $filter('name')(student);
+
                 student.birthDate = $filter('date')(student.birthDate, 'yyyy-MM-dd');
 
                 $scope.student = student;
-
-                Global.title = 'Alunni';
-                Global.subtitle = $filter('name')(student);
             });
     };
 }]);

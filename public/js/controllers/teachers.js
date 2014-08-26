@@ -62,10 +62,10 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
             schoolId: Global.getSchool()._id
         }).$promise
             .then(function (teachers) {
-                $scope.teachers = teachers;
-
                 Global.title = 'Insegnanti';
                 Global.subtitle = Global.getComplex().name;
+
+                $scope.teachers = teachers;
             });
     };
 
@@ -76,10 +76,10 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
             schoolId: Global.getSchool()._id
         }).$promise
             .then(function (teacher) {
-                $scope.teacher = teacher;
-
                 Global.title = 'Insegnanti';
                 Global.subtitle = $filter('name')(teacher);
+
+                $scope.teacher = teacher;
             });
     };
 }]);

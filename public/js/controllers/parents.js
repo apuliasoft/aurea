@@ -64,10 +64,10 @@ angular.module('aurea.parents').controller('ParentsCtrl', ['$scope', '$statePara
             schoolId: Global.getSchool()._id
         }).$promise
             .then(function (parents) {
-                $scope.parents = parents;
-
                 Global.title = 'Genitori';
                 Global.subtitle = $filter('name')(Global.getStudent());
+
+                $scope.parents = parents;
             });
     };
 
@@ -79,10 +79,10 @@ angular.module('aurea.parents').controller('ParentsCtrl', ['$scope', '$statePara
             schoolId: Global.getSchool()._id
         }).$promise
             .then(function (parent) {
-                $scope.parent = parent;
-
                 Global.title = 'Genitori';
                 Global.subtitle = $filter('name')(parent);
+
+                $scope.parent = parent;
             });
     };
 }]);

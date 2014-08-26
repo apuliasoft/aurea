@@ -57,10 +57,10 @@
             schoolId: Global.getSchool()._id
         }).$promise
             .then(function(complexes) {
-                $scope.complexes = complexes;
-
                 Global.title = 'Plessi';
                 Global.subtitle = Global.getSchool().name;
+
+                $scope.complexes = complexes;
             });
     };
 
@@ -70,10 +70,10 @@
             complexId: $stateParams.complexId
         }).$promise
             .then(function(complex) {
-                $scope.complex = complex;
-
                 Global.title = 'Plessi';
                 Global.subtitle = complex.name;
+
+                $scope.complex = complex;
             });
     };
 }]);

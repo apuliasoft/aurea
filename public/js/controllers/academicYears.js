@@ -128,10 +128,10 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
             schoolId: Global.getSchool()._id
         }).$promise
             .then(function (academicYears) {
-                $scope.academicYears = academicYears;
-
                 Global.title = 'Anni accademici';
                 Global.subtitle = Global.getComplex().name;
+
+                $scope.academicYears = academicYears;
             });
     };
 
@@ -142,14 +142,14 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
             schoolId: Global.getSchool()._id
         }).$promise
             .then(function (academicYear) {
+                Global.title = 'Anni accademici';
+                Global.subtitle = academicYear.name;
+
                 academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
                 academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
                 academicYear.timeTable = deserializeData(academicYear.timeTable);
 
                 $scope.academicYear = academicYear;
-
-                Global.title = 'Anni accademici';
-                Global.subtitle = academicYear.name;
             });
     };
 

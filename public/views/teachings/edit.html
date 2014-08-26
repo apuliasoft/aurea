@@ -1,23 +1,38 @@
 <section data-ng-controller="TeachingsCtrl" data-ng-init="findOne()">
-    <h2>Modifica insegnamento</h2>
 
-    <form name="teachingForm" role="form" data-ng-submit="update(teachingForm.$valid)" novalidate>
+  <form name="teachingForm" role="form" data-ng-submit="update(teachingForm.$valid)" novalidate class="form-horizontal">
 
-        <div class="form-group"
-             data-ng-class="{ 'has-error' : teachingForm.name.$invalid && !teachingForm.name.$pristine }">
-            <label for="name" class="control-label">Nome</label>
-            <input type="text" data-ng-model="teaching.name" id="name" name="name" class="form-control"
-                   placeholder="Nome" required>
+    <div class="form-group"
+         data-ng-class="{ 'has-error' : teachingForm.name.$invalid && !teachingForm.name.$pristine }">
+      <label for="name" class="col-sm-2 control-label">Nome</label>
 
-            <p ng-show="teachingForm.name.$invalid && !teachingForm.name.$pristine" class="help-block">Il nome è
-                obbligatorio.</p>
+      <div class="col-sm-10">
+        <input type="text" data-ng-model="teaching.name" id="name" name="name" class="form-control"
+               placeholder="Nome" required>
+      </div>
+
+      <p ng-show="teachingForm.name.$invalid && !teachingForm.name.$pristine" class="help-block">
+        Il nome è obbligatorio.
+      </p>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+      <div class="container">
+        <p class="navbar-text">
+          Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+        </p>
+
+        <div class="nav navbar-nav navbar-right btn-group">
+          <button type="button" data-ng-click="goToListTeachings()" class="btn btn-default navbar-btn" class="Annulla">
+            <i class="fa fa-times"></i> Annulla
+          </button>
+          <button type="submit" data-ng-disabled="teachingForm.$invalid" class="btn btn-primary navbar-btn"
+                  class="Salva">
+            <i class="fa fa-check"></i> Salva
+          </button>
         </div>
+      </div>
+    </nav>
 
-        <hr>
-
-        <button type="submit" class="btn btn-primary" data-ng-disabled="teachingForm.$invalid">Salva</button>
-
-        <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
-
-    </form>
+  </form>
 </section>

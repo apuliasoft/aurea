@@ -60,9 +60,9 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
     $scope.find = function () {
         School.query().$promise
             .then(function (schools) {
-                $scope.schools = schools;
-
                 Global.title = 'Scuole';
+
+                $scope.schools = schools;
             });
     };
 
@@ -71,10 +71,10 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
             schoolId: $stateParams.schoolId
         }).$promise
             .then(function (school) {
-                $scope.school = school;
-
                 Global.title = 'Scuole';
                 Global.subtitle = school.name;
+
+                $scope.school = school;
             });
     };
 
