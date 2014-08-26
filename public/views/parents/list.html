@@ -1,19 +1,17 @@
 <section data-ng-controller="ParentsCtrl" data-ng-init="find()">
-  <h2>{{ global.getStudent() | name }}</h2>
-
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="#">Genitori</a></li>
-  </ul>
 
   <div class="row">
     <div class="col-xs-4" data-ng-repeat="parent in parents">
-      <div class="thumbnail">
+      <div class="thumbnail well well-sm">
         <h3>{{parent | name}}</h3>
         <p>{{parent.user.email}}</p>
 
         <div class="pull-right">
-          <button href="#" class="btn btn-default" role="button" data-ng-click="goToEditParent(parent)"><i
-              class="fa fa-pencil"></i></button>
+          <div class="btn-group btn-group-xs">
+            <button class="btn btn-default" role="button" data-ng-click="goToEditParent(parent)" title="Modifica">
+              <i class="fa fa-pencil"></i>
+            </button>
+          </div>
         </div>
 
         <div class="clearfix"></div>
@@ -21,5 +19,18 @@
     </div>
   </div>
 
-  <button data-ng-click="goToCreateParent()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo genitore</button>
+  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container">
+      <p class="navbar-text">
+        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+      </p>
+
+      <div class="nav navbar-nav navbar-right btn-group">
+        <button type="button" data-ng-click="goToCreateParent()" class="btn btn-primary navbar-btn" title="Aggiungi">
+          <i class="fa fa-plus"></i> Aggiungi
+        </button>
+      </div>
+    </div>
+  </nav>
+
 </section>

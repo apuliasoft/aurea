@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.parents').controller('ParentsCtrl', ['$scope', '$stateParams', 'SmartState', '_', 'Global', 'Parent', function ($scope, $stateParams, SmartState, _, Global, Parent) {
+angular.module('aurea.parents').controller('ParentsCtrl', ['$scope', '$stateParams', '$filter', 'SmartState', '_', 'Global', 'Parent', function ($scope, $stateParams, $filter, SmartState, _, Global, Parent) {
     $scope.global = Global;
 
     $scope.goToListParents = function () {
@@ -21,6 +21,8 @@ angular.module('aurea.parents').controller('ParentsCtrl', ['$scope', '$statePara
             complex: Global.getComplex()._id,
             student: Global.getStudent()._id
         });
+        Global.title = 'Genitori';
+        Global.subtitle = 'Nuovo';
     };
 
     $scope.create = function(isValid) {
@@ -55,19 +57,31 @@ angular.module('aurea.parents').controller('ParentsCtrl', ['$scope', '$statePara
     };
 
     $scope.find = function() {
-        $scope.parents = Parent.query({
+        Parent.query({
             studentId: Global.getStudent()._id,
             complexId: Global.getComplex()._id,
             schoolId: Global.getSchool()._id
-        });
+        }).$promise
+            .then(function (parents) {
+                $scope.parents = parents;
+
+                Global.title = 'Genitori';
+                Global.subtitle = $filter('name')(Global.getStudent());
+            });
     };
 
     $scope.findOne = function() {
-        $scope.parent = Parent.get({
+        Parent.get({
             parentId: $stateParams.parentId,
             studentId: Global.getStudent()._id,
             complexId: Global.getComplex()._id,
             schoolId: Global.getSchool()._id
-        });
+        }).$promise
+            .then(function (parent) {
+                $scope.parent = parent;
+
+                Global.title = 'Genitori';
+                Global.subtitle = $filter('name')(parent);
+            });
     };
 }]);
