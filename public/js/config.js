@@ -15,9 +15,10 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
                     Global.setUser(user);
                     $timeout(deferred.resolve);
                 } else { // Not Authenticated
-                    if (Global.user != {}) {
-                        Global.user = {};
+                    if (Global.getUser() !== {}) {
+                        Global.setUser({});
                     }
+
                     $timeout(deferred.reject);
                     $location.url('/login');
                 }
@@ -427,7 +428,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
           })
 
           .state('all teachings', {
-              url: '/scuole/:schoolId/plessi/:complexId/insegnamenti',
+              url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti',
               templateUrl: 'views/teachings/list.html',
               resolve: {
                   loggedin: checkLoggedin,
@@ -437,7 +438,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
           })
 
           .state('create teaching', {
-              url: '/scuole/:schoolId/plessi/:complexId/insegnamenti/crea',
+              url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti/crea',
               templateUrl: 'views/teachings/create.html',
               resolve: {
                   loggedin: checkLoggedin,
@@ -447,7 +448,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
           })
 
           .state('edit teaching', {
-              url: '/scuole/:schoolId/plessi/:complexId/insegnamenti/:teachingId',
+              url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti/:teachingId',
               templateUrl: 'views/teachings/edit.html',
               resolve: {
                   loggedin: checkLoggedin,

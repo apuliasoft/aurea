@@ -1,90 +1,11 @@
 'use strict';
 
-angular.module('aurea.system').controller('MenuCtrl', ['$scope', 'Global', '$filter', '$localStorage', 'School', 'Complex', 'AcademicYear', 'SchoolClass', function ($scope, Global, $filter, $localStorage, School, Complex, AcademicYear, SchoolClass) {
+angular.module('aurea.system').controller('MenuCtrl', ['$scope', 'Global', '$filter', 'SmartState', function ($scope, Global, $filter, SmartState) {
     $scope.global = Global;
 
     $scope.$watch('global.user', function () {
         updateMenu();
     });
-
-    /*$scope.$watch('global.user', function () {
-        updateMenu();
-
-        if (!Global.isLoggedin())
-            return;
-
-        if (Global.user.school) {
-            School.get({
-                schoolId: Global.user.school
-            }).$promise
-              .then(function (school) {
-                  $scope.schools = [school];
-                  Global.setSchool(school);
-              });
-        } else {
-            $scope.schools = School.query();
-        }
-
-    });
-
-    $scope.$watch('global.school', function () {
-        Global.removeComplex();
-
-        if (!Global.isLoggedin())
-            return;
-
-        if (Global.getSchool()) {
-            if (Global.user.complex) {
-                Complex.get({
-                    schoolId: Global.getSchool()._id,
-                    complexId: Global.user.complex
-                }).$promise
-                  .then(function (complex) {
-                      $scope.complexes = [complex];
-                      Global.setComplex(complex);
-                  });
-            } else {
-                $scope.complexes = Complex.query({ schoolId: Global.getSchool()._id });
-            }
-        }
-    });
-
-    $scope.$watch('global.complex', function () {
-        Global.removeAcademicYear();
-
-        if (!Global.isLoggedin())
-            return;
-
-        if (Global.getComplex()) {
-            $scope.academicYears = AcademicYear.query({
-                schoolId: Global.getSchool() && Global.getSchool()._id,
-                complexId: Global.getComplex() && Global.getComplex()._id
-            });
-        }
-    });
-
-    $scope.$watch('global.academicYear', function () {
-        if (!Global.isLoggedin())
-            return;
-
-        if (Global.getAcademicYear()) {
-            var schoolClass = Global.getSchoolClass();
-            var academicYear = Global.getAcademicYear();
-            if (schoolClass && schoolClass.academicYear !== academicYear._id) {
-                Global.removeSchoolClass();
-            }
-
-            updateSchoolClasses();
-        }
-    });
-
-    function updateSchoolClasses() {
-        $scope.schoolClasses = SchoolClass.query({
-            academicYearId: Global.getAcademicYear() && Global.getAcademicYear()._id,
-            complexId: Global.getComplex() && Global.getComplex()._id,
-            schoolId: Global.getSchool() && Global.getSchool()._id
-        });
-    }*/
 
     function updateMenu() {
         $scope.menu = [];
@@ -94,56 +15,56 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', 'Global', '$fil
         if (Global.isAdmin()) {
             $scope.menu.push({
                 'title': 'Utenti',
-                'link': 'utenti',
+                'goToState': function () { SmartState.go('all users') },
                 'ngif': Global.isAdmin
             });
         }
 
         $scope.menu.push({
             'title': 'Scuole',
-            'link': 'scuole',
+            'goToState': function () { SmartState.go('all schools') },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Insegnanti',
-            'link': 'insegnanti',
+            'goToState': function () { SmartState.go('all theaching') },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Alunni',
-            'link': 'alunni',
+            'goToState': function () { SmartState.go('all students') },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Anni accademici',
-            'link': 'anni-accademici',
+            'goToState': function () { SmartState.go('all academic years') },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Classi',
-            'link': 'classi',
+            'goToState': function () { SmartState.go('all school classes') },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Insegnamenti',
-            'link': 'insegnamenti',
+            'goToState': function () { SmartState.go('all teaching') },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Registro di Classe',
-            'link': 'registri-di-classe/' + $filter('date')(new Date(), 'yyyy-MM-dd'),
+            'goToState': 'registri-di-classe/' + $filter('date')(new Date(), 'yyyy-MM-dd'),
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Registro Personale',
-            'link': 'registri-personali/' + $filter('date')(new Date(), 'd-M-yyyy')
+            'goToState': 'registri-personali/' + $filter('date')(new Date(), 'd-M-yyyy')
         });
     }
 

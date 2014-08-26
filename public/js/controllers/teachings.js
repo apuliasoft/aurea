@@ -27,22 +27,16 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
         return teacher.firstName + ' ' + teacher.lastName;
     };
 
-    $scope.list = function () {
+    $scope.goToListTeaching = function () {
         SmartState.go('all teachings');
     };
 
-    $scope.new = function () {
+    $scope.goToCreateTeaching = function () {
         SmartState.go('create teaching');
     };
 
-    $scope.view = function (teaching) {
+    $scope.goToEditTeachng = function (teaching) {
         SmartState.go('edit teaching', { teachingId: teaching._id });
-    };
-
-    $scope.edit = function (teaching) {
-        if (teaching) {
-            $location.path('insegnamenti/' + teaching._id + '/modifica');
-        }
     };
 
     $scope.init = function () {

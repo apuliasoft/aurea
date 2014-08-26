@@ -152,10 +152,10 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
     $scope.isValidEntranceSelection = function(){
         var selectedStudents = _.chain($scope.classStudents)
           .filter(function (classStudent) {
-              return classStudent.selected
+              return classStudent.selected;
           })
           .map(function (selectedStudent) {
-              return selectedStudent._id
+              return selectedStudent._id;
           })
           .value();
 
@@ -171,7 +171,7 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
               return classStudent.selected;
           })
           .map(function (selectedStudent) {
-              return selectedStudent._id
+              return selectedStudent._id;
           })
           .value();
 

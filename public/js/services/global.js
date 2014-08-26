@@ -1,8 +1,8 @@
 'use strict';
 
 //Global service for global variables
-angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope', '$stateParams', 'School', 'Complex', 'Student', 'AcademicYear', 'SchoolClass',
-    function ($sessionStorage, $rootScope, $stateParams, School, Complex, Student, AcademicYear, SchoolClass) {
+angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope', '$stateParams', '_', 'School', 'Complex', 'Student', 'AcademicYear', 'SchoolClass',
+    function ($sessionStorage, $rootScope, $stateParams, _, School, Complex, Student, AcademicYear, SchoolClass) {
         var _this = this;
 
         var schools = [];

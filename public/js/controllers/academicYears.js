@@ -27,7 +27,7 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
     };
 
     $scope.goToListSchoolClasses = function (academicYear) {
-        SmartState.go('all school classes');
+        SmartState.go('all school classes', { academicYearId: academicYear._id });
     };
 
     $scope.init = function () {
