@@ -4,10 +4,10 @@
 {% include '../includes/head.html' %}
 <body>
 <ng-toast></ng-toast>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-xs-2" data-ng-include="'views/menu.html'"></div>
-    <section class="col-xs-10">
+    <div class="col-sm-2" data-ng-include="'views/menu.html'"></div>
+    <section class="col-sm-10">
       <div data-ng-include="'views/header.html'"></div>
       {% block content %}{% endblock %}
     </section>

@@ -42,6 +42,8 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
             })
 
         });
+        Global.title = 'Anni accademici';
+        Global.subtitle = 'Nuovo';
     };
 
     $scope.addTimeSlot = function (slots) {
@@ -61,12 +63,12 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         });
     };
 
-    $scope.addDayTimeSlots = function(timeTable, day) {
-        var lastDay = _.findLast(timeTable, function(day) {
+    $scope.addDayTimeSlots = function (timeTable, day) {
+        var lastDay = _.findLast(timeTable, function (day) {
             return day.slots.length;
         });
 
-        if (lastDay){
+        if (lastDay) {
             day.slots = _.cloneDeep(lastDay.slots);
         } else {
             day.slots.push({
@@ -128,10 +130,16 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
     };
 
     $scope.find = function () {
-        $scope.academicYears = AcademicYear.query({
+        AcademicYear.query({
             complexId: Global.getComplex()._id,
             schoolId: Global.getSchool()._id
-        });
+        }).$promise
+            .then(function (academicYears) {
+                $scope.academicYears = academicYears;
+
+                Global.title = 'Anni accademici';
+                Global.subtitle = Global.getComplex().name;
+            });
     };
 
     $scope.findOne = function () {
@@ -139,13 +147,17 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
             academicYearId: $stateParams.academicYearId,
             complexId: Global.getComplex()._id,
             schoolId: Global.getSchool()._id
-        }).$promise.then(function (academicYear) {
-              academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
-              academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
-              academicYear.timeTable = deserializeData(academicYear.timeTable);
+        }).$promise
+            .then(function (academicYear) {
+                academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
+                academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
+                academicYear.timeTable = deserializeData(academicYear.timeTable);
 
-              $scope.academicYear = academicYear;
-          });
+                $scope.academicYear = academicYear;
+
+                Global.title = 'Anni accademici';
+                Global.subtitle = academicYear.name;
+            });
     };
 
     /**

@@ -1,63 +1,92 @@
 <section data-ng-controller="ComplexesCtrl" data-ng-init="findOne()">
-  <h2>Modifica Plesso</h2>
 
-  <form name="complexForm" role="form" data-ng-submit="update(complexForm.$valid)" novalidate>
+  <form name="complexForm" role="form" data-ng-submit="update(complexForm.$valid)" novalidate class="form-horizontal">
 
     <div class="form-group"
          data-ng-class="{ 'has-error' : complexForm.name.$invalid && !complexForm.name.$pristine }">
-      <label for="name" class="control-label">Nome</label>
-      <input type="text" data-ng-model="complex.name" id="name" name="name" class="form-control" placeholder="Nome"
-             required>
+      <label for="name" class="col-sm-2 control-label">Nome</label>
 
-      <p ng-show="complexForm.name.$invalid && !complexForm.name.$pristine" class="help-block">Il nome è
-        obbligatorio.</p>
+      <div class="col-sm-10">
+        <input type="text" data-ng-model="complex.name" id="name" name="name" class="form-control" placeholder="Nome"
+               required>
+      </div>
+
+      <p ng-show="complexForm.name.$invalid && !complexForm.name.$pristine" class="help-block">
+        Il nome è obbligatorio.
+      </p>
     </div>
 
     <div class="form-group"
          data-ng-class="{ 'has-error' : complexForm.street.$invalid && !complexForm.street.$pristine }">
-      <label for="street" class="control-label">Via</label>
-      <input type="text" data-ng-model="complex.street" id="street" name="street" class="form-control" placeholder="Via"
-             required>
+      <label for="street" class="col-sm-2 control-label">Via</label>
 
-      <p ng-show="complexForm.street.$invalid && !complexForm.street.$pristine" class="help-block">La via è
-        obbligatoria.</p>
+      <div class="col-sm-10">
+        <input type="text" data-ng-model="complex.street" id="street" name="street" class="form-control"
+               placeholder="Via" required>
+      </div>
+
+      <p ng-show="complexForm.street.$invalid && !complexForm.street.$pristine" class="help-block">
+        La via è obbligatoria.
+      </p>
     </div>
 
     <div class="form-group"
          data-ng-class="{ 'has-error' : complexForm.zipCode.$invalid && !complexForm.zipCode.$pristine }">
-      <label for="zipCode" class="control-label">CAP</label>
-      <input type="text" data-ng-model="complex.zipCode" id="zipCode" name="zipCode" class="form-control"
-             placeholder="CAP" required>
+      <label for="zipCode" class="col-sm-2 control-label">CAP</label>
 
-      <p ng-show="complexForm.zipCode.$invalid && !complexForm.zipCode.$pristine" class="help-block">Il CAP è
-        obbligatorio.</p>
+      <div class="col-sm-10">
+        <input type="text" data-ng-model="complex.zipCode" id="zipCode" name="zipCode" class="form-control"
+               placeholder="CAP" required>
+      </div>
+
+      <p ng-show="complexForm.zipCode.$invalid && !complexForm.zipCode.$pristine" class="help-block">
+        Il CAP è obbligatorio.
+      </p>
     </div>
 
     <div class="form-group"
          data-ng-class="{ 'has-error' : complexForm.city.$invalid && !complexForm.city.$pristine }">
-      <label for="city" class="control-label">Città</label>
-      <input type="text" data-ng-model="complex.city" id="city" name="city" class="form-control" placeholder="Città">
+      <label for="city" class="col-sm-2 control-label">Città</label>
 
-      <p ng-show="complexForm.city.$invalid && !complexForm.city.$pristine" class="help-block">La città è
-        obbligatoria.</p>
+      <div class="col-sm-10">
+        <input type="text" data-ng-model="complex.city" id="city" name="city" class="form-control" placeholder="Città">
+      </div>
+
+      <p ng-show="complexForm.city.$invalid && !complexForm.city.$pristine" class="help-block">
+        La città è obbligatoria.
+      </p>
     </div>
 
     <div class="form-group"
          data-ng-class="{ 'has-error' : complexForm.province.$invalid && !complexForm.province.$pristine }">
-      <label for="province" class="control-label">Provincia</label>
-      <select data-ng-model="complex.province" id="province" name="province" class="form-control">
-        <option data-ng-repeat="province in provinces" value="{{province.code}}">{{province.name}}</option>
-      </select>
+      <label for="province" class="col-sm-2 control-label">Provincia</label>
+      <div class="col-sm-10">
+        <select data-ng-model="complex.province" id="province" name="province" class="form-control">
+          <option data-ng-repeat="province in provinces" value="{{province.code}}">{{province.name}}</option>
+        </select>
+      </div>
 
-      <p ng-show="complexForm.province.$invalid && !complexForm.province.$pristine" class="help-block">La provincia è
-        obbligatoria.</p>
+      <p ng-show="complexForm.province.$invalid && !complexForm.province.$pristine" class="help-block">
+        La provincia è obbligatoria.
+      </p>
     </div>
 
-    <hr>
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+      <div class="container">
+        <p class="navbar-text">
+          Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+        </p>
 
-    <button type="submit" class="btn btn-primary" data-ng-disabled="complexForm.$invalid">Salva</button>
-
-    <button type="button" data-ng-click="goToListComplexes()" class="btn btn-default">Annulla</button>
+        <div class="nav navbar-nav navbar-right btn-group">
+          <button type="button" data-ng-click="goToListComplexes()" class="btn btn-default navbar-btn" class="Annulla">
+            <i class="fa fa-times"></i> Annulla
+          </button>
+          <button type="submit" data-ng-disabled="complexForm.$invalid" class="btn btn-primary navbar-btn" class="Salva">
+            <i class="fa fa-check"></i> Salva
+          </button>
+        </div>
+      </div>
+    </nav>
 
   </form>
 </section>
