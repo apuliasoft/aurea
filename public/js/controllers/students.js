@@ -15,14 +15,6 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
         SmartState.go('edit student', { studentId: student._id });
     };
 
-    $scope.goToListAcademicYears = function () {
-        SmartState.go('all academic years');
-    };
-
-    $scope.goToListTeachers = function () {
-        SmartState.go('all teachers');
-    };
-
     $scope.goToListParents = function (student) {
         SmartState.go('all parents', { studentId: student._id });
     };
@@ -32,10 +24,12 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
             complex: Global.getComplex()._id,
             school: Global.getSchool()._id
         });
+        Global.title = 'Studenti';
+        Global.subtitle = 'Nuovo';
     };
 
-    $scope.create = function(isValid) {
-        if(isValid) {
+    $scope.create = function (isValid) {
+        if (isValid) {
             var student = $scope.student;
             student.$save(function () {
                 $scope.goToListStudents();
@@ -43,8 +37,8 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
         }
     };
 
-    $scope.update = function(isValid) {
-        if(isValid) {
+    $scope.update = function (isValid) {
+        if (isValid) {
             var student = $scope.student;
             if (!student.updated) {
                 student.updated = [];
@@ -57,7 +51,7 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
         }
     };
 
-    $scope.remove = function(student) {
+    $scope.remove = function (student) {
         if (student) {
             student.$remove();
             _.remove($scope.students, student);
@@ -65,21 +59,32 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
         }
     };
 
-    $scope.find = function() {
-        $scope.students = Student.query({
+    $scope.find = function () {
+        Student.query({
             complexId: Global.getComplex()._id,
             schoolId: Global.getSchool()._id
-        });
+        }).$promise
+            .then(function (students) {
+                $scope.students = students;
+
+                Global.title = 'Alunni';
+                Global.subtitle = Global.getComplex().name;
+            });
     };
 
-    $scope.findOne = function() {
-        $scope.student = Student.get({
-            studentId: $stateParams.studentId,
-            complexId: Global.getComplex()._id,
-            schoolId: Global.getSchool()._id
-        },
-        function(student){
-            student.birthDate = $filter('date')(student.birthDate, 'yyyy-MM-dd');
-        });
+    $scope.findOne = function () {
+        Student.get({
+                studentId: $stateParams.studentId,
+                complexId: Global.getComplex()._id,
+                schoolId: Global.getSchool()._id
+            }).$promise
+            .then(function (student) {
+                student.birthDate = $filter('date')(student.birthDate, 'yyyy-MM-dd');
+
+                $scope.student = student;
+
+                Global.title = 'Alunni';
+                Global.subtitle = $filter('name')(student);
+            });
     };
 }]);

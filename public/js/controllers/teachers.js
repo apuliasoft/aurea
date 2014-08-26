@@ -15,14 +15,6 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
         SmartState.go('edit teacher', { teacherId: teacher._id });
     };
 
-    $scope.goToListAcademicYears = function () {
-        SmartState.go('all academic years');
-    };
-
-    $scope.goToListStudents = function () {
-        SmartState.go('all students');
-    };
-
     $scope.init = function () {
         $scope.teacher = new Teacher({
             school: Global.getSchool()._id,

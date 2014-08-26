@@ -1,24 +1,21 @@
 <section data-ng-controller="StudentsCtrl" data-ng-init="find()">
-  <h2>{{ global.getComplex().name }}</h2>
-
-  <ul class="nav nav-tabs" role="tablist">
-    <li><a href="#" data-ng-click="goToListAcademicYears()">Anni accademici</a></li>
-    <li><a href="#" data-ng-click="goToListTeachers()">Insegnanti</a></li>
-    <li class="active"><a href="#">Alunni</a></li>
-  </ul>
 
   <div class="row">
     <div class="col-xs-4" data-ng-repeat="student in students">
-      <div class="thumbnail">
+      <div class="thumbnail well well-sm">
         <h3>{{student | name}}</h3>
         <p>{{student.user.email}}</p>
         <p>{{student.birthDate | date}}</p>
 
         <div class="pull-right">
-          <button class="btn btn-primary" role="button" data-ng-click="goToListParents(student)"><i
-              class="fa fa-check"></i></button>
-          <button href="#" class="btn btn-default" role="button" data-ng-click="goToEditStudent(student)"><i
-              class="fa fa-pencil"></i></button>
+          <div class="btn-group btn-group-xs">
+            <button class="btn btn-default" role="button" data-ng-click="goToEditStudent(student)" title="Modifica">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button class="btn btn-primary" role="button" data-ng-click="goToListParents(student)" title="Seleziona">
+              <i class="fa fa-check"></i>
+            </button>
+          </div>
         </div>
 
         <div class="clearfix"></div>
@@ -26,5 +23,18 @@
     </div>
   </div>
 
-  <button data-ng-click="goToCreateStudent()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo alunno</button>
+  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container">
+      <p class="navbar-text">
+        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+      </p>
+
+      <div class="nav navbar-nav navbar-right btn-group">
+        <button type="button" data-ng-click="goToCreateStudent()" class="btn btn-primary navbar-btn" title="Aggiungi">
+          <i class="fa fa-plus"></i> Aggiungi
+        </button>
+      </div>
+    </div>
+  </nav>
+
 </section>
