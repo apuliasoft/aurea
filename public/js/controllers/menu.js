@@ -15,50 +15,54 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', 'Global', '$fil
         if (Global.isAdmin()) {
             $scope.menu.push({
                 'title': 'Utenti',
-                'goToState': function () { SmartState.go('all users') },
+                'goToState': function () { SmartState.go('all users'); },
                 'ngif': Global.isAdmin
             });
         }
 
         $scope.menu.push({
             'title': 'Scuole',
-            'goToState': function () { SmartState.go('all schools') },
+            'goToState': function () { SmartState.go('all schools'); },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Insegnanti',
-            'goToState': function () { SmartState.go('all theaching') },
+            'goToState': function () { SmartState.go('all teachers'); },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Alunni',
-            'goToState': function () { SmartState.go('all students') },
+            'goToState': function () { SmartState.go('all students'); },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Anni accademici',
-            'goToState': function () { SmartState.go('all academic years') },
+            'goToState': function () { SmartState.go('all academic years'); },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Classi',
-            'goToState': function () { SmartState.go('all school classes') },
+            'goToState': function () { SmartState.go('all school classes'); },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Insegnamenti',
-            'goToState': function () { SmartState.go('all teaching') },
+            'goToState': function () { SmartState.go('all teachings'); },
             'ngif': Global.isAdmin
         });
 
         $scope.menu.push({
             'title': 'Registro di Classe',
-            'goToState': 'registri-di-classe/' + $filter('date')(new Date(), 'yyyy-MM-dd'),
+            'goToState': function () {
+                SmartState.go('class registry by date', {
+                    date: $filter('date')(new Date(), 'yyyy-MM-dd')
+                });
+            },
             'ngif': Global.isAdmin
         });
 

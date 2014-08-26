@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', '$modal', 'Global', 'ClassRegistry', 'ClassStudent', 'Teacher', 'Teaching', function ($scope, $stateParams, $location, $filter, _, $modal, Global, ClassRegistry, ClassStudent, Teacher, Teaching) {
+angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope', '$stateParams', '$filter', '_', '$modal', 'SmartState', 'Global', 'ClassRegistry', 'ClassStudent', 'Teacher', 'Teaching', function ($scope, $stateParams, $filter, _, $modal, SmartState, Global, ClassRegistry, ClassStudent, Teacher, Teaching) {
 
     /**
      * Converte il formato degli orari.
@@ -109,13 +109,17 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
     $scope.tomorrow = function () {
         var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
-        $location.path('registri-di-classe/' + $filter('date')(newDay, 'yyyy-MM-dd'));
+        SmartState.go('class registry by date', {
+            date: $filter('date')(newDay, 'yyyy-MM-dd')
+        });
     };
 
     $scope.yesterday = function () {
         var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() - 1);
-        $location.path('registri-di-classe/' + $filter('date')(newDay, 'yyyy-MM-dd'));
+        SmartState.go('class registry by date', {
+            date: $filter('date')(newDay, 'yyyy-MM-dd')
+        });
     };
 
     $scope.save = function () {

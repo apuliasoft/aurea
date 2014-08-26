@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', '$localStorage', '$state', '$stateParams', function ($scope, Global, $filter, $localStorage, $state, $stateParams) {
+angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', '$localStorage', '$state', 'SmartState', '$stateParams', function ($scope, Global, $filter, $localStorage, $state, SmartState, $stateParams) {
     $scope.global = Global;
 
     $scope.$watch('global.user', function () {
@@ -8,9 +8,12 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
     });
 
     $scope.goToSchool = function (school) {
-        $state.go('all complexes', {
+        SmartState.go('all complexes', {
             schoolId: school._id
         });
+        /*$state.go('all complexes', {
+            schoolId: school._id
+        });*/
     };
 
     $scope.goToComplex = function (complex) {

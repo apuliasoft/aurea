@@ -11,7 +11,7 @@ angular.module('aurea').factory('SmartState', ['$state', '$stateParams', '_', fu
 
             _.filter(nextState.url.split('/'), function (elem) {
                 return elem.charAt(0) === ':';
-            }).map(function(elem){
+            }).map(function (elem) {
                 return elem.substring(1);
             }).forEach(function (elem) {
                 if ($stateParams[elem] && !params[elem]) {
@@ -19,10 +19,10 @@ angular.module('aurea').factory('SmartState', ['$state', '$stateParams', '_', fu
                 }
             });
 
-            console.log(nextState);
-            console.log(params);
-
-            $state.go(name, params);
+            $state.go(name, params)
+              .catch(function (err) {
+                  console.log(err);
+              });
         }
 
     };

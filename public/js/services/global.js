@@ -43,8 +43,6 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
 
         $rootScope.$on('$locationChangeSuccess',
             function(){
-                console.log(arguments);
-
                 _this._data.title = '';
                 _this._data.subtitle = '';
                 _this._data.actions = [];
