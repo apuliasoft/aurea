@@ -21,11 +21,12 @@
     };
 
     $scope.init = function () {
+        Global.title = 'Plessi';
+        Global.subtitle = 'Nuovo';
+
         $scope.complex = new Complex({
             school: Global.getSchool()._id
         });
-        Global.title = 'Plessi';
-        Global.subtitle = 'Nuovo';
     };
 
     $scope.create = function(isValid) {

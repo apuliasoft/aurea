@@ -23,6 +23,9 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
     };
 
     $scope.init = function () {
+        Global.title = 'Anni accademici';
+        Global.subtitle = 'Nuovo';
+
         $scope.academicYear = new AcademicYear({
             school: Global.getSchool()._id,
             complex: Global.getComplex()._id,
@@ -34,8 +37,6 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
             })
 
         });
-        Global.title = 'Anni accademici';
-        Global.subtitle = 'Nuovo';
     };
 
     $scope.addTimeSlot = function (slots) {

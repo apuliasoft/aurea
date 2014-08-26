@@ -20,9 +20,10 @@ angular.module('aurea.schools').controller('SchoolsCtrl', ['$scope', '$statePara
     };
 
     $scope.init = function () {
-        $scope.school = new School();
         Global.title = 'Scuole';
         Global.subtitle = 'Nuova';
+
+        $scope.school = new School();
     };
 
     $scope.create = function (isValid) {

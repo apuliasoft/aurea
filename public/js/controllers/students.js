@@ -20,12 +20,13 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
     };
 
     $scope.init = function () {
+        Global.title = 'Studenti';
+        Global.subtitle = 'Nuovo';
+
         $scope.student = new Student({
             complex: Global.getComplex()._id,
             school: Global.getSchool()._id
         });
-        Global.title = 'Studenti';
-        Global.subtitle = 'Nuovo';
     };
 
     $scope.create = function (isValid) {

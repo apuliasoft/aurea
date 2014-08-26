@@ -16,13 +16,14 @@ angular.module('aurea.parents').controller('ParentsCtrl', ['$scope', '$statePara
     };
 
     $scope.init = function () {
+        Global.title = 'Genitori';
+        Global.subtitle = 'Nuovo';
+
         $scope.parent = new Parent({
             school: Global.getSchool()._id,
             complex: Global.getComplex()._id,
             student: Global.getStudent()._id
         });
-        Global.title = 'Genitori';
-        Global.subtitle = 'Nuovo';
     };
 
     $scope.create = function(isValid) {

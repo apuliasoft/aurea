@@ -1,20 +1,20 @@
 <section data-ng-controller="SchoolClassesCtrl" data-ng-init="find()">
-  <h1>{{ global.getAcademicYear().name }}</h1>
-
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="#">Classi</a></li>
-  </ul>
 
   <div class="row">
     <div class="col-xs-4" data-ng-repeat="schoolClass in schoolClasses">
-      <div class="thumbnail">
+      <div class="thumbnail well well-sm">
         <h3>{{schoolClass.name}}</h3>
+        <p>{{schoolClass.students.length}} studente/i</p>
 
         <div class="pull-right">
-          <button class="btn btn-primary" role="button" data-ng-click="goToClassRegistry(schoolClass)"><i
-              class="fa fa-check"></i></button>
-          <button href="#" class="btn btn-default" role="button" data-ng-click="goToEditSchoolClass(schoolClass)"><i
-              class="fa fa-pencil"></i></button>
+          <div class="btn-group btn-group-xs">
+            <button class="btn btn-default" role="button" data-ng-click="goToEditSchoolClass(schoolClass)" title="Modifica">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button class="btn btn-primary" role="button" data-ng-click="goToClassRegistry(schoolClass)" title="Seleziona">
+              <i class="fa fa-check"></i>
+            </button>
+          </div>
         </div>
 
         <div class="clearfix"></div>
@@ -22,5 +22,18 @@
     </div>
   </div>
 
-  <button data-ng-click="goToCreateSchoolClass()" class="btn btn-default"><i class="fa fa-plus"></i> Nuova classe</button>
+  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container">
+      <p class="navbar-text">
+        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+      </p>
+
+      <div class="nav navbar-nav navbar-right btn-group">
+        <button type="button" data-ng-click="goToCreateSchoolClass()" class="btn btn-primary navbar-btn" title="Aggiungi">
+          <i class="fa fa-plus"></i> Aggiungi
+        </button>
+      </div>
+    </div>
+  </nav>
+
 </section>

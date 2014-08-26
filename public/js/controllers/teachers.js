@@ -16,12 +16,13 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
     };
 
     $scope.init = function () {
+        Global.title = 'Insegnanti';
+        Global.subtitle = 'Nuovo';
+
         $scope.teacher = new Teacher({
             school: Global.getSchool()._id,
             complex: Global.getComplex()._id
         });
-        Global.title = 'Insegnanti';
-        Global.subtitle = 'Nuovo';
     };
 
     $scope.create = function (isValid) {

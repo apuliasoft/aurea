@@ -3,10 +3,6 @@
 angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$stateParams', 'SmartState', '_', 'Global', 'Teaching', 'Teacher' , function ($scope, $stateParams, SmartState, _, Global, Teaching, Teacher) {
     $scope.global = Global;
 
-    $scope.columns = [
-        {name:'name', label:'Nome'}
-    ];
-
     $scope.getSchoolClassName = function(schoolClassId) {
         var schoolClass = _.find($scope.schoolClasses, function(schoolClass) {
             return schoolClass._id === schoolClassId;
