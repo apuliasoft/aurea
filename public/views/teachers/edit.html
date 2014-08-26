@@ -1,43 +1,65 @@
 <section data-ng-controller="TeachersCtrl" data-ng-init="findOne()">
-  <h2>Modifica insegnante</h2>
 
-  <form name="teacherForm" role="form" data-ng-submit="update(teacherForm.$valid)" novalidate>
+  <form name="teacherForm" role="form" data-ng-submit="update(teacherForm.$valid)" novalidate class="form-horizontal">
 
     <div class="form-group"
          data-ng-class="{ 'has-error' : teacherForm.firstName.$invalid && !teacherForm.firstName.$pristine }">
-      <label for="firstName" class="control-label">Nome</label>
-      <input type="text" data-ng-model="teacher.firstName" id="firstName" name="firstName" class="form-control"
-             placeholder="Nome" required>
+      <label for="firstName" class="col-sm-2 control-label">Nome</label>
 
-      <p ng-show="teacherForm.firstName.$invalid && !teacherForm.firstName.$pristine" class="help-block">Il nome è
-        obbligatorio.</p>
+      <div class="col-sm-10">
+        <input type="text" data-ng-model="teacher.firstName" id="firstName" name="firstName" class="form-control"
+               placeholder="Nome" required>
+      </div>
+
+      <p ng-show="teacherForm.firstName.$invalid && !teacherForm.firstName.$pristine" class="help-block">
+        Il nome è obbligatorio.
+      </p>
     </div>
 
     <div class="form-group"
          data-ng-class="{ 'has-error' : teacherForm.lastName.$invalid && !teacherForm.lastName.$pristine }">
-      <label for="lastName" class="control-label">Cognome</label>
-      <input type="text" data-ng-model="teacher.lastName" id="lastName" name="lastName" class="form-control"
-             placeholder="Cognome" required>
+      <label for="lastName" class="col-sm-2 control-label">Cognome</label>
 
-      <p ng-show="teacherForm.lastName.$invalid && !teacherForm.lastName.$pristine" class="help-block">Il cognome
-        è obbligatorio.</p>
+      <div class="col-sm-10">
+        <input type="text" data-ng-model="teacher.lastName" id="lastName" name="lastName" class="form-control"
+               placeholder="Cognome" required>
+      </div>
+
+      <p ng-show="teacherForm.lastName.$invalid && !teacherForm.lastName.$pristine" class="help-block">
+        Il cognome è obbligatorio.
+      </p>
     </div>
 
     <div class="form-group"
          data-ng-class="{ 'has-error' : teacherForm.email.$invalid && !teacherForm.email.$pristine }">
-      <label for="email" class="control-label">Email</label>
-      <input type="email" data-ng-model="teacher.user.email" id="email" name="email" class="form-control"
-             placeholder="Email" required>
+      <label for="email" class="col-sm-2 control-label">Email</label>
 
-      <p ng-show="teacherForm.email.$invalid && !teacherForm.email.$pristine" class="help-block">Inserire una email
-        valida</p>
+      <div class="col-sm-10">
+        <input type="email" data-ng-model="teacher.user.email" id="email" name="email" class="form-control"
+               placeholder="Email" required>
+      </div>
+
+      <p ng-show="teacherForm.email.$invalid && !teacherForm.email.$pristine" class="help-block">
+        Inserire una email valida
+      </p>
     </div>
 
-    <hr>
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+      <div class="container">
+        <p class="navbar-text">
+          Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+        </p>
 
-    <button type="submit" class="btn btn-primary" data-ng-disabled="teacherForm.$invalid">Salva</button>
-
-    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+        <div class="nav navbar-nav navbar-right btn-group">
+          <button type="button" data-ng-click="goToListTeachers()" class="btn btn-default navbar-btn" class="Annulla">
+            <i class="fa fa-times"></i> Annulla
+          </button>
+          <button type="submit" data-ng-disabled="teacherForm.$invalid" class="btn btn-primary navbar-btn" class="Salva">
+            <i class="fa fa-check"></i> Salva
+          </button>
+        </div>
+      </div>
+    </nav>
 
   </form>
 </section>

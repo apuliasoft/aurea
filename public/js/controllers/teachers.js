@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$stateParams', 'SmartState', '_', 'Global', 'Teacher', function ($scope, $stateParams, SmartState, _, Global, Teacher) {
+angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$stateParams', '$filter', 'SmartState', '_', 'Global', 'Teacher', function ($scope, $stateParams, $filter, SmartState, _, Global, Teacher) {
     $scope.global = Global;
 
     $scope.goToListTeachers = function () {
@@ -12,7 +12,7 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
     };
 
     $scope.goToEditTeacher = function (teacher) {
-        SmartState.go('edit teachers', { teacherId: teacher._id });
+        SmartState.go('edit teacher', { teacherId: teacher._id });
     };
 
     $scope.goToListAcademicYears = function () {
@@ -25,12 +25,14 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
 
     $scope.init = function () {
         $scope.teacher = new Teacher({
-          school: Global.getSchool()._id,
-          complex: Global.getComplex()._id
+            school: Global.getSchool()._id,
+            complex: Global.getComplex()._id
         });
+        Global.title = 'Insegnanti';
+        Global.subtitle = 'Nuovo';
     };
 
-    $scope.create = function(isValid) {
+    $scope.create = function (isValid) {
         if (isValid) {
             var teacher = $scope.teacher;
             teacher.$save(function () {
@@ -39,7 +41,7 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
         }
     };
 
-    $scope.update = function(isValid) {
+    $scope.update = function (isValid) {
         if (isValid) {
             var teacher = $scope.teacher;
             if (!teacher.updated) {
@@ -53,7 +55,7 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
         }
     };
 
-    $scope.remove = function(teacher) {
+    $scope.remove = function (teacher) {
         if (teacher) {
             teacher.$remove();
             _.remove($scope.teachers, teacher);
@@ -61,18 +63,30 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
         }
     };
 
-    $scope.find = function() {
-        $scope.teachers = Teacher.query({
+    $scope.find = function () {
+        Teacher.query({
             complexId: Global.getComplex()._id,
             schoolId: Global.getSchool()._id
-        });
+        }).$promise
+            .then(function (teachers) {
+                $scope.teachers = teachers;
+
+                Global.title = 'Insegnanti';
+                Global.subtitle = Global.getComplex().name;
+            });
     };
 
-    $scope.findOne = function() {
-        $scope.teacher = Teacher.get({
+    $scope.findOne = function () {
+        Teacher.get({
             teacherId: $stateParams.teacherId,
             complexId: Global.getComplex()._id,
             schoolId: Global.getSchool()._id
-        });
+        }).$promise
+            .then(function (teacher) {
+                $scope.teacher = teacher;
+
+                Global.title = 'Insegnanti';
+                Global.subtitle = $filter('name')(teacher);
+            });
     };
 }]);
