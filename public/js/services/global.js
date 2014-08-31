@@ -6,37 +6,47 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
         var _this = this;
 
         var schools = [];
-        var school = {};
+        var school = null;
 
         var complexes = [];
-        var complex = {};
+        var complex = null;
 
         var academicYears = [];
-        var academicYear = {};
-
-        var schoolClasses = [];
-        var schoolClass = {};
+        var academicYear = null;
 
         var students = [];
-        var student = {};
+        var student = null;
+
+        var schoolClasses = [];
+        var schoolClass = null;
 
         /**
          * Elimino da Global tutte le variabili di contesto non utili ai fini dell'attuale schermata.
          */
         $rootScope.$on('$stateChangeSuccess', function () {
             if (!$stateParams.schoolId) {
-                schools = [];
-                school = {};
+                schools.length = 0;
+                school = null;
             }
 
             if (!$stateParams.complexId) {
-                complexes = [];
-                complex = {};
+                complexes.length = 0;
+                complex = null;
             }
 
             if (!$stateParams.academicYearId) {
-                academicYears = [];
-                academicYear = {};
+                academicYears.length = 0;
+                academicYear = null;
+            }
+
+            if (!$stateParams.studentId) {
+                students.length = 0;
+                student = null;
+            }
+
+            if (!$stateParams.schoolClassId) {
+                schoolClasses.length = 0;
+                schoolClass = null;
             }
 
         });
@@ -45,7 +55,6 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
             function(){
                 _this._data.title = '';
                 _this._data.subtitle = '';
-                _this._data.actions = [];
             });
 
         _this._data = {
