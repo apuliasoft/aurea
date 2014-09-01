@@ -35,7 +35,7 @@
   <ol class="breadcrumb" data-ng-show="global.isLoggedin()">
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        {{ global.getSchool().name || 'Seleziona la scuola'}} <b class="caret"></b>
+        {{ global.getSchool().name }} <b class="caret"></b>
       </a>
       <ul class="dropdown-menu" role="menu">
         <li data-ng-repeat="school in global.getSchools()" data-ng-click="goToSchool(school)">
@@ -43,54 +43,6 @@
         </li>
       </ul>
     </li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        {{ global.getComplex().name || 'Seleziona il plesso'}} <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu" role="menu">
-        <li data-ng-repeat="complex in global.getComplexes()" data-ng-click="goToComplex(complex)">
-          <a href="#">{{ complex.name }}</a>
-        </li>
-      </ul>
-    </li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        {{ global.getAcademicYear().name || 'Seleziona l\'anno accademico'}} <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu" role="menu">
-        <li data-ng-repeat="academicYear in global.getAcademicYears()"
-            data-ng-click="goToAcademicYear(academicYear)">
-          <a href="#">{{ academicYear.name }}</a>
-        </li>
-      </ul>
-    </li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        {{ global.getSchoolClass().name || 'Seleziona la classe'}} <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu" role="menu">
-        <li data-ng-repeat="schoolClass in global.getSchoolClasses()"
-            data-ng-click="global.setSchoolClass(schoolClass)">
-          <a href="#">{{ schoolClass.name }}</a>
-        </li>
-      </ul>
-    </li>
   </ol>
-
-  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-    <div class="container">
-      <p class="navbar-text">
-        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-      </p>
-
-      <div class="nav navbar-nav navbar-right btn-group">
-        <button data-ng-repeat="action in global.actions"
-                data-ng-class="{'btn btn-primary navbar-btn': $last, 'btn btn-default navbar-btn': !$last}"
-                data-ng-click="action.func()">
-          <i class="fa fa-{{action.icon}}"></i> {{action.name}}
-        </button>
-      </div>
-    </div>
-  </nav>
 
 </div>
