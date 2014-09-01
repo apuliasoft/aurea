@@ -96,16 +96,16 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
             contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass]
         },
-        {
-            title: 'Registro Personale',
-            goToState: function () {
-                SmartState.go('teaching registry by date', {
-                    date: $filter('date')(new Date(), 'yyyy-MM-dd')
-                });
-            },
-            roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
-            contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass, Global.getTeaching]
-        },
+//        {
+//            title: 'Registro Personale',
+//            goToState: function () {
+//                SmartState.go('teaching registry by date', {
+//                    date: $filter('date')(new Date(), 'yyyy-MM-dd')
+//                });
+//            },
+//            roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
+//            contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass, Global.getTeaching]
+//        },
         {
             title: 'Utenti',
             goToState: function () {
