@@ -29,7 +29,7 @@ exports.classRegistry = function (req, res, next) {
       function (err, classRegistry) {
           if (err) return next(err);
           if(!classRegistry){
-              var academicYear = AcademicYear.findById(academicYearId, function(err, academicYear){
+              AcademicYear.findById(academicYearId, function(err, academicYear){
                   if(err) return next(err);
                   var weekDay = date.getDay() === 0 ? 7 : date.getDay();
                   var day = _.find(academicYear.timeTable, function (day) {
@@ -45,7 +45,7 @@ exports.classRegistry = function (req, res, next) {
 
                   classRegistry = new ClassRegistry({
                       schoolClass: schoolClassId,
-                      date: date, // TODO: controllare se è giusto
+                      date: date,
                       school: schoolId,
                       complex: complexId,
                       academicYear: academicYearId,
@@ -55,10 +55,14 @@ exports.classRegistry = function (req, res, next) {
                       earlyLeaves: [],
                       lateEntrances: []
                   });
+
+                  req.classRegistry = classRegistry;
+                  next();
               });
+          } else {
+              req.classRegistry = classRegistry;
+              next();
           }
-          req.classRegistry = classRegistry;
-          next();
       });
 };
 
