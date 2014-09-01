@@ -71,7 +71,7 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
         var academicYear = Global.getAcademicYear()._id;
         var weekDay = date.getDay() === 0 ? 7 : date.getDay();
 
-        var day = _.find(Global.getAcademicYear().timeTable, function (day) {
+        /*var day = _.find(Global.getAcademicYear().timeTable, function (day) {
             return day.weekDay === weekDay;
         });
 
@@ -93,7 +93,7 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
             absences: [],
             earlyLeaves: [],
             lateEntrances: []
-        });
+        });*/
 
         ClassRegistry.get({
             schoolClassId: schoolClass,
