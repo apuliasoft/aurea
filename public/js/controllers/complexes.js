@@ -1,6 +1,6 @@
 'use strict';
 
-    angular.module('aurea.complexes').controller('ComplexesCtrl', ['$scope', '$stateParams', 'SmartState', '_', 'Provinces', 'Global', 'Complex', function ($scope, $stateParams, SmartState, _, Provinces, Global, Complex) {
+angular.module('aurea.complexes').controller('ComplexesCtrl', ['$scope', '$stateParams', 'SmartState', '_', 'Provinces', 'Global', 'Complex', function ($scope, $stateParams, SmartState, _, Provinces, Global, Complex) {
     $scope.global = Global;
     $scope.provinces = Provinces.getProvinces();
 
@@ -29,7 +29,7 @@
         });
     };
 
-    $scope.create = function(isValid) {
+    $scope.create = function (isValid) {
         if (isValid) {
             var complex = $scope.complex;
             complex.$save(function () {
@@ -38,7 +38,7 @@
         }
     };
 
-    $scope.update = function(isValid) {
+    $scope.update = function (isValid) {
         if (isValid) {
             var complex = $scope.complex;
             if (!complex.updated) {
@@ -52,29 +52,29 @@
         }
     };
 
-    $scope.find = function() {
+    $scope.find = function () {
         Complex.query({
             schoolId: Global.getSchool()._id
         }).$promise
-            .then(function(complexes) {
-                Global.title = 'Plessi';
-                Global.subtitle = Global.getSchool().name;
+          .then(function (complexes) {
+              Global.title = 'Plessi';
+              Global.subtitle = Global.getSchool().name;
 
-                $scope.complexes = complexes;
-            });
+              $scope.complexes = complexes;
+          });
     };
 
-    $scope.findOne = function() {
+    $scope.findOne = function () {
         Complex.get({
             schoolId: Global.getSchool()._id,
             complexId: $stateParams.complexId
         }).$promise
-            .then(function(complex) {
-                Global.title = 'Plessi';
-                Global.subtitle = complex.name;
+          .then(function (complex) {
+              Global.title = 'Plessi';
+              Global.subtitle = complex.name;
 
-                $scope.complex = complex;
-            });
+              $scope.complex = complex;
+          });
     };
 }]);
 
