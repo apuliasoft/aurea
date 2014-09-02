@@ -9,11 +9,6 @@
       </div>
 
       <div class="form-group">
-          <label for="username" class="control-label">Username</label>
-          <input type="text" data-ng-model="user.username" id="username" name="username" class="form-control" placeholder="Username">
-      </div>
-
-      <div class="form-group">
           <label for="email" class="control-label">Email</label>
           <input type="email" data-ng-model="user.email" id="email" name="email" class="form-control" placeholder="Email">
       </div>
@@ -23,17 +18,11 @@
           <input type="password" data-ng-model="user.password" id="password" name="password" class="form-control" placeholder="Password">
       </div>
 
-      <div class="form-group">
-          <label for="roles" class="control-label">Ruoli</label>
-          <select class="form-control" size="10" id="roles" data-ng-model="user.role" data-ng-options="key as value for (key, value) in roles">
-          </select>
-      </div>
-
     <hr>
 
     <button type="submit" class="btn btn-primary">Salva</button>
 
-    <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+    <button type="button" data-ng-click="goToListUsers()" class="btn btn-default">Annulla</button>
 
   </form>
 

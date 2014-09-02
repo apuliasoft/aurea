@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams', '$location', '_', 'ngToast', 'Global', 'User', function ($scope, $stateParams, $location, _, ngToast, Global, User) {
+angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams', 'SmartState', '_', 'ngToast', 'Global', 'User', function ($scope, $stateParams, SmartState, _, ngToast, Global, User) {
     $scope.global = Global;
 
     $scope.columns = [
@@ -17,25 +17,20 @@ angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams',
         admin: 'Amministratore'
     };
 
-    $scope.list = function () {
-        $location.path('utenti');
+    $scope.goToListUsers = function () {
+        SmartState.go('all users');
     };
 
-    $scope.new = function () {
-        $location.path('utenti/crea');
+    $scope.goToCreateUser = function () {
+        SmartState.go('create user');
     };
 
-    $scope.view = function (user) {
-        if (user) {
-            ngToast.create('Visualizza dettagli di ' + user.name);
-            $location.path('utenti/' + user._id);
-        }
+    $scope.goToEditUser = function (user) {
+        SmartState.go('edit user', { userId: user._id });
     };
 
-    $scope.edit = function (user) {
-        if (user) {
-            $location.path('utenti/' + user._id + '/modifica');
-        }
+    $scope.goToViewUser = function (user) {
+        SmartState.go('user by id', { userId: user._id });
     };
 
     $scope.init = function () {
@@ -48,7 +43,7 @@ angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams',
         var user = $scope.user;
 
         user.$save(function (response) {
-            $scope.view(response);
+            $scope.goToViewUser(response);
         });
     };
 
@@ -56,7 +51,7 @@ angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams',
         if (user) {
             user.$remove();
             _.remove($scope.users, user);
-            $scope.list();
+            $scope.goToListUsers();
         }
     };
 
@@ -69,7 +64,7 @@ angular.module('aurea.users').controller('UsersCtrl', ['$scope', '$stateParams',
         user.updated.push(new Date().getTime());
 
         user.$update(function (response) {
-            $scope.view(response);
+            $scope.goToViewUser(response);
         });
     };
 

@@ -3,9 +3,11 @@
 angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$filter', '$localStorage', 'SmartState', '$stateParams', function ($scope, Global, $filter, $localStorage, SmartState, $stateParams) {
     $scope.global = Global;
 
-    $scope.goToSchool = function (school) {
-        SmartState.go('all complexes', {
-            schoolId: school._id
+    $scope.goToAcademicYear = function (academicYear) {
+        SmartState.go('all school classes', {
+            schoolId: $stateParams.schoolId,
+            complexId: $stateParams.complexId,
+            academicYearId: academicYear._id
         });
     };
 
@@ -16,11 +18,17 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
         });
     };
 
-    $scope.goToAcademicYear = function (academicYear) {
-        SmartState.go('all school classes', {
+    $scope.goToSchool = function (school) {
+        SmartState.go('all complexes', {
+            schoolId: school._id
+        });
+    };
+
+    $scope.goToStudent = function (student) {
+        SmartState.go('all parents', {
             schoolId: $stateParams.schoolId,
             complexId: $stateParams.complexId,
-            academicYearId: academicYear._id
+            studentId: student._id
         });
     };
 

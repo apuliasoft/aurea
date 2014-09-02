@@ -9,11 +9,6 @@
         </div>
 
         <div class="form-group">
-            <label for="username" class="control-label">Username</label>
-            <input type="text" data-ng-model="user.username" id="username" name="username" class="form-control" placeholder="Username">
-        </div>
-
-        <div class="form-group">
             <label for="email" class="control-label">Email</label>
             <input type="email" data-ng-model="user.email" id="email" name="email" class="form-control" placeholder="Email">
         </div>
@@ -28,7 +23,7 @@
 
         <button type="submit" class="btn btn-primary">Crea</button>
 
-        <button type="button" data-ng-click="list()" class="btn btn-default">Annulla</button>
+        <button type="button" data-ng-click="goToListUsers()" class="btn btn-default">Annulla</button>
 
     </form>
 </section>

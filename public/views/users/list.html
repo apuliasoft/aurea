@@ -1,7 +1,42 @@
 <section data-ng-controller="UsersCtrl" data-ng-init="find()">
-  <h2>Utenti</h2>
+    <h2>Utenti</h2>
 
-  <datatable columns="columns" list="users" view="view(element)" edit="edit(element)" remove="remove(element)"></datatable>
+    <div class="row">
+        <div class="col-xs-4" data-ng-repeat="user in users">
+            <div class="thumbnail well well-sm">
+                <h3>{{user.name}}</h3>
 
-  <button data-ng-click="new()" class="btn btn-default"><i class="fa fa-plus"></i> Nuovo utente</button>
+                <div class="pull-right">
+                    <div class="btn-group btn-group-xs">
+                        <button class="btn btn-default" role="button" data-ng-click="goToEditUser(user)"
+                                title="Modifica">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                        <button class="btn btn-primary" role="button" data-ng-click="goToViewUser(user)"
+                                title="Seleziona">
+                            <i class="fa fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <div class="container">
+            <p class="navbar-text">
+                Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+            </p>
+
+            <div class="nav navbar-nav navbar-right btn-group">
+                <button type="button" data-ng-click="goToCreateUser()" class="btn btn-primary navbar-btn"
+                        title="Aggiungi">
+                    <i class="fa fa-plus"></i> Aggiungi
+                </button>
+            </div>
+        </div>
+    </nav>
+
 </section>
