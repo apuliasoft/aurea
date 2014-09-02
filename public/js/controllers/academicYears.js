@@ -71,6 +71,10 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         }
     };
 
+    $scope.removeDayTimeSlots = function (day) {
+        day.slots.splice(0, day.slots.length);
+    };
+
     $scope.removeTimeSlot = function (slots, index) {
         slots.splice(index, 1);
     };

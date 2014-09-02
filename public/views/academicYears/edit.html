@@ -1,103 +1,132 @@
 <section data-ng-controller="AcademicYearsCtrl" data-ng-init="findOne()">
 
-  <form name="academicYearForm" role="form" data-ng-submit="update(academicYearForm.$valid)" novalidate
-        class="form-horizontal">
+    <form name="academicYearForm" role="form" data-ng-submit="update(academicYearForm.$valid)" novalidate
+          class="form-horizontal">
 
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : academicYearForm.name.$invalid && !academicYearForm.name.$pristine }">
-      <label for="name" class="col-sm-2 control-label">Nome</label>
+        <div class="form-group"
+             data-ng-class="{ 'has-error' : academicYearForm.name.$invalid && !academicYearForm.name.$pristine }">
+            <label for="name" class="col-sm-2 control-label">Nome</label>
 
-      <div class="col-sm-10">
-        <input type="text" data-ng-model="academicYear.name" id="name" name="name" class="form-control"
-               placeholder="Nome" required>
-      </div>
-
-      <p ng-show="academicYearForm.name.$invalid && !academicYearForm.name.$pristine" class="help-block">
-        Il nome è obbligatorio.
-      </p>
-    </div>
-
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : academicYearForm.startDate.$invalid && !academicYearForm.startDate.$pristine }">
-      <label for="startDate" class="col-sm-2 control-label">Data inizio</label>
-
-      <div class="col-sm-10">
-        <input type="date" data-ng-model="academicYear.startDate" id="startDate" name="startDate"
-               class="form-control" placeholder="Data inizio" required>
-      </div>
-
-      <p ng-show="academicYearForm.startDate.$invalid && !academicYearForm.startDate.$pristine" class="help-block">
-        La data di inizio è obbligatoria.</p>
-    </div>
-
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : academicYearForm.endDate.$invalid && !academicYearForm.endDate.$pristine }">
-      <label for="endDate" class="col-sm-2 control-label">Data fine</label>
-
-      <div class="col-sm-10">
-        <input type="date" data-ng-model="academicYear.endDate" id="endDate" name="endDate" class="form-control"
-               placeholder="Data fine" required>
-      </div>
-
-      <p ng-show="academicYearForm.endDate.$invalid && !academicYearForm.endDate.$pristine" class="help-block">
-        La data di fine è obbligatoria.
-      </p>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6" data-ng-repeat="day in academicYear.timeTable">
-        <hr>
-        <p><b>{{day.weekDay | weekDay}}</b></p>
-
-        <div class="col-xs-12" data-ng-if="day.slots.length">
-
-          <div class="row" data-ng-repeat="slot in day.slots" data-ng-class="{ 'has-error' : !slotFilled(slot) }">
-            <div class="col-xs-12">{{($index+1) | ordinalNumber}} ora</div>
-
-            <button type="button" data-ng-click="removeTimeSlot(day.slots, $index)" class="col-xs-1 btn btn-default"
-                    title="Dettagli"><i class="fa fa-minus-circle"></i></button>
-            <div class="col-xs-4 form-group">
-              <input type="time" class="form-control" data-ng-model="slot.start" required>
-            </div>
-            <i class="col-xs-1 fa fa-long-arrow-right"></i>
-
-            <div class="col-xs-4 form-group">
-              <input type="time" class="form-control" data-ng-model="slot.end" required>
+            <div class="col-sm-10">
+                <input type="text" data-ng-model="academicYear.name" id="name" name="name" class="form-control"
+                       placeholder="Nome" required>
             </div>
 
-          </div>
-
-          <div class="row" data-ng-if="slotsFilled(day.slots)">
-            <button type="button" data-ng-click="addTimeSlot(day.slots)" class="col-xs-1 btn btn-default"><i
-                class="fa fa-plus-circle"></i></button>
-          </div>
+            <p ng-show="academicYearForm.name.$invalid && !academicYearForm.name.$pristine" class="help-block">
+                Il nome è obbligatorio.
+            </p>
         </div>
-        <div class="col-xs-12" data-ng-if="!day.slots.length">
-          <button type="button" data-ng-click="addDayTimeSlots(academicYear.timeTable, day)"
-                  class="col-xs-12 btn btn-default btn-lg btn-success" title="Dettagli"><i
-              class="fa fa-chevron-circle-down"></i></button>
+
+        <div class="form-group"
+             data-ng-class="{ 'has-error' : academicYearForm.startDate.$invalid && !academicYearForm.startDate.$pristine }">
+            <label for="startDate" class="col-sm-2 control-label">Data inizio</label>
+
+            <div class="col-sm-10">
+                <input type="date" data-ng-model="academicYear.startDate" id="startDate" name="startDate"
+                       class="form-control" placeholder="Data inizio" required>
+            </div>
+
+            <p ng-show="academicYearForm.startDate.$invalid && !academicYearForm.startDate.$pristine"
+               class="help-block">
+                La data di inizio è obbligatoria.</p>
         </div>
-      </div>
-    </div>
 
-    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-      <div class="container">
-        <p class="navbar-text">
-          Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-        </p>
+        <div class="form-group"
+             data-ng-class="{ 'has-error' : academicYearForm.endDate.$invalid && !academicYearForm.endDate.$pristine }">
+            <label for="endDate" class="col-sm-2 control-label">Data fine</label>
 
-        <div class="nav navbar-nav navbar-right btn-group">
-          <button type="button" data-ng-click="goToListAcademicYears()" class="btn btn-default navbar-btn"
-                  class="Annulla">
-            <i class="fa fa-times"></i> Annulla
-          </button>
-          <button type="submit" data-ng-disabled="academicYearForm.$invalid" class="btn btn-primary navbar-btn"
-                  class="Salva">
-            <i class="fa fa-check"></i> Salva
-          </button>
+            <div class="col-sm-10">
+                <input type="date" data-ng-model="academicYear.endDate" id="endDate" name="endDate" class="form-control"
+                       placeholder="Data fine" required>
+            </div>
+
+            <p ng-show="academicYearForm.endDate.$invalid && !academicYearForm.endDate.$pristine" class="help-block">
+                La data di fine è obbligatoria.
+            </p>
         </div>
-      </div>
-    </nav>
 
-  </form>
+        <hr/>
+
+        <div class="row">
+            <div class="col-xs-6">Aggiungi un giorno</div>
+            <div class="col-xs-6" style="text-align: right">Rimuovi un giorno</div>
+        </div>
+
+        <div class="row">
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group">
+                    <button type="button" data-ng-repeat="day in academicYear.timeTable"
+                            data-ng-if="!day.slots.length"
+                            data-ng-click="addDayTimeSlots(academicYear.timeTable, day)"
+                            class="btn btn-md btn-success"
+                            title="Crea quadro orario per {{day.weekDay | weekDay}}"><i
+                            class="fa fa-calendar"></i> {{day.weekDay | weekDay}}
+                    </button>
+                </div>
+                <div class="btn-group pull-right">
+                    <button type="button" data-ng-repeat="day in academicYear.timeTable"
+                            data-ng-if="day.slots.length"
+                            data-ng-click="removeDayTimeSlots(day)"
+                            class="btn btn-md btn-danger"
+                            title="Crea quadro orario per {{day.weekDay | weekDay}}"><i
+                            class="fa fa-calendar"></i> {{day.weekDay | weekDay}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" data-ng-repeat="day in academicYear.timeTable" data-ng-if="day.slots.length">
+                <hr>
+                <p><b>{{day.weekDay | weekDay}}</b></p>
+
+                <div class="col-xs-12">
+
+                    <div class="row" data-ng-repeat="slot in day.slots"
+                         data-ng-class="{ 'has-error' : !slotFilled(slot) }">
+                        <div class="col-xs-12">{{($index+1) | ordinalNumber}} ora</div>
+
+                        <button type="button" data-ng-click="removeTimeSlot(day.slots, $index)"
+                                class="col-xs-1 btn btn-default"
+                                title="Dettagli"><i class="fa fa-minus-circle"></i></button>
+                        <div class="col-xs-4 form-group">
+                            <input type="time" class="form-control" data-ng-model="slot.start" required>
+                        </div>
+                        <i class="col-xs-1 fa fa-long-arrow-right"></i>
+
+                        <div class="col-xs-4 form-group">
+                            <input type="time" class="form-control" data-ng-model="slot.end" required>
+                        </div>
+
+                    </div>
+
+                    <div class="row" data-ng-if="slotsFilled(day.slots)">
+                        <button type="button" data-ng-click="addTimeSlot(day.slots)" class="col-xs-1 btn btn-default"><i
+                                class="fa fa-plus-circle"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+            <div class="container">
+                <p class="navbar-text">
+                    Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+                </p>
+
+                <div class="nav navbar-nav navbar-right btn-group">
+                    <button type="button" data-ng-click="goToListAcademicYears()" class="btn btn-default navbar-btn"
+                            class="Annulla">
+                        <i class="fa fa-times"></i> Annulla
+                    </button>
+                    <button type="submit" data-ng-disabled="academicYearForm.$invalid"
+                            class="btn btn-primary navbar-btn"
+                            class="Salva">
+                        <i class="fa fa-check"></i> Salva
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+    </form>
 </section>
