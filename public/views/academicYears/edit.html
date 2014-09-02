@@ -48,8 +48,10 @@
         <hr/>
 
         <div class="row">
-            <div class="col-xs-6">Aggiungi un giorno</div>
-            <div class="col-xs-6" style="text-align: right">Rimuovi un giorno</div>
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group" data-ng-show="areAllDaysRemoved(academicYear.timeTable)"><div>Aggiungi un giorno</div></div>
+                <div class="btn-group pull-right" data-ng-show="areAllDaysAdded(academicYear.timeTable)"><div>Rimuovi un giorno</div></div>
+            </div>
         </div>
 
         <div class="row">

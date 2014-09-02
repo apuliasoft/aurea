@@ -39,6 +39,46 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         });
     };
 
+    $scope.findOne = function () {
+        AcademicYear.get({
+            academicYearId: $stateParams.academicYearId,
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id
+        }).$promise
+          .then(function (academicYear) {
+              Global.title = 'Anni accademici';
+              Global.subtitle = academicYear.name;
+
+              academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
+              academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
+              academicYear.timeTable = deserializeData(academicYear.timeTable);
+
+              var baseTimeTable = _.map(_.range(1, 8), function (num) {
+                  return {
+                      weekDay: num,
+                      slots: []
+                  };
+              });
+
+              academicYear.timeTable = _.extend(baseTimeTable, academicYear.timeTable);
+
+              $scope.academicYear = academicYear;
+          });
+    };
+
+    $scope.find = function () {
+        AcademicYear.query({
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id
+        }).$promise
+          .then(function (academicYears) {
+              Global.title = 'Anni accademici';
+              Global.subtitle = Global.getComplex().name;
+
+              $scope.academicYears = academicYears;
+          });
+    };
+
     $scope.addTimeSlot = function (slots) {
         var last = _.last(slots);
         var start = last.end;
@@ -83,6 +123,18 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
         return slot.start && slot.end;
     };
 
+    $scope.areAllDaysRemoved = function(timeTables) {
+        return _.find(timeTables, function(timeTable) {
+            return timeTable.slots.length === 0;
+        });
+    };
+
+    $scope.areAllDaysAdded = function(timeTables) {
+        return _.find(timeTables, function(timeTable) {
+            return timeTable.slots.length > 0;
+        });
+    };
+
     $scope.slotsFilled = function (slots) {
         return _.every(slots, $scope.slotFilled);
     };
@@ -124,37 +176,6 @@ angular.module('aurea.academicYears').controller('AcademicYearsCtrl', ['$scope',
             _.remove($scope.academicYears, academicYear);
             $scope.goToListAcademicYears();
         }
-    };
-
-    $scope.find = function () {
-        AcademicYear.query({
-            complexId: Global.getComplex()._id,
-            schoolId: Global.getSchool()._id
-        }).$promise
-            .then(function (academicYears) {
-                Global.title = 'Anni accademici';
-                Global.subtitle = Global.getComplex().name;
-
-                $scope.academicYears = academicYears;
-            });
-    };
-
-    $scope.findOne = function () {
-        AcademicYear.get({
-            academicYearId: $stateParams.academicYearId,
-            complexId: Global.getComplex()._id,
-            schoolId: Global.getSchool()._id
-        }).$promise
-            .then(function (academicYear) {
-                Global.title = 'Anni accademici';
-                Global.subtitle = academicYear.name;
-
-                academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
-                academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
-                academicYear.timeTable = deserializeData(academicYear.timeTable);
-
-                $scope.academicYear = academicYear;
-            });
     };
 
     /**
