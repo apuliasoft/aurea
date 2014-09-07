@@ -83,9 +83,12 @@ exports.show = function(req, res) {
  * List of complexes
  */
 exports.all = function(req, res) {
-    Complex.find({
-        school: new ObjectId(req.params.schoolId)
-    }, function(err, complexes) {
+    var where = { school: new ObjectId(req.params.schoolId) };
+
+    if (_.contains(['teacher', 'student', 'parent'], req.user.role))
+        where._id = req.user.complex;
+
+    Complex.find(where, function(err, complexes) {
         if (err) {
             res.jsonp(400, err);
         } else {

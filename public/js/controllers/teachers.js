@@ -15,6 +15,10 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
         SmartState.go('edit teacher', { teacherId: teacher._id });
     };
 
+    $scope.isItMe = function(teacher) {
+        return teacher.user._id === Global.getUser()._id
+    };
+
     $scope.init = function () {
         Global.title = 'Insegnanti';
         Global.subtitle = 'Nuovo';

@@ -82,7 +82,12 @@ exports.show = function(req, res) {
  * List of schools
  */
 exports.all = function(req, res) {
-    School.find(function(err, schools) {
+    var where = {};
+
+    if (req.user.role != 'admin')
+        where._id = req.user.school
+
+    School.find(where, function(err, schools) {
         if (err) {
             res.jsonp(400, err);
         } else {

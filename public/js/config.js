@@ -113,7 +113,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             return deferred.promise;
         }];
 
-        var logout = ['$q', '$http', '$location', 'Global', function ($q, $http, $location, Global) {
+        var logout = ['$q', '$http', '$location', 'Global', 'SmartState', function ($q, $http, $location, Global, SmartState) {
             // Initialize a new promise
             var deferred = $q.defer();
 
@@ -121,7 +121,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             $http.post('/logout').success(function () {
                 Global.setUser({});
                 deferred.reject();
-                $location.url('/login');
+                SmartState.go('login user')
             });
 
             return deferred.promise;

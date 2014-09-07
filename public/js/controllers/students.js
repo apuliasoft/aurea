@@ -19,6 +19,10 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
         SmartState.go('all parents', { studentId: student._id });
     };
 
+    $scope.isItMe = function(student) {
+        return student.user._id === Global.getUser()._id
+    };
+
     $scope.init = function () {
         Global.title = 'Studenti';
         Global.subtitle = 'Nuovo';

@@ -1,34 +1,36 @@
 'use strict';
 
-angular.module('aurea.users').controller('LoginCtrl', ['$scope', '$rootScope', '$http', '$location',
-    function($scope, $rootScope, $http, $location) {
+angular.module('aurea.users').controller('LoginCtrl', ['$scope', '$rootScope', '$http', '$location', 'SmartState',
+    function ($scope, $rootScope, $http, $location, SmartState) {
         // This object will be filled by the form
         $scope.user = {};
 
         // Register the login() function
-        $scope.login = function() {
-          $http.post('/login', {
-              email: $scope.user.email,
-              password: $scope.user.password
-          })
-          .success(function(response) {
-            // authentication OK
-              $scope.loginError = 0;
-              $rootScope.$emit('loggedin');
-              if (response.redirect) {
-                  if (window.location.href === response.redirect) {
-                      //This is so an admin user will get full admin page
-                      window.location.reload();
-                  } else {
-                      window.location = response.redirect;
-                  }
-              } else {
-                  $location.url('/');
-              }
-          })
-          .error(function() {
-              $scope.loginerror = 'Autenticazione fallita.';
-          });
+        $scope.login = function () {
+            $http.post('/login', {
+                email: $scope.user.email,
+                password: $scope.user.password
+            })
+              .success(function (response) {
+                  // authentication OK
+                  goToFirstState(response);
+              })
+              .error(function () {
+                  $scope.loginerror = 'Autenticazione fallita.';
+              });
         };
+
+        function goToFirstState(user) {
+            switch (user.role) {
+                case 'admin':
+                    SmartState.go("all schools");
+                    break;
+                case 'manager':
+                    SmartState.go("all complexes", { schoolId: user.school });
+                    break;
+                default:
+                    SmartState.go("all academic years", { schoolId: user.school, complexId: user.complex });
+            }
+        }
     }
 ]);

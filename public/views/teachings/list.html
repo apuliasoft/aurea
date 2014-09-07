@@ -7,7 +7,8 @@
 
         <div class="pull-right">
           <div class="btn-group btn-group-xs">
-            <button class="btn btn-default" role="button" data-ng-click="goToEditTeaching(teaching)" title="Modifica">
+            <button class="btn btn-default" role="button" data-ng-click="goToEditTeaching(teaching)" title="Modifica"
+                    data-ng-if="global.isAdmin() || global.isManager()">
               <i class="fa fa-pencil"></i>
             </button>
           </div>

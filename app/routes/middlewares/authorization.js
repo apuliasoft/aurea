@@ -45,6 +45,11 @@ var authorizations = [
         }
     },
     {
+        role: '*',
+        method: 'GET',
+        path: '/schools'
+    },
+    {
         role: 'manager',
         method: 'PUT',
         path: '/schools/:schoolId',
@@ -56,11 +61,11 @@ var authorizations = [
 
     // Complex
     {
-        role: 'manager',
+        role: ['manager', 'teacher', 'student', 'parent'],
         method: 'GET',
         path: '/schools/:schoolId/complexes',
         custom: function (req) {
-            return req.user.school === req.params.schoolId;
+            return req.user.school.toString() === req.params.schoolId;
         }
     },
     {
@@ -305,11 +310,11 @@ var authorizations = [
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.school.toString() === req.student.school.toString() &&
+                req.user.school.toString() === req.body.school &&
                 req.user.complex.toString() === req.params.complexId &&
-                req.user.complex.toString() === req.parent.complex.toString() &&
-                req.student.school.toString() === req.body.school &&
-                req.student.complex.toString() === req.body.complex &&
-                req.user._id.toString() === req.student.user.toString();
+                req.user.complex.toString() === req.student.complex.toString() &&
+                req.user.complex.toString() === req.body.complex &&
+                req.user._id.toString() === req.student.user._id.toString();
         }
     },
 
