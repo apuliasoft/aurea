@@ -20,7 +20,7 @@ angular.module('aurea.students').controller('StudentsCtrl', ['$scope', '$statePa
     };
 
     $scope.isItMe = function(student) {
-        return student.user._id === Global.getUser()._id
+        return student.user._id === Global.getUser()._id;
     };
 
     $scope.init = function () {

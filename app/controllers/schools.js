@@ -84,8 +84,8 @@ exports.show = function(req, res) {
 exports.all = function(req, res) {
     var where = {};
 
-    if (req.user.role != 'admin')
-        where._id = req.user.school
+    if (req.user.role !== 'admin')
+        where._id = req.user.school;
 
     School.find(where, function(err, schools) {
         if (err) {

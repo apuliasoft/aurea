@@ -69,7 +69,7 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
         var school = Global.getSchool()._id;
         var complex = Global.getComplex()._id;
         var academicYear = Global.getAcademicYear()._id;
-        var weekDay = date.getDay() === 0 ? 7 : date.getDay();
+        //var weekDay = date.getDay() === 0 ? 7 : date.getDay();
 
         /*var day = _.find(Global.getAcademicYear().timeTable, function (day) {
             return day.weekDay === weekDay;

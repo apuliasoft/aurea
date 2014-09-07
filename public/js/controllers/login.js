@@ -23,13 +23,13 @@ angular.module('aurea.users').controller('LoginCtrl', ['$scope', '$rootScope', '
         function goToFirstState(user) {
             switch (user.role) {
                 case 'admin':
-                    SmartState.go("all schools");
+                    SmartState.go('all schools');
                     break;
                 case 'manager':
-                    SmartState.go("all complexes", { schoolId: user.school });
+                    SmartState.go('all complexes', { schoolId: user.school });
                     break;
                 default:
-                    SmartState.go("all academic years", { schoolId: user.school, complexId: user.complex });
+                    SmartState.go('all academic years', { schoolId: user.school, complexId: user.complex });
             }
         }
     }

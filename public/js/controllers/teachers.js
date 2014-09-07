@@ -16,7 +16,7 @@ angular.module('aurea.teachers').controller('TeachersCtrl', ['$scope', '$statePa
     };
 
     $scope.isItMe = function(teacher) {
-        return teacher.user._id === Global.getUser()._id
+        return teacher.user._id === Global.getUser()._id;
     };
 
     $scope.init = function () {

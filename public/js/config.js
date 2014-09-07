@@ -121,7 +121,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             $http.post('/logout').success(function () {
                 Global.setUser({});
                 deferred.reject();
-                SmartState.go('login user')
+                SmartState.go('login user');
             });
 
             return deferred.promise;
