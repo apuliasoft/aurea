@@ -15,6 +15,10 @@ angular.module('aurea.schoolClasses').controller('SchoolClassesCtrl', ['$scope',
         SmartState.go('edit school class', { schoolClassId: schoolClass._id });
     };
 
+    $scope.goToTeachings = function (schoolClass) {
+        SmartState.go('all teachings', { schoolClassId: schoolClass._id });
+    };
+
     $scope.goToClassRegistry = function (schoolClass) {
         SmartState.go('class registry by date', {
             schoolClassId: schoolClass._id,

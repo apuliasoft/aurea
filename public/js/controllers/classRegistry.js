@@ -220,17 +220,20 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
     };
 
     $scope.studentIsAbsent = function (student) {
-        return _.contains($scope.classRegistry.absences, student._id);
+        return $scope.classRegistry &&
+          _.contains($scope.classRegistry.absences, student._id);
     };
 
     $scope.studentHasLeft = function (student) {
-        return _.some($scope.classRegistry.earlyLeaves, function (earlyLeave) {
+        return $scope.classRegistry &&
+          _.some($scope.classRegistry.earlyLeaves, function (earlyLeave) {
             return earlyLeave.student === student._id;
         });
     };
 
     $scope.studentHasEntered = function (student) {
-        return _.some($scope.classRegistry.lateEntrances, function (lateEntrance) {
+        return $scope.classRegistry &&
+          _.some($scope.classRegistry.lateEntrances, function (lateEntrance) {
             return lateEntrance.student === student._id;
         });
     };

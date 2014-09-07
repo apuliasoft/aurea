@@ -394,7 +394,7 @@ var authorizations = [
     {
         role: 'manager',
         method: 'GET',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId;
         }
@@ -402,7 +402,7 @@ var authorizations = [
     {
         role: 'manager',
         method: 'POST',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.school.toString() === req.body.school;
@@ -411,7 +411,7 @@ var authorizations = [
     {
         role: 'manager',
         method: ['GET', 'DELETE'],
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses/:schoolClassId',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId;
         }
@@ -419,7 +419,7 @@ var authorizations = [
     {
         role: 'manager',
         method: 'PUT',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses/:schoolClassId',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.school.toString() === req.schoolClass.school.toString() &&
@@ -439,7 +439,7 @@ var authorizations = [
     {
         role: ['student', 'teacher', 'parent'],
         method: 'GET',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.complex.toString() === req.params.complexId;
@@ -448,7 +448,7 @@ var authorizations = [
     {
         role: ['student', 'teacher', 'parent'],
         method: 'GET',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses/:schoolClassId',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.complex.toString() === req.params.complexId;
@@ -468,15 +468,16 @@ var authorizations = [
     {
         role: 'manager',
         method: 'GET',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses/:schoolClassId/teachings',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings',
         custom: function (req) {
+            console.log(req.user.school.toString());
             return req.user.school.toString() === req.params.schoolId;
         }
     },
     {
         role: 'manager',
         method: 'POST',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses/:schoolClassId/teachings',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.school.toString() === req.body.school;
@@ -485,7 +486,7 @@ var authorizations = [
     {
         role: 'manager',
         method: ['GET', 'DELETE'],
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses/:schoolClassId/teachings/:teachingId',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId;
         }
@@ -493,7 +494,7 @@ var authorizations = [
     {
         role: 'manager',
         method: 'PUT',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses/:schoolClassId/teachings/:teachingId',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.school.toString() === req.teaching.school.toString() &&
@@ -507,7 +508,7 @@ var authorizations = [
     {
         role: 'manager',
         method: 'GET',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/teachers/:teacherId/teachings',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/teachers/:teacherId/teachings',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId;
         }
@@ -515,7 +516,7 @@ var authorizations = [
     {
         role: 'manager',
         method: 'GET',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/teachers/:teacherId/teachings/:teachingId',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/teachers/:teacherId/teachings/:teachingId',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId;
         }
@@ -523,7 +524,7 @@ var authorizations = [
     {
         role: ['student', 'teacher', 'parent'],
         method: 'GET',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses/:schoolClassId/teachings',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.complex.toString() === req.params.complexId;
@@ -532,7 +533,7 @@ var authorizations = [
     {
         role: ['student', 'teacher', 'parent'],
         method: 'GET',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/schoolClasses/:schoolClassId/teachings/:teachingId',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.complex.toString() === req.params.complexId;
@@ -541,7 +542,7 @@ var authorizations = [
     {
         role: ['student', 'teacher', 'parent'],
         method: 'GET',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/teachers/:teacherId/teachings',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/teachers/:teacherId/teachings',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.complex.toString() === req.params.complexId;
@@ -550,7 +551,7 @@ var authorizations = [
     {
         role: ['student', 'teacher', 'parent'],
         method: 'GET',
-        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYear/teachers/:teacherId/teachings/:teachingId',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/teachers/:teacherId/teachings/:teachingId',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.complex.toString() === req.params.complexId;
@@ -570,6 +571,10 @@ function match(req, authorization, path, role, method) {
 
 exports.check = function (req, res, next) {
     if (!req.user) return res.send(401, 'Non puoi accedere, si prega di effettuare il login');
+
+    console.log(req.route.path);
+    console.log(req.user.role);
+    console.log(req.method);
 
     var isAuthorized = _.find(authorizations, function (authorization) {
         if (match(req, authorization, req.route.path, req.user.role, req.method)) {

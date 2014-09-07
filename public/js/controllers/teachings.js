@@ -38,7 +38,7 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
         if (isValid) {
             var teaching = $scope.teaching;
             teaching.$save(function (response) {
-                $scope.view(response);
+                $scope.goToListTeachings(response);
             });
         }
     };
@@ -52,7 +52,7 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
             teaching.updated.push(new Date().getTime());
 
             teaching.$update(function (response) {
-                $scope.view(response);
+                $scope.goToListTeachings(response);
             });
         }
     };
@@ -61,7 +61,7 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
         if (teaching) {
             teaching.$remove();
             _.remove($scope.teachings, teaching);
-            $scope.list();
+            $scope.goToListTeachings();
         }
     };
 

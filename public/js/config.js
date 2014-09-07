@@ -438,7 +438,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               resolve: {
                   loggedin: checkLoggedin,
                   school: checkSchool,
-                  complex: checkComplex
+                  complex: checkComplex,
+                  academicYear: checkAcademicYear,
+                  schoolClass: checkSchoolClass
               }
           })
 
@@ -448,7 +450,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               resolve: {
                   loggedin: checkLoggedin,
                   school: checkSchool,
-                  complex: checkComplex
+                  complex: checkComplex,
+                  academicYear: checkAcademicYear,
+                  schoolClass: checkSchoolClass
               }
           })
 
@@ -458,7 +462,9 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               resolve: {
                   loggedin: checkLoggedin,
                   school: checkSchool,
-                  complex: checkComplex
+                  complex: checkComplex,
+                  academicYear: checkAcademicYear,
+                  schoolClass: checkSchoolClass
               }
           })
 
