@@ -96,17 +96,35 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
     $scope.tomorrow = function () {
         var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
-        SmartState.go('class registry by date', {
-            date: $filter('date')(newDay, 'yyyy-MM-dd')
-        });
+        var found = false;
+        while(!found){
+            if(_.contains($scope.weekdays, newDay.getDay()))
+            {
+                SmartState.go('class registry by date', {
+                    date: $filter('date')(newDay, 'yyyy-MM-dd')
+                });
+                found = true;
+            } else {
+                newDay = new Date(newDay.getFullYear(), newDay.getMonth(), newDay.getDate() + 1);
+            }
+        }
     };
 
     $scope.yesterday = function () {
         var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() - 1);
-        SmartState.go('class registry by date', {
-            date: $filter('date')(newDay, 'yyyy-MM-dd')
-        });
+        var found = false;
+        while(!found){
+            if(_.contains($scope.weekdays, newDay.getDay()))
+            {
+                SmartState.go('class registry by date', {
+                    date: $filter('date')(newDay, 'yyyy-MM-dd')
+                });
+                found = true;
+            } else {
+                newDay = new Date(newDay.getFullYear(), newDay.getMonth(), newDay.getDate() - 1);
+            }
+        }
     };
 
     $scope.save = function () {
@@ -137,7 +155,6 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
     $scope.open = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
-
         $scope.opened = true;
     };
 
