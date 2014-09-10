@@ -87,8 +87,10 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
             academicYearId: academicYear
         }).$promise.then(function (classRegistry) {
               $scope.classRegistry = deserializeData(classRegistry);
-              $scope.weekdays = _.map(Global.getAcademicYear().timeTable, function(slot){
-                  return slot.weekDay === 7 ? 0: slot.weekDay;
+              $scope.weekdays = _.map(_.filter(Global.getAcademicYear().timeTable, function(slot){
+                  return slot.slots.length > 0;
+              }), function(item){
+                  return item.weekDay === 7 ? 0: item.weekDay;
               });
           });
     };
