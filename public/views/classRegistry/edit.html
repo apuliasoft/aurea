@@ -14,6 +14,22 @@
   </script>
 
   <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-primary pull-left" data-ng-click="yesterday()"><i
+          class="fa fa-arrow-circle-left"></i> Precedente
+      </button>
+      <button class="btn btn-primary pull-right" data-ng-click="tomorrow()">Successivo <i
+          class="fa fa-arrow-circle-right"></i></button>
+      <button class="btn center-block btn-default" datepicker-popup="EEEE, d MMMM yyyy" is-open="opened"
+              data-ng-model="classRegistry.date" data-ng-click="open($event)" datepicker-options="dateOptions"
+              show-button-bar="false" date-disabled="disabled(date, mode)">
+        {{ classRegistry.date | date:'EEEE, d MMMM yyyy' }}
+      </button>
+    </div>
+
+  </div>
+  <hr/>
+  <div class="row">
     <div class="col-md-3">
       <div>
         <div class="btn-group pull-right">
@@ -45,74 +61,68 @@
       </div>
     </div>
     <div class="col-md-9">
+      <form class="form-horizontal" data-ng-submit="save()" novalidate>
 
-      <h2>Registro Di Classe</h2>
+        <div data-ng-repeat="slot in classRegistry.slots | orderBy:'number'">
+          <div>
+            <h4 class="bg-primary slot-title">{{ slot.number | ordinalNumber}} Ora ( {{timeslots.slots[slot.number - 1].start | time}} - {{timeslots.slots[slot.number - 1].end | time}} )</h4>
+          </div>
 
-      <hr/>
-
-      <div>
-        <button class="btn btn-primary pull-left" data-ng-click="yesterday()"><i
-            class="fa fa-arrow-circle-left"></i> Precedente
-        </button>
-        <button class="btn btn-primary pull-right" data-ng-click="tomorrow()">Successivo <i
-            class="fa fa-arrow-circle-right"></i></button>
-        <button class="btn center-block btn-default" datepicker-popup="EEEE, d MMMM yyyy" is-open="opened"
-                data-ng-model="classRegistry.date" data-ng-click="open($event)" datepicker-options="dateOptions"
-                show-button-bar="false" date-disabled="disabled(date, mode)">
-          {{ classRegistry.date | date:'EEEE, d MMMM yyyy' }}
-        </button>
-        <!--<h3 class="text-center" datepicker-popup="EEEE, d MMMM yyyy" is-open="true" data-ng-model="classRegistry.date">-->
-        <!--{{ classRegistry.date | date:'EEEE, d MMMM yyyy' }}</h3>-->
-      </div>
-
-      <form data-ng-submit="save()" novalidate>
-
-        <table class="table">
-          <thead>
-          <tr>
-            <th>Ora</th>
-            <th>Materia</th>
-            <th>Supplenza</th>
-            <!--<th>Compresenze</th>-->
-            <!--<th>Sostegni</th>-->
-            <th>Argomento</th>
-            <th>Note</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr data-ng-repeat="slot in classRegistry.slots | orderBy:'number'">
-            <td>{{ slot.number | ordinalNumber}}</td>
-            <td>
+          <div class="form-group">
+            <label for="teaching" class="col-sm-2 control-label">Materia:</label>
+            <div class="col-sm-8">
               <select data-ng-model="slot.teaching" id="teaching" name="teaching" class="form-control"
-                      data-ng-options="teaching._id as teaching.name for teaching in teachings"></select>
-            </td>
-            <td>
+                      data-ng-options="teaching._id as teaching.name for teaching in teachings">
+                <option></option>
+              </select>
+            </div>
+            <div class="checkbox col-sm-2">
+              <label>
+                <input type="checkbox" data-ng-model="slot.isSubstitution" data-ng-change="checkSubstitution(slot)"> Supplenza
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group" data-ng-if="slot.isSubstitution">
+            <label for="substitution" class="col-sm-2 control-label">Supplente:</label>
+            <div class="col-sm-8">
               <select data-ng-model="slot.substitution" id="substitution" name="substitution"
                       class="form-control"
                       data-ng-options="teacher._id as teacher | name for teacher in teachers">
                 <option></option>
               </select>
-            </td>
-            <!--<td>-->
-            <!--<select data-ng-model="slot.assistantTeachers" id="assistantTeachers"-->
-            <!--name="assistantTeachers"-->
-            <!--class="form-control"-->
-            <!--multiple data-ng-multiple="true"-->
-            <!--data-ng-options="teacher._id as teacher | name for teacher in teachers">-->
-            <!--</select>-->
-            <!--</td>-->
-            <!--<td>-->
-            <!--<select data-ng-model="slot.supportTeachers" id="supportTeachers" name="supportTeachers"-->
-            <!--class="form-control"-->
-            <!--multiple data-ng-multiple="true"-->
-            <!--data-ng-options="teacher._id as teacher | name for teacher in teachers">-->
-            <!--</select>-->
-            <!--</td>-->
-            <td><input type="text" data-ng-model="slot.subject" class="form-control"></td>
-            <td><input type="text" data-ng-model="slot.notes" class="form-control"></td>
-          </tr>
-          </tbody>
-        </table>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject" class="col-sm-2 control-label">Argomento:</label>
+            <div class="col-sm-8">
+              <textarea class="form-control" id="subject" name="subject" data-ng-model="slot.subject" rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="notes" class="col-sm-2 control-label">Note:</label>
+            <div class="col-sm-8">
+              <textarea class="form-control" id="notes" name="notes" data-ng-model="slot.notes" rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="supportTeachers" class="col-sm-2 control-label">Insegnanti di sostegno:</label>
+            <div class="col-sm-8">
+              <select data-ng-model="slot.supportTeachers" multiple data-ng-multiple="true" class="form-control" id="supportTeachers" name="supportTeachers" data-ng-options="teacher._id as teacher | name for teacher in teachers"></select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="assistantTeachers" class="col-sm-2 control-label">Compresenze:</label>
+            <div class="col-sm-8">
+              <select data-ng-model="slot.assistantTeachers" multiple data-ng-multiple="true" class="form-control" id="assistantTeachers" name="supportTeachers" data-ng-options="teacher._id as teacher | name for teacher in teachers"></select>
+            </div>
+          </div>
+
+        </div>
 
         <hr>
 

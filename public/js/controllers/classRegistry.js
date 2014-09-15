@@ -86,11 +86,18 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
             complexId: complex,
             academicYearId: academicYear
         }).$promise.then(function (classRegistry) {
+              Global.title = 'Registro di classe';
+              Global.subtitle = Global.getSchoolClass().name;
+
               $scope.classRegistry = deserializeData(classRegistry);
               $scope.weekdays = _.map(_.filter(Global.getAcademicYear().timeTable, function(slot){
                   return slot.slots.length > 0;
               }), function(item){
                   return item.weekDay === 7 ? 0: item.weekDay;
+              });
+
+              $scope.timeslots = _.find(Global.getAcademicYear().timeTable, function(day){
+                  return day.weekDay === date.getDay() === 0 ? 7 : date.getDay();
               });
           });
     };
@@ -342,6 +349,12 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
         });
     };
 
+    $scope.checkSubstitution = function(slot){
+        if(!slot.isSubstitution){
+            delete slot.substitution;
+        }
+    };
+
     var SelectTimeCtrl = function ($scope, $modalInstance, time) {
         $scope.data = {
             time: time
@@ -356,4 +369,5 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
         };
 
     };
+
 }]);
