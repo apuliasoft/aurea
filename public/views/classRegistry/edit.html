@@ -109,13 +109,26 @@
           </div>
 
           <div class="form-group">
+            <div class="checkbox col-sm-4">
+              <label>
+                <input type="checkbox" data-ng-model="slot.isSupport"> Sostegno
+              </label>
+            </div>
+            <div class="checkbox col-sm-4">
+              <label>
+                <input type="checkbox" data-ng-model="slot.isAssistant" > Compresenza
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group" data-ng-if="slot.isSupport">
             <label for="supportTeachers" class="col-sm-2 control-label">Insegnanti di sostegno:</label>
             <div class="col-sm-8">
               <select data-ng-model="slot.supportTeachers" multiple data-ng-multiple="true" class="form-control" id="supportTeachers" name="supportTeachers" data-ng-options="teacher._id as teacher | name for teacher in teachers"></select>
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" data-ng-if="slot.isAssistant">
             <label for="assistantTeachers" class="col-sm-2 control-label">Compresenze:</label>
             <div class="col-sm-8">
               <select data-ng-model="slot.assistantTeachers" multiple data-ng-multiple="true" class="form-control" id="assistantTeachers" name="supportTeachers" data-ng-options="teacher._id as teacher | name for teacher in teachers"></select>
