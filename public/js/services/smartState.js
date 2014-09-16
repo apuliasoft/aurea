@@ -22,6 +22,7 @@ angular.module('aurea').factory('SmartState', ['$state', '$stateParams', '_', fu
             //TODO controllate l'opzione 'inherit' del metodo go
             $state.go(name, params)
               .catch(function (err) {
+                  console.log(name);
                   console.log(err);
               });
         }

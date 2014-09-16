@@ -113,6 +113,22 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             return deferred.promise;
         }];
 
+        var checkTeaching = ['$q', 'ngToast', '$stateParams', 'Global', function ($q, ngToast, $stateParams, Global) {
+            var deferred = $q.defer();
+            Global.setTeaching($stateParams.schoolId, $stateParams.complexId, $stateParams.academicYearId, $stateParams.schoolClassId, $stateParams.teachingId)
+              .then(function () {
+                  deferred.resolve();
+              }, function () {
+                  ngToast.create({
+                      content: 'L\'insegnamento selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.',
+                      class: 'warning'
+                  });
+                  deferred.reject();
+              });
+
+            return deferred.promise;
+        }];
+
         var logout = ['$q', '$http', '$location', 'Global', 'SmartState', function ($q, $http, $location, Global, SmartState) {
             // Initialize a new promise
             var deferred = $q.defer();
@@ -481,10 +497,15 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
           })
 
           .state('teaching registry by date', {
-              url: '/registri-personali/:teachingRegistryDate',
+              url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti/:teachingId/registri-personali/:date',
               templateUrl: 'views/teachingRegistry/edit.html',
               resolve: {
-                  loggedin: checkLoggedin
+                  loggedin: checkLoggedin,
+                  school: checkSchool,
+                  complex: checkComplex,
+                  academicYear: checkAcademicYear,
+                  schoolClass: checkSchoolClass,
+                  teaching: checkTeaching
               }
           })
 

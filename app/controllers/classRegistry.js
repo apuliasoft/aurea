@@ -20,11 +20,11 @@ exports.classRegistry = function (req, res, next) {
     var academicYearId = req.params.academicYearId;
 
     ClassRegistry.findOne({
-          schoolClass: req.params.schoolClassId,
-          date: new Date(req.params.date),
-          school: req.params.schoolId,
-          complex: req.params.complexId,
-          academicYear: req.params.academicYearId
+          schoolClass: schoolClassId,
+          date: date,
+          school: schoolId,
+          complex: complexId,
+          academicYear: academicYearId
       },
       function (err, classRegistry) {
           if (err) return next(err);

@@ -14,7 +14,7 @@ var TeachingRegistrySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Teaching'
     },
-    day: {
+    date: {
         type: Date,
         required: true
     },
@@ -26,6 +26,16 @@ var TeachingRegistrySchema = new Schema({
     complex: {
         type: Schema.Types.ObjectId,
         ref: 'Complex',
+        required: true
+    },
+    academicYear: {
+        type: Schema.Types.ObjectId,
+        ref: 'AcademicYear',
+        required: true
+    },
+    schoolClass: {
+        type: Schema.Types.ObjectId,
+        ref: 'SchoolClass',
         required: true
     },
     votes: [{

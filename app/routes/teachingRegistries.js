@@ -1,14 +1,12 @@
 'use strict';
 
 // Teaching Registry routes use teachingRegistry controller
-var teachingRegistry = require('../controllers/teachingRegistry');
+var teachingRegistries = require('../controllers/teachingRegistry');
 
 module.exports = function(app) {
 
-    app.get('/teachingRegistries/:teachingRegistryDate', teachingRegistry.show);
-    app.put('/teachingRegistries/:teachingRegistryDate', teachingRegistry.createOrUpdate);
+    app.get('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId/teachingRegistries/:date', teachingRegistries.teachingRegistry, teachingRegistries.show);
+    app.put('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId/teachingRegistries/:date', teachingRegistries.teachingRegistry, teachingRegistries.createOrUpdate);
 
-    // Finish with setting up the teachingRegistryDate param
-    app.param('teachingRegistryDate', teachingRegistry.teachingRegistry);
 
 };

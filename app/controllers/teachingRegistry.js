@@ -5,21 +5,46 @@
  */
 var mongoose = require('mongoose'),
     TeachingRegistry = mongoose.model('TeachingRegistry'),
+  AcademicYear = mongoose.model('AcademicYear'),
     _ = require('lodash');
 
 /**
  * Find a teaching registry by date
  */
-exports.teachingRegistry = function(req, res, next, day) {
-    TeachingRegistry.findOne({ day: new Date(day) }, function(err, teachingRegistry) {
-        if (err) return next(err);
+exports.teachingRegistry = function(req, res, next) {
+    var schoolClassId = req.params.schoolClassId;
+    var date = new Date(req.params.date);
+    var schoolId = req.params.schoolId;
+    var complexId = req.params.complexId;
+    var academicYearId = req.params.academicYearId;
+    var teachingId = req.params.teachingId;
 
-        if (teachingRegistry) {
-            req.teachingRegistry = teachingRegistry;
-        }
+    TeachingRegistry.findOne({
+          schoolClass: schoolClassId,
+          date: date,
+          school: schoolId,
+          complex: complexId,
+          academicYear: academicYearId,
+          teaching: teachingId
+      },
+      function (err, teachingRegistry) {
+          if (err) return next(err);
+          if(!teachingRegistry){
+              teachingRegistry = new TeachingRegistry({
+                  schoolClass: schoolClassId,
+                  date: date,
+                  school: schoolId,
+                  complex: complexId,
+                  academicYear: academicYearId,
+                  teaching: teachingId,
 
-        next();
-    });
+                  votes: [],
+                  absences: []
+              });
+          }
+          req.teachingRegistry = teachingRegistry;
+          next();
+      });
 };
 
 /**
@@ -48,5 +73,10 @@ exports.createOrUpdate = function(req, res) {
  * Show a class registry
  */
 exports.show = function(req, res) {
-    res.jsonp(req.teachingRegistry || {});
+    var teachingRegistry = req.teachingRegistry;
+
+    if(!teachingRegistry) {
+        res.jsonp(404, 'non trovato');
+    }
+    res.jsonp(teachingRegistry);
 };

@@ -40,7 +40,7 @@
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li data-ng-repeat="school in global.getSchools()" data-ng-click="goToSchool(school)">
-                    <a href="#">{{ school.name }}</a>
+                    <a href="">{{ school.name }}</a>
                 </li>
             </ul>
         </li>
@@ -50,7 +50,7 @@
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li data-ng-repeat="complex in global.getComplexes()" data-ng-click="goToComplex(complex)">
-                    <a href="#">{{ complex.name }}</a>
+                    <a href="">{{ complex.name }}</a>
                 </li>
             </ul>
         </li>
@@ -61,7 +61,7 @@
             <ul class="dropdown-menu" role="menu">
                 <li data-ng-repeat="academicYear in global.getAcademicYears()"
                     data-ng-click="goToAcademicYear(academicYear)">
-                    <a href="#">{{ academicYear.name }}</a>
+                    <a href="">{{ academicYear.name }}</a>
                 </li>
             </ul>
         </li>
@@ -71,7 +71,7 @@
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li data-ng-repeat="schoolClass in global.getSchoolClasses()" data-ng-click="goToSchoolClass(schoolClass)">
-                    <a href="#">{{ schoolClass.name }}</a>
+                    <a href="">{{ schoolClass.name }}</a>
                 </li>
             </ul>
         </li>
@@ -81,9 +81,19 @@
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li data-ng-repeat="student in global.getStudents()" data-ng-click="goToStudent(student)">
-                    <a href="#">{{ student.firstName }} {{ student.lastName }}</a>
+                    <a href="">{{ student.firstName }} {{ student.lastName }}</a>
                 </li>
             </ul>
+        </li>
+        <li class="dropdown" data-ng-show="global.getTeachings().length">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            {{ global.getTeaching().name }}<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li data-ng-repeat="teaching in global.getTeachings()" data-ng-click="goToTeaching(teaching)">
+              <a href="">{{ teaching.name }}</a>
+            </li>
+          </ul>
         </li>
     </ol>
 

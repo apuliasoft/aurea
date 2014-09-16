@@ -1,8 +1,8 @@
 'use strict';
 
 //Global service for global variables
-angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope', '$stateParams', '$q', '_', 'School', 'Complex', 'Student', 'AcademicYear', 'SchoolClass',
-    function ($sessionStorage, $rootScope, $stateParams, $q, _, School, Complex, Student, AcademicYear, SchoolClass) {
+angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope', '$stateParams', '$q', '_', 'School', 'Complex', 'Student', 'AcademicYear', 'SchoolClass', 'Teaching',
+    function ($sessionStorage, $rootScope, $stateParams, $q, _, School, Complex, Student, AcademicYear, SchoolClass, Teaching) {
         var _this = this;
 
         var schools = [];
@@ -20,8 +20,8 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
         var schoolClasses = [];
         var schoolClass = null;
 
-//        var teachings = [];
-//        var teaching = null;
+        var teachings = [];
+        var teaching = null;
 
         /**
          * Elimino da Global tutte le variabili di contesto non utili ai fini dell'attuale schermata.
@@ -52,10 +52,10 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
                 schoolClass = null;
             }
 
-//            if (!$stateParams.teachingId) {
-//                teachings.length = 0;
-//                teaching = null;
-//            }
+            if (!$stateParams.teachingId) {
+                teachings.length = 0;
+                teaching = null;
+            }
 
         });
 
@@ -253,37 +253,37 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
                   });
 
                 return deferred.promise;
-            }
+            },
 
-//            getTeachings: function () {
-//                return teachings;
-//            },
-//
-//            getTeaching: function () {
-//                return teaching;
-//            },
-//
-//            setTeaching: function (schoolId, complexId, academicYearId, schoolClassId, teachingId) {
-//                var deferred = $q.defer();
-//
-//                Teaching.query({ schoolId: schoolId, complexId: complexId, academicYearId: academicYearId, schoolClassId: schoolClassId }).$promise
-//                    .then(function (data) {
-//                        teachings = data;
-//                        teaching = _.find(teachings, { _id: teachingId });
-//
-//                        if (teaching) {
-//                            deferred.resolve(teaching);
-//                        } else {
-//                            teachings.length = 0;
-//                            deferred.reject();
-//                        }
-//
-//                    }, function (err) {
-//                        deferred.reject(err);
-//                    });
-//
-//                return deferred.promise;
-//            }
+            getTeachings: function () {
+                return teachings;
+            },
+
+            getTeaching: function () {
+                return teaching;
+            },
+
+            setTeaching: function (schoolId, complexId, academicYearId, schoolClassId, teachingId) {
+                var deferred = $q.defer();
+
+                Teaching.query({ schoolId: schoolId, complexId: complexId, academicYearId: academicYearId, schoolClassId: schoolClassId }).$promise
+                    .then(function (data) {
+                        teachings = data;
+                        teaching = _.find(teachings, { _id: teachingId });
+
+                        if (teaching) {
+                            deferred.resolve(teaching);
+                        } else {
+                            teachings.length = 0;
+                            deferred.reject();
+                        }
+
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
+
+                return deferred.promise;
+            }
         };
 
         return _this._data;

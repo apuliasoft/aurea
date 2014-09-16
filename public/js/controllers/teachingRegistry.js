@@ -1,51 +1,64 @@
 'use strict';
 
-angular.module('aurea.teachingRegistry').controller('TeachingRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', '_', 'TeachingRegistry', 'Teaching', 'Student', function ($scope, $stateParams, $location, $filter, _, TeachingRegistry, Teaching, Student) {
+angular.module('aurea.teachingRegistry').controller('TeachingRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', 'ngToast', '_', 'SmartState', 'Global', 'TeachingRegistry', 'ClassStudent', function ($scope, $stateParams, $location, $filter, ngToast, _, SmartState, Global, TeachingRegistry, ClassStudent) {
 
-    function getDateFromUrl () {
-        var dateArray = $stateParams.teachingRegistryDate.split('-');
-        return new Date(/*year*/dateArray[2], /*month*/dateArray[1]-1, /*day*/dateArray[0]);
-    }
-
-    if(!$scope.teachings) {
-        $scope.teachings = Teaching.query();
-    }
-
-    if(!$scope.students) {
-        $scope.students = Student.query();
-    }
-
+    $scope.$watch('teachingRegistry.date', function () {
+        if ($scope.teachingRegistry) {
+            var day = new Date($scope.teachingRegistry.date);
+            SmartState.go('teaching registry by date', {
+                date: $filter('date')(day, 'yyyy-MM-dd')
+            });
+        }
+    });
 
     $scope.init = function () {
 
-        $scope.teachingRegistry = {};
-
-        var day = getDateFromUrl();
-
-        var tempTeachingRegistry = TeachingRegistry.get({
-            teachingRegistryDate: day
+        // Carico gli studenti della classe
+        $scope.classStudents = ClassStudent.query({
+            schoolClassId: Global.getSchoolClass()._id,
+            complexId: Global.getComplex()._id,
+            schoolId: Global.getSchool()._id,
+            academicYearId: Global.getAcademicYear()._id
         });
-        tempTeachingRegistry.$promise.then(function(tempTeachingRegistry){
-            if (!tempTeachingRegistry.day) {
-                tempTeachingRegistry = new TeachingRegistry();
 
-                // I mesi sono zero-based
-                tempTeachingRegistry.day = day;
-            }
-            $scope.teachingRegistry = tempTeachingRegistry;
-        });
+        var date = new Date($stateParams.date);
+        var schoolClass = Global.getSchoolClass()._id;
+        var school = Global.getSchool()._id;
+        var complex = Global.getComplex()._id;
+        var academicYear = Global.getAcademicYear()._id;
+        var teaching = Global.getTeaching()._id;
+
+        TeachingRegistry.get({
+            schoolClassId: schoolClass,
+            date: date.toISOString(),
+            schoolId: school,
+            complexId: complex,
+            academicYearId: academicYear,
+            teachingId: teaching
+        }).$promise.then(function (teachingRegistry) {
+              Global.title = 'Registro di ' + Global.getTeaching().name;
+              Global.subtitle = Global.getSchoolClass().name;
+
+              $scope.teachingRegistry = teachingRegistry;
+          });
     };
 
     $scope.tomorrow = function () {
-        var day = getDateFromUrl();
+        var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate()+1);
-        $location.path('registri-personali/' + $filter('date')(newDay, 'd-M-yyyy'));
+
+        SmartState.go('teaching registry by date', {
+            date: $filter('date')(newDay, 'yyyy-MM-dd')
+        });
     };
 
     $scope.yesterday = function () {
-        var day = getDateFromUrl();
+        var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate()-1);
-        $location.path('registri-personali/' + $filter('date')(newDay, 'd-M-yyyy'));
+
+        SmartState.go('teaching registry by date', {
+            date: $filter('date')(newDay, 'yyyy-MM-dd')
+        });
     };
 
     $scope.onUpdate = function (teachingRegistry) {
@@ -61,11 +74,25 @@ angular.module('aurea.teachingRegistry').controller('TeachingRegistryCtrl', ['$s
         }
         teachingRegistry.updated.push(new Date().getTime());
 
-        teachingRegistry._day = $filter('date')(teachingRegistry.day, 'yyyy-M-d');
+        teachingRegistry._date = teachingRegistry.date;
 
-        teachingRegistry.$update(function (response) {
-            $scope.onUpdate(response);
+        teachingRegistry.$update(function () {
+            ngToast.create('Salvataggio riuscito.');
         });
+    };
+
+    // UTILITY FUNCTIONS
+
+    $scope.dateOptions = {
+        startingDay: 1,
+        showWeeks: false,
+        datepickerMode: 'day'
+    };
+
+    $scope.open = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened = true;
     };
 
     $scope.addVote = function(){

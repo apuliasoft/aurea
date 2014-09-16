@@ -1,21 +1,23 @@
 <section data-ng-controller="TeachingRegistryCtrl" data-ng-init="init()">
 
-  <h2>Registro Personale</h2>
-  <button class="btn" data-ng-click="yesterday()">Ieri</button>
-  <button class="btn" data-ng-click="tomorrow()">domani</button>
-  <h3>{{ teachingRegistry.day | date:'EEEE, d MMMM yyyy' }}</h3>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-primary pull-left" data-ng-click="yesterday()"><i
+          class="fa fa-arrow-circle-left"></i> Precedente
+      </button>
+      <button class="btn btn-primary pull-right" data-ng-click="tomorrow()">Successivo <i
+          class="fa fa-arrow-circle-right"></i></button>
+      <button class="btn center-block btn-default" datepicker-popup="EEEE, d MMMM yyyy" is-open="opened"
+              data-ng-model="teachingRegistry.date" data-ng-click="open($event)" datepicker-options="dateOptions"
+              show-button-bar="false" date-disabled="disabled(date, mode)">
+        {{ teachingRegistry.date | date:'EEEE, d MMMM yyyy' }}
+      </button>
+    </div>
+  </div>
 
-  <!-- Insegnamento -->
-
+  <hr/>
 
   <form data-ng-submit="save()" novalidate>
-
-    <!-- Insegnamento -->
-    <div class="form-group">
-      <label for="teaching" class="control-label">Insegnamento</label>
-      <select data-ng-model="teachingRegistry.teaching" id="teaching" name="teaching" class="form-control"
-              data-ng-options="teaching._id as teaching.name for teaching in teachings"></select>
-    </div>
 
     <div class="form-group">
       <label for="votes" class="control-label">Voti</label>
@@ -34,7 +36,7 @@
           <!--STUDENTE-->
           <td>
             <select data-ng-model="vote.student" class="form-control"
-                    data-ng-options="student._id as student | name for student in students"></select>
+                    data-ng-options="student._id as student | name for student in classStudents"></select>
           </td>
           <!--VOTO-->
           <td>
@@ -136,7 +138,20 @@
 
     <hr>
 
-    <button type="submit" class="btn btn-primary">Salva</button>
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+      <div class="container">
+        <p class="navbar-text">
+          Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+        </p>
+
+        <div class="nav navbar-nav navbar-right btn-group">
+          <button type="submit" class="btn btn-primary navbar-btn"
+                  class="Salva">
+            <i class="fa fa-check"></i> Salva
+          </button>
+        </div>
+      </div>
+    </nav>
 
   </form>
 

@@ -32,4 +32,18 @@ angular.module('aurea.system').controller('HeaderCtrl', ['$scope', 'Global', '$f
         });
     };
 
+    $scope.goToSchoolClass = function (schoolClass) {
+        SmartState.go('class registry by date', {
+            schoolClassId: schoolClass._id,
+            date: $filter('date')(new Date(), 'yyyy-MM-dd')
+        });
+    };
+
+    $scope.goToTeaching = function (teaching) {
+        SmartState.go('teaching registry by date', {
+            teachingId: teaching._id,
+            date: $filter('date')(new Date(), 'yyyy-MM-dd')
+        });
+    };
+
 }]);
