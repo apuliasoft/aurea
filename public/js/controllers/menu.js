@@ -24,6 +24,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
 
     $scope.menu = [
         {
+            icon: 'building-o',
             title: 'Scuole',
             goToState: function () {
                 SmartState.go('all schools');
@@ -31,6 +32,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             roles: [Global.isAdmin]
         },
         {
+            icon: 'building-o',
             title: 'Plessi',
             goToState: function () {
                 SmartState.go('all complexes');
@@ -39,6 +41,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool]
         },
         {
+            icon: 'graduation-cap',
             title: 'Insegnanti',
             goToState: function () {
                 SmartState.go('all teachers');
@@ -47,6 +50,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool, Global.getComplex]
         },
         {
+            icon: 'child',
             title: 'Alunni',
             goToState: function () {
                 SmartState.go('all students');
@@ -55,6 +59,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool, Global.getComplex]
         },
         {
+            icon: 'calendar',
             title: 'Anni accademici',
             goToState: function () {
                 SmartState.go('all academic years');
@@ -63,6 +68,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool, Global.getComplex]
         },
         {
+            icon: '',
             title: 'Genitori',
             goToState: function () {
                 SmartState.go('all parents');
@@ -71,6 +77,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool, Global.getComplex, Global.getStudent]
         },
         {
+            icon: 'home',
             title: 'Classi',
             goToState: function () {
                 SmartState.go('all school classes');
@@ -79,6 +86,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear]
         },
         {
+            icon: 'pencil',
             title: 'Insegnamenti',
             goToState: function () {
                 SmartState.go('all teachings');
@@ -87,6 +95,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass]
         },
         {
+            icon: 'book',
             title: 'Registro di Classe',
             goToState: function () {
                 SmartState.go('class registry by date', {
@@ -97,6 +106,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass]
         },
         {
+            icon: 'book',
             title: 'Registro Personale',
             goToState: function () {
                 SmartState.go('teaching registry by date', {
@@ -107,6 +117,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass, Global.getTeaching]
         },
         {
+            icon: 'users',
             title: 'Utenti',
             goToState: function () {
                 SmartState.go('all users');

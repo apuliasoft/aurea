@@ -1,9 +1,12 @@
 <div data-ng-controller="MenuCtrl">
 
-  <ul class="nav nav-stacked">
-    <li data-ng-repeat="item in menu" ng-class="{active: $uiRoute}" data-ng-if="isVisible(item)">
-      <a href="" data-ng-click="item.goToState()">{{item.title}}</a>
-    </li>
-  </ul>
+    <ul class="nav nav-stacked">
+        <li data-ng-repeat="item in menu" ng-class="{active: $uiRoute}" data-ng-if="isVisible(item)">
+            <a href="" data-ng-click="item.goToState()">
+                <i class="fa fa-{{item.icon}}" style="width: 20px"></i>
+                {{item.title}}
+            </a>
+        </li>
+    </ul>
 
 </div>
