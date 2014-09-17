@@ -448,6 +448,31 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               }
           })
 
+          .state('all class students', {
+              url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/alunni',
+              templateUrl: 'views/classStudents/list.html',
+              resolve: {
+                  loggedin: checkLoggedin,
+                  school: checkSchool,
+                  complex: checkComplex,
+                  academicYear: checkAcademicYear,
+                  schoolClass: checkSchoolClass
+              }
+          })
+
+          .state('student stats', {
+              url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/alunni/:studentId',
+              templateUrl: 'views/classStudents/stats.html',
+              resolve: {
+                  loggedin: checkLoggedin,
+                  school: checkSchool,
+                  complex: checkComplex,
+                  academicYear: checkAcademicYear,
+                  schoolClass: checkSchoolClass,
+                  student: checkStudent
+              }
+          })
+
           .state('all teachings', {
               url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti',
               templateUrl: 'views/teachings/list.html',

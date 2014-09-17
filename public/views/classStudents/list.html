@@ -1,0 +1,39 @@
+<section data-ng-controller="ClassStudentsCtrl" data-ng-init="find()">
+
+  <div class="row">
+    <div class="col-xs-4" data-ng-repeat="student in classStudents | orderBy:['lastName', 'firstName']">
+      <div class="thumbnail well well-sm">
+        <h3>{{student | name:true}}</h3>
+        <p>{{student.user.email}}</p>
+        <p>{{student.birthDate | date}}</p>
+
+        <div class="pull-right">
+          <div class="btn-group btn-group-xs">
+            <button class="btn btn-primary" role="button" data-ng-click="goToStudentStats(student)" title="Modifica"
+                    data-ng-if="global.isAdmin() || global.isManager() || global.isTeacher() || isItMe(student) || isParentOf(student)">
+              <i class="fa fa-pie-chart"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container">
+      <p class="navbar-text">
+        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+      </p>
+
+      <div class="nav navbar-nav navbar-right btn-group">
+        <!--<button type="button" data-ng-click="goToCreateStudent()" class="btn btn-primary navbar-btn" title="Aggiungi"-->
+                <!--data-ng-if="global.isAdmin() || global.isManager()">-->
+          <!--<i class="fa fa-plus"></i> Aggiungi-->
+        <!--</button>-->
+      </div>
+    </div>
+  </nav>
+
+</section>

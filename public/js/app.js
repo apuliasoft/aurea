@@ -13,6 +13,7 @@ angular.module('aurea', [
     'aurea.complexes',
     'aurea.teachers',
     'aurea.students',
+    'aurea.classStudents',
     'aurea.parents',
     'aurea.academicYears',
     'aurea.schoolClasses',
@@ -28,6 +29,7 @@ angular.module('aurea.schools', []);
 angular.module('aurea.complexes', []);
 angular.module('aurea.teachers', []);
 angular.module('aurea.students', []);
+angular.module('aurea.classStudents', []);
 angular.module('aurea.parents', []);
 angular.module('aurea.academicYears', []);
 angular.module('aurea.schoolClasses', []);

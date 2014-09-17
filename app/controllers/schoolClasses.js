@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
     SchoolClass = mongoose.model('SchoolClass'),
     Student = mongoose.model('Student'),
+    ClassRegistry = mongoose.model('ClassRegistry'),
     ObjectId = mongoose.Types.ObjectId,
     async = require('async'),
     _ = require('lodash');
@@ -105,7 +106,7 @@ exports.allStudents = function (req, res) {
               SchoolClass.findById(req.params.schoolClassId, callback);
           },
           function (schoolClass, callback) {
-              Student.find({'_id': { $in: schoolClass.students} }, callback);
+              Student.find({'_id': { $in: schoolClass.students} }).populate('user', 'email').exec(callback);
           }
       ],
       function (err, result) {
@@ -113,6 +114,29 @@ exports.allStudents = function (req, res) {
               res.jsonp(400, err);
           } else {
               res.jsonp(result);
+          }
+      });
+};
+
+exports.studentStats = function (req, res){
+    var student = new ObjectId(req.params.studentId);
+    ClassRegistry.aggregate()
+      .match({
+          school: new ObjectId(req.params.schoolId),
+          complex: new ObjectId(req.params.complexId),
+          academicYear: new ObjectId(req.params.academicYearId),
+          schoolClass: new ObjectId(req.params.schoolClassId),
+          absences: student
+      })
+      .group({
+          _id: null,
+          absences: {$addToSet: '$date'}
+      })
+      .exec(function (err, result){
+          if(err) {
+              res.jsonp(400, err);
+          } else {
+              res.jsonp(result[0]);
           }
       });
 };

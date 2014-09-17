@@ -5,7 +5,6 @@
  */
 var mongoose = require('mongoose'),
     TeachingRegistry = mongoose.model('TeachingRegistry'),
-  AcademicYear = mongoose.model('AcademicYear'),
     _ = require('lodash');
 
 /**

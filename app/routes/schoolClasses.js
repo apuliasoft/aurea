@@ -13,5 +13,6 @@ module.exports = function(app) {
     app.del('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId', schoolClasses.schoolClass, auth.check, schoolClasses.destroy);
 
     app.get('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/students', schoolClasses.schoolClass, auth.check, schoolClasses.allStudents);
+    app.get('/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/students/:studentId', schoolClasses.schoolClass, auth.check, schoolClasses.studentStats);
 
 };
