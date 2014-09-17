@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_', 'Global', 'SmartState', function ($scope, $filter, _, Global, SmartState) {
+angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_', 'Global', '$state', 'SmartState', function ($scope, $filter, _, Global, $state, SmartState) {
     $scope.global = Global;
 
     $scope.isVisible = function (menuItem) {
@@ -29,6 +29,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             goToState: function () {
                 SmartState.go('all schools');
             },
+            isActive: function () {
+                return $state.current.name === 'all schools';
+            },
             roles: [Global.isAdmin]
         },
         {
@@ -36,6 +39,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             title: 'Plessi',
             goToState: function () {
                 SmartState.go('all complexes');
+            },
+            isActive: function () {
+                return $state.current.name === 'all complexes';
             },
             roles: [Global.isAdmin, Global.isManager],
             contexts: [Global.getSchool]
@@ -46,6 +52,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             goToState: function () {
                 SmartState.go('all teachers');
             },
+            isActive: function () {
+                return $state.current.name === 'all teachers';
+            },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
             contexts: [Global.getSchool, Global.getComplex]
         },
@@ -54,6 +63,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             title: 'Alunni',
             goToState: function () {
                 SmartState.go('all students');
+            },
+            isActive: function () {
+                return $state.current.name === 'all students';
             },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
             contexts: [Global.getSchool, Global.getComplex]
@@ -64,6 +76,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             goToState: function () {
                 SmartState.go('all academic years');
             },
+            isActive: function () {
+                return $state.current.name === 'all academic years';
+            },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
             contexts: [Global.getSchool, Global.getComplex]
         },
@@ -72,6 +87,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             title: 'Genitori',
             goToState: function () {
                 SmartState.go('all parents');
+            },
+            isActive: function () {
+                return $state.current.name === 'all parents';
             },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
             contexts: [Global.getSchool, Global.getComplex, Global.getStudent]
@@ -82,6 +100,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             goToState: function () {
                 SmartState.go('all school classes');
             },
+            isActive: function () {
+                return $state.current.name === 'all school classes';
+            },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
             contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear]
         },
@@ -90,6 +111,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             title: 'Insegnamenti',
             goToState: function () {
                 SmartState.go('all teachings');
+            },
+            isActive: function () {
+                return $state.current.name === 'all teachings';
             },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
             contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass]
@@ -102,6 +126,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
                     date: $filter('date')(new Date(), 'yyyy-MM-dd')
                 });
             },
+            isActive: function () {
+                return $state.current.name === 'class registry by date';
+            },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
             contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass]
         },
@@ -113,6 +140,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
                     date: $filter('date')(new Date(), 'yyyy-MM-dd')
                 });
             },
+            isActive: function () {
+                return $state.current.name === 'teaching registry by date';
+            },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
             contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass, Global.getTeaching]
         },
@@ -121,6 +151,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             title: 'Utenti',
             goToState: function () {
                 SmartState.go('all users');
+            },
+            isActive: function () {
+                return $state.current.name === 'all users';
             },
             roles: [Global.isAdmin]
         }

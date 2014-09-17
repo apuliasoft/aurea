@@ -1,4 +1,21 @@
 body {
-  padding-top: 70px;
-  padding-bottom: 70px;
+    background-color: #F0F0F0;
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.left-menu {
+    position: fixed;
+    height: 100%;
+}
+
+.main {
+    background-color: #ffffff;
+    min-height: 500px;
+    box-shadow: 5px 5px 5px #CCCCCC;
+}
+
+.nav > li > a:hover, .nav > li > a.active {
+    background-color: #ffffff;
+    box-shadow: 5px 5px 5px #CCCCCC;
 }
