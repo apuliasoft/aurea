@@ -463,6 +463,15 @@ var authorizations = [
                 req.user.complex.toString() === req.params.complexId;
         }
     },
+    {
+        role: ['parent'],
+        method: 'GET',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/students/:studentId',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.user.complex.toString() === req.params.complexId;
+        }
+    },
 
     // Teaching
     {

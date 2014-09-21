@@ -9,7 +9,10 @@ angular.module('aurea.classStudents').controller('ClassStudentsCtrl', ['$scope',
     };
 
     $scope.isParentOf = function(student){
-        // TODO: da implementare
+        if(Global.getUser().parent){
+            return student._id === Global.getUser().parent.student;
+        }
+        return false;
     };
 
     $scope.goToStudentStats = function(student){
@@ -43,7 +46,46 @@ angular.module('aurea.classStudents').controller('ClassStudentsCtrl', ['$scope',
               Global.title = 'Statistiche';
               Global.subtitle = $filter('name')(Global.getStudent());
 
-              $scope.stats = stats;
+              $scope.stats = formatStats(stats);
+
+              $scope.totalAbsences = _.reduce($scope.stats, function (sum, num){
+                  return sum + num.value;
+              }, 0);
           });
-    }
+    };
+
+    var formatStats = function(stats){
+
+        var academicYear = Global.getAcademicYear();
+
+        var result =[];
+
+        var currentDate = new Date(academicYear.startDate);
+        var endDate = new Date(academicYear.endDate);
+        endDate = getMonthYear(new Date(endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate()));
+
+        while(getMonthYear(currentDate) !== endDate){
+            result.push({
+                name: getMonthYear(currentDate)
+            });
+            currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
+        }
+
+        var groupedAbsences = _.groupBy(stats.absences, function(a){
+            var date = new Date(a);
+            return getMonthYear(date);
+        });
+
+
+        result = _.map(result, function(elem){
+            var absences = groupedAbsences[elem.name];
+            return _.extend(elem, {value: absences ? absences.length : 0, absences: absences ? absences : []});
+        });
+
+        return result;
+    };
+
+    var getMonthYear = function(date){
+        return date.toLocaleString('it-IT', {month: 'short'}).toUpperCase() + ' ' + date.getFullYear();
+    };
 }]);

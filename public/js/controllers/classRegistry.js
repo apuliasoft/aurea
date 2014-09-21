@@ -167,6 +167,10 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
         $scope.opened = true;
     };
 
+    $scope.minDate = new Date(Global.getAcademicYear().startDate);
+
+    $scope.maxDate = new Date(Global.getAcademicYear().endDate);
+
     // Disabilita i giorni per cui non c'è la timetable
     $scope.disabled = function (date, mode) {
         return ( mode === 'day' && !_.contains($scope.weekdays, date.getDay()));

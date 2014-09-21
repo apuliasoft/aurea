@@ -2,5 +2,6 @@
   <div>
     <h4 class="bg-primary section-title">Assenze</h4>
   </div>
-  <h1>{{ stats | json }}</h1>
+  <h3>Totale assenze: {{totalAbsences}}</h3>
+  <d3-bars data="stats" bar-height="20" bar-padding="5"></d3-bars>
 </section>

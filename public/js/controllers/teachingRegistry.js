@@ -95,6 +95,10 @@ angular.module('aurea.teachingRegistry').controller('TeachingRegistryCtrl', ['$s
         $scope.opened = true;
     };
 
+    $scope.minDate = new Date(Global.getAcademicYear().startDate);
+
+    $scope.maxDate = new Date(Global.getAcademicYear().endDate);
+
     $scope.addVote = function(){
         if(!$scope.teachingRegistry.votes){
             $scope.teachingRegistry.votes = [];

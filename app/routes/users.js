@@ -4,19 +4,12 @@
 var users = require('../controllers/users');
 var passport = require('passport');
 var auth = require('./middlewares/authorization');
-var _ = require('lodash');
 
 module.exports = function(app) {
 
     // Setting the local strategy route
+    app.post('/login', passport.authenticate('local'), users.loggedin);
     app.get('/loggedin', users.loggedin);
-    app.post('/login',
-      passport.authenticate('local'),
-      function(req, res) {
-          // If this function gets called, authentication was successful.
-          // `req.user` contains the authenticated user.
-          res.jsonp(_.pick(req.user, ['_id', 'name', 'username', 'eamil', 'role', 'school', 'complex']));
-      });
     app.post('/logout', function(req, res){
         req.logout();
         res.end();

@@ -7,6 +7,7 @@ angular.module('aurea', [
     'ngToast',
     'ui.bootstrap',
     'ui.router',
+    'd3',
     'aurea.system',
     'aurea.users',
     'aurea.schools',
@@ -23,6 +24,7 @@ angular.module('aurea', [
     'aurea.teachingRegistry'
 ]);
 
+angular.module('d3', []);
 angular.module('aurea.system', []);
 angular.module('aurea.users', []);
 angular.module('aurea.schools', []);

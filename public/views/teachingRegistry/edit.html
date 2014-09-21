@@ -8,6 +8,7 @@
       <button class="btn btn-primary pull-right" data-ng-click="tomorrow()">Successivo <i
           class="fa fa-arrow-circle-right"></i></button>
       <button class="btn center-block btn-default" datepicker-popup="EEEE, d MMMM yyyy" is-open="opened"
+              min-date="minDate" max-date="maxDate"
               data-ng-model="teachingRegistry.date" data-ng-click="open($event)" datepicker-options="dateOptions"
               show-button-bar="false" date-disabled="disabled(date, mode)">
         {{ teachingRegistry.date | date:'EEEE, d MMMM yyyy' }}
