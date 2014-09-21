@@ -11,6 +11,8 @@ var db = mongoose.connect(config.db);
 require('./app/models/user.js');
 var User = mongoose.model('User');
 
+db.connection.db.dropDatabase();
+
 User.findOne(
   {email: 'admin@aurea.it'},
   function (err, user) {
@@ -21,7 +23,6 @@ User.findOne(
 
       var admin = new User();
       admin.name = 'admin';
-      admin.username = 'admin';
       admin.email = 'admin@aurea.it';
       admin.password = 'admin';
       admin.role = 'admin';
