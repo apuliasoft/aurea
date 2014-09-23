@@ -10,8 +10,8 @@ angular.module('aurea').directive('d3Bars', ['$window', '$timeout', 'd3Service',
         link: function (scope, ele, attrs) {
             d3Service.d3().then(function (d3) {
 
-                //var margin = parseInt(attrs.margin) || 20,
-                var barHeight = parseInt(attrs.barHeight) || 20,
+                var margin = parseInt(attrs.margin) || 20,
+                  barHeight = parseInt(attrs.barHeight) || 20,
                   barPadding = parseInt(attrs.barPadding) || 5;
 
                 var svg = d3.select(ele[0])
@@ -42,17 +42,15 @@ angular.module('aurea').directive('d3Bars', ['$window', '$timeout', 'd3Service',
                     if (!data) return;
 
                     // setup variables
-                    // var width = d3.select(ele[0]).node().offsetWidth - margin,
+                    var width = d3.select(ele[0]).node().offsetWidth - margin,
                     // calculate the height
-                    var  height = scope.data.length * (barHeight + barPadding),
+                      height = scope.data.length * (barHeight + barPadding),
                     // Use the category20() scale function for multicolor support
                       color = d3.scale.category20(),
                     // our xScale
                       xScale = d3.scale.linear()
-                        .domain([0, d3.max(data, function (d) {
-                            return d.value;
-                        })])
-                        .range([0, 31]);
+                        .domain([0, 31])
+                        .range([0, width]);
 
                     // set the height based on the calculations above
                     svg.attr('height', height);

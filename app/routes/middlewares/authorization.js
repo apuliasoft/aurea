@@ -105,6 +105,52 @@ var authorizations = [
         }
     },
 
+    // Communication
+    {
+        role: '*',
+        method: 'GET',
+        path: '/schools/:schoolId/communications',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId;
+        }
+    },
+    {
+        role: 'manager',
+        method: 'POST',
+        path: '/schools/:schoolId/communications',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.user.school.toString() === req.body.school;
+        }
+    },
+    {
+        role: '*',
+        method: 'GET',
+        path: '/schools/:schoolId/communications/:communicationId',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId;
+        }
+    },
+    {
+        role: 'manager',
+        method: 'PUT',
+        path: '/schools/:schoolId/communications/:communicationId',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.user.school.toString() === req.communication.school &&
+              req.communication.school === req.body.school;
+        }
+    },
+    {
+        role: 'manager',
+        method: 'DELETE',
+        path: '/schools/:schoolId/communications/:communicationId',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.user.school.toString() === req.communication.school;
+        }
+    },
+
     // Academic Year
     {
         role: 'manager',

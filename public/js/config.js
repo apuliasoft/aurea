@@ -534,6 +534,42 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               }
           })
 
+          .state('all communications', {
+              url: '/scuole/:schoolId/comunicazioni',
+              templateUrl: 'views/communications/list.html',
+              resolve: {
+                  loggedin: checkLoggedin,
+                  school: checkSchool
+              }
+          })
+
+          .state('create communication', {
+              url: '/scuole/:schoolId/comunicazioni/nuovo',
+              templateUrl: 'views/communications/create.html',
+              resolve: {
+                  loggedin: checkLoggedin,
+                  school: checkSchool
+              }
+          })
+
+          .state('edit communication', {
+              url: '/scuole/:schoolId/comunicazioni/:communicationId/modifica',
+              templateUrl: 'views/communications/edit.html',
+              resolve: {
+                  loggedin: checkLoggedin,
+                  school: checkSchool
+              }
+          })
+
+          .state('communication by id', {
+              url: '/scuole/:schoolId/comunicazioni/:communicationId',
+              templateUrl: 'views/communications/view.html',
+              resolve: {
+                  loggedin: checkLoggedin,
+                  school: checkSchool
+              }
+          })
+
           .state('home', {
               url: '/',
               templateUrl: 'views/index.html',

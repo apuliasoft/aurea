@@ -47,6 +47,18 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool]
         },
         {
+            icon: 'bullhorn',
+            title: 'Comunicazioni',
+            goToState: function () {
+                SmartState.go('all communications');
+            },
+            isActive: function () {
+                return $state.current.name === 'all communications';
+            },
+            roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isStudent, Global.isParent],
+            contexts: [Global.getSchool]
+        },
+        {
             icon: 'graduation-cap',
             title: 'Insegnanti',
             goToState: function () {

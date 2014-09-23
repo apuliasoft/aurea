@@ -1,0 +1,30 @@
+<section data-ng-controller="CommunicationsCtrl" data-ng-init="find()">
+
+  <div class="row">
+    <div class="col-xs-12" data-ng-repeat="communication in communications | orderBy:'pubDate':true">
+      <h3>{{communication.title}}</h3>
+      <h5>
+        <small>Pubblicato {{communication.pubDate | date:"EEEE, d MMMM yyyy"}}</small>
+      </h5>
+      <p>{{communication.text | words:100}}</p>
+      <a href="" data-ng-click="goToViewCommunication(communication)">Continua a leggere</a>
+      <div class="clearfix"></div>
+    </div>
+
+  </div>
+
+  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container">
+      <p class="navbar-text">
+        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
+      </p>
+
+      <div class="nav navbar-nav navbar-right btn-group" >
+        <button type="button" data-ng-click="goToCreateCommunication()" class="btn btn-primary navbar-btn" title="Aggiungi" data-ng-if="global.isAdmin() || global.isManager()">
+          <i class="fa fa-plus"></i> Aggiungi
+        </button>
+      </div>
+    </div>
+  </nav>
+
+</section>
