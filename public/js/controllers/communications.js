@@ -82,7 +82,7 @@ angular.module('aurea.communications').controller('CommunicationsCtrl', ['$scope
         communication.$delete(function(){
             $scope.goToListCommunications();
         });
-    }
+    };
 }]);
 
 
