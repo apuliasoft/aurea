@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     TeachingRegistry = mongoose.model('TeachingRegistry'),
+    AcademicYear = mongoose.model('AcademicYear'),
     _ = require('lodash');
 
 /**
@@ -18,32 +19,55 @@ exports.teachingRegistry = function(req, res, next) {
     var academicYearId = req.params.academicYearId;
     var teachingId = req.params.teachingId;
 
-    TeachingRegistry.findOne({
-          schoolClass: schoolClassId,
-          date: date,
-          school: schoolId,
-          complex: complexId,
-          academicYear: academicYearId,
-          teaching: teachingId
-      },
-      function (err, teachingRegistry) {
-          if (err) return next(err);
-          if(!teachingRegistry){
-              teachingRegistry = new TeachingRegistry({
-                  schoolClass: schoolClassId,
-                  date: date,
-                  school: schoolId,
-                  complex: complexId,
-                  academicYear: academicYearId,
-                  teaching: teachingId,
+    AcademicYear.findById(academicYearId, function (err, academicYear){
+        if (err) return next(err);
 
-                  votes: [],
-                  absences: []
-              });
-          }
-          req.teachingRegistry = teachingRegistry;
-          next();
-      });
+        // Controllo che la data sia compresa nell'anno accademico
+        var startDate = new Date(academicYear.startDate);
+        var endDate = new Date(academicYear.endDate);
+        if (date < new Date(startDate) || date > new Date(endDate)) {
+            req.teachingRegistry = null;
+            return next();
+        }
+
+        var weekDay = date.getDay() === 0 ? 7 : date.getDay();
+        var day = _.find(academicYear.timeTable, function (day) {
+            return day.weekDay === weekDay;
+        });
+
+        if (!day || day.slots.length === 0) {
+            // La data non fa parte dell'anno accademico
+            req.teachingRegistry = null;
+            return next();
+        }
+
+        TeachingRegistry.findOne({
+              schoolClass: schoolClassId,
+              date: date,
+              school: schoolId,
+              complex: complexId,
+              academicYear: academicYearId,
+              teaching: teachingId
+          },
+          function (err, teachingRegistry) {
+              if (err) return next(err);
+              if(!teachingRegistry){
+                  teachingRegistry = new TeachingRegistry({
+                      schoolClass: schoolClassId,
+                      date: date,
+                      school: schoolId,
+                      complex: complexId,
+                      academicYear: academicYearId,
+                      teaching: teachingId,
+
+                      votes: [],
+                      absences: []
+                  });
+              }
+              req.teachingRegistry = teachingRegistry;
+              next();
+          });
+    });
 };
 
 /**
@@ -75,7 +99,7 @@ exports.show = function(req, res) {
     var teachingRegistry = req.teachingRegistry;
 
     if(!teachingRegistry) {
-        res.jsonp(404, 'non trovato');
+        return res.jsonp(404, 'non trovato');
     }
     res.jsonp(teachingRegistry);
 };

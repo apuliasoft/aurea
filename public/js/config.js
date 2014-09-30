@@ -28,6 +28,56 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
 
         }];
 
+        var checkClassRegistry = ['$q', '$stateParams', 'ClassRegistry', function($q, $stateParams, ClassRegistry){
+            var deferred = $q.defer();
+
+            var date = new Date($stateParams.date);
+            var schoolClass = $stateParams.schoolClassId;
+            var school = $stateParams.schoolId;
+            var complex = $stateParams.complexId;
+            var academicYear = $stateParams.academicYearId;
+
+            ClassRegistry.get({
+                schoolClassId: schoolClass,
+                date: date.toISOString(),
+                schoolId: school,
+                complexId: complex,
+                academicYearId: academicYear
+            }).$promise.then(function(classRegistry){
+                  deferred.resolve(classRegistry);
+              }, function(){
+                  deferred.reject();
+              });
+
+            return deferred.promise;
+        }];
+
+        var checkTeachingRegistry = ['$q', '$stateParams', 'TeachingRegistry', function($q, $stateParams, TeachingRegistry){
+            var deferred = $q.defer();
+
+            var date = new Date($stateParams.date);
+            var schoolClass = $stateParams.schoolClassId;
+            var school = $stateParams.schoolId;
+            var complex = $stateParams.complexId;
+            var academicYear = $stateParams.academicYearId;
+            var teaching = $stateParams.teachingId;
+
+            TeachingRegistry.get({
+                schoolClassId: schoolClass,
+                date: date.toISOString(),
+                schoolId: school,
+                complexId: complex,
+                academicYearId: academicYear,
+                teachingId: teaching
+            }).$promise.then(function(teachingRegistry){
+                  deferred.resolve(teachingRegistry);
+              }, function(){
+                  deferred.reject();
+              });
+
+            return deferred.promise;
+        }];
+
         var checkSchool = ['$q', 'ngToast', '$stateParams', 'School', 'Global', function ($q, ngToast, $stateParams, School, Global) {
             var deferred = $q.defer();
 
@@ -143,7 +193,7 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             return deferred.promise;
         }];
 
-        $httpProvider.responseInterceptors.push(['$rootScope', '$q', '$location', function (scope, $q, $location) {
+        /*$httpProvider.responseInterceptors.push(['$rootScope', '$q', '$location', function (scope, $q, $location) {
 
             function success(response) {
                 return response;
@@ -170,6 +220,30 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
                 return promise.then(success, error);
             };
 
+        }]);*/
+
+        $httpProvider.interceptors.push(['$q', '$location', function ($q, $location){
+            return {
+                'response': function(response) {
+                    return response || $q.when(response);
+                },
+
+                'responseError': function(rejection) {
+                    var status = rejection.status;
+
+                    switch(status){
+                        case 401:
+                            $location.url('/401');
+                            return $q.reject(rejection);
+                        case 404:
+                            $location.url('/404');
+                            return $q.reject(rejection);
+                    }
+
+                    // otherwise
+                    return $q.reject(rejection);
+                }
+            };
         }]);
 
         // For unmatched routes:
@@ -512,25 +586,29 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
           .state('class registry by date', {
               url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/registri-di-classe/:date',
               templateUrl: 'views/classRegistry/edit.html',
-              resolve: {
-                  loggedin: checkLoggedin,
-                  school: checkSchool,
-                  complex: checkComplex,
-                  academicYear: checkAcademicYear,
-                  schoolClass: checkSchoolClass
-              }
-          })
-
-          .state('teaching registry by date', {
-              url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti/:teachingId/registri-personali/:date',
-              templateUrl: 'views/teachingRegistry/edit.html',
+              controller: 'ClassRegistryCtrl',
               resolve: {
                   loggedin: checkLoggedin,
                   school: checkSchool,
                   complex: checkComplex,
                   academicYear: checkAcademicYear,
                   schoolClass: checkSchoolClass,
-                  teaching: checkTeaching
+                  classRegistry: checkClassRegistry
+              }
+          })
+
+          .state('teaching registry by date', {
+              url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti/:teachingId/registri-personali/:date',
+              templateUrl: 'views/teachingRegistry/edit.html',
+              controller: 'TeachingRegistryCtrl',
+              resolve: {
+                  loggedin: checkLoggedin,
+                  school: checkSchool,
+                  complex: checkComplex,
+                  academicYear: checkAcademicYear,
+                  schoolClass: checkSchoolClass,
+                  teaching: checkTeaching,
+                  teachingRegistry: checkTeachingRegistry
               }
           })
 

@@ -1,4 +1,4 @@
-<section class="container-fluid" data-ng-controller="ClassRegistryCtrl" data-ng-init="init()">
+<section class="container-fluid" data-ng-init="init()">
 
   <script type="text/ng-template" id="selectTime.html">
     <div class="modal-header">
@@ -15,10 +15,10 @@
 
   <div class="row">
     <div class="col-md-12">
-      <button class="btn btn-primary pull-left" data-ng-click="yesterday()"><i
+      <button class="btn btn-primary pull-left" data-ng-disabled="prevDisabled" data-ng-click="yesterday()"><i
           class="fa fa-arrow-circle-left"></i> Precedente
       </button>
-      <button class="btn btn-primary pull-right" data-ng-click="tomorrow()">Successivo <i
+      <button class="btn btn-primary pull-right" data-ng-disabled="nextDisabled" data-ng-click="tomorrow()">Successivo <i
           class="fa fa-arrow-circle-right"></i></button>
       <button class="btn center-block btn-default" datepicker-popup="EEEE, d MMMM yyyy" is-open="opened"
               min-date="minDate" max-date="maxDate"

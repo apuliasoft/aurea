@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aurea.teachingRegistry').controller('TeachingRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', 'ngToast', '_', 'SmartState', 'Global', 'TeachingRegistry', 'ClassStudent', function ($scope, $stateParams, $location, $filter, ngToast, _, SmartState, Global, TeachingRegistry, ClassStudent) {
+angular.module('aurea.teachingRegistry').controller('TeachingRegistryCtrl', ['$scope', '$stateParams', '$location', '$filter', 'ngToast', '_', 'SmartState', 'Global', 'TeachingRegistry', 'ClassStudent', 'teachingRegistry', function ($scope, $stateParams, $location, $filter, ngToast, _, SmartState, Global, TeachingRegistry, ClassStudent, teachingRegistry) {
 
     $scope.$watch('teachingRegistry.date', function () {
         if ($scope.teachingRegistry) {
@@ -21,14 +21,37 @@ angular.module('aurea.teachingRegistry').controller('TeachingRegistryCtrl', ['$s
             academicYearId: Global.getAcademicYear()._id
         });
 
-        var date = new Date($stateParams.date);
-        var schoolClass = Global.getSchoolClass()._id;
-        var school = Global.getSchool()._id;
-        var complex = Global.getComplex()._id;
-        var academicYear = Global.getAcademicYear()._id;
-        var teaching = Global.getTeaching()._id;
+        $scope.minDate = new Date(Global.getAcademicYear().startDate);
 
-        TeachingRegistry.get({
+        $scope.maxDate = new Date(Global.getAcademicYear().endDate);
+
+        var date = new Date($stateParams.date);
+//        var schoolClass = Global.getSchoolClass()._id;
+//        var school = Global.getSchool()._id;
+//        var complex = Global.getComplex()._id;
+//        var academicYear = Global.getAcademicYear()._id;
+//        var teaching = Global.getTeaching()._id;
+
+
+        Global.title = 'Registro di ' + Global.getTeaching().name;
+        Global.subtitle = Global.getSchoolClass().name;
+
+        $scope.teachingRegistry = teachingRegistry;
+
+        $scope.weekdays = _.map(_.filter(Global.getAcademicYear().timeTable, function(slot){
+            return slot.slots.length > 0;
+        }), function(item){
+            return item.weekDay === 7 ? 0: item.weekDay;
+        });
+
+        var prevdate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
+        var nextDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+
+        $scope.prevDisabled = prevdate < new Date($scope.minDate.setHours(0,0,0,0));
+        $scope.nextDisabled = nextDate > new Date($scope.maxDate.setHours(0,0,0,0));
+
+        // TODO: rimuovere
+        /*TeachingRegistry.get({
             schoolClassId: schoolClass,
             date: date.toISOString(),
             schoolId: school,
@@ -40,25 +63,52 @@ angular.module('aurea.teachingRegistry').controller('TeachingRegistryCtrl', ['$s
               Global.subtitle = Global.getSchoolClass().name;
 
               $scope.teachingRegistry = teachingRegistry;
-          });
+
+              $scope.weekdays = _.map(_.filter(Global.getAcademicYear().timeTable, function(slot){
+                  return slot.slots.length > 0;
+              }), function(item){
+                  return item.weekDay === 7 ? 0: item.weekDay;
+              });
+
+              var prevdate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
+              var nextDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+
+              $scope.prevDisabled = prevdate < new Date($scope.minDate.setHours(0,0,0,0));
+              $scope.nextDisabled = nextDate > new Date($scope.maxDate.setHours(0,0,0,0));
+          });*/
     };
 
     $scope.tomorrow = function () {
         var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate()+1);
+        var found = false;
+        while(!found){
+            if(_.contains($scope.weekdays, newDay.getDay())){
+                SmartState.go('teaching registry by date', {
+                    date: $filter('date')(newDay, 'yyyy-MM-dd')
+                });
+                found = true;
+            } else {
+                newDay = new Date(newDay.getFullYear(), newDay.getMonth(), newDay.getDate() + 1);
+            }
+        }
 
-        SmartState.go('teaching registry by date', {
-            date: $filter('date')(newDay, 'yyyy-MM-dd')
-        });
     };
 
     $scope.yesterday = function () {
         var day = new Date($stateParams.date);
         var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate()-1);
-
-        SmartState.go('teaching registry by date', {
-            date: $filter('date')(newDay, 'yyyy-MM-dd')
-        });
+        var found = false;
+        while(!found){
+            if(_.contains($scope.weekdays, newDay.getDay())){
+                SmartState.go('teaching registry by date', {
+                    date: $filter('date')(newDay, 'yyyy-MM-dd')
+                });
+                found = true;
+            } else {
+                newDay = new Date(newDay.getFullYear(), newDay.getMonth(), newDay.getDate() - 1);
+            }
+        }
     };
 
     $scope.onUpdate = function (teachingRegistry) {
@@ -95,9 +145,10 @@ angular.module('aurea.teachingRegistry').controller('TeachingRegistryCtrl', ['$s
         $scope.opened = true;
     };
 
-    $scope.minDate = new Date(Global.getAcademicYear().startDate);
-
-    $scope.maxDate = new Date(Global.getAcademicYear().endDate);
+    // Disabilita i giorni per cui non c'è la timetable
+    $scope.disabled = function (date, mode) {
+        return ( mode === 'day' && !_.contains($scope.weekdays, date.getDay()));
+    };
 
     $scope.addVote = function(){
         if(!$scope.teachingRegistry.votes){
