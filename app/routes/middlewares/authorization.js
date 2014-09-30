@@ -627,9 +627,9 @@ function match(req, authorization, path, role, method) {
 exports.check = function (req, res, next) {
     if (!req.user) return res.send(401, 'Non puoi accedere, si prega di effettuare il login');
 
-    console.log(req.route.path);
-    console.log(req.user.role);
-    console.log(req.method);
+//    console.log(req.route.path);
+//    console.log(req.user.role);
+//    console.log(req.method);
 
     var isAuthorized = _.find(authorizations, function (authorization) {
         if (match(req, authorization, req.route.path, req.user.role, req.method)) {
@@ -637,7 +637,7 @@ exports.check = function (req, res, next) {
         }
     });
 
-    console.log(isAuthorized);
+//    console.log(isAuthorized);
 
     if (isAuthorized)
         next();

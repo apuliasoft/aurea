@@ -11,26 +11,13 @@ angular.module('aurea.users').controller('LoginCtrl', ['$scope', '$rootScope', '
                 email: $scope.user.email,
                 password: $scope.user.password
             })
-              .success(function (response) {
+              .success(function () {
                   // authentication OK
-                  goToFirstState(response);
+                  SmartState.go('home');
               })
               .error(function () {
                   $scope.loginerror = 'Autenticazione fallita.';
               });
         };
-
-        function goToFirstState(user) {
-            switch (user.role) {
-                case 'admin':
-                    SmartState.go('all schools');
-                    break;
-                case 'manager':
-                    SmartState.go('all complexes', { schoolId: user.school });
-                    break;
-                default:
-                    SmartState.go('all academic years', { schoolId: user.school, complexId: user.complex });
-            }
-        }
     }
 ]);

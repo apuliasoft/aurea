@@ -193,35 +193,6 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             return deferred.promise;
         }];
 
-        /*$httpProvider.responseInterceptors.push(['$rootScope', '$q', '$location', function (scope, $q, $location) {
-
-            function success(response) {
-                return response;
-            }
-
-            function error(response) {
-                var status = response.status;
-
-                switch (status) {
-                    case 401:
-                        $location.url('/401');
-                        return;
-                    case 404:
-                        $location.url('/404');
-                        return;
-                }
-
-                // otherwise
-                return $q.reject(response);
-
-            }
-
-            return function (promise) {
-                return promise.then(success, error);
-            };
-
-        }]);*/
-
         $httpProvider.interceptors.push(['$q', '$location', function ($q, $location){
             return {
                 'response': function(response) {
@@ -251,6 +222,15 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
 
         // states for my app
         $stateProvider
+
+
+          .state('home', {
+              url: '/',
+              templateUrl: 'views/index.html',
+              resolve: {
+                  loggedin: checkLoggedin
+              }
+          })
 
           .state('login user', {
               url: '/login',
@@ -645,14 +625,6 @@ angular.module('aurea').config(['$stateProvider', '$urlRouterProvider', '$httpPr
               resolve: {
                   loggedin: checkLoggedin,
                   school: checkSchool
-              }
-          })
-
-          .state('home', {
-              url: '/',
-              templateUrl: 'views/index.html',
-              resolve: {
-                  loggedin: checkLoggedin
               }
           });
     }]);
