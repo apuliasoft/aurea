@@ -95,7 +95,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool, Global.getComplex]
         },
         {
-            icon: '',
+            icon: 'male',
             title: 'Genitori',
             goToState: function () {
                 SmartState.go('all parents');

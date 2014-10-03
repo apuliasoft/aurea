@@ -78,11 +78,6 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
         $scope.selectedStudents = [];
 
         var date = new Date($stateParams.date);
-//        var schoolClass = Global.getSchoolClass()._id;
-//        var school = Global.getSchool()._id;
-//        var complex = Global.getComplex()._id;
-//        var academicYear = Global.getAcademicYear()._id;
-
 
         Global.title = 'Registro di classe';
         Global.subtitle = Global.getSchoolClass().name;
@@ -104,37 +99,6 @@ angular.module('aurea.classRegistry').controller('ClassRegistryCtrl', ['$scope',
         $scope.prevDisabled = prevdate < new Date($scope.minDate.setHours(0,0,0,0));
         $scope.nextDisabled = nextDate > new Date($scope.maxDate.setHours(0,0,0,0));
 
-        // TODO: rimuovere
-        /*ClassRegistry.get({
-            schoolClassId: schoolClass,
-            date: date.toISOString(),
-            schoolId: school,
-            complexId: complex,
-            academicYearId: academicYear
-        }).$promise.then(function (classRegistry) {
-              Global.title = 'Registro di classe';
-              Global.subtitle = Global.getSchoolClass().name;
-
-              $scope.classRegistry = deserializeData(classRegistry);
-              $scope.weekdays = _.map(_.filter(Global.getAcademicYear().timeTable, function(slot){
-                  return slot.slots.length > 0;
-              }), function(item){
-                  return item.weekDay === 7 ? 0: item.weekDay;
-              });
-
-              $scope.timeslots = _.find(Global.getAcademicYear().timeTable, function(day){
-                  return day.weekDay === date.getDay() === 0 ? 7 : date.getDay();
-              });
-
-              var prevdate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
-              var nextDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
-
-              $scope.prevDisabled = prevdate < new Date($scope.minDate.setHours(0,0,0,0));
-              $scope.nextDisabled = nextDate > new Date($scope.maxDate.setHours(0,0,0,0));
-
-          }, function(error){
-              console.log(error);
-          });*/
     };
 
     $scope.tomorrow = function () {
