@@ -26,12 +26,6 @@ angular.module('aurea.teachingRegistry').controller('TeachingRegistryCtrl', ['$s
         $scope.maxDate = new Date(Global.getAcademicYear().endDate);
 
         var date = new Date($stateParams.date);
-//        var schoolClass = Global.getSchoolClass()._id;
-//        var school = Global.getSchool()._id;
-//        var complex = Global.getComplex()._id;
-//        var academicYear = Global.getAcademicYear()._id;
-//        var teaching = Global.getTeaching()._id;
-
 
         Global.title = 'Registro di ' + Global.getTeaching().name;
         Global.subtitle = Global.getSchoolClass().name;
@@ -50,32 +44,6 @@ angular.module('aurea.teachingRegistry').controller('TeachingRegistryCtrl', ['$s
         $scope.prevDisabled = prevdate < new Date($scope.minDate.setHours(0,0,0,0));
         $scope.nextDisabled = nextDate > new Date($scope.maxDate.setHours(0,0,0,0));
 
-        // TODO: rimuovere
-        /*TeachingRegistry.get({
-            schoolClassId: schoolClass,
-            date: date.toISOString(),
-            schoolId: school,
-            complexId: complex,
-            academicYearId: academicYear,
-            teachingId: teaching
-        }).$promise.then(function (teachingRegistry) {
-              Global.title = 'Registro di ' + Global.getTeaching().name;
-              Global.subtitle = Global.getSchoolClass().name;
-
-              $scope.teachingRegistry = teachingRegistry;
-
-              $scope.weekdays = _.map(_.filter(Global.getAcademicYear().timeTable, function(slot){
-                  return slot.slots.length > 0;
-              }), function(item){
-                  return item.weekDay === 7 ? 0: item.weekDay;
-              });
-
-              var prevdate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
-              var nextDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
-
-              $scope.prevDisabled = prevdate < new Date($scope.minDate.setHours(0,0,0,0));
-              $scope.nextDisabled = nextDate > new Date($scope.maxDate.setHours(0,0,0,0));
-          });*/
     };
 
     $scope.tomorrow = function () {
