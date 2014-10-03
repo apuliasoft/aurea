@@ -94,10 +94,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             icon: 'calendar',
             title: 'Anni accademici',
             goToState: function () {
-                SmartState.go('all academic years', {
-                    schoolId: Global.user.school,
-                    complexId: Global.user.complex
-                });
+                SmartState.go('all academic years');
             },
             isActive: function () {
                 return $state.current.name === 'all academic years';
