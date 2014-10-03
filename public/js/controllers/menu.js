@@ -21,6 +21,13 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
         return true;
     };
 
+    function hasSchoolContext() {
+        return Global.user.school || Global.getSchool();
+    }
+
+    function hasComplexContext() {
+        return Global.user.complex || Global.getComplex();
+    }
 
     $scope.menu = [
         {
@@ -83,16 +90,20 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             contexts: [Global.getSchool, Global.getComplex]
         },
         {
+            //FIXME fare quello che si e' fatto per gli anni accademici anche per tutti gli altri bottoni nel menu
             icon: 'calendar',
             title: 'Anni accademici',
             goToState: function () {
-                SmartState.go('all academic years');
+                SmartState.go('all academic years', {
+                    schoolId: Global.user.school,
+                    complexId: Global.user.complex
+                });
             },
             isActive: function () {
                 return $state.current.name === 'all academic years';
             },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
-            contexts: [Global.getSchool, Global.getComplex]
+            contexts: [hasSchoolContext, hasComplexContext]
         },
         {
             icon: 'male',
