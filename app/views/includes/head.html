@@ -22,9 +22,10 @@
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-responsive.css"> -->
     <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/lib/ngtoast/dist/ngToast.min.css">
 
+    {% if (process.env.NODE_ENV == 'development') %}
+    <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/views/schools.css">
     <link rel="stylesheet" href="/css/views/teachers.css">
     <link rel="stylesheet" href="/css/views/students.css">
@@ -32,8 +33,13 @@
     <link rel="stylesheet" href="/css/views/schoolClasses.css">
     <link rel="stylesheet" href="/css/views/teachings.css">
     <link rel="stylesheet" href="/css/views/classRegistry.css">
+    {% endif %}
 
-<!--[if lt IE 9]>
+    {% if (process.env.NODE_ENV == 'production') %}
+    <link rel="stylesheet" href="/app.min.css">
+    {% endif %}
+
+    <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
+    <![endif]-->
 </head>

@@ -25,6 +25,9 @@
 <!-- Bootstrap -->
 <script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.js"></script>
 
+
+{% if (process.env.NODE_ENV == 'development') %}
+
 <!-- Application Init -->
 <script type="text/javascript" src="/js/app.js"></script>
 <script type="text/javascript" src="/js/config.js"></script>
@@ -81,8 +84,11 @@
 <script type="text/javascript" src="/js/controllers/menu.js"></script>
 <script type="text/javascript" src="/js/init.js"></script>
 
+<!-- Livereload script rendered -->
+<script type="text/javascript" src="{{'http://' + req.host + ':35729/livereload.js'}}"></script>
+{% endif %}
 
-{% if (process.env.NODE_ENV == 'development') %}
-    <!-- Livereload script rendered -->
-    <script type="text/javascript" src="{{'http://' + req.host + ':35729/livereload.js'}}"></script>
+{% if (process.env.NODE_ENV == 'production') %}
+<script type="text/javascript" src="/app.min.js"></script>
+<script type="text/javascript"  src="/templates.js"></script>
 {% endif %}
