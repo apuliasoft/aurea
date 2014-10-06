@@ -4,6 +4,7 @@
     <div class="col-xs-4" data-ng-repeat="teacher in teachers">
       <div class="thumbnail well well-sm">
         <h3>{{teacher | name}}</h3>
+
         <p>{{teacher.user.email}}</p>
 
         <div class="pull-right">
@@ -27,7 +28,8 @@
       </p>
 
       <div class="nav navbar-nav navbar-right btn-group">
-        <button type="button" data-ng-click="goToCreateTeacher()" class="btn btn-primary navbar-btn" title="Aggiungi">
+        <button type="button" data-ng-click="goToCreateTeacher()" class="btn btn-primary navbar-btn" title="Aggiungi"
+                data-ng-if="global.isAdmin() || global.isManager()">
           <i class="fa fa-plus"></i> Aggiungi
         </button>
       </div>

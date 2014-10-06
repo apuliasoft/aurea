@@ -611,7 +611,100 @@ var authorizations = [
             return req.user.school.toString() === req.params.schoolId &&
                 req.user.complex.toString() === req.params.complexId;
         }
+    },
+
+    // class Registries
+    {
+        role: 'manager',
+        method: 'GET',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/classRegistries/:date',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId;
+        }
+    },
+    {
+        role: 'manager',
+        method: 'PUT',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/classRegistries/:date',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.classRegistry.school.toString() === req.body.school &&
+              req.classRegistry.complex.toString() === req.body.complex &&
+              req.classRegistry.academicYear.toString() === req.body.academicYear &&
+              req.classRegistry.schoolClass.toString() === req.body.schoolClass
+        }
+    },
+    {
+        role: 'teacher',
+        method: 'GET',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/classRegistries/:date',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.user.complex.toString() === req.params.complexId;
+        }
+    },
+    {
+        role: 'teacher',
+        method: 'PUT',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/classRegistries/:date',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.user.complex.toString() === req.params.complexId &&
+              req.classRegistry.school.toString() === req.body.school &&
+              req.classRegistry.complex.toString() === req.body.complex &&
+              req.classRegistry.academicYear.toString() === req.body.academicYear &&
+              req.classRegistry.schoolClass.toString() === req.body.schoolClass
+        }
+    },
+
+    // teaching registries
+    {
+        role: 'manager',
+        method: 'GET',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId/teachingRegistries/:date',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId;
+        }
+    },
+    {
+        role: 'manager',
+        method: 'PUT',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId/teachingRegistries/:date',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.teachingRegistry.school.toString() === req.body.school &&
+              req.teachingRegistry.complex.toString() === req.body.complex &&
+              req.teachingRegistry.academicYear.toString() === req.body.academicYear &&
+              req.teachingRegistry.schoolClass.toString() === req.body.schoolClass &&
+              req.teachingRegistry.teaching.toString() === req.body.teaching &&
+              req.teachingRegistry.teacher.toString() === req.body.teacher
+        }
+    },
+    {
+        role: 'teacher',
+        method: 'GET',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId/teachingRegistries/:date',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.user.complex.toString() === req.params.complexId;
+        }
+    },
+    {
+        role: 'teacher',
+        method: 'PUT',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/teachings/:teachingId/teachingRegistries/:date',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.teachingRegistry.school.toString() === req.body.school &&
+              req.teachingRegistry.complex.toString() === req.body.complex &&
+              req.teachingRegistry.academicYear.toString() === req.body.academicYear &&
+              req.teachingRegistry.schoolClass.toString() === req.body.schoolClass &&
+              req.teachingRegistry.teaching.toString() === req.body.teaching &&
+              req.teachingRegistry.teacher.toString() === req.body.teacher &&
+              req.teachingRegistry.teacher.toString() === req.user._id.toString()
+        }
     }
+
 ];
 
 

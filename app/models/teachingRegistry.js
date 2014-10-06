@@ -14,6 +14,11 @@ var TeachingRegistrySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Teaching'
     },
+    teacher: {
+        type: Schema.Types.ObjectId,
+        ref: 'Teacher',
+        required: true
+    },
     date: {
         type: Date,
         required: true

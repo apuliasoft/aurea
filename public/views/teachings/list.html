@@ -11,7 +11,8 @@
                     data-ng-if="global.isAdmin() || global.isManager()">
               <i class="fa fa-pencil"></i>
             </button>
-            <button class="btn btn-primary" role="button" data-ng-click="goToTeachingRegistry(teaching)" title="Seleziona">
+            <button class="btn btn-primary" role="button" data-ng-click="goToTeachingRegistry(teaching)"
+                    title="Seleziona" data-ng-if="global.isAdmin() || global.isManager() || global.isTeacher()">
               <i class="fa fa-check"></i>
             </button>
           </div>
@@ -29,7 +30,8 @@
       </p>
 
       <div class="nav navbar-nav navbar-right btn-group">
-        <button type="button" data-ng-click="goToCreateTeaching()" class="btn btn-primary navbar-btn" title="Aggiungi">
+        <button type="button" data-ng-click="goToCreateTeaching()" class="btn btn-primary navbar-btn" title="Aggiungi"
+                data-ng-if="global.isAdmin() || global.isManager()">
           <i class="fa fa-plus"></i> Aggiungi
         </button>
       </div>

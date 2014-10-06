@@ -51,7 +51,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
                 return $state.current.name === 'all complexes';
             },
             roles: [Global.isAdmin, Global.isManager],
-            contexts: [Global.getSchool]
+            contexts: [hasSchoolContext]
         },
         {
             icon: 'bullhorn',
@@ -63,7 +63,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
                 return $state.current.name === 'all communications';
             },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isStudent, Global.isParent],
-            contexts: [Global.getSchool]
+            contexts: [hasSchoolContext]
         },
         {
             icon: 'graduation-cap',
@@ -75,7 +75,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
                 return $state.current.name === 'all teachers';
             },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
-            contexts: [Global.getSchool, Global.getComplex]
+            contexts: [hasSchoolContext, hasComplexContext]
         },
         {
             icon: 'child',
@@ -87,10 +87,9 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
                 return $state.current.name === 'all students';
             },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
-            contexts: [Global.getSchool, Global.getComplex]
+            contexts: [hasSchoolContext, hasComplexContext]
         },
         {
-            //FIXME fare quello che si e' fatto per gli anni accademici anche per tutti gli altri bottoni nel menu
             icon: 'calendar',
             title: 'Anni accademici',
             goToState: function () {
@@ -112,7 +111,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
                 return $state.current.name === 'all parents';
             },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
-            contexts: [Global.getSchool, Global.getComplex, Global.getStudent]
+            contexts: [hasSchoolContext, hasComplexContext, Global.getStudent]
         },
         {
             icon: 'home',
@@ -124,7 +123,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
                 return $state.current.name === 'all school classes';
             },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
-            contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear]
+            contexts: [hasSchoolContext, hasComplexContext, Global.getAcademicYear]
         },
         {
             icon: 'pencil',
@@ -136,7 +135,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
                 return $state.current.name === 'all teachings';
             },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
-            contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass]
+            contexts: [hasSchoolContext, hasComplexContext, Global.getAcademicYear, Global.getSchoolClass]
         },
         {
             icon: 'book',
@@ -149,8 +148,8 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             isActive: function () {
                 return $state.current.name === 'class registry by date';
             },
-            roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
-            contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass]
+            roles: [Global.isAdmin, Global.isManager, Global.isTeacher],
+            contexts: [hasSchoolContext, hasComplexContext, Global.getAcademicYear, Global.getSchoolClass]
         },
         {
             icon: 'book',
@@ -163,8 +162,8 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             isActive: function () {
                 return $state.current.name === 'teaching registry by date';
             },
-            roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
-            contexts: [Global.getSchool, Global.getComplex, Global.getAcademicYear, Global.getSchoolClass, Global.getTeaching]
+            roles: [Global.isAdmin, Global.isManager, Global.isTeacher],
+            contexts: [hasSchoolContext, hasComplexContext, Global.getAcademicYear, Global.getSchoolClass, Global.getTeaching]
         },
         {
             icon: 'users',

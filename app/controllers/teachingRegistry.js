@@ -59,6 +59,7 @@ exports.teachingRegistry = function(req, res, next) {
                       complex: complexId,
                       academicYear: academicYearId,
                       teaching: teachingId,
+                      // TODO: aggiungere il teacher
 
                       votes: [],
                       absences: []
