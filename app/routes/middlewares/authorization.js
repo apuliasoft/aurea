@@ -653,7 +653,7 @@ var authorizations = [
               req.classRegistry.school.toString() === req.body.school &&
               req.classRegistry.complex.toString() === req.body.complex &&
               req.classRegistry.academicYear.toString() === req.body.academicYear &&
-              req.classRegistry.schoolClass.toString() === req.body.schoolClass
+              req.classRegistry.schoolClass.toString() === req.body.schoolClass;
         }
     },
 
@@ -677,7 +677,7 @@ var authorizations = [
               req.teachingRegistry.academicYear.toString() === req.body.academicYear &&
               req.teachingRegistry.schoolClass.toString() === req.body.schoolClass &&
               req.teachingRegistry.teaching.toString() === req.body.teaching &&
-              req.teachingRegistry.teacher.toString() === req.body.teacher
+              req.teachingRegistry.teacher.toString() === req.body.teacher;
         }
     },
     {
@@ -701,7 +701,7 @@ var authorizations = [
               req.teachingRegistry.schoolClass.toString() === req.body.schoolClass &&
               req.teachingRegistry.teaching.toString() === req.body.teaching &&
               req.teachingRegistry.teacher.toString() === req.body.teacher &&
-              req.teachingRegistry.teacher.toString() === req.user._id.toString()
+              req.teachingRegistry.teacher.toString() === req.user._id.toString();
         }
     }
 

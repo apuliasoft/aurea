@@ -21,7 +21,7 @@
               <i class="fa fa-child"></i>
             </button>
             <button class="btn btn-primary" role="button" data-ng-click="goToClassRegistry(schoolClass)"
-                    title="Seleziona" >
+                    title="Seleziona" data-ng-if="global.isAdmin() || global.isManager() || global.isTeacher()">
               <i class="fa fa-check"></i>
             </button>
           </div>

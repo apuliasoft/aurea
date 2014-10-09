@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     TeachingRegistry = mongoose.model('TeachingRegistry'),
+    Teaching = mongoose.model('Teaching'),
     AcademicYear = mongoose.model('AcademicYear'),
     _ = require('lodash');
 
@@ -41,33 +42,38 @@ exports.teachingRegistry = function(req, res, next) {
             return next();
         }
 
-        TeachingRegistry.findOne({
-              schoolClass: schoolClassId,
-              date: date,
-              school: schoolId,
-              complex: complexId,
-              academicYear: academicYearId,
-              teaching: teachingId
-          },
-          function (err, teachingRegistry) {
-              if (err) return next(err);
-              if(!teachingRegistry){
-                  teachingRegistry = new TeachingRegistry({
-                      schoolClass: schoolClassId,
-                      date: date,
-                      school: schoolId,
-                      complex: complexId,
-                      academicYear: academicYearId,
-                      teaching: teachingId,
-                      // TODO: aggiungere il teacher
+        Teaching.findById(teachingId, function(err, teaching){
+            if (err) return next(err);
 
-                      votes: [],
-                      absences: []
-                  });
-              }
-              req.teachingRegistry = teachingRegistry;
-              next();
-          });
+            var teacherId = teaching.teacher;
+
+            TeachingRegistry.findOne({
+                  schoolClass: schoolClassId,
+                  date: date,
+                  school: schoolId,
+                  complex: complexId,
+                  academicYear: academicYearId,
+                  teaching: teachingId
+              },
+              function (err, teachingRegistry) {
+                  if (err) return next(err);
+                  if(!teachingRegistry){
+                      teachingRegistry = new TeachingRegistry({
+                          schoolClass: schoolClassId,
+                          date: date,
+                          school: schoolId,
+                          complex: complexId,
+                          academicYear: academicYearId,
+                          teaching: teachingId,
+                          teacher: teacherId,
+                          votes: [],
+                          absences: []
+                      });
+                  }
+                  req.teachingRegistry = teachingRegistry;
+                  next();
+              });
+        });
     });
 };
 

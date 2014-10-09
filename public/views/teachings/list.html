@@ -12,7 +12,7 @@
               <i class="fa fa-pencil"></i>
             </button>
             <button class="btn btn-primary" role="button" data-ng-click="goToTeachingRegistry(teaching)"
-                    title="Seleziona" data-ng-if="global.isAdmin() || global.isManager() || global.isTeacher()">
+                    title="Seleziona" data-ng-if="global.isAdmin() || global.isManager() || (global.isTeacher() && teaching.teacher === global.user._id)">
               <i class="fa fa-check"></i>
             </button>
           </div>
