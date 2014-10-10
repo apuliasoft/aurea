@@ -9,7 +9,7 @@ var config = require('./config/config');
 
 // Bootstrap db connection
 var db = mongoose.connect(config.db, function (err) {
-    db.connection.db.dropDatabase(function (err) {
+    //db.connection.db.dropDatabase(function (err) {
         User.findOne(
           {email: 'admin@aurea.it'},
           function (err, user) {
@@ -26,11 +26,11 @@ var db = mongoose.connect(config.db, function (err) {
 
               admin.save(function () {
                   db.connection.close();
-                  console.log('ATTENZIONE: E\' fortemene consigliato di eliminare questo file dopo averlo eseguito');
+                  console.log('ATTENZIONE: E\' fortemente consigliato di eliminare questo file dopo averlo eseguito');
               });
           }
         );
-    });
+    //});
 });
 
 

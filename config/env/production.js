@@ -2,7 +2,7 @@
 
 module.exports = {
 //    db: process.env.MONGOHQ_URL,
-    db: 'mongodb://localhost/aurea-dev',
+    db: 'mongodb://localhost/aurea',
     app: {
         name: 'Aurea: un registro elettronico aperto - Production'
     },
