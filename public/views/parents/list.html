@@ -8,7 +8,7 @@
 
         <div class="pull-right">
           <div class="btn-group btn-group-xs">
-            <button class="btn btn-default" role="button" data-ng-click="goToEditParent(parent)" title="Modifica">
+            <button class="btn btn-default" role="button" data-ng-click="goToEditParent(parent)" title="Modifica" data-ng-if="global.isAdmin() || global.isManager()">
               <i class="fa fa-pencil"></i>
             </button>
           </div>
@@ -26,7 +26,7 @@
       </p>
 
       <div class="nav navbar-nav navbar-right btn-group">
-        <button type="button" data-ng-click="goToCreateParent()" class="btn btn-primary navbar-btn" title="Aggiungi">
+        <button type="button" data-ng-click="goToCreateParent()" class="btn btn-primary navbar-btn" title="Aggiungi" data-ng-if="global.isAdmin() || global.isManager()">
           <i class="fa fa-plus"></i> Aggiungi
         </button>
       </div>

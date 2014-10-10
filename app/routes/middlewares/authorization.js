@@ -631,7 +631,7 @@ var authorizations = [
               req.classRegistry.school.toString() === req.body.school &&
               req.classRegistry.complex.toString() === req.body.complex &&
               req.classRegistry.academicYear.toString() === req.body.academicYear &&
-              req.classRegistry.schoolClass.toString() === req.body.schoolClass
+              req.classRegistry.schoolClass.toString() === req.body.schoolClass;
         }
     },
     {

@@ -79,7 +79,7 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
         },
         {
             icon: 'child',
-            title: 'Alunni',
+            title: 'Alunni | Plesso',
             goToState: function () {
                 SmartState.go('all students');
             },
@@ -124,6 +124,18 @@ angular.module('aurea.system').controller('MenuCtrl', ['$scope', '$filter', '_',
             },
             roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
             contexts: [hasSchoolContext, hasComplexContext, Global.getAcademicYear]
+        },
+        {
+            icon: 'child',
+            title: 'Alunni | Classe',
+            goToState: function () {
+                SmartState.go('all class students');
+            },
+            isActive: function () {
+                return $state.current.name === 'all class students';
+            },
+            roles: [Global.isAdmin, Global.isManager, Global.isTeacher, Global.isParent, Global.isStudent],
+            contexts: [hasSchoolContext, hasComplexContext, Global.getAcademicYear, Global.getSchoolClass]
         },
         {
             icon: 'pencil',
