@@ -10,6 +10,6 @@ module.exports = function(app) {
     app.post('/schools/:schoolId/communications', auth.check, communications.create);
     app.get('/schools/:schoolId/communications/:communicationId', communications.communication, auth.check, communications.show);
     app.put('/schools/:schoolId/communications/:communicationId', communications.communication, auth.check, communications.update);
-    app.del('/schools/:schoolId/communications/:communicationId', communications.communication, auth.check, communications.destroy);
+    app.delete('/schools/:schoolId/communications/:communicationId', communications.communication, auth.check, communications.destroy);
 
 };

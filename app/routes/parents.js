@@ -10,6 +10,6 @@ module.exports = function(app) {
     app.post('/schools/:schoolId/complexes/:complexId/students/:studentId/parents', auth.check, parents.create);
     app.get('/schools/:schoolId/complexes/:complexId/students/:studentId/parents/:parentId', parents.parent, auth.check, parents.show);
     app.put('/schools/:schoolId/complexes/:complexId/students/:studentId/parents/:parentId', parents.parent, auth.check, parents.update);
-    app.del('/schools/:schoolId/complexes/:complexId/students/:studentId/parents/:parentId', parents.parent, auth.check, parents.destroy);
+    app.delete('/schools/:schoolId/complexes/:complexId/students/:studentId/parents/:parentId', parents.parent, auth.check, parents.destroy);
 
 };

@@ -10,6 +10,6 @@ module.exports = function(app) {
     app.post('/schools', auth.check, schools.create);
     app.get('/schools/:schoolId', schools.school, auth.check, schools.show);
     app.put('/schools/:schoolId', schools.school, auth.check, schools.update);
-    app.del('/schools/:schoolId', schools.school, auth.check, schools.destroy);
+    app.delete('/schools/:schoolId', schools.school, auth.check, schools.destroy);
 
 };

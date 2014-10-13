@@ -20,7 +20,7 @@ module.exports = function(app) {
     app.post('/users', users.create);
     app.get('/users/:userId', auth.check, users.show);
     app.put('/users/:userId', users.update);
-    app.del('/users/:userId', users.destroy);
+    app.delete('/users/:userId', users.destroy);
 
     // Setting up the userId param
     app.param('userId', users.user);
