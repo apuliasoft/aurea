@@ -42,6 +42,7 @@
     "express": "^3.4.7",
     "express-validator": "^1.0.1",
     "forever": "^0.10.11",
+    "grunt": "^0.4.5",
     "lodash": "^2.4.1",
     "mean-logger": "0.0.1",
     "meanio": "0.4.x",
@@ -50,13 +51,10 @@
     "passport": "latest",
     "passport-local": "latest",
     "password-generator": "latest",
-    "should": "^2.1.1",
-    "supertest": "^0.8.2",
     "swig": "^1.3.2",
     "view-helpers": "^0.1.4"
   },
   "devDependencies": {
-    "assetmanager": "^0.1.1",
     "chai": "~1.9.1",
     "grunt-angular-templates": "^0.5.7",
     "grunt-cli": "^0.1.13",
