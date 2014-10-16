@@ -1,8 +1,8 @@
 'use strict';
 
 //Global service for global variables
-angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope', '$stateParams', '$q', '_', 'School', 'Complex', 'Student', 'AcademicYear', 'SchoolClass', 'Teaching',
-    function ($sessionStorage, $rootScope, $stateParams, $q, _, School, Complex, Student, AcademicYear, SchoolClass, Teaching) {
+angular.module('aurea.system')
+    .factory('Global', function ($rootScope, $stateParams, $q, _, School, Complex, Student, AcademicYear, SchoolClass, Teaching) {
         var _this = this;
 
         var schools = [];
@@ -60,10 +60,10 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
         });
 
         $rootScope.$on('$locationChangeSuccess',
-          function () {
-              _this._data.title = '';
-              _this._data.subtitle = '';
-          });
+            function () {
+                _this._data.title = '';
+                _this._data.subtitle = '';
+            });
 
         _this._data = {
 
@@ -117,20 +117,20 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
                 var deferred = $q.defer();
 
                 School.query().$promise
-                  .then(function (data) {
-                      schools = data;
-                      school = _.find(schools, { _id: schoolId });
+                    .then(function (data) {
+                        schools = data;
+                        school = _.find(schools, { _id: schoolId });
 
-                      if (school) {
-                          deferred.resolve(school);
-                      } else {
-                          schools.length = 0;
-                          deferred.reject();
-                      }
+                        if (school) {
+                            deferred.resolve(school);
+                        } else {
+                            schools.length = 0;
+                            deferred.reject();
+                        }
 
-                  }, function (err) {
-                      deferred.reject(err);
-                  });
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
 
                 return deferred.promise;
             },
@@ -147,20 +147,20 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
                 var deferred = $q.defer();
 
                 Complex.query({ schoolId: schoolId }).$promise
-                  .then(function (data) {
-                      complexes = data;
-                      complex = _.find(complexes, { _id: complexId });
+                    .then(function (data) {
+                        complexes = data;
+                        complex = _.find(complexes, { _id: complexId });
 
-                      if (complex) {
-                          deferred.resolve(complex);
-                      } else {
-                          complexes.length = 0;
-                          deferred.reject();
-                      }
+                        if (complex) {
+                            deferred.resolve(complex);
+                        } else {
+                            complexes.length = 0;
+                            deferred.reject();
+                        }
 
-                  }, function (err) {
-                      deferred.reject(err);
-                  });
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
 
                 return deferred.promise;
             },
@@ -177,20 +177,20 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
                 var deferred = $q.defer();
 
                 Student.query({ schoolId: schoolId, complexId: complexId }).$promise
-                  .then(function (data) {
-                      students = data;
-                      student = _.find(students, { _id: studentId });
+                    .then(function (data) {
+                        students = data;
+                        student = _.find(students, { _id: studentId });
 
-                      if (student) {
-                          deferred.resolve(student);
-                      } else {
-                          students.length = 0;
-                          deferred.reject();
-                      }
+                        if (student) {
+                            deferred.resolve(student);
+                        } else {
+                            students.length = 0;
+                            deferred.reject();
+                        }
 
-                  }, function (err) {
-                      deferred.reject(err);
-                  });
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
 
                 return deferred.promise;
             },
@@ -207,20 +207,20 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
                 var deferred = $q.defer();
 
                 AcademicYear.query({ schoolId: schoolId, complexId: complexId }).$promise
-                  .then(function (data) {
-                      academicYears = data;
-                      academicYear = _.find(academicYears, { _id: academicYearId });
+                    .then(function (data) {
+                        academicYears = data;
+                        academicYear = _.find(academicYears, { _id: academicYearId });
 
-                      if (academicYear) {
-                          deferred.resolve(academicYear);
-                      } else {
-                          academicYears.length = 0;
-                          deferred.reject();
-                      }
+                        if (academicYear) {
+                            deferred.resolve(academicYear);
+                        } else {
+                            academicYears.length = 0;
+                            deferred.reject();
+                        }
 
-                  }, function (err) {
-                      deferred.reject(err);
-                  });
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
 
                 return deferred.promise;
             },
@@ -237,20 +237,20 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
                 var deferred = $q.defer();
 
                 SchoolClass.query({ schoolId: schoolId, complexId: complexId, academicYearId: academicYearId }).$promise
-                  .then(function (data) {
-                      schoolClasses = data;
-                      schoolClass = _.find(schoolClasses, { _id: schoolClassId });
+                    .then(function (data) {
+                        schoolClasses = data;
+                        schoolClass = _.find(schoolClasses, { _id: schoolClassId });
 
-                      if (schoolClass) {
-                          deferred.resolve(schoolClass);
-                      } else {
-                          schoolClasses.length = 0;
-                          deferred.reject();
-                      }
+                        if (schoolClass) {
+                            deferred.resolve(schoolClass);
+                        } else {
+                            schoolClasses.length = 0;
+                            deferred.reject();
+                        }
 
-                  }, function (err) {
-                      deferred.reject(err);
-                  });
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
 
                 return deferred.promise;
             },
@@ -287,6 +287,4 @@ angular.module('aurea.system').factory('Global', ['$sessionStorage', '$rootScope
         };
 
         return _this._data;
-    }
-])
-;
+    });

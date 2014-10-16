@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('aurea.users').controller('LoginCtrl', ['$scope', '$rootScope', '$http', '$location', 'SmartState',
-    function ($scope, $rootScope, $http, $location, SmartState) {
+angular.module('aurea.users')
+    .controller('LoginCtrl', function ($scope, $rootScope, $http, $location, SmartState) {
         // This object will be filled by the form
         $scope.user = {};
 
@@ -11,13 +11,12 @@ angular.module('aurea.users').controller('LoginCtrl', ['$scope', '$rootScope', '
                 email: $scope.user.email,
                 password: $scope.user.password
             })
-              .success(function () {
-                  // authentication OK
-                  SmartState.go('home');
-              })
-              .error(function () {
-                  $scope.loginerror = 'Autenticazione fallita.';
-              });
+                .success(function () {
+                    // authentication OK
+                    SmartState.go('home');
+                })
+                .error(function () {
+                    $scope.loginerror = 'Autenticazione fallita.';
+                });
         };
-    }
-]);
+    });

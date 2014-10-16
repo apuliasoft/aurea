@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$stateParams', 'SmartState', '$filter', '_', 'Global', 'Teaching', 'Teacher' , function ($scope, $stateParams, SmartState, $filter, _, Global, Teaching, Teacher) {
+angular.module('aurea.teachings')
+    .controller('TeachingsCtrl', function ($scope, $stateParams, SmartState, $filter, _, Global, Teaching, Teacher) {
     $scope.global = Global;
 
     $scope.goToListTeachings = function () {
@@ -102,4 +103,4 @@ angular.module('aurea.teachings').controller('TeachingsCtrl', ['$scope', '$state
                 $scope.teaching = teaching;
             });
     };
-}]);
+});

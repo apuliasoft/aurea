@@ -1,21 +1,20 @@
 {
-  "name": "aurea",
-  "version": "1.0.0",
-  "dependencies": {
-    "angular": "1.2.26",
-    "angular-resource": "1.2.26",
-    "angular-cookies": "1.2.26",
-    "angular-mocks": "1.2.26",
-    "angular-route": "1.2.26",
-    "bootstrap": "3.2.0",
-    "angular-bootstrap": "0.11.0",
-    "angular-ui-router": "#master",
-    "lodash": "~2.4.1",
-    "font-awesome": "~4.2.0",
-    "angular-i18n": "~1.2.14",
-    "async": "~0.9.0",
-    "ngstorage": "~0.3.0",
-    "ngtoast": "~1.2.0",
-    "d3": "~3.4.11"
-  }
+    "name": "aurea",
+    "version": "1.0.0",
+    "dependencies": {
+        "angular": "1.2.26",
+        "angular-i18n": "1.2.14",
+        "angular-resource": "1.2.26",
+        "angular-cookies": "1.2.26",
+        "angular-mocks": "1.2.26",
+        "angular-route": "1.2.26",
+        "bootstrap": "3.2.0",
+        "font-awesome": "4.2.0",
+        "angular-bootstrap": "0.11.2",
+        "angular-ui-router": "0.2.11",
+        "lodash": "2.4.1",
+        "async": "0.9.0",
+        "ngtoast": "1.2.0",
+        "d3": "~3.4.11"
+    }
 }

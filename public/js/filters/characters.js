@@ -1,6 +1,5 @@
 'use strict';
 
-//Address filter used for format an address object
 angular.module('aurea')
   .filter('characters', function () {
       return function (input, chars, breakOnWord) {
@@ -21,19 +20,6 @@ angular.module('aurea')
                   }
               }
               return input + '...';
-          }
-          return input;
-      };
-  })
-  .filter('words', function () {
-      return function (input, words) {
-          if (isNaN(words)) return input;
-          if (words <= 0) return '';
-          if (input) {
-              var inputWords = input.split(/\s+/);
-              if (inputWords.length > words) {
-                  input = inputWords.slice(0, words).join(' ') + '...';
-              }
           }
           return input;
       };
