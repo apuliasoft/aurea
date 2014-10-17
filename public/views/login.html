@@ -1,27 +1,27 @@
-<section data-ng-controller="LoginCtrl">
-  <div class="row">
-    <div class="col-xs-4 col-xs-offset-2 well well-lg">
-      <div class="alert alert-danger animated fadeIn" ng-show="loginerror">{{loginerror}}</div>
-      <h1>Login</h1>
-      <form data-ng-submit="login()" class="signin form-horizontal">
-        <div class="form-group">
-          <label for="email" class="col-md-4 control-label">Email</label>
-          <div class="col-md-8">
-            <input required id="email" type="email" name="email" placeholder="Email" class="form-control" ng-model="user.email"/>
-          </div>
+<section data-ng-controller="LoginCtrl" layout="horizontal" layout-align="center center">
+
+  <md-content class="md-content-padding">
+    <md-toolbar class="md-theme-light">
+      <h2 class="md-toolbar-tools">Login</h2>
+    </md-toolbar>
+
+    <md-toolbar class="md-theme-red" ng-show="loginerror">
+      <span class="md-toolbar-tools">{{loginerror}}</span>
+    </md-toolbar>
+
+    <md-content class="md-theme-white md-content-padding">
+
+      <form data-ng-submit="login()">
+        <md-text-float label="Email" ng-model="user.email" type="email" tabindex="0"></md-text-float>
+
+        <md-text-float label="Password" ng-model="user.password" type="password" tabindex="1"></md-text-float>
+
+        <div layout="horizontal" layout-align="end">
+          <md-button type="submit">Login</md-button>
         </div>
-        <div class="form-group">
-          <label for="password" class="col-md-4 control-label">Password</label>
-          <div class="col-md-8">
-            <input required id="password" type="password" name="password" placeholder="Password" class="form-control" ng-model="user.password"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-md-offset-4 col-md-8">
-            <button type="submit" class="btn btn-primary">Sign in</button>
-          </div>
-        </div>
+
       </form>
-    </div>
-  </div>
+    </md-content>
+  </md-content>
+
 </section>

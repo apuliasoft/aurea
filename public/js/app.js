@@ -3,9 +3,12 @@
 angular.module('aurea', [
     'ngCookies',
     'ngResource',
+    'ngAnimate',
+    'ngAria',
+    'ngSanitize',
     'ngToast',
-    'ui.bootstrap',
     'ui.router',
+    'ngMaterial',
     'd3',
     'aurea.system',
     'aurea.users',

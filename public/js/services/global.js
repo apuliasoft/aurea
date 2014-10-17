@@ -69,10 +69,6 @@ angular.module('aurea.system')
 
             user: {},
 
-            title: 'Aurea',
-
-            subtitle: '',
-
             isLoggedin: function () {
                 return this.user && this.user._id;
             },

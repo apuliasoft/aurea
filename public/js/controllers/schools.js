@@ -21,9 +21,6 @@ angular.module('aurea.schools')
         };
 
         $scope.init = function () {
-            Global.title = 'Scuole';
-            Global.subtitle = 'Nuova';
-
             $scope.school = new School();
         };
 
@@ -61,8 +58,6 @@ angular.module('aurea.schools')
         $scope.find = function () {
             School.query().$promise
                 .then(function (schools) {
-                    Global.title = 'Scuole';
-
                     $scope.schools = schools;
                 });
         };
@@ -72,9 +67,6 @@ angular.module('aurea.schools')
                 schoolId: $stateParams.schoolId
             }).$promise
                 .then(function (school) {
-                    Global.title = 'Scuole';
-                    Global.subtitle = school.name;
-
                     $scope.school = school;
                 });
         };

@@ -2,17 +2,15 @@
 <html lang="it" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml" itemscope="itemscope"
       itemtype="http://schema.org/Product">
 {% include '../includes/head.html' %}
-<body>
-<ng-toast></ng-toast>
-<div class="container">
-  <div class="row">
-    <div class="col-sm-2 left-menu" data-ng-include="'views/menu.html'"></div>
-    <section class="col-sm-10 col-md-offset-2 main">
-      <div data-ng-include="'views/header.html'"></div>
-      {% block content %}{% endblock %}
-    </section>
-  </div>
+<body layout="vertical">
+
+<div data-ng-include="'views/header.html'"></div>
+
+<div flex>
+  {% block content %}{% endblock %}
 </div>
+
 {% include '../includes/foot.html' %}
+
 </body>
 </html>

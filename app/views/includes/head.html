@@ -1,7 +1,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <title>{{appName}} - {{title}}</title>
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
@@ -19,20 +19,12 @@
     <meta property="og:site_name" content="Aurea">
     <meta property="fb:admins" content="APP_ADMIN">
 
-    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-responsive.css"> -->
+    <link rel="stylesheet" href="/lib/angular-material/angular-material.css">
     <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/lib/ngtoast/dist/ngToast.min.css">
 
     {% if (process.env.NODE_ENV == 'development') %}
     <link rel="stylesheet" href="/css/common.css">
-    <link rel="stylesheet" href="/css/views/schools.css">
-    <link rel="stylesheet" href="/css/views/teachers.css">
-    <link rel="stylesheet" href="/css/views/students.css">
-    <link rel="stylesheet" href="/css/views/academicYears.css">
-    <link rel="stylesheet" href="/css/views/schoolClasses.css">
-    <link rel="stylesheet" href="/css/views/teachings.css">
-    <link rel="stylesheet" href="/css/views/classRegistry.css">
     {% endif %}
 
     {% if (process.env.NODE_ENV == 'production') %}
