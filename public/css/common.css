@@ -4,5 +4,48 @@ body {
 
 .md-theme-white {
   background-color: #ffffff !important;
-  color: #404040 !important;
+  color: #8f8f8f !important;
+}
+
+.md-theme-gray {
+  background-color: #fafafa !important;
+  color: #8f8f8f !important;
+}
+
+.toolbar {
+  border-top: 1px solid #e5e5e5;
+}
+
+.add-button {
+  top: auto;
+  right: 24px;
+  bottom: 24px;
+  left: auto;
+  position: absolute;
+}
+
+.content {
+  max-width: 898px;
+  margin: auto;
+}
+
+.item-content {
+  cursor: default;
+}
+
+.item-content-icon {
+  margin-right: 16px;
+}
+
+.item-content:hover {
+  background-color: #eef6ff;
+}
+
+.icon-button {
+  padding: 0 5px;
+}
+
+.icon-button:hover {
+  background-color: transparent !important;
+  color: #444444;
 }

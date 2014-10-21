@@ -9,16 +9,16 @@
       <div flex></div>
 
       <section layout="horizontal" layout-align="end" data-ng-hide="global.isLoggedin()">
-        <md-button href="/#!/login">
+        <md-button href="/#!/login" class="icon-button" title="Login">
           <i class="fa fa-sign-in"></i>
         </md-button>
       </section>
 
-      <section layout="horizontal" layout-align="end" data-ng-show="global.isLoggedin()">
-        <md-button href="/#!/utenti/{{global.user._id}}">
+      <section data-ng-show="global.isLoggedin()">
+        <md-button href="/#!/utenti/{{global.user._id}}" class="icon-button" title="Profilo">
           <i class="fa fa-user"></i>
         </md-button>
-        <md-button href="/#!/logout">
+        <md-button href="/#!/logout" class="icon-button" title="Logout">
           <i class="fa fa-sign-out"></i>
         </md-button>
       </section>

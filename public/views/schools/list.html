@@ -1,27 +1,37 @@
 <section data-ng-controller="SchoolsCtrl" data-ng-init="find()">
 
-  <div class="row">
-    <div class="col-xs-4" data-ng-repeat="school in schools">
-      <div class="thumbnail well well-sm">
-        <h3>{{school.name}}</h3>
+  <md-toolbar class="md-theme-light md-whiteframe-z1 toolbar">
+    <div class="md-toolbar-tools">
+      <h2>Istituti</h2>
 
-        <div class="pull-right">
-          <div class="btn-group btn-group-xs">
-            <button class="btn btn-default" role="button" data-ng-click="goToEditSchool(school)" title="Modifica">
-              <i class="fa fa-pencil"></i>
-            </button>
-            <button class="btn btn-primary" role="button" data-ng-click="goToListComplexes(school)" title="Seleziona">
-              <i class="fa fa-check"></i>
-            </button>
-          </div>
-        </div>
+      <div flex></div>
+    </div>
+  </md-toolbar>
 
-        <div class="clearfix"></div>
+  <md-content class="md-content-padding" scroll-y flex>
+    <div layout="vertical" layout-fill class="content">
+      <div flex layout="vertical">
+        <section class="md-theme-white md-whiteframe-z1">
+          <md-list>
+            <md-item ng-repeat="school in schools">
+              <md-item-content class="item-content">
+                <div class="md-tile-content" data-ng-click="goToListComplexes(school)">
+                  <h3><i class="fa fa-building item-content-icon"></i> {{school.name}}</h3>
+                </div>
+                <div class="md-tile-right">
+                  <md-button class="icon-button" title="Modifica"><i class="fa fa-pencil"></i></md-button>
+                  <md-button class="icon-button" title="Cancella"><i class="fa fa-trash"></i></md-button>
+                </div>
+              </md-item-content>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-item>
+          </md-list>
+        </section>
       </div>
     </div>
-  </div>
+  </md-content>
 
-  <md-button class="md-button-fab" tabindex="-1" aria-label="" data-ng-click="goToCreateSchool()">
+  <md-button class="md-button-fab add-button md-theme-light" title="Aggiungi" data-ng-click="goToCreateSchool()">
     <i class="fa fa-plus"></i>
   </md-button>
 
