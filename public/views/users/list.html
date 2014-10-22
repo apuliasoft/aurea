@@ -1,42 +1,42 @@
 <section data-ng-controller="UsersCtrl" data-ng-init="find()">
-    <h2>Utenti</h2>
 
-    <div class="row">
-        <div class="col-xs-4" data-ng-repeat="user in users">
-            <div class="thumbnail well well-sm">
-                <h3>{{user.name}}</h3>
+  <md-toolbar class="md-theme-red md-whiteframe-z1 toolbar">
+    <div class="md-toolbar-tools">
+      <h2>Utenti</h2>
 
-                <div class="pull-right">
-                    <div class="btn-group btn-group-xs">
-                        <button class="btn btn-default" role="button" data-ng-click="goToEditUser(user)"
-                                title="Modifica">
-                            <i class="fa fa-pencil"></i>
-                        </button>
-                        <button class="btn btn-primary" role="button" data-ng-click="goToViewUser(user)"
-                                title="Seleziona">
-                            <i class="fa fa-check"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-        </div>
+      <div flex></div>
     </div>
+  </md-toolbar>
 
-    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-        <div class="container">
-            <p class="navbar-text">
-                Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-            </p>
+  <md-content class="md-content-padding" scroll-y flex>
+    <div layout="vertical" layout-fill class="content">
+      <div flex layout="vertical">
+        <section class="md-theme-white md-whiteframe-z1">
+          <md-list>
+            <md-item ng-repeat="user in users">
+              <md-item-content class="item-content">
+                <div class="md-tile-content" data-ng-click="goToViewUser(user)">
+                  <h3 class="item-content-text"><i class="fa fa-home item-content-icon"></i> {{user.name}}</h3>
+                </div>
+                <div class="md-tile-right">
+                  <md-button class="icon-button" title="Modifica" data-ng-click="goToEditUser(user)">
+                    <i class="fa fa-pencil"></i>
+                  </md-button>
+                  <md-button class="icon-button" title="Cancella" data-as-confirmed-click="remove(student)" data-as-confirm-message="Sicuro di voler eliminare questo utente?">
+                    <i class="fa fa-trash"></i>
+                  </md-button>
+                </div>
+              </md-item-content>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-item>
+          </md-list>
+        </section>
+      </div>
+    </div>
+  </md-content>
 
-            <div class="nav navbar-nav navbar-right btn-group">
-                <button type="button" data-ng-click="goToCreateUser()" class="btn btn-primary navbar-btn"
-                        title="Aggiungi">
-                    <i class="fa fa-plus"></i> Aggiungi
-                </button>
-            </div>
-        </div>
-    </nav>
+  <md-button class="md-button-fab add-button md-theme-red" title="Aggiungi" data-ng-click="goToCreateUser()">
+    <i class="fa fa-plus"></i>
+  </md-button>
 
 </section>

@@ -1,43 +1,42 @@
 <section data-ng-controller="AcademicYearsCtrl" data-ng-init="find()">
 
-  <div class="row">
-    <div class="col-xs-4" data-ng-repeat="academicYear in academicYears">
-      <div class="thumbnail well well-sm">
-        <h3>{{academicYear.name}}</h3>
+  <md-toolbar class="md-theme-light md-whiteframe-z1 toolbar">
+    <div class="md-toolbar-tools">
+      <h2>Anni Accademici</h2>
 
-        <p>{{academicYear.startDate | date}} - {{academicYear.endDate | date}}</p>
+      <div flex></div>
+    </div>
+  </md-toolbar>
 
-        <div class="pull-right">
-          <div class="btn-group btn-group-xs">
-            <button class="btn btn-default" role="button" data-ng-click="goToEditAcademicYear(academicYear)"
-                    title="Modifica" data-ng-if="global.isAdmin() || global.isManager()">
-              <i class="fa fa-pencil"></i>
-            </button>
-            <button class="btn btn-primary" role="button" data-ng-click="goToListSchoolClasses(academicYear)"
-                    title="Seleziona">
-              <i class="fa fa-check"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="clearfix"></div>
+  <md-content class="md-content-padding" scroll-y flex>
+    <div layout="vertical" layout-fill class="content">
+      <div flex layout="vertical">
+        <section class="md-theme-white md-whiteframe-z1">
+          <md-list>
+            <md-item ng-repeat="academicYear in academicYears">
+              <md-item-content class="item-content">
+                <div class="md-tile-content" data-ng-click="goToListSchoolClasses(academicYear)">
+                  <h3 class="item-content-text"><i class="fa fa-calendar item-content-icon"></i> {{academicYear.name}}</h3>
+                </div>
+                <div class="md-tile-right">
+                  <md-button class="icon-button" title="Modifica" data-ng-click="goToEditAcademicYear(academicYear)">
+                    <i class="fa fa-pencil"></i>
+                  </md-button>
+                  <md-button class="icon-button" title="Cancella" data-as-confirmed-click="remove(academicYear)" data-as-confirm-message="Sicuro di voler eliminare questo anno accademico?">
+                    <i class="fa fa-trash"></i>
+                  </md-button>
+                </div>
+              </md-item-content>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-item>
+          </md-list>
+        </section>
       </div>
     </div>
-  </div>
+  </md-content>
 
-  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-    <div class="container">
-      <p class="navbar-text">
-        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-      </p>
-
-      <div class="nav navbar-nav navbar-right btn-group">
-        <button type="button" data-ng-click="goToCreateAcademicYear()" class="btn btn-primary navbar-btn"
-                title="Aggiungi" data-ng-if="global.isAdmin() || global.isManager()">
-          <i class="fa fa-plus"></i> Aggiungi
-        </button>
-      </div>
-    </div>
-  </nav>
+  <md-button class="md-button-fab add-button md-theme-light" title="Aggiungi" data-ng-click="goToCreateAcademicYear()">
+    <i class="fa fa-plus"></i>
+  </md-button>
 
 </section>

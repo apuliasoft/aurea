@@ -16,11 +16,15 @@
             <md-item ng-repeat="school in schools">
               <md-item-content class="item-content">
                 <div class="md-tile-content" data-ng-click="goToListComplexes(school)">
-                  <h3><i class="fa fa-building item-content-icon"></i> {{school.name}}</h3>
+                  <h3 class="item-content-text"><i class="fa fa-university item-content-icon"></i> {{school.name}}</h3>
                 </div>
                 <div class="md-tile-right">
-                  <md-button class="icon-button" title="Modifica"><i class="fa fa-pencil"></i></md-button>
-                  <md-button class="icon-button" title="Cancella"><i class="fa fa-trash"></i></md-button>
+                  <md-button class="icon-button" title="Modifica" data-ng-click="goToEditSchool(school)">
+                    <i class="fa fa-pencil"></i>
+                  </md-button>
+                  <md-button class="icon-button" title="Cancella" data-as-confirmed-click="remove(school)" data-as-confirm-message="Sicuro di voler eliminare questa scuola?">
+                    <i class="fa fa-trash"></i>
+                  </md-button>
                 </div>
               </md-item-content>
               <md-divider ng-if="!$last"></md-divider>
