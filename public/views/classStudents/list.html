@@ -19,8 +19,9 @@
                   <h3 class="item-content-text"><i class="fa fa-graduation-cap item-content-icon"></i> {{student | name}}</h3>
                 </div>
                 <div class="md-tile-right">
-                  <md-button class="icon-button" title="Andamento" data-ng-click="goToStudentStats(student)">
+                  <md-button class="icon-button" data-ng-click="goToStudentStats(student)">
                     <i class="fa fa-line-chart"></i>
+                    <md-tooltip>Andamento</md-tooltip>
                   </md-button>
                 </div>
               </md-item-content>

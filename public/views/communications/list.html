@@ -19,11 +19,13 @@
                   <h3 class="item-content-text"><i class="fa fa-bullhorn item-content-icon"></i> {{communication.title}}</h3>
                 </div>
                 <div class="md-tile-right">
-                  <md-button class="icon-button" title="Modifica" data-ng-click="goToEditUser(user)">
+                  <md-button class="icon-button" data-ng-click="goToEditUser(user)">
                     <i class="fa fa-pencil"></i>
+                    <md-tooltip>Modifica</md-tooltip>
                   </md-button>
-                  <md-button class="icon-button" title="Cancella" data-as-confirmed-click="remove(student)" data-as-confirm-message="Sicuro di voler eliminare questa comunicazione?">
+                  <md-button class="icon-button" data-as-confirmed-click="remove(student)" data-as-confirm-message="Sicuro di voler eliminare questa comunicazione?">
                     <i class="fa fa-trash"></i>
+                    <md-tooltip>Cancella</md-tooltip>
                   </md-button>
                 </div>
               </md-item-content>
@@ -35,8 +37,9 @@
     </div>
   </md-content>
 
-  <md-button class="md-button-fab add-button md-theme-green" title="Aggiungi" data-ng-click="goToCreateCommunication()">
+  <md-button class="md-button-fab add-button md-theme-green" data-ng-click="goToCreateCommunication()">
     <i class="fa fa-plus"></i>
+    <md-tooltip>Aggiungi</md-tooltip>
   </md-button>
 
 </section>

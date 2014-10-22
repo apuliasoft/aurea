@@ -1,12 +1,10 @@
 <div data-ng-controller="HeaderCtrl">
 
   <md-toolbar class="md-theme-white">
-    <div class="md-toolbar-tools">
+    <h1 class="md-toolbar-tools">
       <img src="../img/icons/logo.png">
 
-      <h2>Aurea</h2>
-
-      <div flex></div>
+      <span flex>Aurea</span>
 
       <section layout="horizontal" layout-align="end" data-ng-hide="global.isLoggedin()">
         <md-button href="/#!/login" class="icon-button" title="Login">
@@ -15,14 +13,16 @@
       </section>
 
       <section data-ng-show="global.isLoggedin()">
-        <md-button href="/#!/utenti/{{global.user._id}}" class="icon-button" title="Profilo">
+        <md-button href="/#!/utenti/{{global.user._id}}" class="icon-button">
           <i class="fa fa-user"></i>
+          <md-tooltip>Profilo</md-tooltip>
         </md-button>
-        <md-button href="/#!/logout" class="icon-button" title="Logout">
+        <md-button href="/#!/logout" class="icon-button">
           <i class="fa fa-sign-out"></i>
+          <md-tooltip>Logout</md-tooltip>
         </md-button>
       </section>
-    </div>
+    </h1>
   </md-toolbar>
 
 </div>
