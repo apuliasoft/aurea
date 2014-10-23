@@ -1,27 +1,29 @@
-<section data-ng-controller="LoginCtrl" layout="horizontal" layout-align="center center">
+<section data-ng-controller="LoginCtrl" layout="vertical" layout-align="center center">
 
   <md-content class="md-content-padding">
-    <md-toolbar class="md-theme-light">
-      <h2 class="md-toolbar-tools">Login</h2>
-    </md-toolbar>
+    <div class="md-whiteframe-z1">
+      <md-toolbar class="md-theme-light">
+        <h2 class="md-toolbar-tools">Login</h2>
+      </md-toolbar>
 
-    <md-toolbar class="md-theme-red" ng-show="loginerror">
-      <span class="md-toolbar-tools">{{loginerror}}</span>
-    </md-toolbar>
+      <md-toolbar class="md-theme-red" ng-show="loginerror">
+        <span class="md-toolbar-tools">{{loginerror}}</span>
+      </md-toolbar>
 
-    <md-content class="md-theme-white md-content-padding">
+      <md-content class="md-theme-white md-content-padding">
 
-      <form data-ng-submit="login()">
-        <md-text-float label="Email" ng-model="user.email" type="email" tabindex="0"></md-text-float>
+        <form data-ng-submit="login()">
+          <md-text-float label="Email" ng-model="user.email" type="email" tabindex="0"></md-text-float>
 
-        <md-text-float label="Password" ng-model="user.password" type="password" tabindex="1"></md-text-float>
+          <md-text-float label="Password" ng-model="user.password" type="password" tabindex="1"></md-text-float>
 
-        <div layout="horizontal" layout-align="end">
-          <md-button type="submit">Login</md-button>
-        </div>
+          <div layout="horizontal" layout-align="end">
+            <md-button type="submit" class="md-button-colored">Login</md-button>
+          </div>
 
-      </form>
-    </md-content>
+        </form>
+      </md-content>
+    </div>
   </md-content>
 
 </section>

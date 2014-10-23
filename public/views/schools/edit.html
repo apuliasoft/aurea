@@ -1,37 +1,36 @@
-<section data-ng-controller="SchoolsCtrl" data-ng-init="findOne()">
+<section data-ng-controller="SchoolsCtrl" data-ng-init="findOne()" layout="vertical" layout-align="center center">
 
-  <form name="schoolForm" role="form" data-ng-submit="update(schoolForm.$valid)" novalidate class="form-horizontal">
+  <md-toolbar class="md-theme-light toolbar">
+    <div class="md-toolbar-tools">
+      <md-button class="icon-button" data-ng-click="goToListSchools()">
+        <i class="fa fa-arrow-left"></i>
+        <md-tooltip>Torna a Istituti</md-tooltip>
+      </md-button>
 
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : schoolForm.name.$invalid && !schoolForm.name.$pristine }">
-      <label for="name" class="col-sm-2 control-label">Nome</label>
+      <h2>Istituti</h2>
 
-      <div class="col-sm-10">
-        <input type="text" data-ng-model="school.name" id="name" name="name" class="form-control" placeholder="Nome"
-               required>
-      </div>
-
-      <p ng-show="schoolForm.name.$invalid && !schoolForm.name.$pristine" class="help-block">
-        Il nome è obbligatorio.
-      </p>
+      <div flex></div>
     </div>
+  </md-toolbar>
 
-    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-      <div class="container">
-        <p class="navbar-text">
-          Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-        </p>
+  <md-content class="md-content-padding ">
+    <div class="md-whiteframe-z1">
+      <md-toolbar class="md-theme-light">
+        <h2 class="md-toolbar-tools">Modifica istituto</h2>
+      </md-toolbar>
 
-        <div class="nav navbar-nav navbar-right btn-group">
-          <button type="button" data-ng-click="goToListSchools()" class="btn btn-default navbar-btn" class="Annulla">
-            <i class="fa fa-times"></i> Annulla
-          </button>
-          <button type="submit" data-ng-disabled="schoolForm.$invalid" class="btn btn-primary navbar-btn" class="Salva">
-            <i class="fa fa-check"></i> Salva
-          </button>
-        </div>
-      </div>
-    </nav>
+      <md-content class="md-theme-white md-content-padding">
 
-  </form>
+        <form name="schoolForm" data-ng-submit="update(schoolForm.$valid)" novalidate>
+          <md-text-float label="Nome" ng-model="school.name" type="text" tabindex="0" name="name" class="long" required></md-text-float>
+
+          <div layout="horizontal" layout-align="end">
+            <md-button type="submit" class="md-button-colored" data-ng-disabled="schoolForm.$invalid">Salva</md-button>
+          </div>
+
+        </form>
+      </md-content>
+    </div>
+  </md-content>
+
 </section>
