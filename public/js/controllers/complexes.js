@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.complexes')
-    .controller('ComplexesCtrl', function ($scope, $stateParams, SmartState, _, Provinces, Global, Complex) {
+    .controller('ComplexesCtrl', function ($scope, $stateParams, $mdToast, SmartState, _, Provinces, Global, Complex) {
         $scope.global = Global;
         $scope.provinces = Provinces.getProvinces();
 
@@ -22,9 +22,6 @@ angular.module('aurea.complexes')
         };
 
         $scope.init = function () {
-            Global.title = 'Plessi';
-            Global.subtitle = 'Nuovo';
-
             $scope.complex = new Complex({
                 school: Global.getSchool()._id
             });
@@ -35,6 +32,10 @@ angular.module('aurea.complexes')
                 var complex = $scope.complex;
                 complex.$save(function () {
                     $scope.goToListComplexes();
+                    $mdToast.show({
+                      template: '<md-toast>Plesso creato</md-toast>',
+                      hideDelay: 2000
+                    });
                 });
             }
         };
@@ -49,6 +50,22 @@ angular.module('aurea.complexes')
 
                 complex.$update(function () {
                     $scope.goToListComplexes();
+                    $mdToast.show({
+                      template: '<md-toast>Plesso aggiornato</md-toast>',
+                      hideDelay: 2000
+                    });
+                });
+            }
+        };
+
+        $scope.remove = function (complex) {
+            if (complex) {
+                complex.$remove();
+                _.remove($scope.complexes, complex);
+                $scope.goToListComplexes();
+                $mdToast.show({
+                  template: '<md-toast>Plesso cancellato</md-toast>',
+                  hideDelay: 2000
                 });
             }
         };
@@ -58,9 +75,6 @@ angular.module('aurea.complexes')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (complexes) {
-                    Global.title = 'Plessi';
-                    Global.subtitle = Global.getSchool().name;
-
                     $scope.complexes = complexes;
                 });
         };
@@ -71,43 +85,7 @@ angular.module('aurea.complexes')
                 complexId: $stateParams.complexId
             }).$promise
                 .then(function (complex) {
-                    Global.title = 'Plessi';
-                    Global.subtitle = complex.name;
-
                     $scope.complex = complex;
                 });
         };
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,18 +1,5 @@
 <section data-ng-controller="SchoolsCtrl" data-ng-init="findOne()" layout="vertical" layout-align="center center">
 
-  <md-toolbar class="md-theme-light toolbar">
-    <div class="md-toolbar-tools">
-      <md-button class="icon-button" data-ng-click="goToListSchools()">
-        <i class="fa fa-arrow-left"></i>
-        <md-tooltip>Torna a Istituti</md-tooltip>
-      </md-button>
-
-      <h2>Istituti</h2>
-
-      <div flex></div>
-    </div>
-  </md-toolbar>
-
   <md-content class="md-content-padding ">
     <div class="md-whiteframe-z1">
       <md-toolbar class="md-theme-light">
@@ -32,5 +19,10 @@
       </md-content>
     </div>
   </md-content>
+
+  <md-button class="md-button-fab back-button md-theme-white" data-ng-click="goToListSchools()">
+    <i class="fa fa-arrow-left"></i>
+    <md-tooltip>Torna a Istituti</md-tooltip>
+  </md-button>
 
 </section>

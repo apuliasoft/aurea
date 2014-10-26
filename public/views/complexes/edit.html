@@ -1,92 +1,42 @@
-<section data-ng-controller="ComplexesCtrl" data-ng-init="findOne()">
+<section data-ng-controller="ComplexesCtrl" data-ng-init="findOne()" layout="vertical" layout-align="center center">
 
-  <form name="complexForm" role="form" data-ng-submit="update(complexForm.$valid)" novalidate class="form-horizontal">
+  <md-content class="md-content-padding ">
+    <div class="md-whiteframe-z1">
+      <md-toolbar class="md-theme-light">
+        <h2 class="md-toolbar-tools">Modifica plesso</h2>
+      </md-toolbar>
 
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : complexForm.name.$invalid && !complexForm.name.$pristine }">
-      <label for="name" class="col-sm-2 control-label">Nome</label>
+      <md-content class="md-theme-white md-content-padding">
 
-      <div class="col-sm-10">
-        <input type="text" data-ng-model="complex.name" id="name" name="name" class="form-control" placeholder="Nome"
-               required>
-      </div>
+        <form name="complexForm" data-ng-submit="update(complexForm.$valid)" novalidate>
+          <md-text-float label="Nome" ng-model="complex.name" type="text" tabindex="0" name="name" class="longer" required></md-text-float>
 
-      <p ng-show="complexForm.name.$invalid && !complexForm.name.$pristine" class="help-block">
-        Il nome è obbligatorio.
-      </p>
+          <md-text-float label="Via" ng-model="complex.street" type="text" tabindex="1" name="street" class="longer" required></md-text-float>
+
+          <div layout="horizzontal">
+
+            <md-text-float label="CAP" ng-model="complex.zipCode" type="text" tabindex="2" name="zipCode" class="short" required></md-text-float>
+
+            <md-text-float label="Città" ng-model="complex.city" type="text" tabindex="3" name="city" required></md-text-float>
+
+            <md-input-group label="Provincia" class="select-group" name="province" ng-class="{'md-input-has-value': complex.province}">
+              <label>Provincia</label>
+              <select ng-model="complex.province" name="province" tabindex="4" ng-options="province.code as province.name group by province.region for province in provinces"></select>
+            </md-input-group>
+          </div>
+
+          <div layout="horizontal" layout-align="end">
+            <md-button type="submit" class="md-button-colored" data-ng-disabled="complexForm.$invalid">Salva</md-button>
+          </div>
+
+        </form>
+      </md-content>
     </div>
+  </md-content>
 
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : complexForm.street.$invalid && !complexForm.street.$pristine }">
-      <label for="street" class="col-sm-2 control-label">Via</label>
+  <md-button class="md-button-fab back-button md-theme-white" data-ng-click="goToListComplexes()">
+    <i class="fa fa-arrow-left"></i>
+    <md-tooltip>Torna a Plessi</md-tooltip>
+  </md-button>
 
-      <div class="col-sm-10">
-        <input type="text" data-ng-model="complex.street" id="street" name="street" class="form-control"
-               placeholder="Via" required>
-      </div>
-
-      <p ng-show="complexForm.street.$invalid && !complexForm.street.$pristine" class="help-block">
-        La via è obbligatoria.
-      </p>
-    </div>
-
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : complexForm.zipCode.$invalid && !complexForm.zipCode.$pristine }">
-      <label for="zipCode" class="col-sm-2 control-label">CAP</label>
-
-      <div class="col-sm-10">
-        <input type="text" data-ng-model="complex.zipCode" id="zipCode" name="zipCode" class="form-control"
-               placeholder="CAP" required>
-      </div>
-
-      <p ng-show="complexForm.zipCode.$invalid && !complexForm.zipCode.$pristine" class="help-block">
-        Il CAP è obbligatorio.
-      </p>
-    </div>
-
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : complexForm.city.$invalid && !complexForm.city.$pristine }">
-      <label for="city" class="col-sm-2 control-label">Città</label>
-
-      <div class="col-sm-10">
-        <input type="text" data-ng-model="complex.city" id="city" name="city" class="form-control" placeholder="Città">
-      </div>
-
-      <p ng-show="complexForm.city.$invalid && !complexForm.city.$pristine" class="help-block">
-        La città è obbligatoria.
-      </p>
-    </div>
-
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : complexForm.province.$invalid && !complexForm.province.$pristine }">
-      <label for="province" class="col-sm-2 control-label">Provincia</label>
-      <div class="col-sm-10">
-        <select data-ng-model="complex.province" id="province" name="province" class="form-control">
-          <option data-ng-repeat="province in provinces" value="{{province.code}}">{{province.name}}</option>
-        </select>
-      </div>
-
-      <p ng-show="complexForm.province.$invalid && !complexForm.province.$pristine" class="help-block">
-        La provincia è obbligatoria.
-      </p>
-    </div>
-
-    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-      <div class="container">
-        <p class="navbar-text">
-          Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-        </p>
-
-        <div class="nav navbar-nav navbar-right btn-group">
-          <button type="button" data-ng-click="goToListComplexes()" class="btn btn-default navbar-btn" class="Annulla">
-            <i class="fa fa-times"></i> Annulla
-          </button>
-          <button type="submit" data-ng-disabled="complexForm.$invalid" class="btn btn-primary navbar-btn" class="Salva">
-            <i class="fa fa-check"></i> Salva
-          </button>
-        </div>
-      </div>
-    </nav>
-
-  </form>
 </section>

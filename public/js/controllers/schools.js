@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.schools')
-    .controller('SchoolsCtrl', function ($scope, $stateParams, $location, SmartState, _, Global, School) {
+    .controller('SchoolsCtrl', function ($scope, $stateParams, $mdToast, SmartState, _, Global, School) {
         $scope.global = Global;
 
         $scope.goToListSchools = function () {
@@ -29,6 +29,10 @@ angular.module('aurea.schools')
                 var school = $scope.school;
                 school.$save(function () {
                     $scope.goToListSchools();
+                    $mdToast.show({
+                      template: '<md-toast>Istituto creato</md-toast>',
+                      hideDelay: 2000
+                    });
                 });
             }
         };
@@ -43,6 +47,10 @@ angular.module('aurea.schools')
 
                 school.$update(function () {
                     $scope.goToListSchools();
+                    $mdToast.show({
+                      template: '<md-toast>Istituto aggiornato</md-toast>',
+                      hideDelay: 2000
+                    });
                 });
             }
         };
@@ -52,6 +60,10 @@ angular.module('aurea.schools')
                 school.$remove();
                 _.remove($scope.schools, school);
                 $scope.goToListSchools();
+                $mdToast.show({
+                  template: '<md-toast>Istituto cancellato</md-toast>',
+                  hideDelay: 2000
+                });
             }
         };
 
@@ -71,36 +83,3 @@ angular.module('aurea.schools')
                 });
         };
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
