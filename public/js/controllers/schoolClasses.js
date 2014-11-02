@@ -44,9 +44,6 @@ angular.module('aurea.schoolClasses')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (students) {
-                    Global.title = 'Classi';
-                    Global.subtitle = 'Nuova';
-
                     $scope.chosableStudents = students;
                 });
         };
@@ -108,9 +105,6 @@ angular.module('aurea.schoolClasses')
                 academicYearId: Global.getAcademicYear()._id
             }).$promise
                 .then(function (schoolClasses) {
-                    Global.title = 'Classi';
-                    Global.subtitle = Global.getAcademicYear().name;
-
                     $scope.schoolClasses = schoolClasses;
                 });
         };
@@ -123,9 +117,6 @@ angular.module('aurea.schoolClasses')
                 academicYearId: Global.getAcademicYear()._id
             }).$promise
                 .then(function (schoolClass) {
-                    Global.title = 'Classi';
-                    Global.subtitle = schoolClass.name;
-
                     $scope.schoolClass = schoolClass;
 
                     Student.query({

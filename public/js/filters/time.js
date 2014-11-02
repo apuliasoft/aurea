@@ -15,6 +15,6 @@ angular.module('aurea')
                 minutes = '0' + minutes;
             }
 
-            return hours + ':' + minutes;
+            return new Date(input * 60 * 1000);
         };
     });

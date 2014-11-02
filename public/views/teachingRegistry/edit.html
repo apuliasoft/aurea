@@ -1,15 +1,15 @@
-<section data-ng-init="init()">
+<section ng-init="init()">
 
   <div class="row">
     <div class="col-md-12">
-      <button class="btn btn-primary pull-left" data-ng-disabled="prevDisabled" data-ng-click="yesterday()"><i
+      <button class="btn btn-primary pull-left" ng-disabled="prevDisabled" ng-click="yesterday()"><i
           class="fa fa-arrow-circle-left"></i> Precedente
       </button>
-      <button class="btn btn-primary pull-right" data-ng-disabled="nextDisabled" data-ng-click="tomorrow()">Successivo <i
+      <button class="btn btn-primary pull-right" ng-disabled="nextDisabled" ng-click="tomorrow()">Successivo <i
           class="fa fa-arrow-circle-right"></i></button>
       <button class="btn center-block btn-default" datepicker-popup="EEEE, d MMMM yyyy" is-open="opened"
               min-date="minDate" max-date="maxDate"
-              data-ng-model="teachingRegistry.date" data-ng-click="open($event)" datepicker-options="dateOptions"
+              ng-model="teachingRegistry.date" ng-click="open($event)" datepicker-options="dateOptions"
               show-button-bar="false" date-disabled="disabled(date, mode)">
         {{ teachingRegistry.date | date:'EEEE, d MMMM yyyy' }}
       </button>
@@ -18,7 +18,7 @@
 
   <hr/>
 
-  <form data-ng-submit="save()" novalidate>
+  <form ng-submit="save()" novalidate>
 
     <div class="form-group">
       <label for="votes" class="control-label">Voti</label>
@@ -33,20 +33,20 @@
         </tr>
         </thead>
         <tbody>
-        <tr data-ng-repeat="vote in teachingRegistry.votes">
+        <tr ng-repeat="vote in teachingRegistry.votes">
           <!--STUDENTE-->
           <td>
-            <select data-ng-model="vote.student" class="form-control"
-                    data-ng-options="student._id as student | name for student in classStudents"></select>
+            <select ng-model="vote.student" class="form-control"
+                    ng-options="student._id as student | name for student in classStudents"></select>
           </td>
           <!--VOTO-->
           <td>
-            <input type="text" data-ng-model="vote.vote" class="form-control"
+            <input type="text" ng-model="vote.vote" class="form-control"
                    placeholder="Voto">
           </td>
           <!--MODALITA' VOTO-->
           <td>
-            <input type="text" data-ng-model="vote.mode" class="form-control"
+            <input type="text" ng-model="vote.mode" class="form-control"
                    placeholder="Modalità">
           </td>
           <!--PARZIALI-->
@@ -60,15 +60,15 @@
               </tr>
               </thead>
               <tbody>
-              <tr data-ng-repeat="partial in vote.partials">
+              <tr ng-repeat="partial in vote.partials">
                 <!--CRITERIO-->
                 <td>
-                  <input type="text" data-ng-model="partial.criterion" class="form-control"
+                  <input type="text" ng-model="partial.criterion" class="form-control"
                          placeholder="Criterio">
                 </td>
                 <!--VOTO-->
                 <td>
-                  <input type="text" data-ng-model="partial.vote" class="form-control"
+                  <input type="text" ng-model="partial.vote" class="form-control"
                          placeholder="Voto">
                 </td>
                 <td>
@@ -78,7 +78,7 @@
                 </td>
               </tr>
             </table>
-            <button type="button" class="btn btn-default" data-ng-click="addPartial(vote)"><i class="fa fa-plus"></i>
+            <button type="button" class="btn btn-default" ng-click="addPartial(vote)"><i class="fa fa-plus"></i>
             </button>
           </td>
           <td>
@@ -88,7 +88,7 @@
         </tr>
         </tbody>
       </table>
-      <button type="button" class="btn btn-default" data-ng-click="addVote()"><i class="fa fa-plus"></i></button>
+      <button type="button" class="btn btn-default" ng-click="addVote()"><i class="fa fa-plus"></i></button>
 
     </div>
 
@@ -105,15 +105,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr data-ng-repeat="absence in teachingRegistry.absences">
+        <tr ng-repeat="absence in teachingRegistry.absences">
           <!--STUDENTE-->
           <td>
-            <select data-ng-model="absence.student" class="form-control"
-                    data-ng-options="student._id as student | name for student in students"></select>
+            <select ng-model="absence.student" class="form-control"
+                    ng-options="student._id as student | name for student in students"></select>
           </td>
           <!--ORE-->
           <td>
-            <input type="number" data-ng-model="absence.slots" class="form-control" placeholder="Ore">
+            <input type="number" ng-model="absence.slots" class="form-control" placeholder="Ore">
           </td>
           <td>
             <button type="button" class="btn btn-danger" ng-click="removeAbsence(absence)"><i class="fa fa-times"></i>
@@ -122,19 +122,19 @@
         </tr>
         </tbody>
       </table>
-      <button type="button" class="btn btn-default" data-ng-click="addAbsence()"><i class="fa fa-plus"></i></button>
+      <button type="button" class="btn btn-default" ng-click="addAbsence()"><i class="fa fa-plus"></i></button>
     </div>
 
     <hr>
 
     <div class="form-group">
       <label for="annotations" class="control-label">Annotazioni</label>
-      <textarea id="annotations" class="form-control" rows="3" data-ng-model="teachingRegistry.annotations" ></textarea>
+      <textarea id="annotations" class="form-control" rows="3" ng-model="teachingRegistry.annotations" ></textarea>
     </div>
 
     <div class="form-group">
       <label for="notes" class="control-label">Note</label>
-      <textarea id="notes" class="form-control" rows="3" data-ng-model="teachingRegistry.notes"></textarea>
+      <textarea id="notes" class="form-control" rows="3" ng-model="teachingRegistry.notes"></textarea>
     </div>
 
     <hr>

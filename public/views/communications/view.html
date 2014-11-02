@@ -1,4 +1,4 @@
-<section data-ng-controller="CommunicationsCtrl" data-ng-init="findOne()">
+<section ng-controller="CommunicationsCtrl" ng-init="findOne()">
 
   <div class="row">
     <div class="col-xs-12">
@@ -18,10 +18,10 @@
       </p>
 
       <div class="nav navbar-nav navbar-right btn-group">
-        <button type="button" data-ng-click="remove()" class="btn btn-danger navbar-btn" title="Cancella" data-ng-if="global.isAdmin() || global.isManager()">
+        <button type="button" ng-click="remove()" class="btn btn-danger navbar-btn" title="Cancella" ng-if="global.isAdmin() || global.isManager()">
           <i class="fa fa-eraser"></i> Cancella
         </button>
-        <button type="button" data-ng-click="goToEditCommunication(communication)" class="btn btn-primary navbar-btn" title="Modifica" data-ng-if="global.isAdmin() || global.isManager()">
+        <button type="button" ng-click="goToEditCommunication(communication)" class="btn btn-primary navbar-btn" title="Modifica" ng-if="global.isAdmin() || global.isManager()">
           <i class="fa fa-edit"></i> Modifica
         </button>
       </div>

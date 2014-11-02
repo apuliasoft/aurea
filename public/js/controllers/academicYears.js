@@ -24,16 +24,17 @@ angular.module('aurea.academicYears')
         };
 
         $scope.init = function () {
-            Global.title = 'Anni accademici';
-            Global.subtitle = 'Nuovo';
-
             $scope.academicYear = new AcademicYear({
                 school: Global.getSchool()._id,
                 complex: Global.getComplex()._id,
                 timeTable: _.map(_.range(1, 8), function (num) {
                     return {
                         weekDay: num,
-                        slots: []
+                        active: false,
+                        slots: [{
+                            start: new Date(1970, 0, 1, 8, 30, 0),
+                            end: new Date(1970, 0, 1, 9, 30, 0)
+                        }]
                     };
                 })
 
@@ -47,9 +48,6 @@ angular.module('aurea.academicYears')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (academicYear) {
-                    Global.title = 'Anni accademici';
-                    Global.subtitle = academicYear.name;
-
                     academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
                     academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
                     academicYear.timeTable = deserializeData(academicYear.timeTable);
@@ -73,25 +71,17 @@ angular.module('aurea.academicYears')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (academicYears) {
-                    Global.title = 'Anni accademici';
-                    Global.subtitle = Global.getComplex().name;
-
                     $scope.academicYears = academicYears;
                 });
         };
 
-        $scope.addTimeSlot = function (slots) {
-            var last = _.last(slots);
-            var start = last.end;
-            var lastDuration = toMinute(last.end) - toMinute(last.start);
-            var end = toMinute(last.end) + lastDuration;
-            if (end >= 0 && end < 1440) {
-                end = toTime(end);
-            } else {
-                end = undefined;
-            }
+        $scope.addTimeSlot = function (day) {
+            var last = _.last(day.slots);
+            var start = new Date(last.end.valueOf());
+            var lastDuration = last.end.valueOf() - last.start.valueOf();
+            var end = new Date(last.end.valueOf() + lastDuration);
 
-            slots.push({
+            day.slots.push({
                 start: start,
                 end: end
             });

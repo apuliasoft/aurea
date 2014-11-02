@@ -17,9 +17,6 @@ angular.module('aurea.parents')
         };
 
         $scope.init = function () {
-            Global.title = 'Genitori';
-            Global.subtitle = 'Nuovo';
-
             $scope.parent = new Parent({
                 school: Global.getSchool()._id,
                 complex: Global.getComplex()._id,
@@ -65,9 +62,6 @@ angular.module('aurea.parents')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (parents) {
-                    Global.title = 'Genitori';
-                    Global.subtitle = $filter('name')(Global.getStudent());
-
                     $scope.parents = parents;
                 });
         };
@@ -80,9 +74,6 @@ angular.module('aurea.parents')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (parent) {
-                    Global.title = 'Genitori';
-                    Global.subtitle = $filter('name')(parent);
-
                     $scope.parent = parent;
                 });
         };

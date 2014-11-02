@@ -21,9 +21,6 @@ angular.module('aurea.communications')
         };
 
         $scope.init = function () {
-            Global.title = 'Comunicazioni';
-            Global.subtitle = 'Nuova';
-
             $scope.communication = new Communication({
                 school: Global.getSchool()._id
             });
@@ -58,9 +55,6 @@ angular.module('aurea.communications')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (communications) {
-                    Global.title = 'Comunicazioni';
-                    Global.subtitle = Global.getSchool().name;
-
                     $scope.communications = communications;
                 });
         };
@@ -71,9 +65,6 @@ angular.module('aurea.communications')
                 communicationId: $stateParams.communicationId
             }).$promise
                 .then(function (communication) {
-                    Global.title = 'Comunicazioni';
-                    Global.subtitle = communication.title;
-
                     $scope.communication = communication;
                 });
         };

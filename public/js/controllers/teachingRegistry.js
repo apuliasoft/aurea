@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.teachingRegistry')
-    .controller('TeachingRegistryCtrl', function ($scope, $stateParams, $location, $filter, ngToast, _, SmartState, Global, TeachingRegistry, ClassStudent, teachingRegistry) {
+    .controller('TeachingRegistryCtrl', function ($scope, $stateParams, $location, $filter, $mdToast, _, SmartState, Global, TeachingRegistry, ClassStudent, teachingRegistry) {
 
         $scope.$watch('teachingRegistry.date', function () {
             if ($scope.teachingRegistry) {
@@ -27,9 +27,6 @@ angular.module('aurea.teachingRegistry')
             $scope.maxDate = new Date(Global.getAcademicYear().endDate);
 
             var date = new Date($stateParams.date);
-
-            Global.title = 'Registro di ' + Global.getTeaching().name;
-            Global.subtitle = Global.getSchoolClass().name;
 
             $scope.teachingRegistry = teachingRegistry;
 
@@ -96,7 +93,10 @@ angular.module('aurea.teachingRegistry')
             teachingRegistry._date = teachingRegistry.date;
 
             teachingRegistry.$update(function () {
-                ngToast.create('Salvataggio riuscito.');
+                $mdToast.show({
+                    template: '<md-toast>Salvataggio riuscito.</md-toast>',
+                    hideDelay: 2000
+                });
             });
         };
 

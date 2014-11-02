@@ -1,28 +1,28 @@
-<section data-ng-controller="UsersCtrl" data-ng-init="findOne()">
+<section ng-controller="UsersCtrl" ng-init="findOne()">
   <h2>Modifica utente</h2>
 
-  <form name="userForm" role="form" data-ng-submit="update()" novalidate>
+  <form name="userForm" role="form" ng-submit="update()" novalidate>
 
       <div class="form-group">
           <label for="name" class="control-label">Nome</label>
-          <input type="text" data-ng-model="user.name" id="name" name="name" class="form-control" placeholder="Nome">
+          <input type="text" ng-model="user.name" id="name" name="name" class="form-control" placeholder="Nome">
       </div>
 
       <div class="form-group">
           <label for="email" class="control-label">Email</label>
-          <input type="email" data-ng-model="user.email" id="email" name="email" class="form-control" placeholder="Email">
+          <input type="email" ng-model="user.email" id="email" name="email" class="form-control" placeholder="Email">
       </div>
 
       <div class="form-group">
           <label for="password" class="control-label">Password</label>
-          <input type="password" data-ng-model="user.password" id="password" name="password" class="form-control" placeholder="Password">
+          <input type="password" ng-model="user.password" id="password" name="password" class="form-control" placeholder="Password">
       </div>
 
     <hr>
 
     <button type="submit" class="btn btn-primary">Salva</button>
 
-    <button type="button" data-ng-click="goToListUsers()" class="btn btn-default">Annulla</button>
+    <button type="button" ng-click="goToListUsers()" class="btn btn-default">Annulla</button>
 
   </form>
 

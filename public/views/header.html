@@ -1,18 +1,18 @@
-<div data-ng-controller="HeaderCtrl">
+<div ng-controller="HeaderCtrl">
 
-  <md-toolbar class="md-theme-white md-whiteframe-z1">
+  <md-toolbar class="md-white-theme md-whiteframe-z1">
     <h1 class="md-toolbar-tools">
       <img src="../img/icons/logo.png">
 
       <span flex>Aurea</span>
 
-      <section layout="horizontal" layout-align="end" data-ng-hide="global.isLoggedin()">
+      <section layout="horizontal" layout-align="end" ng-hide="global.isLoggedin()">
         <md-button href="/#!/login" class="icon-button" title="Login">
           <i class="fa fa-sign-in"></i>
         </md-button>
       </section>
 
-      <section data-ng-show="global.isLoggedin()">
+      <section ng-show="global.isLoggedin()">
         <md-button href="/#!/utenti/{{global.user._id}}" class="icon-button">
           <i class="fa fa-user"></i>
           <md-tooltip>Profilo</md-tooltip>

@@ -1,28 +1,30 @@
-<section data-ng-controller="SchoolsCtrl" data-ng-init="findOne()" layout="vertical" layout-align="center center">
+<section ng-controller="SchoolsCtrl" ng-init="findOne()" layout="vertical" layout-align="center center">
 
-  <md-content class="md-content-padding ">
-    <div class="md-whiteframe-z1">
-      <md-toolbar class="md-theme-light">
-        <h2 class="md-toolbar-tools">Modifica istituto</h2>
-      </md-toolbar>
+  <form name="schoolForm" ng-submit="update(schoolForm.$valid)" novalidate>
+    <md-content class="md-padding ">
+      <div class="md-whiteframe-z1">
+        <md-toolbar>
+          <h2 class="md-toolbar-tools">Modifica istituto</h2>
+        </md-toolbar>
 
-      <md-content class="md-theme-white md-content-padding">
+        <md-content class="md-padding">
 
-        <form name="schoolForm" data-ng-submit="update(schoolForm.$valid)" novalidate>
-          <md-text-float label="Nome" ng-model="school.name" type="text" tabindex="0" name="name" class="long" required></md-text-float>
+          <md-text-float label="Nome" ng-model="school.name" type="text" tabindex="0" name="name" class="longest"
+                         required></md-text-float>
 
-          <div layout="horizontal" layout-align="end">
-            <md-button type="submit" class="md-button-colored" data-ng-disabled="schoolForm.$invalid">Salva</md-button>
-          </div>
+        </md-content>
+      </div>
+    </md-content>
 
-        </form>
-      </md-content>
-    </div>
-  </md-content>
+    <md-button type="button" class="md-fab back-button" ng-click="goToListSchools()">
+      <i class="fa fa-reply-all"></i>
+      <md-tooltip>Torna a Istituti</md-tooltip>
+    </md-button>
 
-  <md-button class="md-button-fab back-button md-theme-white" data-ng-click="goToListSchools()">
-    <i class="fa fa-arrow-left"></i>
-    <md-tooltip>Torna a Istituti</md-tooltip>
-  </md-button>
+    <md-button type="submit" ng-disabled="schoolForm.$invalid" class="md-fab md-primary add-button">
+      <i class="fa fa-save"></i>
+      <md-tooltip>Salva</md-tooltip>
+    </md-button>
+  </form>
 
 </section>

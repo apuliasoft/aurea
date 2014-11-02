@@ -6,7 +6,6 @@ angular.module('aurea', [
     'ngAnimate',
     'ngAria',
     'ngSanitize',
-    'ngToast',
     'ui.router',
     'ngMaterial',
     'd3',

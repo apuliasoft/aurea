@@ -1,6 +1,6 @@
-<section data-ng-controller="TeachingsCtrl" data-ng-init="find()">
+<section ng-controller="TeachingsCtrl" ng-init="find()">
 
-  <md-toolbar class="md-theme-light md-whiteframe-z1 toolbar">
+  <md-toolbar class="md-whiteframe-z1">
     <div class="md-toolbar-tools">
       <h2>Insegnamenti</h2>
 
@@ -8,22 +8,22 @@
     </div>
   </md-toolbar>
 
-  <md-content class="md-content-padding" scroll-y flex>
+  <md-content class="md-padding" scroll-y flex>
     <div layout="vertical" layout-fill class="content">
       <div flex layout="vertical">
-        <section class="md-theme-white md-whiteframe-z1">
+        <section class="md-whiteframe-z1">
           <md-list>
             <md-item ng-repeat="teaching in teachings">
               <md-item-content class="item-content">
-                <div class="md-tile-content" data-ng-click="goToTeachingRegistry(teaching)">
+                <div class="md-tile-content" ng-click="goToTeachingRegistry(teaching)">
                   <h3 class="item-content-text"><i class="fa fa-home item-content-icon"></i> {{teaching.name}}</h3>
                 </div>
                 <div class="md-tile-right">
-                  <md-button class="icon-button" data-ng-click="goToEditTeaching(teaching)">
+                  <md-button class="icon-button" ng-click="goToEditTeaching(teaching)">
                     <i class="fa fa-pencil"></i>
                     <md-tooltip>Modifica</md-tooltip>
                   </md-button>
-                  <md-button class="icon-button" data-as-confirmed-click="remove(student)" data-as-confirm-message="Sicuro di voler eliminare questo insegnamento?">
+                  <md-button class="icon-button" as-confirmed-click="remove(student)" as-confirm-message="Sicuro di voler eliminare questo insegnamento?">
                     <i class="fa fa-trash"></i>
                     <md-tooltip>Cancella</md-tooltip>
                   </md-button>
@@ -37,7 +37,7 @@
     </div>
   </md-content>
 
-  <md-button class="md-button-fab add-button md-theme-light" data-ng-click="goToCreateTeaching()">
+  <md-button class="md-fab md-primary add-button" ng-click="goToCreateTeaching()">
     <i class="fa fa-plus"></i>
     <md-tooltip>Aggiungi</md-tooltip>
   </md-button>

@@ -1,66 +1,40 @@
-<section data-ng-controller="TeachersCtrl" data-ng-init="init()">
+<section ng-controller="TeachersCtrl" ng-init="init()" layout="vertical" layout-align="center center">
 
-  <form name="teacherForm" role="form" data-ng-submit="create(teacherForm.$valid)" novalidate class="form-horizontal">
+  <form name="teacherForm" ng-submit="create(teacherForm.$valid)" novalidate>
+    <md-content class="md-padding ">
+      <div class="md-whiteframe-z1">
+        <md-toolbar>
+          <h2 class="md-toolbar-tools">Nuovo insegnante</h2>
+        </md-toolbar>
 
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : teacherForm.firstName.$invalid && !teacherForm.firstName.$pristine }">
-      <label for="firstName" class="col-sm-2 control-label">Nome</label>
+        <md-content class="md-padding">
 
-      <div class="col-sm-10">
-        <input type="text" data-ng-model="teacher.firstName" id="firstName" name="firstName" class="form-control"
-               placeholder="Nome" required>
+          <md-text-float label="Email" ng-model="teacher.user.email" type="email" tabindex="0" name="email"
+                         class="longest" required></md-text-float>
+
+          <div layout="horizzontal">
+
+            <md-text-float label="Nome" ng-model="teacher.firstName" type="text" tabindex="1" name="name" class="long"
+                           required></md-text-float>
+
+            <md-text-float label="Cognome" ng-model="teacher.lastName" type="text" tabindex="2" name="street"
+                           class="long" required></md-text-float>
+
+          </div>
+
+        </md-content>
       </div>
+    </md-content>
 
-      <p ng-show="teacherForm.firstName.$invalid && !teacherForm.firstName.$pristine" class="help-block">
-        Il nome è obbligatorio.
-      </p>
-    </div>
+    <md-button type="button" class="md-fab back-button" ng-click="goToListTeachers()">
+      <i class="fa fa-reply-all"></i>
+      <md-tooltip>Torna a insegnanti</md-tooltip>
+    </md-button>
 
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : teacherForm.lastName.$invalid && !teacherForm.lastName.$pristine }">
-      <label for="lastName" class="col-sm-2 control-label">Cognome</label>
-
-      <div class="col-sm-10">
-        <input type="text" data-ng-model="teacher.lastName" id="lastName" name="lastName" class="form-control"
-               placeholder="Cognome" required>
-      </div>
-
-      <p ng-show="teacherForm.lastName.$invalid && !teacherForm.lastName.$pristine" class="help-block">
-        Il cognome è obbligatorio.
-      </p>
-    </div>
-
-    <div class="form-group"
-         data-ng-class="{ 'has-error' : teacherForm.email.$invalid && !teacherForm.email.$pristine }">
-      <label for="email" class="col-sm-2 control-label">Email</label>
-
-      <div class="col-sm-10">
-        <input type="email" data-ng-model="teacher.user.email" id="email" name="email" class="form-control"
-               placeholder="Email" required>
-      </div>
-
-      <p ng-show="teacherForm.email.$invalid && !teacherForm.email.$pristine" class="help-block">
-        Inserire una email valida
-      </p>
-    </div>
-
-    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-      <div class="container">
-        <p class="navbar-text">
-          Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-        </p>
-
-        <div class="nav navbar-nav navbar-right btn-group">
-          <button type="button" data-ng-click="goToListTeachers()" class="btn btn-default navbar-btn" class="Annulla">
-            <i class="fa fa-times"></i> Annulla
-          </button>
-          <button type="submit" data-ng-disabled="teacherForm.$invalid" class="btn btn-primary navbar-btn"
-                  class="Salva">
-            <i class="fa fa-check"></i> Salva
-          </button>
-        </div>
-      </div>
-    </nav>
-
+    <md-button type="submit" ng-disabled="teacherForm.$invalid" class="md-fab md-primary add-button">
+      <i class="fa fa-save"></i>
+      <md-tooltip>Salva</md-tooltip>
+    </md-button>
   </form>
+
 </section>

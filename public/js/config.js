@@ -78,16 +78,16 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        var checkSchool = ['$q', 'ngToast', '$stateParams', 'School', 'Global', function ($q, ngToast, $stateParams, School, Global) {
+        var checkSchool = ['$q', '$mdToast', '$stateParams', 'School', 'Global', function ($q, $mdToast, $stateParams, School, Global) {
             var deferred = $q.defer();
 
             Global.setSchool($stateParams.schoolId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'La scuola selezionata non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>La scuola selezionata non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });
@@ -95,16 +95,16 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        var checkComplex = ['$q', 'ngToast', '$stateParams', 'Complex', 'Global', function ($q, ngToast, $stateParams, Complex, Global) {
+        var checkComplex = ['$q', '$mdToast', '$stateParams', 'Complex', 'Global', function ($q, $mdToast, $stateParams, Complex, Global) {
             var deferred = $q.defer();
 
             Global.setComplex($stateParams.schoolId, $stateParams.complexId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'Il plesso selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>Il plesso selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });
@@ -112,16 +112,16 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        var checkAcademicYear = ['$q', 'ngToast', '$stateParams', 'AcademicYear', 'Global', function ($q, ngToast, $stateParams, AcademicYear, Global) {
+        var checkAcademicYear = ['$q', '$mdToast', '$stateParams', 'AcademicYear', 'Global', function ($q, $mdToast, $stateParams, AcademicYear, Global) {
             var deferred = $q.defer();
 
             Global.setAcademicYear($stateParams.schoolId, $stateParams.complexId, $stateParams.academicYearId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'L\'anno accademico selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>L\'anno accademico selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });
@@ -129,16 +129,16 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        var checkSchoolClass = ['$q', 'ngToast', '$stateParams', 'AcademicYear', 'Global', function ($q, ngToast, $stateParams, AcademicYear, Global) {
+        var checkSchoolClass = ['$q', '$mdToast', '$stateParams', 'AcademicYear', 'Global', function ($q, $mdToast, $stateParams, AcademicYear, Global) {
             var deferred = $q.defer();
 
             Global.setSchoolClass($stateParams.schoolId, $stateParams.complexId, $stateParams.academicYearId, $stateParams.schoolClassId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'La classe selezionata non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>La classe selezionata non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });
@@ -146,16 +146,16 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        var checkStudent = ['$q', 'ngToast', '$stateParams', 'Student', 'Global', function ($q, ngToast, $stateParams, Student, Global) {
+        var checkStudent = ['$q', '$mdToast', '$stateParams', 'Student', 'Global', function ($q, $mdToast, $stateParams, Student, Global) {
             var deferred = $q.defer();
 
             Global.setStudent($stateParams.schoolId, $stateParams.complexId, $stateParams.studentId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'Lo studente selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>Lo studente selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });
@@ -163,15 +163,15 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        var checkTeaching = ['$q', 'ngToast', '$stateParams', 'Global', function ($q, ngToast, $stateParams, Global) {
+        var checkTeaching = ['$q', '$mdToast', '$stateParams', 'Global', function ($q, $mdToast, $stateParams, Global) {
             var deferred = $q.defer();
             Global.setTeaching($stateParams.schoolId, $stateParams.complexId, $stateParams.academicYearId, $stateParams.schoolClassId, $stateParams.teachingId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'L\'insegnamento selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>L\'insegnamento selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });

@@ -35,9 +35,6 @@ angular.module('aurea.teachings')
             schoolId: Global.getSchool()._id
         }).$promise
             .then(function (teachers) {
-                Global.title = 'Insegnamenti';
-                Global.subtitle = 'Nuovo';
-
                 $scope.teachers = teachers;
             });
     };
@@ -81,9 +78,6 @@ angular.module('aurea.teachings')
             schoolClassId: Global.getSchoolClass()._id
         }).$promise
             .then(function (teachings) {
-                Global.title = 'Insegnamenti';
-                Global.subtitle = Global.getSchoolClass().name;
-
                 $scope.teachings = teachings;
             });
     };
@@ -97,9 +91,6 @@ angular.module('aurea.teachings')
             teachingId: $stateParams.teachingId
         }).$promise
             .then(function (teaching) {
-                Global.title = 'Insegnamenti';
-                Global.subtitle = teaching.name;
-
                 $scope.teaching = teaching;
             });
     };

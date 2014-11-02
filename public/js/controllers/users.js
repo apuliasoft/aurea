@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.users')
-    .controller('UsersCtrl', function ($scope, $stateParams, SmartState, _, ngToast, Global, User) {
+    .controller('UsersCtrl', function ($scope, $stateParams, $mdToast, SmartState, _, Global, User) {
         $scope.global = Global;
 
         $scope.columns = [

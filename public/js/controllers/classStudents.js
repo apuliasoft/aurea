@@ -27,9 +27,6 @@ angular.module('aurea.classStudents')
                 academicYearId: Global.getAcademicYear()._id
             }).$promise
                 .then(function (students) {
-                    Global.title = 'Alunni';
-                    Global.subtitle = Global.getSchoolClass().name;
-
                     $scope.classStudents = students;
                 });
         };
@@ -43,9 +40,6 @@ angular.module('aurea.classStudents')
                 studentId: $stateParams.studentId
             }).$promise
                 .then(function (stats) {
-                    Global.title = 'Statistiche';
-                    Global.subtitle = $filter('name')(Global.getStudent());
-
                     $scope.stats = formatStats(stats);
 
                     $scope.totalAbsences = _.reduce($scope.stats, function (sum, num) {

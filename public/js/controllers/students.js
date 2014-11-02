@@ -25,9 +25,6 @@ angular.module('aurea.students')
         };
 
         $scope.init = function () {
-            Global.title = 'Studenti';
-            Global.subtitle = 'Nuovo';
-
             $scope.student = new Student({
                 complex: Global.getComplex()._id,
                 school: Global.getSchool()._id
@@ -71,9 +68,6 @@ angular.module('aurea.students')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (students) {
-                    Global.title = 'Alunni';
-                    Global.subtitle = Global.getComplex().name;
-
                     $scope.students = students;
                 });
         };
@@ -85,9 +79,6 @@ angular.module('aurea.students')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (student) {
-                    Global.title = 'Alunni';
-                    Global.subtitle = $filter('name')(student);
-
                     student.birthDate = $filter('date')(student.birthDate, 'yyyy-MM-dd');
 
                     $scope.student = student;

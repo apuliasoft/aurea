@@ -21,9 +21,6 @@ angular.module('aurea.teachers')
         };
 
         $scope.init = function () {
-            Global.title = 'Insegnanti';
-            Global.subtitle = 'Nuovo';
-
             $scope.teacher = new Teacher({
                 school: Global.getSchool()._id,
                 complex: Global.getComplex()._id
@@ -67,9 +64,6 @@ angular.module('aurea.teachers')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (teachers) {
-                    Global.title = 'Insegnanti';
-                    Global.subtitle = Global.getComplex().name;
-
                     $scope.teachers = teachers;
                 });
         };
@@ -81,9 +75,6 @@ angular.module('aurea.teachers')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (teacher) {
-                    Global.title = 'Insegnanti';
-                    Global.subtitle = $filter('name')(teacher);
-
                     $scope.teacher = teacher;
                 });
         };

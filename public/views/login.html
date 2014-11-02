@@ -1,31 +1,30 @@
-<section data-ng-controller="LoginCtrl" layout="vertical" layout-align="center center">
+<section ng-controller="LoginCtrl" layout="vertical" layout-align="center center">
 
-  <md-content class="md-content-padding">
+  <form ng-submit="login()" novalidate>
 
-    <div class="md-whiteframe-z1">
-      <md-toolbar class="md-theme-light">
-        <h2 class="md-toolbar-tools">Login</h2>
-      </md-toolbar>
+    <md-content class="md-padding">
+      <div class="md-whiteframe-z1">
+        <md-toolbar>
+          <h2 class="md-toolbar-tools">Login</h2>
+        </md-toolbar>
 
-      <md-toolbar class="md-theme-red" ng-show="loginerror">
-        <span class="md-toolbar-tools">{{loginerror}}</span>
-      </md-toolbar>
+        <md-toolbar ng-show="loginerror">
+          <span class="md-toolbar-tools">{{loginerror}}</span>
+        </md-toolbar>
 
-      <md-content class="md-theme-white md-content-padding">
+        <md-content class="md-padding">
 
-        <form data-ng-submit="login()">
           <md-text-float label="Email" ng-model="user.email" type="email" tabindex="0"></md-text-float>
 
           <md-text-float label="Password" ng-model="user.password" type="password" tabindex="1"></md-text-float>
 
-          <div layout="horizontal" layout-align="end">
-            <md-button type="submit">Login</md-button>
-          </div>
+        </md-content>
+      </div>
+    </md-content>
 
-        </form>
-      </md-content>
-    </div>
-
-  </md-content>
-
+    <md-button class="md-fab md-primary add-button">
+      <i class="fa fa-sign-in"></i>
+      <md-tooltip>Login</md-tooltip>
+    </md-button>
+  </form>
 </section>

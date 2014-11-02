@@ -1,13 +1,13 @@
-<section data-ng-controller="SchoolClassesCtrl" data-ng-init="init()">
+<section ng-controller="SchoolClassesCtrl" ng-init="init()">
 
-  <form name="schoolClassForm" role="form" data-ng-submit="create(schoolClassForm.$valid)" novalidate class="form-horizontal">
+  <form name="schoolClassForm" role="form" ng-submit="create(schoolClassForm.$valid)" novalidate class="form-horizontal">
 
     <div class="form-group"
-         data-ng-class="{ 'has-error' : schoolClassForm.name.$invalid && !schoolClassForm.name.$pristine }">
+         ng-class="{ 'has-error' : schoolClassForm.name.$invalid && !schoolClassForm.name.$pristine }">
       <label for="name" class="col-sm-2 control-label">Nome</label>
 
       <div class="col-sm-10">
-        <input type="text" data-ng-model="schoolClass.name" id="name" name="name" class="form-control"
+        <input type="text" ng-model="schoolClass.name" id="name" name="name" class="form-control"
                placeholder="Nome" required>
       </div>
 
@@ -22,7 +22,7 @@
 
         <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-          <input data-ng-model="searchChosableStudent" type="text" class="form-control"
+          <input ng-model="searchChosableStudent" type="text" class="form-control"
                  placeholder="cerca in tutti gli alunni...">
         </div>
         <hr/>
@@ -51,7 +51,7 @@
 
         <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-          <input data-ng-model="searchChosenStudent" type="text" class="form-control"
+          <input ng-model="searchChosenStudent" type="text" class="form-control"
                  placeholder="cerca tra gli alunni selezionati...">
         </div>
         <hr/>
@@ -83,10 +83,10 @@
         </p>
 
         <div class="nav navbar-nav navbar-right btn-group">
-          <button type="button" data-ng-click="goToListSchoolClasses()" class="btn btn-default navbar-btn" class="Annulla">
+          <button type="button" ng-click="goToListSchoolClasses()" class="btn btn-default navbar-btn" class="Annulla">
             <i class="fa fa-times"></i> Annulla
           </button>
-          <button type="submit" data-ng-disabled="schoolClassForm.$invalid" class="btn btn-primary navbar-btn" class="Salva">
+          <button type="submit" ng-disabled="schoolClassForm.$invalid" class="btn btn-primary navbar-btn" class="Salva">
             <i class="fa fa-check"></i> Salva
           </button>
         </div>
