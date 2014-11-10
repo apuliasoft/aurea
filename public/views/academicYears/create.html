@@ -26,17 +26,20 @@
 
         </md-content>
 
-        <section ng-repeat="day in academicYear.timeTable">
+        <md-divider></md-divider>
+
+        <section ng-repeat="day in academicYear.timeTable" md-theme="grey">
           <md-toolbar>
             <h2 class="md-toolbar-tools">
-              <md-checkbox ng-model="day.active" flex>{{day.weekDay | weekDay}}</md-checkbox>
-              <md-button ng-if="day.active" class="icon-button" ng-click="addTimeSlot(day)"><i class="fa fa-plus"></i>
+              <md-checkbox ng-model="day.active" ng-change="switchDay(day)" flex>{{day.weekDay | weekDay}}</md-checkbox>
+              <md-button type="button" ng-if="day.active" class="icon-button" ng-click="addTimeSlot(day)" ng-disabled="day.slots.length == 8">
+                <i class="fa fa-plus"></i>
               </md-button>
             </h2>
           </md-toolbar>
           <md-content ng-if="day.active" layout="vertical" layout-align="bottom" class="md-padding">
 
-            <section ng-repeat="slot in day.slots" layout="horizontal" layout-align="center end">
+            <section ng-repeat="slot in day.slots" layout="horizontal" layout-align="center center">
 
               <span flex>{{($index+1) | ordinalNumber}} ora</span>
               <md-text-float label="Dalle" ng-model="slot.start" type="time" tabindex="2" name="startTime"
@@ -45,7 +48,7 @@
               <md-text-float label="Alle" ng-model="slot.end" type="time" tabindex="2" name="endTime"
                              required></md-text-float>
 
-              <md-button class="md-warn icon-button" ng-click="removeTimeSlot(day, $index)"><i class="fa fa-times"></i>
+              <md-button type="button" class="md-warn icon-button" ng-click="removeTimeSlot(day, $index)"><i class="fa fa-times"></i>
               </md-button>
             </section>
 
