@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.academicYears')
-    .controller('AcademicYearsCtrl', function ($scope, $stateParams, $filter, $mdToast, SmartState, _, Global, AcademicYear) {
+    .controller('AcademicYearsCtrl', function ($scope, $state, $stateParams, $filter, $mdToast, SmartState, _, Global, AcademicYear) {
         $scope.global = Global;
 
         $scope.goToListAcademicYears = function () {
@@ -20,25 +20,6 @@ angular.module('aurea.academicYears')
             SmartState.go('all school classes', { academicYearId: academicYear._id });
         };
 
-        $scope.init = function () {
-            $scope.academicYear = new AcademicYear({
-                school: Global.getSchool()._id,
-                complex: Global.getComplex()._id,
-                timeTable: baseTimeTable()
-            });
-        };
-
-        $scope.findOne = function () {
-            AcademicYear.get({
-                academicYearId: $stateParams.academicYearId,
-                complexId: Global.getComplex()._id,
-                schoolId: Global.getSchool()._id
-            }).$promise
-                .then(function (academicYear) {
-                    $scope.academicYear = deserializeData(academicYear);
-                });
-        };
-
         $scope.find = function () {
             AcademicYear.query({
                 complexId: Global.getComplex()._id,
@@ -47,6 +28,27 @@ angular.module('aurea.academicYears')
                 .then(function (academicYears) {
                     $scope.academicYears = academicYears;
                 });
+        };
+
+        $scope.init = function () {
+            if ($state.current.data.editMode) {
+                $scope.title = 'Modifica anno accademico';
+                findOne();
+            } else {
+                $scope.title = 'Nuovo anno accademico';
+                prepare();
+            }
+        };
+
+        $scope.save = function (isValid) {
+            if (isValid) {
+                var academicYear = serializeData($scope.academicYear);
+                if ($state.current.data.editMode) {
+                    update(academicYear);
+                } else {
+                    create(academicYear);
+                }
+            }
         };
 
         $scope.switchDay = function (day) {
@@ -97,39 +99,6 @@ angular.module('aurea.academicYears')
             day.slots.splice(index, 1);
         };
 
-        $scope.create = function (isValid) {
-            if (isValid) {
-                var academicYear = serializeData($scope.academicYear);
-
-                academicYear.$save(function () {
-                    $scope.goToListAcademicYears();
-                    $mdToast.show({
-                        template: '<md-toast>Anno accademico creato</md-toast>',
-                        hideDelay: 2000
-                    });
-                });
-            }
-        };
-
-        $scope.update = function (isValid) {
-            if (isValid) {
-                var academicYear = serializeData($scope.academicYear);
-
-                if (!academicYear.updated) {
-                    academicYear.updated = [];
-                }
-                academicYear.updated.push(new Date().getTime());
-
-                academicYear.$update(function (response) {
-                    $scope.goToListAcademicYears(response);
-                    $mdToast.show({
-                        template: '<md-toast>Anno accademico aggiornato</md-toast>',
-                        hideDelay: 2000
-                    });
-                });
-            }
-        };
-
         $scope.remove = function (academicYear) {
             if (academicYear) {
                 academicYear.$remove();
@@ -142,12 +111,56 @@ angular.module('aurea.academicYears')
             }
         };
 
+        var prepare = function () {
+            $scope.academicYear = new AcademicYear({
+                school: Global.getSchool()._id,
+                complex: Global.getComplex()._id,
+                timeTable: baseTimeTable()
+            });
+        };
+
+        var findOne = function () {
+            AcademicYear.get({
+                academicYearId: $stateParams.academicYearId,
+                complexId: Global.getComplex()._id,
+                schoolId: Global.getSchool()._id
+            }).$promise
+                .then(function (academicYear) {
+                    $scope.academicYear = deserializeData(academicYear);
+                });
+        };
+
+        var create = function (academicYear) {
+            academicYear.$save(function () {
+                $scope.goToListAcademicYears();
+                $mdToast.show({
+                    template: '<md-toast>Anno accademico creato</md-toast>',
+                    hideDelay: 2000
+                });
+            });
+        };
+
+        var update = function (academicYear) {
+            if (!academicYear.updated) {
+                academicYear.updated = [];
+            }
+            academicYear.updated.push(new Date().getTime());
+
+            academicYear.$update(function (response) {
+                $scope.goToListAcademicYears(response);
+                $mdToast.show({
+                    template: '<md-toast>Anno accademico aggiornato</md-toast>',
+                    hideDelay: 2000
+                });
+            });
+        };
+
         /**
          * Genera gli slot vuoti.
          */
-        var baseTimeTable = function() {
+        var baseTimeTable = function () {
             var timeTable = _.map(_.range(1, 8), function (num) {
-                var result =  {};
+                var result = {};
                 result.weekDay = num;
                 result.active = false;
                 result.slots = [];
@@ -206,8 +219,8 @@ angular.module('aurea.academicYears')
                 return result;
             });
 
-            academicYear.timeTable = _.map(baseTimeTable(), function(baseSlot) {
-                var slot = _.find(timeTable, function(slot) {
+            academicYear.timeTable = _.map(baseTimeTable(), function (baseSlot) {
+                var slot = _.find(timeTable, function (slot) {
                     return slot.weekDay === baseSlot.weekDay;
                 }) || baseSlot;
                 return slot;

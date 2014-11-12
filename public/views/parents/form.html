@@ -1,20 +1,23 @@
-<section ng-controller="ParentsCtrl" ng-init="findOne()" layout="vertical" layout-align="center center">
+<section ng-controller="ParentsCtrl" ng-init="init()" layout="vertical" layout-align="center center">
 
-  <form name="parentForm" ng-submit="update(parentForm.$valid)" novalidate>
+  <form name="parentForm" ng-submit="save(parentForm.$valid)" novalidate>
     <md-content class="md-padding ">
       <div class="md-whiteframe-z1">
         <md-toolbar>
-          <h2 class="md-toolbar-tools">Modifica genitore</h2>
+          <h2 class="md-toolbar-tools">{{title}}</h2>
         </md-toolbar>
 
         <md-content class="md-padding">
 
+          <md-text-float label="Email" ng-model="parent.user.email" ng-if="!editMode" type="email" tabindex="0" name="email"
+                         class="longest" required></md-text-float>
+
           <div layout="horizzontal">
 
-            <md-text-float label="Nome" ng-model="parent.firstName" type="text" tabindex="0" name="name" class="long"
+            <md-text-float label="Nome" ng-model="parent.firstName" type="text" tabindex="1" name="name" class="long"
                            required></md-text-float>
 
-            <md-text-float label="Cognome" ng-model="parent.lastName" type="text" tabindex="1" name="street"
+            <md-text-float label="Cognome" ng-model="parent.lastName" type="text" tabindex="2" name="street"
                            class="long" required></md-text-float>
 
           </div>

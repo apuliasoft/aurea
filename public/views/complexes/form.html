@@ -1,10 +1,10 @@
 <section ng-controller="ComplexesCtrl" ng-init="init()" layout="vertical" layout-align="center center">
 
-  <form name="complexForm" ng-submit="create(complexForm.$valid)" novalidate>
+  <form name="complexForm" ng-submit="save(complexForm.$valid)" novalidate>
     <md-content class="md-padding ">
       <div class="md-whiteframe-z1">
         <md-toolbar>
-          <h2 class="md-toolbar-tools">Nuovo plesso</h2>
+          <h2 class="md-toolbar-tools">{{title}}</h2>
         </md-toolbar>
 
         <md-content class="md-padding">
@@ -23,7 +23,7 @@
             <md-text-float label="Città" ng-model="complex.city" type="text" tabindex="3" name="city" class="long"
                            required></md-text-float>
 
-            <md-input-group label="Provincia" class="select-group" name="province"
+            <md-input-group label="Provincia" class="md-default-theme select-group" name="province"
                             ng-class="{'md-input-has-value': complex.province}">
               <label>Provincia</label>
               <select ng-model="complex.province" name="province" tabindex="4"

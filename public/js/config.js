@@ -296,20 +296,26 @@ angular.module('aurea')
 
             .state('create school', {
                 url: '/scuole/nuova',
-                templateUrl: 'views/schools/create.html',
+                templateUrl: 'views/schools/form.html',
                 resolve: {
                     loggedin: checkLoggedin
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit school', {
                 url: '/scuole/:schoolId',
-                templateUrl: 'views/schools/edit.html',
+                templateUrl: 'views/schools/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     provices: ['Provinces', function (Provinces) {
                         return Provinces.loadProvinces();
                     }]
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -324,25 +330,31 @@ angular.module('aurea')
 
             .state('create complex', {
                 url: '/scuole/:schoolId/plessi/nuovo',
-                templateUrl: 'views/complexes/create.html',
+                templateUrl: 'views/complexes/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     provices: function (Provinces) {
                         return Provinces.loadProvinces();
                     }
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit complex', {
                 url: '/scuole/:schoolId/plessi/:complexId',
-                templateUrl: 'views/complexes/edit.html',
+                templateUrl: 'views/complexes/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     provices: function (Provinces) {
                         return Provinces.loadProvinces();
                     }
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -358,21 +370,27 @@ angular.module('aurea')
 
             .state('create academic year', {
                 url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/nuovo',
-                templateUrl: 'views/academicYears/create.html',
+                templateUrl: 'views/academicYears/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit academic year', {
                 url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId',
-                templateUrl: 'views/academicYears/edit.html',
+                templateUrl: 'views/academicYears/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -388,21 +406,27 @@ angular.module('aurea')
 
             .state('create teacher', {
                 url: '/scuole/:schoolId/plessi/:complexId/insegnanti/nuovo',
-                templateUrl: 'views/teachers/create.html',
+                templateUrl: 'views/teachers/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit teacher', {
                 url: '/scuole/:schoolId/plessi/:complexId/insegnanti/:teacherId',
-                templateUrl: 'views/teachers/edit.html',
+                templateUrl: 'views/teachers/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -418,21 +442,27 @@ angular.module('aurea')
 
             .state('create student', {
                 url: '/scuole/:schoolId/plessi/:complexId/alunni/nuovo',
-                templateUrl: 'views/students/create.html',
+                templateUrl: 'views/students/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit student', {
                 url: '/scuole/:schoolId/plessi/:complexId/alunni/:studentId',
-                templateUrl: 'views/students/edit.html',
+                templateUrl: 'views/students/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -449,23 +479,29 @@ angular.module('aurea')
 
             .state('create parent', {
                 url: '/scuole/:schoolId/plessi/:complexId/alunni/:studentId/genitori/nuovo',
-                templateUrl: 'views/parents/create.html',
+                templateUrl: 'views/parents/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex,
                     student: checkStudent
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit parent', {
                 url: '/scuole/:schoolId/plessi/:complexId/alunni/:studentId/genitori/:parentId',
-                templateUrl: 'views/parents/edit.html',
+                templateUrl: 'views/parents/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex,
                     student: checkStudent
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -482,23 +518,29 @@ angular.module('aurea')
 
             .state('create school class', {
                 url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/crea',
-                templateUrl: 'views/schoolClasses/create.html',
+                templateUrl: 'views/schoolClasses/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex,
                     academicYear: checkAcademicYear
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit school class', {
                 url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId',
-                templateUrl: 'views/schoolClasses/edit.html',
+                templateUrl: 'views/schoolClasses/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex,
                     academicYear: checkAcademicYear
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -548,6 +590,9 @@ angular.module('aurea')
                     complex: checkComplex,
                     academicYear: checkAcademicYear,
                     schoolClass: checkSchoolClass
+                },
+                data: {
+                    editMode: false
                 }
             })
 
@@ -560,12 +605,15 @@ angular.module('aurea')
                     complex: checkComplex,
                     academicYear: checkAcademicYear,
                     schoolClass: checkSchoolClass
+                },
+                data: {
+                    editMode: true
                 }
             })
 
             .state('class registry by date', {
                 url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/registri-di-classe/:date',
-                templateUrl: 'views/classRegistry/edit.html',
+                templateUrl: 'views/classRegistry/registry.html',
                 controller: 'ClassRegistryCtrl',
                 resolve: {
                     loggedin: checkLoggedin,
@@ -579,7 +627,7 @@ angular.module('aurea')
 
             .state('teaching registry by date', {
                 url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti/:teachingId/registri-personali/:date',
-                templateUrl: 'views/teachingRegistry/edit.html',
+                templateUrl: 'views/teachingRegistry/registry.html',
                 controller: 'TeachingRegistryCtrl',
                 resolve: {
                     loggedin: checkLoggedin,
@@ -607,6 +655,9 @@ angular.module('aurea')
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool
+                },
+                data: {
+                    editMode: false
                 }
             })
 
@@ -616,6 +667,9 @@ angular.module('aurea')
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool
+                },
+                data: {
+                    editMode: true
                 }
             })
 

@@ -1,10 +1,10 @@
-<section ng-controller="AcademicYearsCtrl" ng-init="findOne()" layout="vertical" layout-align="center center">
+<section ng-controller="AcademicYearsCtrl" ng-init="init()" layout="vertical" layout-align="center center">
 
-  <form name="academicYearForm" ng-submit="update(academicYearForm.$valid)" novalidate>
+  <form name="academicYearForm" ng-submit="save(academicYearForm.$valid)" novalidate>
     <md-content class="md-padding ">
       <div class="md-whiteframe-z1">
         <md-toolbar>
-          <h2 class="md-toolbar-tools">Nuovo anno accademico</h2>
+          <h2 class="md-toolbar-tools">{{title}}</h2>
         </md-toolbar>
 
         <md-content class="md-padding">

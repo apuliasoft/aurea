@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.students')
-    .controller('StudentsCtrl', function ($scope, $stateParams, SmartState, $filter, _, Global, Student) {
+    .controller('StudentsCtrl', function ($scope, $state, $stateParams, SmartState, $filter, _, Global, Student) {
         $scope.global = Global;
 
         $scope.goToListStudents = function () {
@@ -24,33 +24,35 @@ angular.module('aurea.students')
             return student.user._id === Global.getUser()._id;
         };
 
-        $scope.init = function () {
-            $scope.student = new Student({
-                complex: Global.getComplex()._id,
-                school: Global.getSchool()._id
-            });
+        $scope.find = function () {
+            Student.query({
+                complexId: Global.getComplex()._id,
+                schoolId: Global.getSchool()._id
+            }).$promise
+                .then(function (students) {
+                    $scope.students = students;
+                });
         };
 
-        $scope.create = function (isValid) {
-            if (isValid) {
-                var student = $scope.student;
-                student.$save(function () {
-                    $scope.goToListStudents();
-                });
+        $scope.init = function () {
+            $scope.editMode = $state.current.data.editMode;
+            if ($state.current.data.editMode) {
+                $scope.title = 'Modifica alunno';
+                findOne();
+            } else {
+                $scope.title = 'Nuovo alunno';
+                prepare();
             }
         };
 
-        $scope.update = function (isValid) {
+        $scope.save = function (isValid) {
             if (isValid) {
-                var student = $scope.student;
-                if (!student.updated) {
-                    student.updated = [];
+                var student = serializeData($scope.student);
+                if ($state.current.data.editMode) {
+                    update(student);
+                } else {
+                    create(student);
                 }
-                student.updated.push(new Date().getTime());
-
-                student.$update(function () {
-                    $scope.goToListStudents();
-                });
             }
         };
 
@@ -62,25 +64,56 @@ angular.module('aurea.students')
             }
         };
 
-        $scope.find = function () {
-            Student.query({
-                complexId: Global.getComplex()._id,
-                schoolId: Global.getSchool()._id
-            }).$promise
-                .then(function (students) {
-                    $scope.students = students;
-                });
+        var prepare = function () {
+            $scope.student = new Student({
+                complex: Global.getComplex()._id,
+                school: Global.getSchool()._id
+            });
         };
 
-        $scope.findOne = function () {
+        var findOne = function () {
             Student.get({
                 studentId: $stateParams.studentId,
                 complexId: Global.getComplex()._id,
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (student) {
-                    student.birthDate = new Date(student.birthDate);
-                    $scope.student = student;
+                    $scope.student = deserializeData(student);
                 });
+        };
+
+        var create = function (student) {
+                student.$save(function () {
+                    $scope.goToListStudents();
+                });
+        };
+
+        var update = function (student) {
+                if (!student.updated) {
+                    student.updated = [];
+                }
+                student.updated.push(new Date().getTime());
+
+                student.$update(function () {
+                    $scope.goToListStudents();
+                });
+        };
+
+        /**
+         * Converte il formato della data di nascita.
+         * @param academicYear
+         */
+        var serializeData = function (student) {
+            var result = _.cloneDeep(student);
+            return new Student(result);
+        };
+
+        /**
+         * Converte il formato della data di nascita.
+         * @param academicYear
+         */
+        var deserializeData = function (student) {
+            student.birthDate = new Date(student.birthDate);
+            return student;
         };
     });

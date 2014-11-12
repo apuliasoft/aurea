@@ -100,14 +100,14 @@ md-input-group.short input {
 md-input-group.select-group {
   display: block;
   position: relative;
-  margin: 10px 0 10px 0;
-  border-bottom: 1px solid #c7c7c7;
+  margin: 8px 0 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 md-input-group.select-group select {
   display: block;
   background: transparent;
-  color: #2f2f2f;
+  color: rgba(0, 0, 0, 0.73);
   border: 0;
   border-radius: 0;
   line-height: 26px;

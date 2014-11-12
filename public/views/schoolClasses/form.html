@@ -1,0 +1,76 @@
+<section ng-controller="SchoolClassesCtrl" ng-init="init()" layout="vertical" layout-align="center center">
+
+  <form name="schoolClassForm" ng-submit="save(schoolClassForm.$valid)" novalidate>
+    <md-content class="md-padding">
+      <div class="md-whiteframe-z1">
+        <md-toolbar>
+          <h2 class="md-toolbar-tools">{{title}}</h2>
+        </md-toolbar>
+
+        <md-content class="md-padding">
+
+          <md-text-float label="Nome" ng-model="schoolClass.name" type="text" tabindex="0" name="name" class="longest"
+                         required></md-text-float>
+
+        </md-content>
+
+        <section md-theme="grey" layout="horizontal">
+          <section flex>
+            <md-toolbar>
+              <h2 class="md-toolbar-tools">Tutti gli alunni</h2>
+            </md-toolbar>
+
+            <md-content class="md-padding">
+              <md-text-float label="cerca tra tutti gli alunni" ng-model="searchChosableStudent" type="text"
+                             tabindex="0"></md-text-float>
+
+              <md-list>
+                <md-item ng-repeat="student in chosableStudents | filter:searchChosableStudent">
+                  <md-item-content class="item-content">
+                    <div class="md-tile-content" ng-click="addStudent(student)">
+                      <h3 class="item-content-text"><i class="fa fa-graduation-cap item-content-icon"></i> {{student | name}}</h3>
+                    </div>
+                  </md-item-content>
+                  <md-divider ng-if="!$last"></md-divider>
+                </md-item>
+              </md-list>
+          </section>
+
+          <section flex>
+            <md-toolbar>
+              <h2 class="md-toolbar-tools">Alunni selezionati</h2>
+            </md-toolbar>
+
+            <md-content class="md-padding">
+              <md-text-float label="cerca tra gli alunni selezionati" ng-model="searchChosenStudent" type="text"
+                             tabindex="1"></md-text-float>
+
+              <md-list>
+                <md-item ng-repeat="student in chosenStudents | filter:searchChosenStudent">
+                  <md-item-content class="item-content">
+                    <div class="md-tile-content" ng-click="removeStudent(student)">
+                      <h3 class="item-content-text"><i class="fa fa-graduation-cap item-content-icon"></i> {{student | name}}</h3>
+                    </div>
+                  </md-item-content>
+                  <md-divider ng-if="!$last"></md-divider>
+                </md-item>
+              </md-list>
+            </md-content>
+
+          </section>
+        </section>
+      </div>
+    </md-content>
+
+    <md-button type="button" class="md-fab back-button" ng-click="goToListSchoolClasses()">
+      <i class="fa fa-reply-all"></i>
+      <md-tooltip>Torna a Istituti</md-tooltip>
+    </md-button>
+
+    <md-button type="submit" ng-disabled="schoolClassForm.$invalid" class="md-fab md-primary add-button">
+      <i class="fa fa-save"></i>
+      <md-tooltip>Salva</md-tooltip>
+    </md-button>
+  </form>
+
+</section>

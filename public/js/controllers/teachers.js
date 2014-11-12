@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.teachers')
-    .controller('TeachersCtrl', function ($scope, $stateParams, $filter, SmartState, _, Global, Teacher) {
+    .controller('TeachersCtrl', function ($scope, $state, $stateParams, $filter, SmartState, _, Global, Teacher) {
         $scope.global = Global;
 
         $scope.goToListTeachers = function () {
@@ -20,44 +20,6 @@ angular.module('aurea.teachers')
             return teacher.user._id === Global.getUser()._id;
         };
 
-        $scope.init = function () {
-            $scope.teacher = new Teacher({
-                school: Global.getSchool()._id,
-                complex: Global.getComplex()._id
-            });
-        };
-
-        $scope.create = function (isValid) {
-            if (isValid) {
-                var teacher = $scope.teacher;
-                teacher.$save(function () {
-                    $scope.goToListTeachers();
-                });
-            }
-        };
-
-        $scope.update = function (isValid) {
-            if (isValid) {
-                var teacher = $scope.teacher;
-                if (!teacher.updated) {
-                    teacher.updated = [];
-                }
-                teacher.updated.push(new Date().getTime());
-
-                teacher.$update(function () {
-                    $scope.goToListTeachers();
-                });
-            }
-        };
-
-        $scope.remove = function (teacher) {
-            if (teacher) {
-                teacher.$remove();
-                _.remove($scope.teachers, teacher);
-                $scope.list();
-            }
-        };
-
         $scope.find = function () {
             Teacher.query({
                 complexId: Global.getComplex()._id,
@@ -68,7 +30,44 @@ angular.module('aurea.teachers')
                 });
         };
 
-        $scope.findOne = function () {
+        $scope.init = function () {
+            $scope.editMode = $state.current.data.editMode;
+            if ($state.current.data.editMode) {
+                $scope.title = 'Modifica insegnante';
+                findOne();
+            } else {
+                $scope.title = 'Nuovo insegnante';
+                prepare();
+            }
+        };
+
+        $scope.save = function (isValid) {
+            if (isValid) {
+                var teacher = $scope.teacher;
+                if ($state.current.data.editMode) {
+                    update(teacher);
+                } else {
+                    create(teacher);
+                }
+            }
+        };
+
+        $scope.remove = function (teacher) {
+            if (teacher) {
+                teacher.$remove();
+                _.remove($scope.teachers, teacher);
+                $scope.goToListTeachers();
+            }
+        };
+
+        var prepare = function () {
+            $scope.teacher = new Teacher({
+                school: Global.getSchool()._id,
+                complex: Global.getComplex()._id
+            });
+        };
+
+        var findOne = function () {
             Teacher.get({
                 teacherId: $stateParams.teacherId,
                 complexId: Global.getComplex()._id,
@@ -77,5 +76,22 @@ angular.module('aurea.teachers')
                 .then(function (teacher) {
                     $scope.teacher = teacher;
                 });
+        };
+
+        var create = function (teacher) {
+            teacher.$save(function () {
+                $scope.goToListTeachers();
+            });
+        };
+
+        var update = function (teacher) {
+            if (!teacher.updated) {
+                teacher.updated = [];
+            }
+            teacher.updated.push(new Date().getTime());
+
+            teacher.$update(function () {
+                $scope.goToListTeachers();
+            });
         };
     });

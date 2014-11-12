@@ -1,10 +1,10 @@
-<section ng-controller="SchoolsCtrl" ng-init="findOne()" layout="vertical" layout-align="center center">
+<section ng-controller="SchoolsCtrl" ng-init="init()" layout="vertical" layout-align="center center">
 
-  <form name="schoolForm" ng-submit="update(schoolForm.$valid)" novalidate>
+  <form name="schoolForm" ng-submit="save(schoolForm.$valid)" novalidate>
     <md-content class="md-padding ">
       <div class="md-whiteframe-z1">
         <md-toolbar>
-          <h2 class="md-toolbar-tools">Modifica istituto</h2>
+          <h2 class="md-toolbar-tools">{{title}}</h2>
         </md-toolbar>
 
         <md-content class="md-padding">

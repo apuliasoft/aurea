@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.schoolClasses')
-    .controller('SchoolClassesCtrl', function ($scope, $stateParams, SmartState, $filter, _, Global, SchoolClass, Student) {
+    .controller('SchoolClassesCtrl', function ($scope, $state, $stateParams, SmartState, $filter, _, Global, SchoolClass, Student) {
         $scope.global = Global;
 
         $scope.goToListSchoolClasses = function () {
@@ -31,7 +31,58 @@ angular.module('aurea.schoolClasses')
             });
         };
 
+        $scope.find = function () {
+            SchoolClass.query({
+                schoolId: Global.getSchool()._id,
+                complexId: Global.getComplex()._id,
+                academicYearId: Global.getAcademicYear()._id
+            }).$promise
+                .then(function (schoolClasses) {
+                    $scope.schoolClasses = schoolClasses;
+                });
+        };
+
         $scope.init = function () {
+            $scope.editMode = $state.current.data.editMode;
+            if ($state.current.data.editMode) {
+                $scope.title = 'Modifica classe';
+                findOne();
+            } else {
+                $scope.title = 'Nuova classe';
+                prepare();
+            }
+        };
+
+        $scope.save = function (isValid) {
+            if (isValid) {
+                var schoolClass = $scope.schoolClass;
+                if ($state.current.data.editMode) {
+                    update(schoolClass);
+                } else {
+                    create(schoolClass);
+                }
+            }
+        };
+
+        $scope.remove = function (schoolClass) {
+            if (schoolClass) {
+                schoolClass.$remove();
+                _.remove($scope.schoolClasses, schoolClass);
+                $scope.goToListSchoolClasses();
+            }
+        };
+
+        $scope.addStudent = function (student) {
+            $scope.chosenStudents.push(student);
+            $scope.chosableStudents = _.without($scope.chosableStudents, student);
+        };
+
+        $scope.removeStudent = function (student) {
+            $scope.chosableStudents.push(student);
+            $scope.chosenStudents = _.without($scope.chosenStudents, student);
+        };
+
+        var prepare = function () {
             $scope.schoolClass = new SchoolClass({
                 academicYear: Global.getAcademicYear()._id,
                 complex: Global.getComplex()._id,
@@ -48,68 +99,7 @@ angular.module('aurea.schoolClasses')
                 });
         };
 
-        $scope.addStudent = function (student) {
-            $scope.chosenStudents.push(student);
-            $scope.chosableStudents = _.without($scope.chosableStudents, student);
-        };
-
-        $scope.removeStudent = function (student) {
-            $scope.chosableStudents.push(student);
-            $scope.chosenStudents = _.without($scope.chosenStudents, student);
-        };
-
-        $scope.create = function (isValid) {
-            if (isValid) {
-                var schoolClass = $scope.schoolClass;
-                schoolClass.students = _.map($scope.chosenStudents, function (student) {
-                    return student._id;
-                });
-
-                console.log(schoolClass);
-
-                schoolClass.$save(function (response) {
-                    $scope.goToListSchoolClasses(response);
-                });
-            }
-        };
-
-        $scope.update = function (isValid) {
-            if (isValid) {
-                var schoolClass = $scope.schoolClass;
-                if (!schoolClass.updated) {
-                    schoolClass.updated = [];
-                }
-                schoolClass.updated.push(new Date().getTime());
-                schoolClass.students = _.map($scope.chosenStudents, function (student) {
-                    return student._id;
-                });
-
-                schoolClass.$update(function (response) {
-                    $scope.goToListSchoolClasses(response);
-                });
-            }
-        };
-
-        $scope.remove = function (schoolClass) {
-            if (schoolClass) {
-                schoolClass.$remove();
-                _.remove($scope.schoolClasses, schoolClass);
-                $scope.goToListSchoolClasses();
-            }
-        };
-
-        $scope.find = function () {
-            SchoolClass.query({
-                schoolId: Global.getSchool()._id,
-                complexId: Global.getComplex()._id,
-                academicYearId: Global.getAcademicYear()._id
-            }).$promise
-                .then(function (schoolClasses) {
-                    $scope.schoolClasses = schoolClasses;
-                });
-        };
-
-        $scope.findOne = function () {
+        var findOne = function () {
             SchoolClass.get({
                 schoolClassId: $stateParams.schoolClassId,
                 schoolId: Global.getSchool()._id,
@@ -131,6 +121,32 @@ angular.module('aurea.schoolClasses')
                             $scope.chosableStudents = _.difference(students, $scope.chosenStudents);
                         });
                 });
+        };
+
+        var create = function (schoolClass) {
+            schoolClass.students = _.map($scope.chosenStudents, function (student) {
+                return student._id;
+            });
+
+            console.log(schoolClass);
+
+            schoolClass.$save(function (response) {
+                $scope.goToListSchoolClasses(response);
+            });
+        };
+
+        var update = function (schoolClass) {
+            if (!schoolClass.updated) {
+                schoolClass.updated = [];
+            }
+            schoolClass.updated.push(new Date().getTime());
+            schoolClass.students = _.map($scope.chosenStudents, function (student) {
+                return student._id;
+            });
+
+            schoolClass.$update(function (response) {
+                $scope.goToListSchoolClasses(response);
+            });
         };
     });
 
