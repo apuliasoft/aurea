@@ -79,8 +79,7 @@ angular.module('aurea.students')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (student) {
-                    student.birthDate = $filter('date')(student.birthDate, 'yyyy-MM-dd');
-
+                    student.birthDate = new Date(student.birthDate);
                     $scope.student = student;
                 });
         };
