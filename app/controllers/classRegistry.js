@@ -22,7 +22,7 @@ exports.classRegistry = function (req, res, next) {
     AcademicYear.findById(academicYearId, function (err, academicYear) {
         if (err) return next(err);
 
-        // Controllo che la data sia compresa nell'anno accademico
+        // Controllo che la data sia compresa nell'anno scolastico
         var startDate = new Date(academicYear.startDate);
         var endDate = new Date(academicYear.endDate);
         if (date < new Date(startDate) || date > new Date(endDate)) {
@@ -41,7 +41,7 @@ exports.classRegistry = function (req, res, next) {
                 return {number: index + 1};
             });
         } else {
-            // La data non fa parte dell'anno accademico
+            // La data non fa parte dell'anno scolastico
             req.classRegistry = null;
             return next();
         }

@@ -32,10 +32,10 @@ angular.module('aurea.academicYears')
 
         $scope.init = function () {
             if ($state.current.data.editMode) {
-                $scope.title = 'Modifica anno accademico';
+                $scope.title = 'Modifica anno scolastico';
                 findOne();
             } else {
-                $scope.title = 'Nuovo anno accademico';
+                $scope.title = 'Nuovo anno scolastico';
                 prepare();
             }
         };
@@ -105,7 +105,7 @@ angular.module('aurea.academicYears')
                 _.remove($scope.academicYears, academicYear);
                 $scope.goToListAcademicYears();
                 $mdToast.show({
-                    template: '<md-toast>Anno accademico cancellato</md-toast>',
+                    template: '<md-toast>Anno scolastico cancellato</md-toast>',
                     hideDelay: 2000
                 });
             }
@@ -134,7 +134,7 @@ angular.module('aurea.academicYears')
             academicYear.$save(function () {
                 $scope.goToListAcademicYears();
                 $mdToast.show({
-                    template: '<md-toast>Anno accademico creato</md-toast>',
+                    template: '<md-toast>Anno scolastico creato</md-toast>',
                     hideDelay: 2000
                 });
             });
@@ -149,7 +149,7 @@ angular.module('aurea.academicYears')
             academicYear.$update(function (response) {
                 $scope.goToListAcademicYears(response);
                 $mdToast.show({
-                    template: '<md-toast>Anno accademico aggiornato</md-toast>',
+                    template: '<md-toast>Anno scolastico aggiornato</md-toast>',
                     hideDelay: 2000
                 });
             });
@@ -159,7 +159,7 @@ angular.module('aurea.academicYears')
          * Genera gli slot vuoti.
          */
         var baseTimeTable = function () {
-            var timeTable = _.map(_.range(1, 8), function (num) {
+            var timeTable = _.map([1,2,3,4,5,6,0], function (num) {
                 var result = {};
                 result.weekDay = num;
                 result.active = false;

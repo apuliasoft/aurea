@@ -27,8 +27,8 @@ var AcademicYearSchema = new Schema({
         _id: false,
         weekDay: {
             type: Number,
-            min: 1, //da lunedì
-            max: 7, //a domenica
+            min: 0, //da domenica
+            max: 6, //a sabato
             required: true
         },
         // Gli slot sono ordinati dalla prima all'ultima ora

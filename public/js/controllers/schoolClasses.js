@@ -26,8 +26,7 @@ angular.module('aurea.schoolClasses')
 
         $scope.goToClassRegistry = function (schoolClass) {
             SmartState.go('class registry by date', {
-                schoolClassId: schoolClass._id,
-                date: $filter('date')(new Date(), 'yyyy-MM-dd')
+                schoolClassId: schoolClass._id
             });
         };
 

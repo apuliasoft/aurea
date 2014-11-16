@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.classRegistry')
-    .controller('ClassRegistryCtrl', function ($scope, $location, $stateParams, $filter, $mdToast, _, $modal, SmartState, Global, ClassRegistry, ClassStudent, Teacher, Teaching, classRegistry) {
+    .controller('ClassRegistryCtrl', function ($scope, $location, $stateParams, $filter, $mdDialog, $mdToast, _, SmartState, Global, ClassRegistry, ClassStudent, Teacher, Teaching, classRegistry) {
 
         $scope.$watch('classRegistry.date', function () {
             if ($scope.classRegistry) {

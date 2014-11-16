@@ -13,6 +13,10 @@
       </section>
 
       <section ng-show="global.isLoggedin()">
+        <md-button href="/#!/comunicazioni" class="icon-button">
+          <i class="fa fa-bullhorn"></i>
+          <md-tooltip>Comunicazioni</md-tooltip>
+        </md-button>
         <md-button href="/#!/utenti/{{global.user._id}}" class="icon-button">
           <i class="fa fa-user"></i>
           <md-tooltip>Profilo</md-tooltip>

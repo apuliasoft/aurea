@@ -2,7 +2,7 @@
 
 //Province service used to serve provinces
 angular.module('aurea')
-    .factory('SmartState', function ($state, $stateParams, _, Global) {
+    .factory('SmartState', function ($state, $stateParams, $filter, _, Global) {
         return {
             go: function (name, params) {
                 var user = Global.getUser();
@@ -32,11 +32,41 @@ angular.module('aurea')
                     params.complexId = user.complex;
                 }
 
+                // 4. parametri inferiti dalla data
+                var academicYear = Global.getAcademicYear();
+                if (nextState.url.indexOf(':date') && academicYear) {
+                    var date = new Date();
+                    date.setHours(0);
+                    date.setMinutes(0);
+                    date.setSeconds(0);
+                    date.setMilliseconds(0);
+
+                    var startDate = new Date(academicYear.startDate);
+                    var endDate = new Date(academicYear.endDate);
+
+                    var weekDays = _.map(academicYear.timeTable, function (slot) {
+                        return slot.weekDay;
+                    });
+
+                    if (date < startDate) {
+                        date = startDate;
+                        while (!weekDays.indexOf(date.getDay())) {
+                            date.setDate(date.getDate() + 1);
+                        }
+                    } else if (date > endDate) {
+                        date = endDate;
+                        while (!weekDays.indexOf(date.getDay())) {
+                            date.setDate(date.getDate() - 1);
+                        }
+                    }
+                    params.date = $filter('date')(date, 'yyyy-MM-dd');
+                }
+
                 //TODO controllate l'opzione 'inherit' del metodo go
                 $state.go(name, params)
                     .catch(function (err) {
                         console.log(name);
-                        console.log(err);
+                        console.error(err);
                     });
             }
         };

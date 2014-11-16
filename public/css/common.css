@@ -5,6 +5,10 @@ body {
   color: #808080;
 }
 
+md-content {
+  overflow: visible;
+}
+
 .md-white-theme {
   background-color: #fff !important;
   color: #808080 !important;
