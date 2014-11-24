@@ -1,4 +1,4 @@
-<section ng-controller="UsersCtrl" ng-init="find()">
+<section ng-controller="UsersCtrl" ng-init="find()" flex layout="column" layout-fill>
 
   <md-toolbar class="md-whiteframe-z1">
     <div class="md-toolbar-tools">
@@ -8,22 +8,25 @@
     </div>
   </md-toolbar>
 
-  <md-content class="md-padding" scroll-y flex>
-    <div layout="vertical" layout-fill class="content">
-      <div flex layout="vertical">
+  <md-content class="md-padding" md-scroll-y flex>
+    <div layout="column" layout-fill class="content">
+      <div flex layout="column">
         <section class="md-whiteframe-z1">
           <md-list>
             <md-item ng-repeat="user in users">
               <md-item-content class="item-content">
                 <div class="md-tile-content" ng-click="goToViewUser(user)">
-                  <h3 class="item-content-text"><i class="fa fa-home item-content-icon"></i> {{user.name}}</h3>
+                  <h3 class="item-content-text">
+                    <i class="fa fa-home item-content-icon"></i> {{user.name}}
+                  </h3>
                 </div>
                 <div class="md-tile-right">
                   <md-button class="icon-button" ng-click="goToEditUser(user)">
                     <i class="fa fa-pencil"></i>
                     <md-tooltip>Modifica</md-tooltip>
                   </md-button>
-                  <md-button class="icon-button" as-confirmed-click="remove(student)" as-confirm-message="Sicuro di voler eliminare questo utente?">
+                  <md-button class="icon-button" as-confirmed-click="remove(student)"
+                             as-confirm-message="Sicuro di voler eliminare questo utente?">
                     <i class="fa fa-trash"></i>
                     <md-tooltip>Cancella</md-tooltip>
                   </md-button>

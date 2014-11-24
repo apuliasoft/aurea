@@ -1,72 +1,80 @@
-<section ng-controller="AcademicYearsCtrl" ng-init="init()" layout="vertical" layout-align="center center">
+<section ng-controller="AcademicYearsCtrl" ng-init="init()" flex layout="column" layout-fill>
 
-  <form name="academicYearForm" ng-submit="save(academicYearForm.$valid)" novalidate>
-    <md-content class="md-padding ">
-      <div class="md-whiteframe-z1">
-        <md-toolbar>
-          <h2 class="md-toolbar-tools">{{title}}</h2>
-        </md-toolbar>
+  <md-content md-scroll-y flex layout="row" layout-align="center">
 
-        <md-content class="md-padding">
-
-          <md-text-float label="Nome" ng-model="academicYear.name" type="text" tabindex="0" name="name" class="longest"
-                         required></md-text-float>
-
-          <div layout="horizzontal">
-
-            <md-text-float label="Data inizio" ng-model="academicYear.startDate" type="date" tabindex="1"
-                           name="startDate" class="long"
-                           required></md-text-float>
-
-            <md-text-float label="Data fine" ng-model="academicYear.endDate" type="date" tabindex="2" name="endDate"
-                           class="long"
-                           required></md-text-float>
-
-          </div>
-
-        </md-content>
-
-        <md-divider></md-divider>
-
-        <section ng-repeat="day in academicYear.timeTable" md-theme="grey">
+    <form name="academicYearForm" ng-submit="save(academicYearForm.$valid)" novalidate>
+      <md-content class="md-padding ">
+        <div class="md-whiteframe-z1">
           <md-toolbar>
-            <h2 class="md-toolbar-tools">
-              <md-checkbox ng-model="day.active" ng-change="switchDay(day)" flex>{{day.weekDay | weekDay}}</md-checkbox>
-              <md-button type="button" ng-if="day.active" class="icon-button" ng-click="addTimeSlot(day)" ng-disabled="day.slots.length == 8">
-                <i class="fa fa-plus"></i>
-              </md-button>
-            </h2>
+            <h2 class="md-toolbar-tools">{{title}}</h2>
           </md-toolbar>
-          <md-content ng-if="day.active" layout="vertical" layout-align="bottom" class="md-padding">
 
-            <section ng-repeat="slot in day.slots" layout="horizontal" layout-align="center center">
+          <md-content class="md-padding">
 
-              <span flex>{{($index+1) | ordinalNumber}} ora</span>
-              <md-text-float label="Dalle" ng-model="slot.start" type="time" tabindex="2" name="startTime"
+            <md-text-float label="Nome" ng-model="academicYear.name" type="text" tabindex="0" name="name"
+                           class="longest"
+                           required></md-text-float>
+
+            <div layout="horizzontal">
+
+              <md-text-float label="Data inizio" ng-model="academicYear.startDate" type="date" tabindex="1"
+                             name="startDate" class="long"
                              required></md-text-float>
 
-              <md-text-float label="Alle" ng-model="slot.end" type="time" tabindex="2" name="endTime"
+              <md-text-float label="Data fine" ng-model="academicYear.endDate" type="date" tabindex="2" name="endDate"
+                             class="long"
                              required></md-text-float>
 
-              <md-button type="button" class="md-warn icon-button" ng-click="removeTimeSlot(day, $index)"><i class="fa fa-times"></i>
-              </md-button>
-            </section>
+            </div>
 
           </md-content>
-        </section>
 
-      </div>
-    </md-content>
+          <md-divider></md-divider>
 
-    <md-button type="button" class="md-fab back-button" ng-click="goToListAcademicYears()">
-      <i class="fa fa-reply-all"></i>
-      <md-tooltip>Torna ad Anni Scolastici</md-tooltip>
-    </md-button>
+          <section ng-repeat="day in academicYear.timeTable" md-theme="grey">
+            <md-toolbar>
+              <h2 class="md-toolbar-tools">
+                <md-checkbox ng-model="day.active" ng-change="switchDay(day)" flex>{{day.weekDay | weekDay}}
+                </md-checkbox>
+                <md-button type="button" ng-if="day.active" class="icon-button" ng-click="addTimeSlot(day)"
+                           ng-disabled="day.slots.length == 8">
+                  <i class="fa fa-plus"></i>
+                </md-button>
+              </h2>
+            </md-toolbar>
+            <md-content ng-if="day.active" layout="column" layout-align="bottom" class="md-padding">
 
-    <md-button type="submit" ng-disabled="academicYearForm.$invalid" class="md-fab md-primary add-button">
-      <i class="fa fa-save"></i>
-      <md-tooltip>Salva</md-tooltip>
-    </md-button>
+              <section ng-repeat="slot in day.slots" layout="row" layout-align="center center">
 
-  </form>
+                <span flex>{{($index+1) | ordinalNumber}} ora</span>
+                <md-text-float label="Dalle" ng-model="slot.start" type="time" tabindex="2" name="startTime"
+                               required></md-text-float>
+
+                <md-text-float label="Alle" ng-model="slot.end" type="time" tabindex="2" name="endTime"
+                               required></md-text-float>
+
+                <md-button type="button" class="md-warn icon-button" ng-click="removeTimeSlot(day, $index)"><i
+                    class="fa fa-times"></i>
+                </md-button>
+              </section>
+
+            </md-content>
+          </section>
+
+        </div>
+      </md-content>
+
+      <md-button type="button" class="md-fab back-button" ng-click="goToListAcademicYears()">
+        <i class="fa fa-reply-all"></i>
+        <md-tooltip>Torna ad Anni Scolastici</md-tooltip>
+      </md-button>
+
+      <md-button type="submit" ng-disabled="academicYearForm.$invalid" class="md-fab md-primary add-button">
+        <i class="fa fa-save"></i>
+        <md-tooltip>Salva</md-tooltip>
+      </md-button>
+    </form>
+
+  </md-content>
+
 </section>

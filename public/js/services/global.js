@@ -59,12 +59,6 @@ angular.module('aurea.system')
 
         });
 
-        $rootScope.$on('$locationChangeSuccess',
-            function () {
-                _this._data.title = '';
-                _this._data.subtitle = '';
-            });
-
         _this._data = {
 
             user: {},

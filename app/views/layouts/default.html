@@ -2,13 +2,11 @@
 <html lang="it" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml" itemscope="itemscope"
       itemtype="http://schema.org/Product">
 {% include '../includes/head.html' %}
-<body layout="vertical">
+<body layout="column">
 
 <div ng-include="'views/header.html'"></div>
 
-<md-content flex scroll-y>
-  {% block content %}{% endblock %}
-</md-content>
+<section ui-view flex layout="column" />
 
 {% include '../includes/foot.html' %}
 

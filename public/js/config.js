@@ -9,7 +9,7 @@ angular.module('aurea')
             var deferred = $q.defer();
 
             // Make an AJAX call to check if the user is logged in
-            $http.get('/loggedin').success(function (user) {
+            $http.get('loggedin').success(function (user) {
                 // Authenticated
                 if (user !== '0') {
                     Global.setUser(user);
@@ -184,7 +184,7 @@ angular.module('aurea')
             var deferred = $q.defer();
 
             // Make an AJAX call to logout user
-            $http.post('/logout').success(function () {
+            $http.post('logout').success(function () {
                 Global.setUser({});
                 deferred.reject();
                 SmartState.go('login user');
@@ -309,10 +309,7 @@ angular.module('aurea')
                 url: '/scuole/:schoolId',
                 templateUrl: 'views/schools/form.html',
                 resolve: {
-                    loggedin: checkLoggedin,
-                    provices: ['Provinces', function (Provinces) {
-                        return Provinces.loadProvinces();
-                    }]
+                    loggedin: checkLoggedin
                 },
                 data: {
                     editMode: true
@@ -620,8 +617,7 @@ angular.module('aurea')
                     school: checkSchool,
                     complex: checkComplex,
                     academicYear: checkAcademicYear,
-                    schoolClass: checkSchoolClass,
-                    classRegistry: checkClassRegistry
+                    schoolClass: checkSchoolClass
                 }
             })
 

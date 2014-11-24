@@ -1,44 +1,49 @@
-<section ng-controller="StudentsCtrl" ng-init="init()" layout="vertical" layout-align="center center">
+<section ng-controller="StudentsCtrl" ng-init="init()" flex layout="column" layout-fill>
 
-  <form name="studentForm" ng-submit="save(studentForm.$valid)" novalidate>
+  <md-content md-scroll-y flex layout="row" layout-align="center">
 
-    <md-content class="md-padding ">
-      <div class="md-whiteframe-z1">
-        <md-toolbar>
-          <h2 class="md-toolbar-tools">{{title}}</h2>
-        </md-toolbar>
+    <form name="studentForm" ng-submit="save(studentForm.$valid)" novalidate>
 
-        <md-content class="md-padding">
+      <md-content class="md-padding">
+        <div class="md-whiteframe-z1">
+          <md-toolbar>
+            <h2 class="md-toolbar-tools">{{title}}</h2>
+          </md-toolbar>
 
-          <md-text-float label="Email" ng-model="student.user.email" ng-if="!editMode" type="email" tabindex="0" name="email"
-                         class="longest" required></md-text-float>
+          <md-content class="md-padding">
 
-          <div layout="horizzontal">
+            <md-text-float label="Email" ng-model="student.user.email" ng-if="!editMode" type="email" tabindex="0"
+                           name="email"
+                           class="longest" required></md-text-float>
 
-            <md-text-float label="Nome" ng-model="student.firstName" type="text" tabindex="1" name="name"
-                           required></md-text-float>
+            <div layout="horizzontal">
 
-            <md-text-float label="Cognome" ng-model="student.lastName" type="text" tabindex="2" name="street"
-                           required></md-text-float>
+              <md-text-float label="Nome" ng-model="student.firstName" type="text" tabindex="1" name="name"
+                             required></md-text-float>
 
-            <md-text-float label="Data di nascita" ng-model="student.birthDate" type="date" tabindex="3"
-                           name="birthDate" required></md-text-float>
+              <md-text-float label="Cognome" ng-model="student.lastName" type="text" tabindex="2" name="street"
+                             required></md-text-float>
 
-          </div>
+              <md-text-float label="Data di nascita" ng-model="student.birthDate" type="date" tabindex="3"
+                             name="birthDate" required></md-text-float>
 
-        </md-content>
-      </div>
-    </md-content>
+            </div>
 
-    <md-button type="button" class="md-fab back-button" ng-click="goToListStudents()">
-      <i class="fa fa-reply-all"></i>
-      <md-tooltip>Torna a Studenti</md-tooltip>
-    </md-button>
+          </md-content>
+        </div>
+      </md-content>
 
-    <md-button type="submit" ng-disabled="studentForm.$invalid" class="md-fab md-primary add-button">
-      <i class="fa fa-save"></i>
-      <md-tooltip>Salva</md-tooltip>
-    </md-button>
-  </form>
+      <md-button type="button" class="md-fab back-button" ng-click="goToListStudents()">
+        <i class="fa fa-reply-all"></i>
+        <md-tooltip>Torna a Studenti</md-tooltip>
+      </md-button>
+
+      <md-button type="submit" ng-disabled="studentForm.$invalid" class="md-fab md-primary add-button">
+        <i class="fa fa-save"></i>
+        <md-tooltip>Salva</md-tooltip>
+      </md-button>
+    </form>
+
+  </md-content>
 
 </section>

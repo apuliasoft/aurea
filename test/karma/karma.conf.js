@@ -16,16 +16,18 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'public/lib/lodash/dist/lodash.min.js',
-            'public/lib/angular/angular.min.js',
-            'public/lib/angular-mocks/angular-mocks.min.js',
-            'public/lib/angular-cookies/angular-cookies.min.js',
-            'public/lib/angular-resource/angular-resource.min.js',
-            'public/lib/angular-ui-router/release/angular-ui-router.min.js',
-            'public/lib/angular-ui-select/dist/select.min.js',
-            'public/lib/angular-aria/angular-aria.min.js',
-            'public/lib/angular-animate/angular-animate.min.js',
-            'public/lib/angular-material/angular-material.min.js',
+            'public/lib/lodash/dist/lodash.js',
+            'public/lib/angular/angular.js',
+            'public/lib/angular-mocks/angular-mocks.js',
+            'public/lib/angular-cookies/angular-cookies.js',
+            'public/lib/angular-resource/angular-resource.js',
+            'public/lib/angular-ui-router/release/angular-ui-router.js',
+            'public/lib/angular-ui-select/dist/select.js',
+            'public/lib/angular-aria/angular-aria.js',
+            'public/lib/angular-animate/angular-animate.js',
+            'public/lib/angular-sanitize/angular-sanitize.js',
+            'public/lib/hammerjs/hammer.js',
+            'public/lib/angular-material/angular-material.js',
             'public/js/*.js',
             'public/js/**/*.js',
             'test/karma/unit/controllers/schools.spec.js' //'test/karma/unit/**/*.js'

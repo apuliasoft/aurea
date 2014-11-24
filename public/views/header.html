@@ -6,24 +6,26 @@
 
       <span flex>Aurea</span>
 
-      <section layout="horizontal" layout-align="end" ng-hide="global.isLoggedin()">
-        <md-button href="/#!/login" class="icon-button" title="Login">
-          <i class="fa fa-sign-in"></i>
+      <section layout="row" layout-align="end">
+        <md-button ng-click="getFeedback()" class="icon-button">
+          <i class="fa fa-star-o"></i>
+          <md-tooltip>Feedback</md-tooltip>
         </md-button>
-      </section>
-
-      <section ng-show="global.isLoggedin()">
-        <md-button href="/#!/comunicazioni" class="icon-button">
+        <md-button ng-click="goToListCommunications()" class="icon-button" ng-show="global.isLoggedin()">
           <i class="fa fa-bullhorn"></i>
           <md-tooltip>Comunicazioni</md-tooltip>
         </md-button>
-        <md-button href="/#!/utenti/{{global.user._id}}" class="icon-button">
+        <md-button ng-click="goToViewUser()" class="icon-button" ng-show="global.isLoggedin()">
           <i class="fa fa-user"></i>
           <md-tooltip>Profilo</md-tooltip>
         </md-button>
-        <md-button href="/#!/logout" class="icon-button">
+        <md-button ng-click="logout()" class="icon-button" ng-show="global.isLoggedin()">
           <i class="fa fa-sign-out"></i>
           <md-tooltip>Logout</md-tooltip>
+        </md-button>
+        <md-button ng-click="login()" class="icon-button" ng-hide="global.isLoggedin()">
+          <i class="fa fa-sign-in"></i>
+          <md-tooltip>Login</md-tooltip>
         </md-button>
       </section>
     </h1>

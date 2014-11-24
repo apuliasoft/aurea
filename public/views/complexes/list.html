@@ -1,4 +1,4 @@
-<section ng-controller="ComplexesCtrl" ng-init="find()">
+<section ng-controller="ComplexesCtrl" ng-init="find()" flex layout="column" layout-fill>
 
   <md-toolbar class="md-whiteframe-z1">
     <div class="md-toolbar-tools">
@@ -8,9 +8,9 @@
     </div>
   </md-toolbar>
 
-  <md-content class="md-padding" scroll-y flex>
-    <div layout="vertical" layout-fill class="content">
-      <div flex layout="vertical">
+  <md-content class="md-padding" md-scroll-y flex>
+    <div layout="column" layout-fill class="content">
+      <div flex layout="column">
         <section class="md-whiteframe-z1">
           <md-list>
             <md-item ng-repeat="complex in complexes">

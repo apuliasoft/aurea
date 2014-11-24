@@ -4,6 +4,26 @@ angular.module('aurea.system')
     .controller('HeaderCtrl', function ($scope, Global, $filter, SmartState, $stateParams) {
         $scope.global = Global;
 
+        $scope.getFeedback = function() {
+            SmartState.go('feedback');
+        };
+
+        $scope.login = function() {
+            SmartState.go('login user');
+        };
+
+        $scope.logout = function() {
+            SmartState.go('logout user');
+        };
+
+        $scope.goToListCommunications = function () {
+            SmartState.go('all communications');
+        };
+
+        $scope.goToViewUser = function () {
+            SmartState.go('user by id', { userId: Global.user._id });
+        };
+
         $scope.goToAcademicYear = function (academicYear) {
             SmartState.go('all school classes', {
                 schoolId: $stateParams.schoolId,

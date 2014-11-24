@@ -1,163 +1,48 @@
-<section class="container-fluid" ng-init="init()">
+<section ng-init="init()" flex layout="row">
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left"
+              md-is-locked-open="$media('md')">
+    <md-toolbar class="md-whiteframe-z1">
+      <h2 class="md-toolbar-tools">
+        <span flex>Alunni</span>
 
-  <script type="text/ng-template" id="selectTime.html">
-    <div class="modal-header">
-      <h3 class="modal-title">A che ora?</h3>
-    </div>
-    <div class="modal-body">
-      <input type="time" class="form-control" ng-model="data.time">
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="ok()">OK</button>
-      <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-    </div>
-  </script>
+        <section layout="row" layout-align="end">
+          <md-button ng-click="toggleAbsents()" ng-disabled="noneSelected()" class="icon-button">A
+            <md-tooltip>Assenza</md-tooltip>
+          </md-button>
+          <md-button ng-click="addLateEntrance()" ng-disabled="!isValidEntranceSelection()" class="icon-button">E
+            <md-tooltip>Entrata posticipata</md-tooltip>
+          </md-button>
+          <md-button ng-click="addEarlyLeave()" ng-disabled="!isValidLeaveSelection()" class="icon-button">U
+            <md-tooltip>Uscita anticipata</md-tooltip>
+          </md-button>
+        </section>
+      </h2>
+    </md-toolbar>
+    <md-content flex md-scroll-y>
+      <section ng-repeat="student in classStudents | orderBy:['lastName', 'firstName']" flex layout="row" layout-fill>
+        <md-checkbox ng-model="student.selected" class="menu-item" flex layout="row" layout-fill>
+          <span flex class="title">{{student | name:true}}</span>
+          <span ng-show="studentIsAbsent(student)">A</span>
+          <span ng-show="studentHasEntered(student)">E</span>
+          <span ng-show="studentHasLeft(student)">U</span>
+        </md-checkbox>
+      </section>
+    </md-content>
+  </md-sidenav>
 
-  <div class="row">
-    <div class="col-md-12">
-      <button class="btn btn-primary pull-left" ng-disabled="prevDisabled" ng-click="yesterday()"><i
-          class="fa fa-arrow-circle-left"></i> Precedente
-      </button>
-      <button class="btn btn-primary pull-right" ng-disabled="nextDisabled" ng-click="tomorrow()">Successivo <i
-          class="fa fa-arrow-circle-right"></i></button>
-      <button class="btn center-block btn-default" datepicker-popup="EEEE, d MMMM yyyy" is-open="opened"
-              min-date="minDate" max-date="maxDate"
-              ng-model="classRegistry.date" ng-click="open($event)" datepicker-options="dateOptions"
-              show-button-bar="false" date-disabled="disabled(date, mode)">
-        {{ classRegistry.date | date:'EEEE, d MMMM yyyy' }}
-      </button>
-    </div>
-  </div>
+  <section flex layout="column" layout-fill>
+    <md-toolbar class="md-whiteframe-z1">
+      <h2 class="md-toolbar-tools">
+        <md-button ng-click="toggleLeft()" class="icon-button" hide show-phone show-tablet>
+          <i class="fa fa-bars"></i>
+        </md-button>
+        <span flex>Registro di classe</span>
+      </h2>
+    </md-toolbar>
 
-  <hr/>
-
-  <div class="row">
-    <div class="col-md-3">
-      <div>
-        <div class="btn-group pull-right">
-          <button class="btn btn-danger" ng-click="toggleAbsents()" ng-disabled="noneSelected()">A</button>
-          <button class="btn btn-success" ng-click="addLateEntrance()"
-                  ng-disabled="!isValidEntranceSelection()">E
-          </button>
-          <button class="btn btn-warning" ng-click="addEarlyLeave()" ng-disabled="!isValidLeaveSelection()">
-            U
-          </button>
-        </div>
-        <h3>Alunni</h3>
+    <md-content flex md-scroll-y class="md-padding">
+      <div layout="column" layout-fill layout-align="center center">
       </div>
-      <div class="list-group">
-        <a href="" class="list-group-item"
-           ng-repeat="student in classStudents | orderBy:['lastName', 'firstName']"
-           ng-class="{active: student.selected}"
-           ng-click="toggleStudentSelection(student)"
-            >
-
-          <div>
-            <h6 class="pull-right text-warning" ng-if="studentHasLeft(student)"> U</h6>
-            <h6 class="pull-right text-success" ng-if="studentHasEntered(student)"> E </h6>
-            <h6 class="pull-right text-danger" ng-if="studentIsAbsent(student)">A </h6>
-
-            <h5 class>{{ student | name:true}}</h5>
-          </div>
-        </a>
-      </div>
-    </div>
-    <div class="col-md-9">
-      <form class="form-horizontal" ng-submit="save()" novalidate>
-
-        <div ng-repeat="slot in classRegistry.slots | orderBy:'number'">
-          <div>
-            <h4 class="bg-primary section-title">{{ slot.number | ordinalNumber}} Ora ( {{timeslots.slots[slot.number - 1].start | time}} - {{timeslots.slots[slot.number - 1].end | time}} )</h4>
-          </div>
-
-          <div class="form-group">
-            <label for="teaching" class="col-sm-2 control-label">Materia:</label>
-            <div class="col-sm-8">
-              <select ng-model="slot.teaching" id="teaching" name="teaching" class="form-control"
-                      ng-options="teaching._id as teaching.name for teaching in teachings">
-                <option></option>
-              </select>
-            </div>
-            <div class="checkbox col-sm-2">
-              <label>
-                <input type="checkbox" ng-model="slot.isSubstitution" ng-change="checkSubstitution(slot)"> Supplenza
-              </label>
-            </div>
-          </div>
-
-          <div class="form-group" ng-if="slot.isSubstitution">
-            <label for="substitution" class="col-sm-2 control-label">Supplente:</label>
-            <div class="col-sm-8">
-              <select ng-model="slot.substitution" id="substitution" name="substitution"
-                      class="form-control"
-                      ng-options="teacher._id as teacher | name for teacher in teachers">
-                <option></option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="subject" class="col-sm-2 control-label">Argomento:</label>
-            <div class="col-sm-8">
-              <textarea class="form-control" id="subject" name="subject" ng-model="slot.subject" rows="3"></textarea>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="notes" class="col-sm-2 control-label">Note:</label>
-            <div class="col-sm-8">
-              <textarea class="form-control" id="notes" name="notes" ng-model="slot.notes" rows="3"></textarea>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="checkbox col-sm-4">
-              <label>
-                <input type="checkbox" ng-model="slot.isSupport"> Sostegno
-              </label>
-            </div>
-            <div class="checkbox col-sm-4">
-              <label>
-                <input type="checkbox" ng-model="slot.isAssistant" > Compresenza
-              </label>
-            </div>
-          </div>
-
-          <div class="form-group" ng-if="slot.isSupport">
-            <label for="supportTeachers" class="col-sm-2 control-label">Insegnanti di sostegno:</label>
-            <div class="col-sm-8">
-              <select ng-model="slot.supportTeachers" multiple ng-multiple="true" class="form-control" id="supportTeachers" name="supportTeachers" ng-options="teacher._id as teacher | name for teacher in teachers"></select>
-            </div>
-          </div>
-
-          <div class="form-group" ng-if="slot.isAssistant">
-            <label for="assistantTeachers" class="col-sm-2 control-label">Compresenze:</label>
-            <div class="col-sm-8">
-              <select ng-model="slot.assistantTeachers" multiple ng-multiple="true" class="form-control" id="assistantTeachers" name="supportTeachers" ng-options="teacher._id as teacher | name for teacher in teachers"></select>
-            </div>
-          </div>
-
-        </div>
-
-        <hr>
-
-        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-          <div class="container">
-            <p class="navbar-text">
-              Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-            </p>
-
-            <div class="nav navbar-nav navbar-right btn-group">
-              <button type="submit" class="btn btn-primary navbar-btn"
-                      class="Salva">
-                <i class="fa fa-check"></i> Salva
-              </button>
-            </div>
-          </div>
-        </nav>
-
-      </form>
-    </div>
-  </div>
-
+    </md-content>
+  </section>
 </section>
