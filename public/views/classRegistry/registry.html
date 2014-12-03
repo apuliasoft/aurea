@@ -1,7 +1,7 @@
 <section ng-init="init()" flex layout="row">
-  <md-sidenav layout="column" style="overflow: hidden; display: flex;" class="md-sidenav-left md-whiteframe-z2"
+  <md-sidenav layout="column" style="display: flex;" class="md-sidenav-left md-whiteframe-z2"
               md-component-id="left" md-is-locked-open="$media('gt-sm')">
-    <md-toolbar style="min-height: 64px; max-height:64px;" class="md-whiteframe-z1" layout="column">
+    <md-toolbar class="md-whiteframe-z1" layout="column">
       <h2 class="md-toolbar-tools">
         <span flex>Alunni</span>
 
@@ -22,7 +22,7 @@
       </h2>
     </md-toolbar>
 
-    <md-content flex style="overflow: auto;">
+    <md-content flex md-scroll-y>
       <section ng-repeat="student in classStudents | orderBy:['lastName', 'firstName']" flex layout="row" layout-fill>
         <md-checkbox ng-model="student.selected" class="menu-item" flex layout="row" layout-fill>
           <span flex class="title">{{student | name:true}}</span>
@@ -62,15 +62,16 @@
 
               <section data-ng-repeat="slot in classRegistry.slots | orderBy:'number'">
                 <md-toolbar class="md-grey-theme">
-                  <h2 class="md-toolbar-tools">{{ slot.number | ordinalNumber}} Ora ({{timeslots.slots[$index].start |
-                    time}} -
-                    {{timeslots.slots[$index].end | time}})</h2>
+                  <h2 class="md-toolbar-tools">
+                    {{ slot.number | ordinalNumber}}
+                    Ora ({{timeslots.slots[$index].start | time}} - {{timeslots.slots[$index].end | time}})
+                  </h2>
                 </md-toolbar>
 
                 <md-content class="md-padding">
 
-                  <md-input-group label="Materia" class="md-default-theme longest select-group" name="teaching"
-                                  ng-class="{'md-input-has-value': slot.teaching}">
+                  <md-input-group label="Materia" class="md-default-theme select-group" name="teaching"
+                                  ng-class="{'md-input-has-value': slot.teaching}" flex>
                     <label>Materia</label>
                     <select ng-model="slot.teaching" name="teaching"
                             ng-options="teaching._id as teaching.name for teaching in teachings"></select>

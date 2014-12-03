@@ -5,8 +5,31 @@ body {
   color: #808080;
 }
 
+h1, h2, h3, h4, p, span {
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 md-content {
   overflow: visible;
+}
+
+.logo {
+  max-height: 64px;
+}
+
+.logo-big {
+  padding: 20px;
+  width: 100%;
+}
+
+.login-content {
+  border-left: 1px solid #808080;
 }
 
 .md-white-theme {
@@ -102,13 +125,15 @@ md-input-group.select-group {
 
 md-input-group.select-group select {
   display: block;
+  margin: 0;
+  min-height: 100%;
+  width: 100%;
   background: transparent;
   color: rgba(0, 0, 0, 0.73);
   border: 0;
   border-radius: 0;
   line-height: 26px;
   padding: 2px 1px 1px 1px;
-  width: 202px;
   -webkit-appearance: none;
   -webkit-transition: all ease-out 150ms;
   transition: all ease-out 150ms;
@@ -119,19 +144,19 @@ md-input-group input[type="date"], md-input-group input[type="time"]{
   width: 202px;
 }
 
-md-input-group.longest input, md-input-group.longest select {
+md-input-group.longest input {
   width: 606px;
 }
 
-md-input-group.longer input, md-input-group.longer select {
+md-input-group.longer input {
   width: 404px;
 }
 
-md-input-group.long input, md-input-group.long select {
+md-input-group.long input {
   width: 303px;
 }
 
-md-input-group.short input, md-input-group.short select {
+md-input-group.short input {
   width: 101px;
 }
 

@@ -1,8 +1,8 @@
 <div ng-controller="HeaderCtrl">
 
-  <md-toolbar class="md-white-theme md-whiteframe-z1">
+  <md-toolbar class="md-white-theme md-whiteframe-z1" ng-if="global.isLoggedin()">
     <h1 class="md-toolbar-tools">
-      <img src="../img/icons/logo.png">
+      <img src="../img/icons/logo.png" class="logo">
 
       <span flex>Aurea</span>
 
@@ -11,21 +11,17 @@
           <i class="fa fa-star-o"></i>
           <md-tooltip>Feedback</md-tooltip>
         </md-button>
-        <md-button ng-click="goToListCommunications()" class="icon-button" ng-show="global.isLoggedin()">
+        <md-button ng-click="goToListCommunications()" class="icon-button">
           <i class="fa fa-bullhorn"></i>
           <md-tooltip>Comunicazioni</md-tooltip>
         </md-button>
-        <md-button ng-click="goToViewUser()" class="icon-button" ng-show="global.isLoggedin()">
+        <md-button ng-click="goToViewUser()" class="icon-button">
           <i class="fa fa-user"></i>
           <md-tooltip>Profilo</md-tooltip>
         </md-button>
-        <md-button ng-click="logout()" class="icon-button" ng-show="global.isLoggedin()">
+        <md-button ng-click="logout()" class="icon-button">
           <i class="fa fa-sign-out"></i>
           <md-tooltip>Logout</md-tooltip>
-        </md-button>
-        <md-button ng-click="login()" class="icon-button" ng-hide="global.isLoggedin()">
-          <i class="fa fa-sign-in"></i>
-          <md-tooltip>Login</md-tooltip>
         </md-button>
       </section>
     </h1>
