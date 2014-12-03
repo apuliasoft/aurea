@@ -3,55 +3,45 @@
 angular.module('aurea.classRegistry')
     .controller('ClassRegistryCtrl', function ($scope, $location, $stateParams, $filter, $mdDialog, $mdSidenav, $mdToast, _, SmartState, Global, ClassRegistry, ClassStudent, Teacher, Teaching) {
 
-        $scope.toggleLeft = function () {
-            $mdSidenav('left').toggle();
+        $scope.$watch('classRegistry.date', function () {
+            if ($scope.classRegistry) {
+                var day = new Date($scope.classRegistry.date);
+                SmartState.go('class registry by date', {
+                    date: $filter('date')(day, 'yyyy-MM-dd')
+                });
+            }
+        });
+
+        $scope.goPrevDay = function () {
+            var day = new Date($stateParams.date);
+            var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() - 1);
+            var found = false;
+            while (!found) {
+                if (_.contains($scope.weekdays, newDay.getDay())) {
+                    SmartState.go('class registry by date', {
+                        date: $filter('date')(newDay, 'yyyy-MM-dd')
+                    });
+                    found = true;
+                } else {
+                    newDay = new Date(newDay.getFullYear(), newDay.getMonth(), newDay.getDate() - 1);
+                }
+            }
         };
 
-//        $scope.$watch('classRegistry.date', function () {
-//            if ($scope.classRegistry) {
-//                var day = new Date($scope.classRegistry.date);
-//                SmartState.go('class registry by date', {
-//                    date: $filter('date')(day, 'yyyy-MM-dd')
-//                });
-//            }
-//        });
-//
-//        /**
-//         * Converte il formato degli orari.
-//         * @param classRegistry
-//         */
-//        var serializeData = function (classRegistry) {
-//
-//            classRegistry.lateEntrances = _.map(classRegistry.lateEntrances, function (lateEntrance) {
-//                lateEntrance.timestamp = $filter('minute')(lateEntrance.timestamp);
-//                return lateEntrance;
-//            });
-//
-//            classRegistry.earlyLeaves = _.map(classRegistry.earlyLeaves, function (earlyLeave) {
-//                earlyLeave.timestamp = $filter('minute')(earlyLeave.timestamp);
-//                return earlyLeave;
-//            });
-//
-//            return classRegistry;
-//        };
-
-        /**
-         * Converte il formato degli orari.
-         * @param classRegistry
-         */
-        var deserializeData = function (classRegistry) {
-
-            classRegistry.lateEntrances = _.map(classRegistry.lateEntrances, function (lateEntrance) {
-                lateEntrance.timestamp = new Date(lateEntrance.timestamp * 60 * 1000);
-                return lateEntrance;
-            });
-
-            classRegistry.earlyLeaves = _.map(classRegistry.earlyLeaves, function (earlyLeave) {
-                earlyLeave.timestamp = new Date(earlyLeave.timestamp * 60 * 1000);
-                return earlyLeave;
-            });
-
-            return classRegistry;
+        $scope.goNextDay = function () {
+            var day = new Date($stateParams.date);
+            var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
+            var found = false;
+            while (!found) {
+                if (_.contains($scope.weekdays, newDay.getDay())) {
+                    SmartState.go('class registry by date', {
+                        date: $filter('date')(newDay, 'yyyy-MM-dd')
+                    });
+                    found = true;
+                } else {
+                    newDay = new Date(newDay.getFullYear(), newDay.getMonth(), newDay.getDate() + 1);
+                }
+            }
         };
 
         $scope.init = function () {
@@ -116,60 +106,28 @@ angular.module('aurea.classRegistry')
             $scope.nextDisabled = nextDate > new Date($scope.maxDate.setHours(0, 0, 0, 0));
 
         };
-//
-//        $scope.tomorrow = function () {
-//            var day = new Date($stateParams.date);
-//            var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
-//            var found = false;
-//            while (!found) {
-//                if (_.contains($scope.weekdays, newDay.getDay())) {
-//                    SmartState.go('class registry by date', {
-//                        date: $filter('date')(newDay, 'yyyy-MM-dd')
-//                    });
-//                    found = true;
-//                } else {
-//                    newDay = new Date(newDay.getFullYear(), newDay.getMonth(), newDay.getDate() + 1);
-//                }
-//            }
-//        };
-//
-//        $scope.yesterday = function () {
-//            var day = new Date($stateParams.date);
-//            var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() - 1);
-//            var found = false;
-//            while (!found) {
-//                if (_.contains($scope.weekdays, newDay.getDay())) {
-//                    SmartState.go('class registry by date', {
-//                        date: $filter('date')(newDay, 'yyyy-MM-dd')
-//                    });
-//                    found = true;
-//                } else {
-//                    newDay = new Date(newDay.getFullYear(), newDay.getMonth(), newDay.getDate() - 1);
-//                }
-//            }
-//        };
-//
-//        $scope.save = function () {
-//            var classRegistry = $scope.classRegistry;
-//            classRegistry = serializeData(classRegistry);
-//
-//            if (!classRegistry.updated) {
-//                classRegistry.updated = [];
-//            }
-//            classRegistry.updated.push(new Date().getTime());
-//
-//            classRegistry._date = classRegistry.date;
-//
-//            classRegistry.$update(function () {
-//                classRegistry = deserializeData(classRegistry);
-//
-//                $mdToast.show({
-//                    template: '<md-toast>Salvataggio riuscito.</md-toast>',
-//                    hideDelay: 2000
-//                });
-//            });
-//        };
-//
+
+        $scope.save = function () {
+            var classRegistry = $scope.classRegistry;
+            classRegistry = serializeData(classRegistry);
+
+            if (!classRegistry.updated) {
+                classRegistry.updated = [];
+            }
+            classRegistry.updated.push(new Date().getTime());
+
+            classRegistry._date = classRegistry.date;
+
+            classRegistry.$update(function () {
+                classRegistry = deserializeData(classRegistry);
+
+                $mdToast.show({
+                    template: '<md-toast>Registro aggiornato.</md-toast>',
+                    hideDelay: 2000
+                });
+            });
+        };
+
 //        // UTILITY FUNCTIONS
 //
 //        $scope.dateOptions = {
@@ -351,6 +309,50 @@ angular.module('aurea.classRegistry')
 //            };
 //
 //        };
+
+        $scope.toggleLeft = function () {
+            $mdSidenav('left').toggle();
+        };
+
+
+
+        /**
+         * Converte il formato degli orari.
+         * @param classRegistry
+         */
+        var serializeData = function (classRegistry) {
+
+            classRegistry.lateEntrances = _.map(classRegistry.lateEntrances, function (lateEntrance) {
+                lateEntrance.timestamp = lateEntrance.timestamp.valueOf() / (60 * 1000);
+                return lateEntrance;
+            });
+
+            classRegistry.earlyLeaves = _.map(classRegistry.earlyLeaves, function (earlyLeave) {
+                earlyLeave.timestamp = earlyLeave.timestamp.valueOf() / (60 * 1000);
+                return earlyLeave;
+            });
+
+            return classRegistry;
+        };
+
+        /**
+         * Converte il formato degli orari.
+         * @param classRegistry
+         */
+        var deserializeData = function (classRegistry) {
+
+            classRegistry.lateEntrances = _.map(classRegistry.lateEntrances, function (lateEntrance) {
+                lateEntrance.timestamp = new Date(lateEntrance.timestamp * 60 * 1000);
+                return lateEntrance;
+            });
+
+            classRegistry.earlyLeaves = _.map(classRegistry.earlyLeaves, function (earlyLeave) {
+                earlyLeave.timestamp = new Date(earlyLeave.timestamp * 60 * 1000);
+                return earlyLeave;
+            });
+
+            return classRegistry;
+        };
 
         var TimeDialogCtrl = function ($scope, $mdDialog, time, title) {
             var currentTime = new Date();

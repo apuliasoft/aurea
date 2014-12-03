@@ -688,7 +688,7 @@ angular.module('aurea')
 //Setting uiSelect theme
 angular.module('aurea')
     .config(function(uiSelectConfig) {
-        uiSelectConfig.theme = 'selectize';
+        uiSelectConfig.theme = 'select2';
     });
 
 //Setting Lodash

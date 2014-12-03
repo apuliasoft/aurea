@@ -1,24 +1,28 @@
 <section ng-init="init()" flex layout="row">
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left"
-              md-is-locked-open="$media('md')">
-    <md-toolbar class="md-whiteframe-z1">
+  <md-sidenav layout="column" style="overflow: hidden; display: flex;" class="md-sidenav-left md-whiteframe-z2"
+              md-component-id="left" md-is-locked-open="$media('gt-sm')">
+    <md-toolbar style="min-height: 64px; max-height:64px;" class="md-whiteframe-z1" layout="column">
       <h2 class="md-toolbar-tools">
         <span flex>Alunni</span>
 
         <section layout="row" layout-align="end">
-          <md-button ng-click="toggleAbsents()" ng-disabled="noneSelected()" class="icon-button">A
+          <md-button ng-click="toggleAbsents()" ng-disabled="noneSelected()" class="icon-button">
+            <span>A</span>
             <md-tooltip>Assenza</md-tooltip>
           </md-button>
-          <md-button ng-click="addLateEntrance()" ng-disabled="!isValidEntranceSelection()" class="icon-button">E
+          <md-button ng-click="addLateEntrance()" ng-disabled="!isValidEntranceSelection()" class="icon-button">
+            <span>E</span>
             <md-tooltip>Entrata posticipata</md-tooltip>
           </md-button>
-          <md-button ng-click="addEarlyLeave()" ng-disabled="!isValidLeaveSelection()" class="icon-button">U
+          <md-button ng-click="addEarlyLeave()" ng-disabled="!isValidLeaveSelection()" class="icon-button">
+            <span>U</span>
             <md-tooltip>Uscita anticipata</md-tooltip>
           </md-button>
         </section>
       </h2>
     </md-toolbar>
-    <md-content flex md-scroll-y>
+
+    <md-content flex style="overflow: auto;">
       <section ng-repeat="student in classStudents | orderBy:['lastName', 'firstName']" flex layout="row" layout-fill>
         <md-checkbox ng-model="student.selected" class="menu-item" flex layout="row" layout-fill>
           <span flex class="title">{{student | name:true}}</span>
@@ -33,15 +37,87 @@
   <section flex layout="column" layout-fill>
     <md-toolbar class="md-whiteframe-z1">
       <h2 class="md-toolbar-tools">
-        <md-button ng-click="toggleLeft()" class="icon-button" hide show-phone show-tablet>
+        <md-button ng-click="toggleLeft()" class="icon-button" hide-gt-sm>
           <i class="fa fa-bars"></i>
+          <md-tooltip>Alunni</md-tooltip>
         </md-button>
         <span flex>Registro di classe</span>
+        <md-button ng-click="goPrevDay()" class="icon-button">
+          <i class="fa fa-arrow-circle-o-left"></i>
+          <md-tooltip>Giorno precedente</md-tooltip>
+        </md-button>
+        <span>{{ classRegistry.date | date:'EEEE, d MMMM yyyy'}}</span>
+        <md-button ng-click="goNextDay()" class="icon-button">
+          <i class="fa fa-arrow-circle-o-right"></i>
+          <md-tooltip>Giorno successivo</md-tooltip>
+        </md-button>
       </h2>
     </md-toolbar>
 
     <md-content flex md-scroll-y class="md-padding">
-      <div layout="column" layout-fill layout-align="center center">
+      <div flex layout="row" layout-align="center">
+        <form name="classRegistryForm" data-ng-submit="save()" novalidate>
+          <md-content class="md-padding">
+            <div class="md-whiteframe-z1">
+
+              <section data-ng-repeat="slot in classRegistry.slots | orderBy:'number'">
+                <md-toolbar class="md-grey-theme">
+                  <h2 class="md-toolbar-tools">{{ slot.number | ordinalNumber}} Ora ({{timeslots.slots[$index].start |
+                    time}} -
+                    {{timeslots.slots[$index].end | time}})</h2>
+                </md-toolbar>
+
+                <md-content class="md-padding">
+
+                  <md-input-group label="Materia" class="md-default-theme longest select-group" name="teaching"
+                                  ng-class="{'md-input-has-value': slot.teaching}">
+                    <label>Materia</label>
+                    <select ng-model="slot.teaching" name="teaching"
+                            ng-options="teaching._id as teaching.name for teaching in teachings"></select>
+                  </md-input-group>
+
+                  <md-checkbox ng-model="slot.isSubstitution">Supplenza</md-checkbox>
+
+                  <md-input-group label="Supplente" class="md-default-theme longest select-group" name="substitution"
+                                  ng-class="{'md-input-has-value': slot.substitution}" ng-if="slot.isSubstitution">
+                    <label>Supplente</label>
+                    <select ng-model="slot.substitution" name="substitution"
+                            ng-options="teacher._id as teacher | name for teacher in teachers"></select>
+                  </md-input-group>
+
+                  <md-text-float label="Argomento" ng-model="slot.subject" class="longest"></md-text-float>
+
+                  <md-text-float label="Note" ng-model="slot.notes" class="longest"></md-text-float>
+
+                  <md-checkbox ng-model="slot.isSupport">Sostegno</md-checkbox>
+
+                  <ui-select ng-model="slot.supportTeachers" multiple ng-if="slot.isSupport" layout-fill>
+                    <ui-select-match>{{ $item | name }}</ui-select-match>
+                    <ui-select-choices repeat="teacher in teachers | filter: $select.search">
+                      <div ng-bind-html="teacher | name"></div>
+                    </ui-select-choices>
+                  </ui-select>
+
+                  <md-checkbox ng-model="slot.isAssistant">Compresenza</md-checkbox>
+
+                  <ui-select ng-model="slot.assistantTeachers" multiple ng-if="slot.isAssistant" layout-fill>
+                    <ui-select-match>{{ $item | name }}</ui-select-match>
+                    <ui-select-choices repeat="teacher in teachers | filter: $select.search">
+                      <div ng-bind-html="teacher | name"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                </md-content>
+
+              </section>
+
+              <md-button type="submit" ng-disabled="classRegistryForm.$invalid" class="md-fab md-primary add-button">
+                <i class="fa fa-save"></i>
+                <md-tooltip>Salva</md-tooltip>
+              </md-button>
+
+            </div>
+          </md-content>
+        </form>
       </div>
     </md-content>
   </section>

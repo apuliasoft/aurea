@@ -34,7 +34,7 @@ angular.module('aurea')
 
                 // 4. parametri inferiti dalla data
                 var academicYear = Global.getAcademicYear();
-                if (nextState.url.indexOf(':date') && academicYear) {
+                if (nextState.url.indexOf(':date') && !params.date && academicYear) {
                     var date = new Date();
                     date.setHours(0);
                     date.setMinutes(0);

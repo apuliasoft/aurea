@@ -14,6 +14,19 @@ md-content {
   color: #808080 !important;
 }
 
+.md-white-theme .icon-button {
+  color: #808080 !important;
+}
+
+.md-grey-theme {
+  background-color: #E0E0E0 !important;
+  color: #616161 !important;
+}
+
+.md-grey-theme .icon-button {
+  color: #808080 !important;
+}
+
 .add-button {
   top: auto;
   right: 24px;
@@ -76,27 +89,6 @@ md-content {
   visibility: visible;
 }
 
-md-input-group input[type="date"], md-input-group input[type="time"]{
-  height: 30px;
-  width: 202px;
-}
-
-md-input-group.longest input {
-  width: 606px;
-}
-
-md-input-group.longer input {
-  width: 404px;
-}
-
-md-input-group.long input {
-  width: 303px;
-}
-
-md-input-group.short input {
-  width: 101px;
-}
-
 ::-webkit-inner-spin-button {
   display: none;
 }
@@ -122,6 +114,27 @@ md-input-group.select-group select {
   transition: all ease-out 150ms;
 }
 
+md-input-group input[type="date"], md-input-group input[type="time"]{
+  height: 30px;
+  width: 202px;
+}
+
+md-input-group.longest input, md-input-group.longest select {
+  width: 606px;
+}
+
+md-input-group.longer input, md-input-group.longer select {
+  width: 404px;
+}
+
+md-input-group.long input, md-input-group.long select {
+  width: 303px;
+}
+
+md-input-group.short input, md-input-group.short select {
+  width: 101px;
+}
+
 .menu-item {
   margin: 0;
   padding: 10px;
@@ -133,7 +146,7 @@ md-input-group.select-group select {
   user-select: none;
 }
 
-.menu-item:focus, .menu-item:hover {
+.menu-item:hover {
   background-color: #ccc;
 }
 
