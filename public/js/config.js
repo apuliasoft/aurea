@@ -28,30 +28,6 @@ angular.module('aurea')
 
         }];
 
-        var checkClassRegistry = ['$q', '$stateParams', 'ClassRegistry', function ($q, $stateParams, ClassRegistry) {
-            var deferred = $q.defer();
-
-            var date = new Date($stateParams.date);
-            var schoolClass = $stateParams.schoolClassId;
-            var school = $stateParams.schoolId;
-            var complex = $stateParams.complexId;
-            var academicYear = $stateParams.academicYearId;
-
-            ClassRegistry.get({
-                schoolClassId: schoolClass,
-                date: date.toISOString(),
-                schoolId: school,
-                complexId: complex,
-                academicYearId: academicYear
-            }).$promise.then(function (classRegistry) {
-                    deferred.resolve(classRegistry);
-                }, function () {
-                    deferred.reject();
-                });
-
-            return deferred.promise;
-        }];
-
         var checkTeachingRegistry = ['$q', '$stateParams', 'TeachingRegistry', function ($q, $stateParams, TeachingRegistry) {
             var deferred = $q.defer();
 
