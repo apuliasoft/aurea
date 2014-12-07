@@ -3,6 +3,26 @@
 //Province service used to serve provinces
 angular.module('aurea')
     .factory('SmartState', function ($state, $stateParams, $filter, _, Global) {
+        var checkDate = function(date, startDate, endDate, weekDays) {
+            if (date < startDate) {
+                date = startDate;
+                while (weekDays.indexOf(date.getDay()) < 0) {
+                    date.setDate(date.getDate() + 1);
+                }
+            } else if (date > endDate) {
+                date = endDate;
+                while (weekDays.indexOf(date.getDay()) < 0) {
+                    date.setDate(date.getDate() - 1);
+                }
+            } else if (weekDays.indexOf(date.getDay()) < 0) {
+                while (weekDays.indexOf(date.getDay()) < 0) {
+                    date.setDate(date.getDate() - 1);
+                }
+                return checkDate(date, startDate, endDate, weekDays);
+            }
+            return date;
+        };
+
         return {
             go: function (name, params) {
                 var user = Global.getUser();
@@ -48,17 +68,7 @@ angular.module('aurea')
                         return slot.weekDay;
                     });
 
-                    if (date < startDate) {
-                        date = startDate;
-                        while (!weekDays.indexOf(date.getDay())) {
-                            date.setDate(date.getDate() + 1);
-                        }
-                    } else if (date > endDate) {
-                        date = endDate;
-                        while (!weekDays.indexOf(date.getDay())) {
-                            date.setDate(date.getDate() - 1);
-                        }
-                    }
+                    date = checkDate(date, startDate, endDate, weekDays);
                     params.date = $filter('date')(date, 'yyyy-MM-dd');
                 }
 
