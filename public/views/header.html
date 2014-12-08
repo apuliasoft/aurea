@@ -2,9 +2,12 @@
 
   <md-toolbar class="md-white-theme md-whiteframe-z1" ng-if="global.isLoggedin()">
     <h1 class="md-toolbar-tools">
-      <img src="../img/icons/logo.png" class="logo">
+      <a ui-sref="home" layout="row" layout-align="center center">
+        <img src="../img/icons/logo.png" class="logo">
+        <span>Aurea</span>
+      </a>
 
-      <span flex>Aurea</span>
+      <span flex></span>
 
       <section layout="row" layout-align="end">
         <md-button ng-click="getFeedback()" class="icon-button">
