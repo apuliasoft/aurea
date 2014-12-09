@@ -12,6 +12,7 @@ var mongoose = require('mongoose'),
 exports.create = function (req, res) {
 
     var feedback = new Feedback(req.body);
+    feedback.ip = req.ip;
 
     feedback.save(function(err) {
         if (err) {
