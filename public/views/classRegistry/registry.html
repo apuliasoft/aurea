@@ -1,6 +1,6 @@
 <section ng-init="init()" flex layout="row">
   <md-sidenav layout="column" style="display: flex;" class="md-sidenav-left md-whiteframe-z2"
-              md-component-id="left" md-is-locked-open="$media('sm')">
+              md-component-id="left" md-is-locked-open="true">
     <md-toolbar class="md-whiteframe-z1" layout="column">
       <h2 class="md-toolbar-tools">
         <span flex>Alunni</span>
@@ -37,10 +37,6 @@
   <section flex layout="column" layout-fill>
     <md-toolbar class="md-whiteframe-z1">
       <h2 class="md-toolbar-tools">
-        <md-button ng-click="toggleLeft()" class="icon-button" hide-gt-sm>
-          <i class="fa fa-bars"></i>
-          <md-tooltip>Alunni</md-tooltip>
-        </md-button>
         <span flex>Registro di classe</span>
         <md-button ng-click="goPrevDay()" class="icon-button">
           <i class="fa fa-arrow-circle-o-left"></i>

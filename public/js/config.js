@@ -623,7 +623,7 @@ angular.module('aurea')
 
             .state('create communication', {
                 url: '/scuole/:schoolId/comunicazioni/nuovo',
-                templateUrl: 'views/communications/create.html',
+                templateUrl: 'views/communications/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool
@@ -635,7 +635,7 @@ angular.module('aurea')
 
             .state('edit communication', {
                 url: '/scuole/:schoolId/comunicazioni/:communicationId/modifica',
-                templateUrl: 'views/communications/edit.html',
+                templateUrl: 'views/communications/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool
