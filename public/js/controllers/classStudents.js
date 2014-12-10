@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.classStudents')
-    .controller('ClassStudentsCtrl', function ($scope, $stateParams, $filter, SmartState, _, Global, ClassStudent) {
+    .controller('ClassStudentsCtrl', function ($scope, $stateParams, SmartState, _, Global, ClassStudent) {
         $scope.global = Global;
 
         $scope.isItMe = function (student) {

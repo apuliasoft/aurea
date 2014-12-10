@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.system')
-    .controller('IndexCtrl', function ($scope, AcademicYear, Global, SmartState) {
+    .controller('IndexCtrl', function ($scope, SmartState, Global) {
         $scope.global = Global;
 
         switch (Global.user.role) {

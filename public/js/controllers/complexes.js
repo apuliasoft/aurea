@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.complexes')
-    .controller('ComplexesCtrl', function ($scope, $state, $stateParams, $mdToast, SmartState, _, Provinces, Global, Complex) {
+    .controller('ComplexesCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, Provinces, Complex) {
         $scope.global = Global;
         $scope.provinces = Provinces.getProvinces();
 
@@ -14,11 +14,19 @@ angular.module('aurea.complexes')
         };
 
         $scope.goToEditComplex = function (complex) {
-            SmartState.go('edit complex', { complexId: complex._id });
+            SmartState.go('edit complex', {complexId: complex._id});
         };
 
         $scope.goToListAcademicYears = function (complex) {
-            SmartState.go('all academic years', { complexId: complex._id });
+            SmartState.go('all academic years', {complexId: complex._id});
+        };
+
+        $scope.goToListTeachers = function (complex) {
+            SmartState.go('all teachers', {complexId: complex._id});
+        };
+
+        $scope.goToListStudents = function (complex) {
+            SmartState.go('all students', {complexId: complex._id});
         };
 
         $scope.find = function () {
@@ -53,12 +61,12 @@ angular.module('aurea.complexes')
 
         $scope.remove = function (complex) {
             if (complex) {
-                complex.$remove();
-                _.remove($scope.complexes, complex);
-                $scope.goToListComplexes();
-                $mdToast.show({
-                    template: '<md-toast>Plesso cancellato</md-toast>',
-                    hideDelay: 2000
+                complex.$remove(function () {
+                    _.remove($scope.complexes, complex);
+                    $mdToast.show({
+                        template: '<md-toast>Plesso cancellato</md-toast>',
+                        hideDelay: 2000
+                    });
                 });
             }
         };

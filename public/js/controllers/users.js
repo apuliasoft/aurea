@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.users')
-    .controller('UsersCtrl', function ($scope, $state, $stateParams, $mdToast, SmartState, _, Global, User) {
+    .controller('UsersCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, User) {
         $scope.global = Global;
 
         $scope.roles = [
@@ -59,8 +59,13 @@ angular.module('aurea.users')
 
         $scope.remove = function (user) {
             if (user) {
-                user.$remove();
-                _.remove($scope.users, user);
+                user.$remove(function () {
+                    _.remove($scope.users, user);
+                    $mdToast.show({
+                        template: '<md-toast>Utente cancellato</md-toast>',
+                        hideDelay: 2000
+                    });
+                });
             }
         };
 
@@ -82,6 +87,10 @@ angular.module('aurea.users')
         var create = function (user) {
             user.$save(function () {
                 $scope.goToListUsers();
+                $mdToast.show({
+                    template: '<md-toast>Utente creato</md-toast>',
+                    hideDelay: 2000
+                });
             });
         };
 
@@ -91,8 +100,12 @@ angular.module('aurea.users')
             }
             user.updated.push(new Date().getTime());
 
-            user.$update(function (response) {
-                $scope.goToListUsers(response);
+            user.$update(function () {
+                $scope.goToListUsers();
+                $mdToast.show({
+                    template: '<md-toast>Utente aggiornato</md-toast>',
+                    hideDelay: 2000
+                });
             });
         };
     });

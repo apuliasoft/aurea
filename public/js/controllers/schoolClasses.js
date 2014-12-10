@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.schoolClasses')
-    .controller('SchoolClassesCtrl', function ($scope, $state, $stateParams, SmartState, $filter, _, Global, SchoolClass, Student) {
+    .controller('SchoolClassesCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, SchoolClass, Student) {
         $scope.global = Global;
 
         $scope.goToListSchoolClasses = function () {
@@ -13,21 +13,21 @@ angular.module('aurea.schoolClasses')
         };
 
         $scope.goToEditSchoolClass = function (schoolClass) {
-            SmartState.go('edit school class', { schoolClassId: schoolClass._id });
-        };
-
-        $scope.goToTeachings = function (schoolClass) {
-            SmartState.go('all teachings', { schoolClassId: schoolClass._id });
-        };
-
-        $scope.goToClassStudents = function (schoolClass) {
-            SmartState.go('all class students', { schoolClassId: schoolClass._id });
+            SmartState.go('edit school class', {schoolClassId: schoolClass._id});
         };
 
         $scope.goToClassRegistry = function (schoolClass) {
             SmartState.go('class registry by date', {
                 schoolClassId: schoolClass._id
             });
+        };
+
+        $scope.goToListTeachings = function (schoolClass) {
+            SmartState.go('all teachings', {schoolClassId: schoolClass._id});
+        };
+
+        $scope.goToListClassStudents = function (schoolClass) {
+            SmartState.go('all class students', {schoolClassId: schoolClass._id});
         };
 
         $scope.find = function () {
@@ -55,6 +55,9 @@ angular.module('aurea.schoolClasses')
         $scope.save = function (isValid) {
             if (isValid) {
                 var schoolClass = $scope.schoolClass;
+                schoolClass.students = _.map($scope.chosenStudents, function (student) {
+                    return student._id;
+                });
                 if ($state.current.data.editMode) {
                     update(schoolClass);
                 } else {
@@ -65,9 +68,13 @@ angular.module('aurea.schoolClasses')
 
         $scope.remove = function (schoolClass) {
             if (schoolClass) {
-                schoolClass.$remove();
-                _.remove($scope.schoolClasses, schoolClass);
-                $scope.goToListSchoolClasses();
+                schoolClass.$remove(function () {
+                    _.remove($scope.schoolClasses, schoolClass);
+                    $mdToast.show({
+                        template: '<md-toast>Classe cancellata</md-toast>',
+                        hideDelay: 2000
+                    });
+                });
             }
         };
 
@@ -123,14 +130,12 @@ angular.module('aurea.schoolClasses')
         };
 
         var create = function (schoolClass) {
-            schoolClass.students = _.map($scope.chosenStudents, function (student) {
-                return student._id;
-            });
-
-            console.log(schoolClass);
-
             schoolClass.$save(function (response) {
                 $scope.goToListSchoolClasses(response);
+                $mdToast.show({
+                    template: '<md-toast>Classe creata</md-toast>',
+                    hideDelay: 2000
+                });
             });
         };
 
@@ -139,12 +144,13 @@ angular.module('aurea.schoolClasses')
                 schoolClass.updated = [];
             }
             schoolClass.updated.push(new Date().getTime());
-            schoolClass.students = _.map($scope.chosenStudents, function (student) {
-                return student._id;
-            });
 
             schoolClass.$update(function (response) {
                 $scope.goToListSchoolClasses(response);
+                $mdToast.show({
+                    template: '<md-toast>Classe aggiornata</md-toast>',
+                    hideDelay: 2000
+                });
             });
         };
     });

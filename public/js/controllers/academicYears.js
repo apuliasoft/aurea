@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.academicYears')
-    .controller('AcademicYearsCtrl', function ($scope, $state, $stateParams, $filter, $mdToast, SmartState, _, Global, AcademicYear) {
+    .controller('AcademicYearsCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, AcademicYear) {
         $scope.global = Global;
 
         $scope.goToListAcademicYears = function () {
@@ -103,7 +103,6 @@ angular.module('aurea.academicYears')
             if (academicYear) {
                 academicYear.$remove();
                 _.remove($scope.academicYears, academicYear);
-                $scope.goToListAcademicYears();
                 $mdToast.show({
                     template: '<md-toast>Anno scolastico cancellato</md-toast>',
                     hideDelay: 2000

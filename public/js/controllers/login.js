@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.users')
-    .controller('LoginCtrl', function ($scope, $rootScope, $http, $location, SmartState) {
+    .controller('LoginCtrl', function ($scope, $http, $mdToast, SmartState) {
         // This object will be filled by the form
         $scope.user = {};
 
@@ -13,10 +13,17 @@ angular.module('aurea.users')
             })
                 .success(function () {
                     // authentication OK
+                    $mdToast.show({
+                        template: '<md-toast>Autorizzato</md-toast>',
+                        hideDelay: 2000
+                    });
                     SmartState.go('home');
                 })
                 .error(function () {
-                    $scope.loginerror = 'Autenticazione fallita.';
+                    $mdToast.show({
+                        template: '<md-toast>Non autorizzato</md-toast>',
+                        hideDelay: 2000
+                    });
                 });
         };
     });

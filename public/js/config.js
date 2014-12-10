@@ -169,7 +169,7 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        $httpProvider.interceptors.push(['$q', '$location', function ($q, $location) {
+        $httpProvider.interceptors.push(['$q', function ($q) {
             return {
                 'response': function (response) {
                     return response || $q.when(response);
@@ -180,10 +180,8 @@ angular.module('aurea')
 
                     switch (status) {
                         case 401:
-                            $location.url('/401');
                             return $q.reject(rejection);
                         case 404:
-                            $location.url('/404');
                             return $q.reject(rejection);
                     }
 
@@ -562,7 +560,7 @@ angular.module('aurea')
 
             .state('create teaching', {
                 url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi/:schoolClassId/insegnamenti/crea',
-                templateUrl: 'views/teachings/create.html',
+                templateUrl: 'views/teachings/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
@@ -577,7 +575,7 @@ angular.module('aurea')
 
             .state('edit teaching', {
                 url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi/:schoolClassId/insegnamenti/:teachingId',
-                templateUrl: 'views/teachings/edit.html',
+                templateUrl: 'views/teachings/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,

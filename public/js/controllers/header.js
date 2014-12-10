@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.system')
-    .controller('HeaderCtrl', function ($scope, Global, $filter, SmartState, $stateParams, $mdDialog, $mdToast, Feedback) {
+    .controller('HeaderCtrl', function ($scope, $stateParams, $mdDialog, $mdToast, SmartState, Global, Feedback) {
         $scope.global = Global;
 
         $scope.getFeedback = function (event) {
@@ -68,15 +68,13 @@ angular.module('aurea.system')
 
         $scope.goToSchoolClass = function (schoolClass) {
             SmartState.go('class registry by date', {
-                schoolClassId: schoolClass._id,
-                date: $filter('date')(new Date(), 'yyyy-MM-dd')
+                schoolClassId: schoolClass._id
             });
         };
 
         $scope.goToTeaching = function (teaching) {
             SmartState.go('teaching registry by date', {
-                teachingId: teaching._id,
-                date: $filter('date')(new Date(), 'yyyy-MM-dd')
+                teachingId: teaching._id
             });
         };
 
