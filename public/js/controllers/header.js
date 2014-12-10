@@ -1,18 +1,31 @@
 'use strict';
 
 angular.module('aurea.system')
-    .controller('HeaderCtrl', function ($scope, Global, $filter, SmartState, $stateParams) {
+    .controller('HeaderCtrl', function ($scope, Global, $filter, SmartState, $stateParams, $mdDialog, $mdToast, Feedback) {
         $scope.global = Global;
 
-        $scope.getFeedback = function() {
-            SmartState.go('feedback');
+        $scope.getFeedback = function (event) {
+            var feedback = new Feedback({ rating: 1, text: '' });
+
+            $mdDialog.show({
+                controller: FeedbackCtrl,
+                templateUrl: 'views/feedbackDialog.html',
+                targetEvent: event,
+                locals: { feedback: feedback }
+            })
+                .then(function (feedback) {
+                    if (feedback) {
+                        feedback.$save(function () {
+                            $mdToast.show({
+                                template: '<md-toast>Feedback inviato</md-toast>',
+                                hideDelay: 2000
+                            });
+                        });
+                    }
+                });
         };
 
-        $scope.login = function() {
-            SmartState.go('login user');
-        };
-
-        $scope.logout = function() {
+        $scope.logout = function () {
             SmartState.go('logout user');
         };
 
@@ -21,7 +34,7 @@ angular.module('aurea.system')
         };
 
         $scope.goToViewUser = function () {
-            SmartState.go('user by id', { userId: Global.user._id });
+            SmartState.go('user by id', {userId: Global.user._id});
         };
 
         $scope.goToAcademicYear = function (academicYear) {
@@ -65,5 +78,20 @@ angular.module('aurea.system')
                 teachingId: teaching._id,
                 date: $filter('date')(new Date(), 'yyyy-MM-dd')
             });
+        };
+
+        var FeedbackCtrl = function ($scope, $mdDialog, feedback) {
+
+            $scope.feedback = feedback;
+
+            $scope.cancel = function () {
+                $mdDialog.cancel();
+            };
+
+            $scope.save = function (isValid) {
+                if (isValid) {
+                    $mdDialog.hide($scope.feedback);
+                }
+            };
         };
     });

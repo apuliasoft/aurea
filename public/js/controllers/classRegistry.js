@@ -314,8 +314,6 @@ angular.module('aurea.classRegistry')
             $mdSidenav('left').toggle();
         };
 
-
-
         /**
          * Converte il formato degli orari.
          * @param classRegistry

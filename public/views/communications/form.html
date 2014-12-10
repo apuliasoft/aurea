@@ -2,7 +2,7 @@
 
   <md-content md-scroll-y flex layout="row" layout-align="center">
 
-    <form name="communicationsForm" ng-submit="save(communicationsForm.$valid)" novalidate>
+    <form name="communicationForm" ng-submit="save(communicationForm.$valid)" novalidate>
       <md-content class="md-padding">
         <div class="md-whiteframe-z1">
           <md-toolbar>
@@ -26,7 +26,7 @@
         <md-tooltip>Torna a Comunicazioni</md-tooltip>
       </md-button>
 
-      <md-button type="submit" ng-disabled="communicationsForm.$invalid" class="md-fab md-primary add-button">
+      <md-button type="submit" ng-disabled="communicationForm.$invalid" class="md-fab md-primary add-button">
         <i class="fa fa-save"></i>
         <md-tooltip>Salva</md-tooltip>
       </md-button>

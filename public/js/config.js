@@ -240,17 +240,23 @@ angular.module('aurea')
 
             .state('create user', {
                 url: '/utenti/crea',
-                templateUrl: 'views/users/create.html',
+                templateUrl: 'views/users/form.html',
                 resolve: {
                     loggedin: checkLoggedin
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit user', {
                 url: '/utenti/:userId/modifica',
-                templateUrl: 'views/users/edit.html',
+                templateUrl: 'views/users/form.html',
                 resolve: {
                     loggedin: checkLoggedin
+                },
+                data: {
+                    editMode: true
                 }
             })
 
