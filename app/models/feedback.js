@@ -24,6 +24,10 @@ var FeedbackSchema = new Schema({
         max: 5,
         required: true
     },
+    email: {
+        type: String,
+        match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    },
     time : {
         type : Date,
         default: Date.now
