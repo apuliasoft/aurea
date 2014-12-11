@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.students')
-    .controller('StudentsCtrl', function ($scope, $state, $stateParams, SmartState, $filter, _, Global, Student) {
+    .controller('StudentsCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, Student) {
         $scope.global = Global;
 
         $scope.goToListStudents = function () {
@@ -58,9 +58,13 @@ angular.module('aurea.students')
 
         $scope.remove = function (student) {
             if (student) {
-                student.$remove();
-                _.remove($scope.students, student);
-                $scope.goToListStudents();
+                student.$remove(function() {
+                    _.remove($scope.students, student);
+                    $mdToast.show({
+                        template: '<md-toast>Alunno cancellato</md-toast>',
+                        hideDelay: 2000
+                    });
+                });
             }
         };
 
@@ -85,6 +89,10 @@ angular.module('aurea.students')
         var create = function (student) {
                 student.$save(function () {
                     $scope.goToListStudents();
+                    $mdToast.show({
+                        template: '<md-toast>Alunno creato</md-toast>',
+                        hideDelay: 2000
+                    });
                 });
         };
 
@@ -96,6 +104,10 @@ angular.module('aurea.students')
 
                 student.$update(function () {
                     $scope.goToListStudents();
+                    $mdToast.show({
+                        template: '<md-toast>Alunno aggiornato</md-toast>',
+                        hideDelay: 2000
+                    });
                 });
         };
 

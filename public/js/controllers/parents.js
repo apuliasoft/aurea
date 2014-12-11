@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.parents')
-    .controller('ParentsCtrl', function ($scope, $state, $stateParams, $filter, SmartState, _, Global, Parent) {
+    .controller('ParentsCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, Parent) {
         $scope.global = Global;
 
         $scope.goToListParents = function () {
@@ -53,7 +53,10 @@ angular.module('aurea.parents')
             if (parent) {
                 parent.$remove();
                 _.remove($scope.parents, parent);
-                $scope.goToListParents();
+                $mdToast.show({
+                    template: '<md-toast>Genitore cancellato</md-toast>',
+                    hideDelay: 2000
+                });
             }
         };
 
@@ -80,6 +83,10 @@ angular.module('aurea.parents')
         var create = function (parent) {
             parent.$save(function () {
                 $scope.goToListParents();
+                $mdToast.show({
+                    template: '<md-toast>Genitore creato</md-toast>',
+                    hideDelay: 2000
+                });
             });
         };
 
@@ -91,6 +98,10 @@ angular.module('aurea.parents')
 
             parent.$update(function () {
                 $scope.goToListParents();
+                $mdToast.show({
+                    template: '<md-toast>Genitore aggiornato</md-toast>',
+                    hideDelay: 2000
+                });
             });
         };
     });

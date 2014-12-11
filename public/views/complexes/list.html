@@ -19,6 +19,14 @@
                   <h3 class="item-content-text"><i class="fa fa-building item-content-icon"></i> {{complex.name}}</h3>
                 </div>
                 <div class="md-tile-right">
+                  <md-button class="icon-button" ng-click="goToListStudents(complex)">
+                    <i class="fa fa-graduation-cap"></i>
+                    <md-tooltip>Alunni</md-tooltip>
+                  </md-button>
+                  <md-button class="icon-button" ng-click="goToListTeachers(complex)">
+                    <i class="fa fa-briefcase"></i>
+                    <md-tooltip>Insegnanti</md-tooltip>
+                  </md-button>
                   <md-button class="icon-button" ng-click="goToEditComplex(complex)">
                     <i class="fa fa-pencil"></i>
                     <md-tooltip>Modifica</md-tooltip>

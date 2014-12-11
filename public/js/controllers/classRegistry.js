@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.classRegistry')
-    .controller('ClassRegistryCtrl', function ($scope, $location, $stateParams, $filter, $mdDialog, $mdSidenav, $mdToast, _, SmartState, Global, ClassRegistry, ClassStudent, Teacher, Teaching) {
+    .controller('ClassRegistryCtrl', function ($scope, $filter, $stateParams, $mdDialog, $mdSidenav, $mdToast, _, SmartState, Global, ClassRegistry, ClassStudent, Teacher, Teaching) {
 
         $scope.$watch('classRegistry.date', function () {
             if ($scope.classRegistry) {
@@ -313,8 +313,6 @@ angular.module('aurea.classRegistry')
         $scope.toggleLeft = function () {
             $mdSidenav('left').toggle();
         };
-
-
 
         /**
          * Converte il formato degli orari.

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.communications')
-    .controller('CommunicationsCtrl', function ($scope, $state, $stateParams, SmartState, _, Global, Communication) {
+    .controller('CommunicationsCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, Communication) {
         $scope.global = Global;
 
         $scope.goToListCommunications = function () {
@@ -50,11 +50,16 @@ angular.module('aurea.communications')
             }
         };
 
-        $scope.remove = function () {
-            var communication = $scope.communication;
-            communication.$delete(function () {
-                $scope.goToListCommunications();
-            });
+        $scope.remove = function (communication) {
+            if (communication) {
+                communication.$remove(function () {
+                    _.remove($scope.communications, communication);
+                    $mdToast.show({
+                        template: '<md-toast>Comunicazione cancellata</md-toast>',
+                        hideDelay: 2000
+                    });
+                });
+            }
         };
 
         var prepare = function () {
@@ -77,6 +82,10 @@ angular.module('aurea.communications')
             communication.pubDate = new Date();
             communication.$save(function () {
                 $scope.goToListCommunications();
+                $mdToast.show({
+                    template: '<md-toast>Comunicazione creata</md-toast>',
+                    hideDelay: 2000
+                });
             });
         };
 
@@ -88,39 +97,10 @@ angular.module('aurea.communications')
 
             communication.$update(function () {
                 $scope.goToListCommunications();
+                $mdToast.show({
+                    template: '<md-toast>Comunicazione aggiornata</md-toast>',
+                    hideDelay: 2000
+                });
             });
         };
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,27 @@
+<md-dialog>
+  <md-toolbar>
+    <h2 class="md-toolbar-tools">Invia Feedback</h2>
+  </md-toolbar>
+  <form name="feedbackForm" ng-submit="save(feedbackForm.$valid)" novalidate>
+    <md-content class="md-padding">
+
+      <md-content>
+
+        <span>Voto: {{feedback.rating}}/5</span>
+        <md-slider md-discrete ng-model="feedback.rating" step="1" min="1" max="5"></md-slider>
+
+        <md-text-float label="Messaggio" ng-model="feedback.text" type="text" tabindex="0" name="text" class="longer"
+                       required></md-text-float>
+
+      </md-content>
+      <div class="md-actions" layout="row">
+        <md-button type="button" ng-click="cancel()">
+          Annulla
+        </md-button>
+        <md-button class="md-primary" ng-disabled="feedbackForm.$invalid">
+          Salva
+        </md-button>
+      </div>
+    </md-content>
+  </form>
+</md-dialog>

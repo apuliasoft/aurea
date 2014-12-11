@@ -17,7 +17,13 @@
               <md-item-content class="item-content">
                 <div class="md-tile-content" ng-click="goToViewUser(user)">
                   <h3 class="item-content-text">
-                    <i class="fa fa-home item-content-icon"></i> {{user.name}}
+                    <i class="fa item-content-icon" ng-class="{
+                    'fa-graduation-cap': user.role == 'student',
+                    'fa-home': user.role == 'parent',
+                    'fa-briefcase': user.role == 'teacher',
+                    'fa-user': user.role == 'manager',
+                    'fa-tachometer': user.role == 'admin'
+                    }"></i> {{user.name}}
                   </h3>
                 </div>
                 <div class="md-tile-right">

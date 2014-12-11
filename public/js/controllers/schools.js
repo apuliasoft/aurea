@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.schools')
-    .controller('SchoolsCtrl', function ($scope, $state, $stateParams, $mdToast, SmartState, _, Global, School) {
+    .controller('SchoolsCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, School) {
         $scope.global = Global;
 
         $scope.goToListSchools = function () {
@@ -13,11 +13,11 @@ angular.module('aurea.schools')
         };
 
         $scope.goToEditSchool = function (school) {
-            SmartState.go('edit school', { schoolId: school._id });
+            SmartState.go('edit school', {schoolId: school._id});
         };
 
         $scope.goToListComplexes = function (school) {
-            SmartState.go('all complexes', { schoolId: school._id });
+            SmartState.go('all complexes', {schoolId: school._id});
         };
 
         $scope.find = function () {
@@ -50,12 +50,12 @@ angular.module('aurea.schools')
 
         $scope.remove = function (school) {
             if (school) {
-                school.$remove();
-                _.remove($scope.schools, school);
-                $scope.goToListSchools();
-                $mdToast.show({
-                    template: '<md-toast>Istituto cancellato</md-toast>',
-                    hideDelay: 2000
+                school.$remove(function () {
+                    _.remove($scope.schools, school);
+                    $mdToast.show({
+                        template: '<md-toast>Istituto cancellato</md-toast>',
+                        hideDelay: 2000
+                    });
                 });
             }
         };

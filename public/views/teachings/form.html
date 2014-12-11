@@ -1,0 +1,40 @@
+<section ng-controller="TeachingsCtrl" ng-init="init()" flex layout="column" layout-fill>
+
+  <md-content md-scroll-y flex layout="row" layout-align="center">
+
+    <form name="teachingForm" ng-submit="save(teachingForm.$valid)" novalidate>
+      <md-content class="md-padding">
+        <div class="md-whiteframe-z1">
+          <md-toolbar>
+            <h2 class="md-toolbar-tools">{{title}}</h2>
+          </md-toolbar>
+
+          <md-content class="md-padding">
+
+            <md-text-float label="Nome" ng-model="teaching.name" type="text" tabindex="0" name="name" class="longest"
+                           required></md-text-float>
+
+            <md-input-group label="Insegnante" class="md-default-theme select-group" name="role"
+                            ng-class="{'md-input-has-value': teaching.teacher}">
+              <label>Ruolo</label>
+              <select ng-model="teaching.teacher" name="role" tabindex="1"
+                      ng-options="teacher._id as teacher | name for teacher in teachers"></select>
+            </md-input-group>
+          </md-content>
+        </div>
+      </md-content>
+
+      <md-button type="button" class="md-fab back-button" ng-click="goToListTeachings()">
+        <i class="fa fa-reply-all"></i>
+        <md-tooltip>Torna a Insegnamenti</md-tooltip>
+      </md-button>
+
+      <md-button type="submit" ng-disabled="teachingForm.$invalid" class="md-fab md-primary add-button">
+        <i class="fa fa-save"></i>
+        <md-tooltip>Salva</md-tooltip>
+      </md-button>
+    </form>
+
+  </md-content>
+
+</section>

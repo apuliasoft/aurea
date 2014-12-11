@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.teachers')
-    .controller('TeachersCtrl', function ($scope, $state, $stateParams, $filter, SmartState, _, Global, Teacher) {
+    .controller('TeachersCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, Teacher) {
         $scope.global = Global;
 
         $scope.goToListTeachers = function () {
@@ -54,9 +54,13 @@ angular.module('aurea.teachers')
 
         $scope.remove = function (teacher) {
             if (teacher) {
-                teacher.$remove();
-                _.remove($scope.teachers, teacher);
-                $scope.goToListTeachers();
+                teacher.$remove(function() {
+                    _.remove($scope.teachers, teacher);
+                    $mdToast.show({
+                        template: '<md-toast>Insegnante cancellato</md-toast>',
+                        hideDelay: 2000
+                    });
+                });
             }
         };
 
@@ -81,6 +85,10 @@ angular.module('aurea.teachers')
         var create = function (teacher) {
             teacher.$save(function () {
                 $scope.goToListTeachers();
+                $mdToast.show({
+                    template: '<md-toast>Insegnante creato</md-toast>',
+                    hideDelay: 2000
+                });
             });
         };
 
@@ -92,6 +100,10 @@ angular.module('aurea.teachers')
 
             teacher.$update(function () {
                 $scope.goToListTeachers();
+                $mdToast.show({
+                    template: '<md-toast>Insegnante aggiornato</md-toast>',
+                    hideDelay: 2000
+                });
             });
         };
     });
