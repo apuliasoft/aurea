@@ -10,14 +10,6 @@ var mongoose = require('mongoose'),
  * Feedback Schema
  */
 var FeedbackSchema = new Schema({
-    text: {
-        type: String,
-        required: true
-    },
-    ip: {
-        type: String,
-        required: true
-    },
     rating: {
         type: Number,
         min: 1,
@@ -25,8 +17,15 @@ var FeedbackSchema = new Schema({
         required: true
     },
     email: {
+        type: String
+    },
+    text: {
         type: String,
-        match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        required: true
+    },
+    ip: {
+        type: String,
+        required: true
     },
     time : {
         type : Date,
