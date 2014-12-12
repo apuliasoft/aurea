@@ -87,7 +87,7 @@ md-content {
 }
 
 .icon-button {
-  padding: 0 10px;
+  padding: 15px;
   opacity: .4;
 
   -webkit-transition: 0.2s ease-out;

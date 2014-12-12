@@ -10,8 +10,11 @@
         <span>Voto: {{feedback.rating}}/5</span>
         <md-slider md-discrete ng-model="feedback.rating" step="1" min="1" max="5"></md-slider>
 
-        <md-text-float label="Messaggio" ng-model="feedback.text" type="text" tabindex="0" name="text" class="longer"
-                       required></md-text-float>
+        <md-text-float label="Email" ng-model="feedback.email" type="text" tabindex="0" name="email"
+                       class="longer"></md-text-float>
+
+        <md-text-float label="Messaggio" ng-model="feedback.text" type="text" tabindex="1" name="text"
+                       class="longer" required></md-text-float>
 
       </md-content>
       <div class="md-actions" layout="row">
@@ -19,7 +22,7 @@
           Annulla
         </md-button>
         <md-button class="md-primary" ng-disabled="feedbackForm.$invalid">
-          Salva
+          Invia
         </md-button>
       </div>
     </md-content>

@@ -5,7 +5,7 @@ angular.module('aurea.system')
         $scope.global = Global;
 
         $scope.getFeedback = function (event) {
-            var feedback = new Feedback({ rating: 1, text: '' });
+            var feedback = new Feedback({ rating: 3 });
 
             $mdDialog.show({
                 controller: FeedbackCtrl,

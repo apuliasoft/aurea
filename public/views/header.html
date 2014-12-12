@@ -5,6 +5,7 @@
       <a ui-sref="home" layout="row" layout-align="center center">
         <img src="../img/icons/logo.png" class="logo">
         <span>Aurea</span>
+        <md-tooltip>Home</md-tooltip>
       </a>
 
       <span flex></span>
@@ -14,7 +15,7 @@
           <i class="fa fa-star-o"></i>
           <md-tooltip>Feedback</md-tooltip>
         </md-button>
-        <md-button ng-click="goToListCommunications()" class="icon-button">
+        <md-button ng-click="goToListCommunications()" ng-if="global.getSchool()" class="icon-button">
           <i class="fa fa-bullhorn"></i>
           <md-tooltip>Comunicazioni</md-tooltip>
         </md-button>
