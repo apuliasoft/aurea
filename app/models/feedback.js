@@ -17,7 +17,8 @@ var FeedbackSchema = new Schema({
         required: true
     },
     email: {
-        type: String
+        type: String,
+        match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
     text: {
         type: String,
@@ -27,8 +28,8 @@ var FeedbackSchema = new Schema({
         type: String,
         required: true
     },
-    time : {
-        type : Date,
+    time: {
+        type: Date,
         default: Date.now
     }
 
