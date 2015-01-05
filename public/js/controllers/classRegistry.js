@@ -69,6 +69,7 @@ angular.module('aurea.classRegistry')
                 schoolClassId: Global.getSchoolClass()._id
             });
 
+            // Carico la pagina di registro di classe
             ClassRegistry.get({
                 date: date.toISOString(),
                 schoolClassId: Global.getSchoolClass()._id,
@@ -86,14 +87,9 @@ angular.module('aurea.classRegistry')
 
             $scope.selectedStudents = [];
 
-            $scope.weekdays = _(Global.getAcademicYear().timeTable).
-                filter(function (slot) {
-                    return slot.slots.length > 0;
-                })
-                .map(function (item) {
-                    return item.weekDay === 7 ? 0 : item.weekDay;
-                })
-                .value();
+            $scope.weekdays = _.map(Global.getAcademicYear().timeTable, function (slot) {
+                return slot.weekDay;
+            });
 
             $scope.timeslots = _.find(Global.getAcademicYear().timeTable, function (day) {
                 return day.weekDay === date.getDay();
@@ -148,63 +144,39 @@ angular.module('aurea.classRegistry')
 //        };
 
         $scope.clearSelection = function () {
-            _.map($scope.classStudents, function (classStudent) {
+            _.each(selectedStudents(), function (classStudent) {
                 classStudent.selected = false;
             });
         };
 
         $scope.noneSelected = function () {
-            var selectedStudents = _.chain($scope.classStudents)
-                .filter(function (classStudent) {
-                    return classStudent.selected;
-                })
-                .map(function (selectedStudent) {
-                    return selectedStudent._id;
-                })
-                .value();
-
-            return selectedStudents.length === 0;
+            return selectedStudents().length === 0;
         };
 
-        $scope.isValidEntranceSelection = function () {
-            var selectedStudents = _.chain($scope.classStudents)
-                .filter(function (classStudent) {
-                    return classStudent.selected;
-                })
-                .map(function (selectedStudent) {
-                    return selectedStudent._id;
-                })
-                .value();
-
-            return selectedStudents.length === 1;
-        };
-
-        $scope.isValidLeaveSelection = function () {
-            var selectedStudents = _.chain($scope.classStudents)
-                .filter(function (classStudent) {
-                    return classStudent.selected;
-                })
-                .map(function (selectedStudent) {
-                    return selectedStudent._id;
-                })
-                .value();
-
-            return selectedStudents.length === 1;
+        $scope.studentIsAbsent = function (student) {
+            return $scope.classRegistry &&
+                _.contains($scope.classRegistry.absences, student._id);
         };
 
         $scope.toggleAbsents = function () {
-            var selectedStudents = _.chain($scope.classStudents)
-                .filter(function (classStudent) {
-                    return classStudent.selected;
-                })
-                .map(function (selectedStudent) {
-                    return selectedStudent._id;
-                })
-                .value();
+            var students = _.map(selectedStudents(), function (selectedStudent) {
+                return selectedStudent._id;
+            });
 
-            $scope.classRegistry.absences = _.xor($scope.classRegistry.absences, selectedStudents);
+            $scope.classRegistry.absences = _.xor($scope.classRegistry.absences, students);
 
             $scope.clearSelection();
+        };
+
+        $scope.isValidEntranceSelection = function () {
+            return selectedStudents().length === 1;
+        };
+
+        $scope.studentHasLeft = function (student) {
+            return $scope.classRegistry &&
+                _.some($scope.classRegistry.earlyLeaves, function (earlyLeave) {
+                    return earlyLeave.student === student._id;
+                });
         };
 
         $scope.addLateEntrance = function (event) {
@@ -221,11 +193,11 @@ angular.module('aurea.classRegistry')
                 controller: TimeDialogCtrl,
                 templateUrl: 'views/classRegistry/timeDialog.html',
                 targetEvent: event,
-                locals: { time: lateEntrance ? lateEntrance.timestamp : null, title: 'Entrata posticipata' }
+                locals: {time: lateEntrance ? lateEntrance.timestamp : null, title: 'Entrata posticipata'}
             })
                 .then(function (response) {
                     if (response) {
-                        if(lateEntrance) {
+                        if (lateEntrance) {
                             _.remove($scope.classRegistry.lateEntrances, lateEntrance);
                         }
                         $scope.classRegistry.lateEntrances.push({
@@ -236,6 +208,17 @@ angular.module('aurea.classRegistry')
                         _.remove($scope.classRegistry.lateEntrances, lateEntrance);
                     }
                     $scope.clearSelection();
+                });
+        };
+
+        $scope.isValidLeaveSelection = function () {
+            return selectedStudents().length === 1;
+        };
+
+        $scope.studentHasEntered = function (student) {
+            return $scope.classRegistry &&
+                _.some($scope.classRegistry.lateEntrances, function (lateEntrance) {
+                    return lateEntrance.student === student._id;
                 });
         };
 
@@ -252,7 +235,7 @@ angular.module('aurea.classRegistry')
                 controller: TimeDialogCtrl,
                 templateUrl: 'views/classRegistry/timeDialog.html',
                 targetEvent: event,
-                locals: { time: earlyLeave ? earlyLeave.timestamp : null, title: 'Uscita anticipata' }
+                locals: {time: earlyLeave ? earlyLeave.timestamp : null, title: 'Uscita anticipata'}
             })
                 .then(function (response) {
                     if (response) {
@@ -267,25 +250,6 @@ angular.module('aurea.classRegistry')
                         _.remove($scope.classRegistry.earlyLeaves, earlyLeave);
                     }
                     $scope.clearSelection();
-                });
-        };
-
-        $scope.studentIsAbsent = function (student) {
-            return $scope.classRegistry &&
-                _.contains($scope.classRegistry.absences, student._id);
-        };
-
-        $scope.studentHasLeft = function (student) {
-            return $scope.classRegistry &&
-                _.some($scope.classRegistry.earlyLeaves, function (earlyLeave) {
-                    return earlyLeave.student === student._id;
-                });
-        };
-
-        $scope.studentHasEntered = function (student) {
-            return $scope.classRegistry &&
-                _.some($scope.classRegistry.lateEntrances, function (lateEntrance) {
-                    return lateEntrance.student === student._id;
                 });
         };
 //
@@ -310,8 +274,10 @@ angular.module('aurea.classRegistry')
 //
 //        };
 
-        $scope.toggleLeft = function () {
-            $mdSidenav('left').toggle();
+        var selectedStudents = function() {
+            return _.filter($scope.classStudents, function (classStudent) {
+                return classStudent.selected;
+            });
         };
 
         /**
@@ -370,7 +336,7 @@ angular.module('aurea.classRegistry')
 
             $scope.save = function (isValid) {
                 if (isValid) {
-                    $mdDialog.hide({ time: $scope.time });
+                    $mdDialog.hide({time: $scope.time});
                 }
             };
 

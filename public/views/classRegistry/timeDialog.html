@@ -4,7 +4,8 @@
   </md-toolbar>
   <form name="timeForm" ng-submit="save(timeForm.$valid)" novalidate>
     <md-content>
-      <md-text-float label="Orario" ng-model="time" type="time" tabindex="0" name="time" required></md-text-float>
+      <md-text-float label="Orario" ng-model="time" type="time" tabindex="0" name="time"
+                     ng-model-options="{ timezone: 'UTC' }" required></md-text-float>
     </md-content>
     <div class="md-actions" layout="row">
       <md-button type="button" ng-show="deleteEnabled" ng-click="delete()" class="md-warn">

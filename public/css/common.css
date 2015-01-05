@@ -47,6 +47,11 @@ md-content {
   color: #808080 !important;
 }
 
+.md-dark-theme {
+  background-color: #424242;
+  color: #fff !important;
+}
+
 .add-button {
   top: auto;
   right: 24px;
@@ -91,9 +96,9 @@ md-content {
   opacity: .4;
 
   -webkit-transition: 0.2s ease-out;
-          transition: 0.2s ease-out;
+  transition: 0.2s ease-out;
   -webkit-transition-property: -webkit-transform, opacity;
-          transition-property: transform, opacity;
+  transition-property: transform, opacity;
 }
 
 .icon-button:hover {
@@ -124,7 +129,7 @@ md-input-group.select-group select {
   display: block;
   margin: 0;
   min-height: 100%;
-  width: 100%;
+  width: 202px;
   background: transparent;
   color: rgba(0, 0, 0, 0.73);
   border: 0;
@@ -136,24 +141,53 @@ md-input-group.select-group select {
   transition: all ease-out 150ms;
 }
 
-md-input-group input[type="date"], md-input-group input[type="time"]{
+md-input-group.md-dark-theme.select-group {
+  border-color: rgba(255,255,255,0.12);
+}
+
+md-input-group.md-dark-theme.select-group select {
+  color: rgba(255,255,255,1.0);
+}
+
+md-input-group.md-dark-theme label {
+  color: rgba(255,255,255,0.3);
+}
+
+md-input-group.md-dark-theme.md-input-has-value:not(.md-input-focused) label {
+  color: rgba(255,255,255,0.7);
+}
+
+md-input-group.md-dark-theme.md-input-focused label {
+  color: #2196F3;
+}
+
+md-input-group.md-dark-theme input, md-input-group.md-dark-theme textarea {
+  color: rgba(255,255,255,1.0);
+  border-color: rgba(255,255,255,0.12);
+}
+
+md-input-group.md-dark-theme.md-input-focused input, md-input-group.md-dark-theme.md-input-focused textarea {
+  border-color: #2196F3;
+}
+
+md-input-group input[type="date"], md-input-group input[type="time"] {
   height: 30px;
   width: 202px;
 }
 
-md-input-group.longest input {
+md-input-group.longest input, md-input-group.longest select {
   width: 606px;
 }
 
-md-input-group.longer input {
+md-input-group.longer input, md-input-group.longer select {
   width: 404px;
 }
 
-md-input-group.long input {
+md-input-group.long input, md-input-group.long select {
   width: 303px;
 }
 
-md-input-group.short input {
+md-input-group.short input, md-input-group.short select {
   width: 101px;
 }
 
@@ -186,7 +220,7 @@ md-input-group.short input {
   line-height: 24px;
 }
 
-.menu-item:focus .md-label{
+.menu-item:focus .md-label {
   border-color: transparent;
 }
 

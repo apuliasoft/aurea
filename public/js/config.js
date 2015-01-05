@@ -28,32 +28,6 @@ angular.module('aurea')
 
         }];
 
-        var checkTeachingRegistry = ['$q', '$stateParams', 'TeachingRegistry', function ($q, $stateParams, TeachingRegistry) {
-            var deferred = $q.defer();
-
-            var date = new Date($stateParams.date);
-            var schoolClass = $stateParams.schoolClassId;
-            var school = $stateParams.schoolId;
-            var complex = $stateParams.complexId;
-            var academicYear = $stateParams.academicYearId;
-            var teaching = $stateParams.teachingId;
-
-            TeachingRegistry.get({
-                schoolClassId: schoolClass,
-                date: date.toISOString(),
-                schoolId: school,
-                complexId: complex,
-                academicYearId: academicYear,
-                teachingId: teaching
-            }).$promise.then(function (teachingRegistry) {
-                    deferred.resolve(teachingRegistry);
-                }, function () {
-                    deferred.reject();
-                });
-
-            return deferred.promise;
-        }];
-
         var checkSchool = ['$q', '$mdToast', '$stateParams', 'School', 'Global', function ($q, $mdToast, $stateParams, School, Global) {
             var deferred = $q.defer();
 
@@ -612,7 +586,6 @@ angular.module('aurea')
                     academicYear: checkAcademicYear,
                     schoolClass: checkSchoolClass,
                     teaching: checkTeaching,
-                    teachingRegistry: checkTeachingRegistry
                 }
             })
 

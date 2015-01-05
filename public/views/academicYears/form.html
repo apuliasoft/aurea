@@ -15,7 +15,7 @@
                            class="longest"
                            required></md-text-float>
 
-            <div layout="horizzontal">
+            <div layout="row">
 
               <md-text-float label="Data inizio" ng-model="academicYear.startDate" type="date" tabindex="1"
                              name="startDate" class="long"
@@ -48,9 +48,11 @@
 
                 <span flex>{{($index+1) | ordinalNumber}} ora</span>
                 <md-text-float label="Dalle" ng-model="slot.start" type="time" tabindex="2" name="startTime"
+                               ng-model-options="{ timezone: 'UTC' }"
                                required></md-text-float>
 
                 <md-text-float label="Alle" ng-model="slot.end" type="time" tabindex="2" name="endTime"
+                               ng-model-options="{ timezone: 'UTC' }"
                                required></md-text-float>
 
                 <md-button type="button" class="md-warn icon-button" ng-click="removeTimeSlot(day, $index)"><i
