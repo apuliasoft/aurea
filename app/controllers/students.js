@@ -38,7 +38,6 @@ exports.create = function (req, res) {
     var student = new Student(req.body);
 
     user.name = student.firstName + ' ' + student.lastName;
-    user.email = req.body.email;
     user.role = 'student';
     user.complex = student.complex;
     user.school = student.school;
