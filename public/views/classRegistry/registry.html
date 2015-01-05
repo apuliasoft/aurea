@@ -96,7 +96,7 @@
 
                     <ui-select ng-model="slot.supportTeachers" multiple ng-if="slot.isSupport" layout-fill>
                       <ui-select-match>{{ $item | name }}</ui-select-match>
-                      <ui-select-choices repeat="teacher in teachers | filter: $select.search">
+                      <ui-select-choices repeat="teacher._id as teacher in teachers | filter: $select.search">
                         <div ng-bind-html="teacher | name"></div>
                       </ui-select-choices>
                     </ui-select>
@@ -105,7 +105,7 @@
 
                     <ui-select ng-model="slot.assistantTeachers" multiple ng-if="slot.isAssistant" layout-fill>
                       <ui-select-match>{{ $item | name }}</ui-select-match>
-                      <ui-select-choices repeat="teacher in teachers | filter: $select.search">
+                      <ui-select-choices repeat="teacher._id as teacher in teachers | filter: $select.search">
                         <div ng-bind-html="teacher | name"></div>
                       </ui-select-choices>
                     </ui-select>

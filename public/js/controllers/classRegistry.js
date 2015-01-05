@@ -315,6 +315,18 @@ angular.module('aurea.classRegistry')
                 return earlyLeave;
             });
 
+            _.forEach(classRegistry.slots, function(slot){
+                if (slot.substitution){
+                    slot.isSubstitution = true;
+                }
+                if (slot.assistantTeachers && slot.assistantTeachers.length > 0){
+                    slot.isAssistant = true;
+                }
+                if (slot.supportTeachers && slot.supportTeachers.length > 0){
+                    slot.isSupport = true;
+                }
+            });
+
             return classRegistry;
         };
 
