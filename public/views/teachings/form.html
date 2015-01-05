@@ -14,9 +14,9 @@
             <md-text-float label="Nome" ng-model="teaching.name" type="text" tabindex="0" name="name" class="longest"
                            required></md-text-float>
 
-            <md-input-group label="Insegnante" class="md-default-theme select-group" name="role"
+            <md-input-group label="Insegnante" class="md-default-theme select-group longest" name="role"
                             ng-class="{'md-input-has-value': teaching.teacher}">
-              <label>Ruolo</label>
+              <label>Insegnante</label>
               <select ng-model="teaching.teacher" name="role" tabindex="1"
                       ng-options="teacher._id as teacher | name for teacher in teachers"></select>
             </md-input-group>
