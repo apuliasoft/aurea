@@ -1,4 +1,48 @@
 <section ng-controller="LoginCtrl" flex layout="column" layout-fill>
+
+  <!-- Da cancellare nella versione finale-->
+  <md-content  layout="row" layout-align="center">
+
+    <md-content flex class="md-padding">
+
+      <div class="md-whiteframe-z1" layout-align="center">
+        <md-toolbar class="md-grey-theme">
+          <h4 class="md-toolbar-tools">
+            <span>Istruzioni</span>
+          </h4>
+        </md-toolbar>
+        <md-content class="md-padding">
+          Aurea &egrave; una piattaforma web di registro elettronico. Questa demo contiene dei dati di esempio e viene
+          resettata quotidianamente. Sono forniti 4 account demo, uno per ogni ruolo possibile nel sistema. <br/>
+          Di seguito vengono fornite le credenziali per accedere con ciascuno dei ruoli. <br/>
+
+          <md-content layout="row">
+            <section flex>
+              <h5>Dirigente</h5>
+              <b>email:</b> dirigente@demo.it <br/>
+              <b>password:</b> dirigenteDemo
+            </section>
+            <section flex>
+              <h5>Docente</h5>
+              <b>email:</b> docente@demo.it <br/>
+              <b>password:</b> docenteDemo
+            </section>
+            <section flex>
+              <h5>Studente</h5>
+              <b>email:</b> studente@demo.it <br/>
+              <b>password:</b> studenteDemo
+            </section>
+            <section flex>
+              <h5>Genitore</h5>
+              <b>email:</b> genitore@demo.it <br/>
+              <b>password:</b> genitoreDemo
+            </section>
+          </md-content>
+        </md-content>
+      </div>
+    </md-content>
+  </md-content>
+
   <md-content md-scroll-y flex layout="row" layout-align="center">
     <div class="logo-big" flex layout="column" layout-align="center">
       <img src="../img/icons/logo-big.png" class="logo-big">
