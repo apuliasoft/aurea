@@ -39,6 +39,7 @@ exports.create = function (req, res) {
     var parent = new Parent(req.body);
 
     user.name = parent.firstName + ' ' + parent.lastName;
+    user.email = req.body.email;
     user.role = 'parent';
     user.complex = parent.complex;
     user.school = parent.school;
