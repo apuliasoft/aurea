@@ -5,12 +5,12 @@ angular.module('aurea.classStudents')
       $scope.global = Global;
 
       $scope.isItMe = function (student) {
-          return student.user._id === Global.getUser()._id;
+          return student.user._id === Global.getCurrentUser()._id;
       };
 
       $scope.isParentOf = function (student) {
-          if (Global.getUser().parent) {
-              return student._id === Global.getUser().parent.student;
+          if (Global.getCurrentUser().parent) {
+              return student._id === Global.getCurrentUser().parent.student;
           }
           return false;
       };

@@ -17,12 +17,48 @@ md-content {
 }
 
 .logo {
-  max-height: 64px;
+  max-height: 32px;
 }
 
 .logo-big {
   padding: 20px;
   width: 100%;
+}
+
+.breadcrumb {
+  cursor: pointer;
+}
+
+.breadcrumb label {
+  color: #fff !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.breadcrumb input {
+  width: 100%;
+  text-overflow: ellipsis;
+  color: #fff !important;
+  background: none !important;
+}
+
+md-bottom-sheet button {
+  color: #808080;
+}
+
+md-bottom-sheet button i {
+  display: inline-block !important;
+  height: 24px;
+  line-height: 24px !important;
+  width: 24px;
+}
+
+md-bottom-sheet button span {
+  padding-left: 12px;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
 }
 
 .login-content {

@@ -17,7 +17,7 @@ angular.module('aurea.teachers')
         };
 
         $scope.isItMe = function (teacher) {
-            return teacher.user._id === Global.getUser()._id;
+            return teacher.user._id === Global.getCurrentUser()._id;
         };
 
         $scope.find = function () {

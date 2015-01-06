@@ -1,0 +1,11 @@
+<md-bottom-sheet class="md-list md-has-header">
+  <md-subheader>Azioni per {{label}}</md-subheader>
+  <md-list>
+    <md-item ng-repeat="item in submenu">
+      <md-button aria-label="{{item.label}}" ng-click="itemClick(item)">
+        <i class="fa fa-{{item.icon}}"></i>
+        <span class="md-inline-list-icon-label">{{ item.label }}</span>
+      </md-button>
+    </md-item>
+  </md-list>
+</md-bottom-sheet>

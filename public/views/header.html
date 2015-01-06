@@ -31,4 +31,11 @@
     </h1>
   </md-toolbar>
 
+  <md-toolbar class="md-whiteframe-z1">
+    <div class="md-toolbar-tools">
+      <md-text-float ng-repeat="menuitem in menu" label="{{menuitem.label}}" ng-model="menuitem.value"
+                     class="breadcrumb" type="text" ng-disabled="true" ng-click="showListBottomSheet(menuitem)">
+    </div>
+  </md-toolbar>
+
 </div>

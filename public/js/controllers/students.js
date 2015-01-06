@@ -21,7 +21,7 @@ angular.module('aurea.students')
         };
 
         $scope.isItMe = function (student) {
-            return student.user._id === Global.getUser()._id;
+            return student.user._id === Global.getCurrentUser()._id;
         };
 
         $scope.find = function () {

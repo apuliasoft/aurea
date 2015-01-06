@@ -25,7 +25,7 @@ angular.module('aurea')
 
         return {
             go: function (name, params) {
-                var user = Global.getUser();
+                var user = Global.getCurrentUser();
 
                 // 1. parametri passati come parametro
                 params = params || {};
