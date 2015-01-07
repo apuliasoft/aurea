@@ -152,7 +152,7 @@ angular.module('aurea.system')
                     {
                         label: 'Lista scuole',
                         icon: 'university',
-                        state: 'all complexes'
+                        state: 'all schools'
                     },
                     {
                         label: 'Lista plessi',
