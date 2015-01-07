@@ -20,12 +20,14 @@
                     <i class="fa fa-file-text"></i>
                     <md-tooltip>Insegnamenti</md-tooltip>
                   </md-button>
-                  <md-button class="icon-button" ng-click="goToEditSchoolClass(schoolClass)">
+                  <md-button class="icon-button" ng-click="goToEditSchoolClass(schoolClass)"
+                             ng-if="global.isAdmin() || global.isManager()">
                     <i class="fa fa-pencil"></i>
                     <md-tooltip>Modifica</md-tooltip>
                   </md-button>
                   <md-button class="icon-button" as-confirmed-click="remove(schoolClass)"
-                             as-confirm-message="Sicuro di voler eliminare questa classe?">
+                             as-confirm-message="Sicuro di voler eliminare questa classe?"
+                             ng-if="global.isAdmin() || global.isManager()">
                     <i class="fa fa-trash"></i>
                     <md-tooltip>Cancella</md-tooltip>
                   </md-button>
@@ -39,7 +41,8 @@
     </div>
   </md-content>
 
-  <md-button class="md-fab md-primary add-button" ng-click="goToCreateSchoolClass()">
+  <md-button class="md-fab md-primary add-button" ng-click="goToCreateSchoolClass()"
+             ng-if="global.isAdmin() || global.isManager()">
     <i class="fa fa-plus"></i>
     <md-tooltip>Aggiungi</md-tooltip>
   </md-button>

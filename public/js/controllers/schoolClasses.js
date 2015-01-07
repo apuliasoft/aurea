@@ -17,9 +17,11 @@ angular.module('aurea.schoolClasses')
         };
 
         $scope.goToClassRegistry = function (schoolClass) {
-            SmartState.go('class registry by date', {
-                schoolClassId: schoolClass._id
-            });
+            if(Global.isAdmin() || Global.isManager() || Global.isTeacher()) {
+                SmartState.go('class registry by date', {
+                    schoolClassId: schoolClass._id
+                });
+            }
         };
 
         $scope.goToListTeachings = function (schoolClass) {

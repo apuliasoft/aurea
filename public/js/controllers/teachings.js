@@ -17,9 +17,11 @@ angular.module('aurea.teachings')
         };
 
         $scope.goToTeachingRegistry = function (teaching) {
-            SmartState.go('teaching registry by date', {
-                teachingId: teaching._id
-            });
+            if (Global.isAdmin() || Global.isManager() || Global.isTeacher()) {
+                SmartState.go('teaching registry by date', {
+                    teachingId: teaching._id
+                });
+            }
         };
 
         $scope.find = function () {
@@ -36,6 +38,16 @@ angular.module('aurea.teachings')
 
         $scope.init = function () {
             $scope.editMode = $state.current.data.editMode;
+
+
+            Teacher.query({
+                complexId: Global.getComplex()._id,
+                schoolId: Global.getSchool()._id
+            }).$promise
+                .then(function (teachers) {
+                    $scope.teachers = teachers;
+                });
+
             if ($state.current.data.editMode) {
                 $scope.title = 'Modifica insegnamento';
                 findOne();
@@ -74,14 +86,6 @@ angular.module('aurea.teachings')
                 academicYear: Global.getAcademicYear()._id,
                 schoolClass: Global.getSchoolClass()._id
             });
-
-            Teacher.query({
-                complexId: Global.getComplex()._id,
-                schoolId: Global.getSchool()._id
-            }).$promise
-                .then(function (teachers) {
-                    $scope.teachers = teachers;
-                });
         };
 
         var findOne = function () {

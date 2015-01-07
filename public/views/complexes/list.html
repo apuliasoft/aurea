@@ -19,11 +19,14 @@
                     <i class="fa fa-briefcase"></i>
                     <md-tooltip>Insegnanti</md-tooltip>
                   </md-button>
-                  <md-button class="icon-button" ng-click="goToEditComplex(complex)">
+                  <md-button class="icon-button" ng-click="goToEditComplex(complex)"
+                             ng-if="global.isAdmin() || global.isManager()">
                     <i class="fa fa-pencil"></i>
                     <md-tooltip>Modifica</md-tooltip>
                   </md-button>
-                  <md-button class="icon-button" as-confirmed-click="remove(complex)" as-confirm-message="Sicuro di voler eliminare questo plesso?">
+                  <md-button class="icon-button" as-confirmed-click="remove(complex)"
+                             as-confirm-message="Sicuro di voler eliminare questo plesso?"
+                             ng-if="global.isAdmin() || global.isManager()">
                     <i class="fa fa-trash"></i>
                     <md-tooltip>Cancella</md-tooltip>
                   </md-button>
@@ -37,7 +40,8 @@
     </div>
   </md-content>
 
-  <md-button class="md-fab md-primary add-button" ng-click="goToCreateComplex()">
+  <md-button class="md-fab md-primary add-button" ng-click="goToCreateComplex()"
+             ng-if="global.isAdmin() || global.isManager()">
     <i class="fa fa-plus"></i>
     <md-tooltip>Aggiungi</md-tooltip>
   </md-button>

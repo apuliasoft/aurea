@@ -3,7 +3,6 @@
 angular.module('aurea.complexes')
     .controller('ComplexesCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, Provinces, Complex) {
         $scope.global = Global;
-        $scope.provinces = Provinces.getProvinces();
 
         $scope.goToListComplexes = function () {
             SmartState.go('all complexes');
@@ -39,6 +38,8 @@ angular.module('aurea.complexes')
         };
 
         $scope.init = function () {
+            $scope.provinces = Provinces.getProvinces();
+
             if ($state.current.data.editMode) {
                 $scope.title = 'Modifica plesso';
                 findOne();

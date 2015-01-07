@@ -2,6 +2,7 @@
 
 angular.module('aurea.classRegistry')
     .controller('ClassRegistryCtrl', function ($scope, $filter, $stateParams, $mdDialog, $mdSidenav, $mdToast, _, SmartState, Global, ClassRegistry, ClassStudent, Teacher, Teaching) {
+        $scope.global = Global;
 
         $scope.$watch('classRegistry.date', function () {
             if ($scope.classRegistry) {

@@ -55,6 +55,7 @@ md-content {
 
 .breadcrumb .label {
   font-size: 12px;
+  font-weight: lighter;
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -62,6 +63,7 @@ md-content {
 }
 
 .breadcrumb .value {
+  font-size: 20px;
   display: block;
   white-space: nowrap;
   overflow: hidden;

@@ -8,14 +8,18 @@
             <md-item ng-repeat="student in students">
               <md-item-content class="item-content">
                 <div class="md-tile-content" ng-click="goToListParents(student)">
-                  <h3 class="item-content-text"><i class="fa fa-graduation-cap item-content-icon"></i> {{student | name}}</h3>
+                  <h3 class="item-content-text"><i class="fa fa-graduation-cap item-content-icon"></i> {{student |
+                    name}}</h3>
                 </div>
                 <div class="md-tile-right">
-                  <md-button class="icon-button" ng-click="goToEditStudent(student)">
+                  <md-button class="icon-button" ng-click="goToEditStudent(student)"
+                             ng-if="global.isAdmin() || global.isManager()">
                     <i class="fa fa-pencil"></i>
                     <md-tooltip>Modifica</md-tooltip>
                   </md-button>
-                  <md-button class="icon-button" as-confirmed-click="remove(student)" as-confirm-message="Sicuro di voler eliminare questo studente?">
+                  <md-button class="icon-button" as-confirmed-click="remove(student)"
+                             as-confirm-message="Sicuro di voler eliminare questo studente?"
+                             ng-if="global.isAdmin() || global.isManager()">
                     <i class="fa fa-trash"></i>
                     <md-tooltip>Cancella</md-tooltip>
                   </md-button>
@@ -29,7 +33,8 @@
     </div>
   </md-content>
 
-  <md-button class="md-fab md-primary add-button" ng-click="goToCreateStudent()">
+  <md-button class="md-fab md-primary add-button" ng-click="goToCreateStudent()"
+             ng-if="global.isAdmin() || global.isManager()">
     <i class="fa fa-plus"></i>
     <md-tooltip>Aggiungi</md-tooltip>
   </md-button>
