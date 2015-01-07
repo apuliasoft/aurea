@@ -17,10 +17,10 @@ module.exports = function(app) {
 
     // Setting up the users api
     app.get('/users', auth.check, users.all);
-    app.post('/users', users.create);
+    app.post('/users', auth.check, users.create);
     app.get('/users/:userId', auth.check, users.show);
-    app.put('/users/:userId', users.update);
-    app.delete('/users/:userId', users.destroy);
+    app.put('/users/:userId', auth.check, users.update);
+    app.delete('/users/:userId', auth.check, users.destroy);
 
     // Setting up the userId param
     app.param('userId', users.user);
