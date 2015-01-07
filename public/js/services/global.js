@@ -95,7 +95,7 @@ angular.module('aurea.system')
             user: {},
 
             isLoggedin: function () {
-                return this.user && this.user._id;
+                return _this._data.user && _this._data.user._id;
             },
 
             isAdmin: function () {

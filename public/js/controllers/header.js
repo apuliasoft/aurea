@@ -6,12 +6,14 @@ angular.module('aurea.system')
         $scope.menu = [];
 
         $rootScope.$on('$stateChangeSuccess', function (event, toState) {
-            var rules = toState.url.split('/');
+            var rules = toState.url.split('/').splice(1);
             $scope.menu.length = 0;
-            for (var i = 1; i < rules.length; i += 2) {
+            for (var i = 0; i < rules.length; i += 2) {
                 var template = menuTemplate[rules[i]];
                 if (!template) {
-                    console.error('Non esiste un tempate per ' + rules[i]);
+                    if(rules[i] && rules[i] != 'login') {
+                        console.error('Non esiste un template per ' + rules[i]);
+                    }
                     continue;
                 }
 

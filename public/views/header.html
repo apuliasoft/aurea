@@ -1,41 +1,41 @@
 <div ng-controller="HeaderCtrl">
+  <section ng-if="global.isLoggedin()">
+    <md-toolbar class="md-white-theme md-whiteframe-z1">
+      <h1 class="md-toolbar-tools">
+        <a ui-sref="home" layout="row" layout-align="center center">
+          <img src="../img/icons/logo.png" class="logo">
+          <span>Aurea</span>
+          <md-tooltip>Home</md-tooltip>
+        </a>
 
-  <md-toolbar class="md-white-theme md-whiteframe-z1" ng-if="global.isLoggedin()">
-    <h1 class="md-toolbar-tools">
-      <a ui-sref="home" layout="row" layout-align="center center">
-        <img src="../img/icons/logo.png" class="logo">
-        <span>Aurea</span>
-        <md-tooltip>Home</md-tooltip>
-      </a>
+        <span flex></span>
 
-      <span flex></span>
+        <section layout="row" layout-align="end">
+          <md-button ng-click="getFeedback()" class="icon-button">
+            <i class="fa fa-star-o"></i>
+            <md-tooltip>Feedback</md-tooltip>
+          </md-button>
+          <md-button ng-click="goToListCommunications()" ng-if="global.getSchool()" class="icon-button">
+            <i class="fa fa-bullhorn"></i>
+            <md-tooltip>Comunicazioni</md-tooltip>
+          </md-button>
+          <md-button ng-click="goToViewUser()" class="icon-button" ng-show="false">
+            <i class="fa fa-user"></i>
+            <md-tooltip>Profilo</md-tooltip>
+          </md-button>
+          <md-button ng-click="logout()" class="icon-button">
+            <i class="fa fa-sign-out"></i>
+            <md-tooltip>Logout</md-tooltip>
+          </md-button>
+        </section>
+      </h1>
+    </md-toolbar>
 
-      <section layout="row" layout-align="end">
-        <md-button ng-click="getFeedback()" class="icon-button">
-          <i class="fa fa-star-o"></i>
-          <md-tooltip>Feedback</md-tooltip>
-        </md-button>
-        <md-button ng-click="goToListCommunications()" ng-if="global.getSchool()" class="icon-button">
-          <i class="fa fa-bullhorn"></i>
-          <md-tooltip>Comunicazioni</md-tooltip>
-        </md-button>
-        <md-button ng-click="goToViewUser()" class="icon-button">
-          <i class="fa fa-user"></i>
-          <md-tooltip>Profilo</md-tooltip>
-        </md-button>
-        <md-button ng-click="logout()" class="icon-button">
-          <i class="fa fa-sign-out"></i>
-          <md-tooltip>Logout</md-tooltip>
-        </md-button>
-      </section>
-    </h1>
-  </md-toolbar>
-
-  <md-toolbar class="md-whiteframe-z1">
-    <div class="md-toolbar-tools">
-      <md-text-float ng-repeat="menuitem in menu" label="{{menuitem.label}}" ng-model="menuitem.value"
-                     class="breadcrumb" type="text" ng-disabled="true" ng-click="showListBottomSheet(menuitem)">
-    </div>
-  </md-toolbar>
-
+    <md-toolbar class="md-whiteframe-z1">
+      <div class="md-toolbar-tools">
+        <md-text-float ng-repeat="menuitem in menu" label="{{menuitem.label}}" ng-model="menuitem.value"
+                       class="breadcrumb" type="text" ng-disabled="true" ng-click="showListBottomSheet(menuitem)">
+      </div>
+    </md-toolbar>
+  </section>
 </div>

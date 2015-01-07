@@ -204,7 +204,7 @@ angular.module('aurea')
 
             // Make an AJAX call to logout user
             $http.post('logout').success(function () {
-                Global.setUser({});
+                Global.setCurrentUser({});
                 deferred.reject();
                 SmartState.go('login user');
             });
