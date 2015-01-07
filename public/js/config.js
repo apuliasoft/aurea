@@ -2,7 +2,7 @@
 
 //Setting up route
 angular.module('aurea')
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $analyticsProvider) {
 
         var checkLoggedin = ['$q', '$http', '$location', 'Global', function ($q, $http, $location, Global) {
             // Initialize a new promise

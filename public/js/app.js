@@ -10,6 +10,8 @@ angular.module('aurea', [
     'ui.select',
     'ngMaterial',
     'd3',
+    'angulartics',
+    'angulartics.google.analytics',
     'aurea.system',
     'aurea.users',
     'aurea.feedbacks',
