@@ -65,7 +65,7 @@ angular.module('aurea.system')
 
         $scope.showListBottomSheet = function (menuitem, $event) {
             var submenu = menuitem.submenu;
-            var label = menuitem.label + ' \'' + menuitem.value + '\''
+            var label = menuitem.label + ' \'' + menuitem.value + '\'';
 
             if (!submenu) {
                 return;

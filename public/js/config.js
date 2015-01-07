@@ -708,6 +708,9 @@ angular.module('aurea')
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     communication: checkCommunication
+                },
+                data: {
+                    editMode: true
                 }
             });
     });
