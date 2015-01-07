@@ -25,22 +25,47 @@ md-content {
   width: 100%;
 }
 
+.breadcrumbs {
+  position: relative;
+}
+
+.breadcrumbs .grather {
+  position: absolute;
+  top: 12px;
+  right: -12px;
+}
+
 .breadcrumb {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  height: 44px;
+  text-align: left;
+  max-width: 250px;
+  cursor: default;
+}
+
+.breadcrumb.clickable {
   cursor: pointer;
 }
 
-.breadcrumb label {
-  color: #fff !important;
+.breadcrumb.clickable:hover {
+  border-bottom: 1px dashed #fff;
+}
+
+.breadcrumb .label {
+  font-size: 12px;
+  display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.breadcrumb input {
-  width: 100%;
+.breadcrumb .value {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
-  color: #fff !important;
-  background: none !important;
 }
 
 md-bottom-sheet button {

@@ -33,8 +33,16 @@
 
     <md-toolbar class="md-whiteframe-z1">
       <div class="md-toolbar-tools">
-        <md-text-float ng-repeat="menuitem in menu" label="{{menuitem.label}}" ng-model="menuitem.value"
-                       class="breadcrumb" type="text" ng-disabled="true" ng-click="showListBottomSheet(menuitem)">
+        <section ng-repeat="menuitem in menu" class="breadcrumbs">
+          <button ng-click="showListBottomSheet(menuitem)" ng-class="{'clickable': menuitem.label}" class="breadcrumb"
+                  flex>
+            <span class="label">{{menuitem.label}}</span>
+            <span class="value">{{menuitem.value}}</span>
+          </button>
+          <span ng-if="!$last" class="grather">
+            <i class="fa fa-angle-right"></i>
+          </span>
+        </section>
       </div>
     </md-toolbar>
   </section>

@@ -26,7 +26,7 @@ angular.module('aurea.system')
                     });
                 } else {
                     $scope.menu.push({
-                        label: template.plural
+                        value: template.plural
                     });
                 }
             }
