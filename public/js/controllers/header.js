@@ -11,7 +11,7 @@ angular.module('aurea.system')
             for (var i = 0; i < rules.length; i += 2) {
                 var template = menuTemplate[rules[i]];
                 if (!template) {
-                    if(rules[i] && rules[i] != 'login') {
+                    if(rules[i] && rules[i] !== 'login') {
                         console.error('Non esiste un template per ' + rules[i]);
                     }
                     continue;

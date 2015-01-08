@@ -4,6 +4,8 @@
 angular.module('aurea')
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $analyticsProvider) {
 
+        $analyticsProvider.virtualPageviews(true);
+
         var checkLoggedin = ['$q', '$http', '$location', 'Global', function ($q, $http, $location, Global) {
             // Initialize a new promise
             var deferred = $q.defer();
