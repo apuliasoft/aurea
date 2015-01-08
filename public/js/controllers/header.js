@@ -36,7 +36,7 @@ angular.module('aurea.system')
             var feedback = new Feedback({rating: 3});
 
             $mdDialog.show({
-                controller: FeedbackCtrl,
+                controller: 'FeedbackCtrl',
                 templateUrl: 'views/feedbackDialog.html',
                 targetEvent: event,
                 locals: {feedback: feedback}
@@ -75,7 +75,7 @@ angular.module('aurea.system')
 
             $mdBottomSheet.show({
                 templateUrl: 'views/menu.html',
-                controller: MenuCtrl,
+                controller: 'MenuCtrl',
                 targetEvent: $event,
                 locals: {
                     label: label,
@@ -353,28 +353,50 @@ angular.module('aurea.system')
             }
         };
 
-        var MenuCtrl = function ($scope, $mdBottomSheet, label, submenu) {
-            $scope.label = label;
-            $scope.submenu = submenu;
+        //var MenuCtrl = ['$scope', '$mdBottomSheet', function ($scope, $mdBottomSheet, label, submenu) {
+        //    $scope.label = label;
+        //    $scope.submenu = submenu;
+        //
+        //    $scope.itemClick = function (submenuItem) {
+        //        $mdBottomSheet.hide(submenuItem);
+        //    };
+        //}];
 
-            $scope.itemClick = function (submenuItem) {
-                $mdBottomSheet.hide(submenuItem);
-            };
-        };
-
-        var FeedbackCtrl = function ($scope, $mdDialog, feedback) {
-
-            $scope.feedback = feedback;
-
-            $scope.cancel = function () {
-                $mdDialog.cancel();
-            };
-
-            $scope.save = function (isValid) {
-                if (isValid) {
-                    $mdDialog.hide($scope.feedback);
-                }
-            };
-        };
+        //var FeedbackCtrl = ['$scope', '$mdDialog', function ($scope, $mdDialog, feedback) {
+        //
+        //    $scope.feedback = feedback;
+        //
+        //    $scope.cancel = function () {
+        //        $mdDialog.cancel();
+        //    };
+        //
+        //    $scope.save = function (isValid) {
+        //        if (isValid) {
+        //            $mdDialog.hide($scope.feedback);
+        //        }
+        //    };
+        //}];
     })
+  .controller('MenuCtrl', function ($scope, $mdBottomSheet, label, submenu) {
+      $scope.label = label;
+      $scope.submenu = submenu;
+
+      $scope.itemClick = function (submenuItem) {
+          $mdBottomSheet.hide(submenuItem);
+      };
+  })
+  .controller('FeedbackCtrl', function ($scope, $mdDialog, feedback) {
+
+      $scope.feedback = feedback;
+
+      $scope.cancel = function () {
+          $mdDialog.cancel();
+      };
+
+      $scope.save = function (isValid) {
+          if (isValid) {
+              $mdDialog.hide($scope.feedback);
+          }
+      };
+  })
 ;

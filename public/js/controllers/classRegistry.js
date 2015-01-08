@@ -191,7 +191,7 @@ angular.module('aurea.classRegistry')
             });
 
             $mdDialog.show({
-                controller: TimeDialogCtrl,
+                controller: 'TimeDialogCtrl',
                 templateUrl: 'views/classRegistry/timeDialog.html',
                 targetEvent: event,
                 locals: {time: lateEntrance ? lateEntrance.timestamp : null, title: 'Entrata posticipata'}
@@ -233,7 +233,7 @@ angular.module('aurea.classRegistry')
             });
 
             $mdDialog.show({
-                controller: TimeDialogCtrl,
+                controller: 'TimeDialogCtrl',
                 templateUrl: 'views/classRegistry/timeDialog.html',
                 targetEvent: event,
                 locals: {time: earlyLeave ? earlyLeave.timestamp : null, title: 'Uscita anticipata'}
@@ -331,30 +331,56 @@ angular.module('aurea.classRegistry')
             return classRegistry;
         };
 
-        var TimeDialogCtrl = function ($scope, $mdDialog, time, title) {
-            var currentTime = new Date();
-            currentTime.setFullYear(1970);
-            currentTime.setMonth(1);
-            currentTime.setDate(1);
-            currentTime.setSeconds(0);
-            currentTime.setMilliseconds(0);
+        //var TimeDialogCtrl = function ($scope, $mdDialog, time, title) {
+        //    var currentTime = new Date();
+        //    currentTime.setFullYear(1970);
+        //    currentTime.setMonth(1);
+        //    currentTime.setDate(1);
+        //    currentTime.setSeconds(0);
+        //    currentTime.setMilliseconds(0);
+        //
+        //    $scope.deleteEnabled = !!time;
+        //    $scope.time = time ? time : currentTime;
+        //    $scope.title = title;
+        //
+        //    $scope.cancel = function () {
+        //        $mdDialog.cancel();
+        //    };
+        //
+        //    $scope.save = function (isValid) {
+        //        if (isValid) {
+        //            $mdDialog.hide({time: $scope.time});
+        //        }
+        //    };
+        //
+        //    $scope.delete = function () {
+        //        $mdDialog.hide();
+        //    };
+        //};
+    })
+  .controller('TimeDialogCtrl', function ($scope, $mdDialog, time, title) {
+      var currentTime = new Date();
+      currentTime.setFullYear(1970);
+      currentTime.setMonth(1);
+      currentTime.setDate(1);
+      currentTime.setSeconds(0);
+      currentTime.setMilliseconds(0);
 
-            $scope.deleteEnabled = !!time;
-            $scope.time = time ? time : currentTime;
-            $scope.title = title;
+      $scope.deleteEnabled = !!time;
+      $scope.time = time ? time : currentTime;
+      $scope.title = title;
 
-            $scope.cancel = function () {
-                $mdDialog.cancel();
-            };
+      $scope.cancel = function () {
+          $mdDialog.cancel();
+      };
 
-            $scope.save = function (isValid) {
-                if (isValid) {
-                    $mdDialog.hide({time: $scope.time});
-                }
-            };
+      $scope.save = function (isValid) {
+          if (isValid) {
+              $mdDialog.hide({time: $scope.time});
+          }
+      };
 
-            $scope.delete = function () {
-                $mdDialog.hide();
-            };
-        };
-    });
+      $scope.delete = function () {
+          $mdDialog.hide();
+      };
+  });
