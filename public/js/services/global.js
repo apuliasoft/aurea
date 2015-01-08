@@ -126,6 +126,14 @@ angular.module('aurea.system')
                 _this._data.user = newUser;
             },
 
+            isItMe: function (user) {
+                return  _this._data.user._id === user._id;
+            },
+
+            isParentOf: function (student) {
+                return _this._data.isParent() && _this._data.user.parent.student === student._id;
+            },
+
             getUsers: function () {
                 return users;
             },

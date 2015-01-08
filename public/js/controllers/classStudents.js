@@ -4,17 +4,6 @@ angular.module('aurea.classStudents')
   .controller('ClassStudentsCtrl', function ($scope, $stateParams, SmartState, _, Global, ClassStudent) {
       $scope.global = Global;
 
-      $scope.isItMe = function (student) {
-          return student.user._id === Global.getCurrentUser()._id;
-      };
-
-      $scope.isParentOf = function (student) {
-          if (Global.getCurrentUser().parent) {
-              return student._id === Global.getCurrentUser().parent.student;
-          }
-          return false;
-      };
-
       $scope.goToStudentStats = function (student) {
           SmartState.go('student stats', {studentId: student._id});
       };

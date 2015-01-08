@@ -13,7 +13,8 @@
                   </h3>
                 </div>
                 <div class="md-tile-right">
-                  <md-button class="icon-button" ng-click="goToStudentStats(student)">
+                  <md-button class="icon-button" ng-click="goToStudentStats(student)"
+                             ng-if="global.isAdmin() || global.isManager() || global.isItMe(student.user) || global.isParentOf(student)">
                     <i class="fa fa-line-chart"></i>
                     <md-tooltip>Andamento</md-tooltip>
                   </md-button>
