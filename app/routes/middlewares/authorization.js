@@ -510,12 +510,40 @@ var authorizations = [
         }
     },
     {
-        role: ['parent'],
+        role: ['manager'],
+        method: 'GET',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/students/:studentId',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId;
+        }
+    },
+    {
+        role: ['teacher'],
         method: 'GET',
         path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/students/:studentId',
         custom: function (req) {
             return req.user.school.toString() === req.params.schoolId &&
               req.user.complex.toString() === req.params.complexId;
+        }
+    },
+    {
+        role: ['parent'],
+        method: 'GET',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/students/:studentId',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.user.complex.toString() === req.params.complexId &&
+              req.user.parent.student.toString() === req.params.studentId;
+        }
+    },
+    {
+        role: ['student'],
+        method: 'GET',
+        path: '/schools/:schoolId/complexes/:complexId/academicYears/:academicYearId/schoolClasses/:schoolClassId/students/:studentId',
+        custom: function (req) {
+            return req.user.school.toString() === req.params.schoolId &&
+              req.user.complex.toString() === req.params.complexId &&
+              req.user.student._id.toString() === req.params.studentId;
         }
     },
 
