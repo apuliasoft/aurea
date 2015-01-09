@@ -2,8 +2,35 @@
 
 angular.module('aurea.users')
     .controller('LoginCtrl', function ($scope, $http, $mdToast, SmartState) {
-        // This object will be filled by the form
-        $scope.user = {};
+        $scope.accounts = [
+            {
+                role: 'Dirigente',
+                email: 'dirigente@demo.it',
+                password: 'dirigenteDemo'
+            },
+            {
+                role: 'Docente',
+                email: 'docente@demo.it',
+                password: 'docenteDemo'
+            },
+            {
+                role: 'Studente',
+                email: 'studente@demo.it',
+                password: 'studenteDemo'
+            },
+            {
+                role: 'Genitore',
+                email: 'genitore@demo.it',
+                password: 'genitoreDemo'
+            }
+        ];
+
+        $scope.setCredentials = function (account) {
+            $scope.user = {
+                email: account.email,
+                password: account.password
+            };
+        };
 
         // Register the login() function
         $scope.login = function () {

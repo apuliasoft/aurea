@@ -1,49 +1,41 @@
 <section ng-controller="LoginCtrl" flex layout="column" layout-fill>
 
   <!-- Da cancellare nella versione finale-->
-  <md-content  layout="row" layout-align="center">
+  <md-content layout="row" layout-align="center">
 
-    <md-content flex class="md-padding">
+    <md-content flex class="md-padding intro">
 
-      <div class="md-whiteframe-z1" layout-align="center"
-          style="
-  -webkit-user-select: text;
-  -khtml-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-          ">
+      <div class="md-whiteframe-z1" layout-align="center">
         <md-toolbar class="md-grey-theme">
-          <h4 class="md-toolbar-tools">
+          <h2 class="md-toolbar-tools">
             <span>Istruzioni</span>
-          </h4>
+          </h2>
         </md-toolbar>
-        <md-content class="md-padding">
-          Aurea &egrave; una piattaforma web di registro elettronico. Questa demo contiene dei dati di esempio e viene
-          resettata quotidianamente. Sono forniti 4 account demo, uno per ogni ruolo possibile nel sistema. <br/>
-          Di seguito vengono fornite le credenziali per accedere con ciascuno dei ruoli. <br/>
+        <md-content class="md-padding istruction">
+          <p>Aurea &egrave; una piattaforma web di <b>registro elettronico</b> open source realizzata da <a
+              href="http://www.apuliasoft.com" target="_blank">ApuliaSoft</a>.</p>
 
-          <md-content layout="row">
-            <section flex>
-              <h5>Dirigente</h5>
-              <b>email:</b> dirigente@demo.it<br/>
-              <b>password:</b> dirigenteDemo
-            </section>
-            <section flex>
-              <h5>Docente</h5>
-              <b>email:</b> docente@demo.it<br/>
-              <b>password:</b> docenteDemo
-            </section>
-            <section flex>
-              <h5>Studente</h5>
-              <b>email:</b> studente@demo.it<br/>
-              <b>password:</b> studenteDemo
-            </section>
-            <section flex>
-              <h5>Genitore</h5>
-              <b>email:</b> genitore@demo.it<br/>
-              <b>password:</b> genitoreDemo
-            </section>
+          <p>Il codice di Aurea risiede interamente sul GitHub all'indirizzo <a
+              href="http://apuliasoft.github.io/aurea" target="_blank">http://apuliasoft.github.io/aurea</a> dove
+            potrete trovare
+            maggiori informazioni in merito al progetto.</p>
+
+          <p>In questo sito avete a disposizione una demo contenente dati di esempio resettati quotidianamente.
+            Questa demo ha lo scopo di permettere ai dirigenti scolastici di valutare il prodotto e di inviarci
+            feedback (tramite pulsante <i class="fa fa-star-o"></i> in alto a destra dopo il login) su qualunque aspetto
+            della piattaforma, permettendone la continua evoluzione.</p>
+
+          <p>Per accedere al sistema forniamo 4 account demo con relative credenziali, uno per ogni ruolo disponibile
+            nel sistema. Cliccare su una delle credenziali e successivamente cliccare su <i
+                class="fa fa-sign-in"></i> (sar&agrave; sempre possibile tornare a questa schermata tramite <i
+                class="fa fa-sign-out"></i> in alto a destra dopo il logini).</p>
+
+          <md-content layout="row" layout-align="space-around center">
+            <md-button ng-repeat="account in accounts" ng-click="setCredentials(account)">
+              <h4>{{ account.role }}</h4>
+              <span><b>EMAIL:</b> {{ account.email }}</span>
+              <span><b>PASSWD:</b> {{ account.password }}</span>
+            </md-button>
           </md-content>
         </md-content>
       </div>
