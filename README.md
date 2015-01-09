@@ -6,6 +6,8 @@ Aurea: un registro elettronico aperto
 
 ![logo name payoff](https://f.cloud.github.com/assets/666044/1408450/51af2684-3d82-11e3-94cc-97a9a0949c62.png)
 
+#### Prova la [Demo](http://aureaapp.it/)
+
 ### Chi Siamo
 Il progetto AUREA si propone di creare un servizio orientato al web rivolto a tutti gli istituti scolastici della Puglia, che possa permettere l’adeguamento della amministrazione scolastica al decreto legge 6 luglio 2012 n. 95 - “Spending Review” art 7, che obbliga all’utilizzo del **registro elettronico** a partire dall’anno scolastico 2012-2013.
 
