@@ -12,6 +12,10 @@ body {
   user-select: none;
 }
 
+a {
+  color: #808080;
+}
+
 md-content {
   overflow: visible;
 }
@@ -43,15 +47,12 @@ md-content {
   text-align: left;
   width: 100%;
   max-width: 250px;
-  cursor: default;
+  text-transform: none;
 }
 
-.breadcrumb.clickable {
-  cursor: pointer;
-}
-
-.breadcrumb.clickable:hover {
-  border-bottom: 1px dashed #fff;
+.breadcrumb[disabled] {
+  color: #fff !important;
+  cursor: default !important;
 }
 
 .breadcrumb .label {
@@ -171,6 +172,10 @@ md-bottom-sheet button span {
   opacity: .8;
 }
 
+:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
 ::-webkit-datetime-edit-fields-wrapper {
   visibility: hidden;
 }
@@ -259,12 +264,6 @@ md-input-group.short input, md-input-group.short select {
 .menu-item {
   margin: 0;
   padding: 10px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .menu-item:hover {
@@ -293,4 +292,14 @@ md-input-group.short input, md-input-group.short select {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.intro button {
+  text-transform: none;
+  font-weight: 200;
+  text-align: left;
+}
+
+.intro button span {
+  display: block;
 }

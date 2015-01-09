@@ -34,11 +34,11 @@
     <md-toolbar class="md-whiteframe-z1">
       <div class="md-toolbar-tools">
         <section ng-repeat="menuitem in menu" class="breadcrumbs">
-          <button ng-click="showListBottomSheet(menuitem)" ng-class="{'clickable': menuitem.label}" class="breadcrumb">
-            <span class="label">{{menuitem.label}}</span>
+          <md-button ng-click="showListBottomSheet(menuitem)" ng-disabled="!menuitem.label" class="breadcrumb">
+            <span class="label" ng-if="menuitem.label">{{menuitem.label}}</span>
             <span class="value">{{menuitem.value}}</span>
             <md-tooltip ng-if="menuitem.label">Azioni per {{menuitem.label}}</md-tooltip>
-          </button>
+          </md-button>
           <span ng-if="!$last" class="grather">
             <i class="fa fa-angle-right"></i>
           </span>
