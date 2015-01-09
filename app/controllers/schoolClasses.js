@@ -133,6 +133,7 @@ exports.studentStats = function (req, res){
           absences: {$addToSet: '$date'}
       })
       .exec(function (err, result){
+        console.log(result[0]);
           if(err) {
               res.jsonp(400, err);
           } else {
