@@ -53,7 +53,6 @@ module.exports = function(passport) {
 
                 user = _.pick(user, ['_id', 'name', 'email', 'role', 'school', 'complex']);
 
-                console.log("Local Strategy");
                 switch(user.role) {
                     case 'parent':
                         Parent.findOne({user: user._id}, function(err, parent){
