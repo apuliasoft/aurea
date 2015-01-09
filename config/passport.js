@@ -4,6 +4,8 @@ var mongoose = require('mongoose'),
     LocalStrategy = require('passport-local').Strategy,
     User = mongoose.model('User'),
     Parent = mongoose.model('Parent'),
+    Student = mongoose.model('Student'),
+    Teacher = mongoose.model('Teacher'),
     config = require('./config'),
     _ = require('lodash');
 
@@ -51,10 +53,23 @@ module.exports = function(passport) {
 
                 user = _.pick(user, ['_id', 'name', 'email', 'role', 'school', 'complex']);
 
+                console.log("Local Strategy");
                 switch(user.role) {
                     case 'parent':
                         Parent.findOne({user: user._id}, function(err, parent){
                             user.parent = parent;
+                            return done(null, user);
+                        });
+                        break;
+                    case 'student':
+                        Student.findOne({user: user._id}, function(err, student){
+                            user.student = student;
+                            return done(null, user);
+                        });
+                        break;
+                    case 'teacher':
+                        Teacher.findOne({user: user._id}, function(err, teacher){
+                            user.teacher = teacher;
                             return done(null, user);
                         });
                         break;
