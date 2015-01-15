@@ -1,39 +1,31 @@
-<section data-ng-controller="ClassStudentsCtrl" data-ng-init="find()">
+<section ng-controller="ClassStudentsCtrl" ng-init="find()" flex layout="column" layout-fill>
 
-  <div class="row">
-    <div class="col-xs-4" data-ng-repeat="student in classStudents | orderBy:['lastName', 'firstName']">
-      <div class="thumbnail well well-sm">
-        <h3>{{student | name:true}}</h3>
-        <p>{{student.user.email}}</p>
-        <p>{{student.birthDate | date}}</p>
-
-        <div class="pull-right">
-          <div class="btn-group btn-group-xs">
-            <button class="btn btn-primary" role="button" data-ng-click="goToStudentStats(student)" title="Modifica"
-                    data-ng-if="global.isAdmin() || global.isManager() || global.isTeacher() || isItMe(student) || isParentOf(student)">
-              <i class="fa fa-pie-chart"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="clearfix"></div>
+  <md-content class="md-padding" md-scroll-y flex>
+    <div layout="column" layout-fill class="content">
+      <div flex layout="column">
+        <section class="md-whiteframe-z1">
+          <md-list>
+            <md-item ng-repeat="student in classStudents">
+              <md-item-content class="item-content">
+                <div class="md-tile-content" ng-click="goToListParents(student)">
+                  <h3 class="item-content-text">
+                    <i class="fa fa-graduation-cap item-content-icon"></i> {{student | name}}
+                  </h3>
+                </div>
+                <div class="md-tile-right">
+                  <md-button class="icon-button" ng-click="goToStudentStats(student)"
+                             ng-if="global.isAdmin() || global.isManager() || global.isTeacher() || global.isItMe(student.user) || global.isParentOf(student)">
+                    <i class="fa fa-line-chart"></i>
+                    <md-tooltip>Andamento</md-tooltip>
+                  </md-button>
+                </div>
+              </md-item-content>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-item>
+          </md-list>
+        </section>
       </div>
     </div>
-  </div>
-
-  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-    <div class="container">
-      <p class="navbar-text">
-        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-      </p>
-
-      <div class="nav navbar-nav navbar-right btn-group">
-        <!--<button type="button" data-ng-click="goToCreateStudent()" class="btn btn-primary navbar-btn" title="Aggiungi"-->
-                <!--data-ng-if="global.isAdmin() || global.isManager()">-->
-          <!--<i class="fa fa-plus"></i> Aggiungi-->
-        <!--</button>-->
-      </div>
-    </div>
-  </nav>
+  </md-content>
 
 </section>

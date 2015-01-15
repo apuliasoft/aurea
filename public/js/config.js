@@ -2,21 +2,23 @@
 
 //Setting up route
 angular.module('aurea')
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $analyticsProvider) {
+
+        $analyticsProvider.virtualPageviews(true);
 
         var checkLoggedin = ['$q', '$http', '$location', 'Global', function ($q, $http, $location, Global) {
             // Initialize a new promise
             var deferred = $q.defer();
 
             // Make an AJAX call to check if the user is logged in
-            $http.get('/loggedin').success(function (user) {
+            $http.get('loggedin').success(function (user) {
                 // Authenticated
                 if (user !== '0') {
-                    Global.setUser(user);
+                    Global.setCurrentUser(user);
                     deferred.resolve();
                 } else { // Not Authenticated
-                    if (Global.getUser() !== {}) {
-                        Global.setUser({});
+                    if (Global.getCurrentUser() !== {}) {
+                        Global.setCurrentUser({});
                     }
 
                     deferred.reject();
@@ -28,66 +30,33 @@ angular.module('aurea')
 
         }];
 
-        var checkClassRegistry = ['$q', '$stateParams', 'ClassRegistry', function ($q, $stateParams, ClassRegistry) {
+        var checkUser = ['$q', '$mdToast', '$stateParams', 'Global', function ($q, $mdToast, $stateParams, Global) {
             var deferred = $q.defer();
 
-            var date = new Date($stateParams.date);
-            var schoolClass = $stateParams.schoolClassId;
-            var school = $stateParams.schoolId;
-            var complex = $stateParams.complexId;
-            var academicYear = $stateParams.academicYearId;
-
-            ClassRegistry.get({
-                schoolClassId: schoolClass,
-                date: date.toISOString(),
-                schoolId: school,
-                complexId: complex,
-                academicYearId: academicYear
-            }).$promise.then(function (classRegistry) {
-                    deferred.resolve(classRegistry);
+            Global.setUser($stateParams.userId)
+                .then(function () {
+                    deferred.resolve();
                 }, function () {
+                    $mdToast.show({
+                        template: '<md-toast>L\'utente selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
+                    });
                     deferred.reject();
                 });
 
             return deferred.promise;
         }];
 
-        var checkTeachingRegistry = ['$q', '$stateParams', 'TeachingRegistry', function ($q, $stateParams, TeachingRegistry) {
-            var deferred = $q.defer();
-
-            var date = new Date($stateParams.date);
-            var schoolClass = $stateParams.schoolClassId;
-            var school = $stateParams.schoolId;
-            var complex = $stateParams.complexId;
-            var academicYear = $stateParams.academicYearId;
-            var teaching = $stateParams.teachingId;
-
-            TeachingRegistry.get({
-                schoolClassId: schoolClass,
-                date: date.toISOString(),
-                schoolId: school,
-                complexId: complex,
-                academicYearId: academicYear,
-                teachingId: teaching
-            }).$promise.then(function (teachingRegistry) {
-                    deferred.resolve(teachingRegistry);
-                }, function () {
-                    deferred.reject();
-                });
-
-            return deferred.promise;
-        }];
-
-        var checkSchool = ['$q', 'ngToast', '$stateParams', 'School', 'Global', function ($q, ngToast, $stateParams, School, Global) {
+        var checkSchool = ['$q', '$mdToast', '$stateParams', 'Global', function ($q, $mdToast, $stateParams, Global) {
             var deferred = $q.defer();
 
             Global.setSchool($stateParams.schoolId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'La scuola selezionata non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>La scuola selezionata non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });
@@ -95,16 +64,16 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        var checkComplex = ['$q', 'ngToast', '$stateParams', 'Complex', 'Global', function ($q, ngToast, $stateParams, Complex, Global) {
+        var checkComplex = ['$q', '$mdToast', '$stateParams', 'Global', function ($q, $mdToast, $stateParams, Global) {
             var deferred = $q.defer();
 
             Global.setComplex($stateParams.schoolId, $stateParams.complexId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'Il plesso selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>Il plesso selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });
@@ -112,16 +81,16 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        var checkAcademicYear = ['$q', 'ngToast', '$stateParams', 'AcademicYear', 'Global', function ($q, ngToast, $stateParams, AcademicYear, Global) {
+        var checkAcademicYear = ['$q', '$mdToast', '$stateParams', 'Global', function ($q, $mdToast, $stateParams, Global) {
             var deferred = $q.defer();
 
             Global.setAcademicYear($stateParams.schoolId, $stateParams.complexId, $stateParams.academicYearId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'L\'anno accademico selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>L\'anno scolastico selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });
@@ -129,16 +98,16 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        var checkSchoolClass = ['$q', 'ngToast', '$stateParams', 'AcademicYear', 'Global', function ($q, ngToast, $stateParams, AcademicYear, Global) {
+        var checkSchoolClass = ['$q', '$mdToast', '$stateParams', 'Global', function ($q, $mdToast, $stateParams, Global) {
             var deferred = $q.defer();
 
             Global.setSchoolClass($stateParams.schoolId, $stateParams.complexId, $stateParams.academicYearId, $stateParams.schoolClassId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'La classe selezionata non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>La classe selezionata non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });
@@ -146,16 +115,16 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        var checkStudent = ['$q', 'ngToast', '$stateParams', 'Student', 'Global', function ($q, ngToast, $stateParams, Student, Global) {
+        var checkStudent = ['$q', '$mdToast', '$stateParams', 'Global', function ($q, $mdToast, $stateParams, Global) {
             var deferred = $q.defer();
 
             Global.setStudent($stateParams.schoolId, $stateParams.complexId, $stateParams.studentId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'Lo studente selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>Lo studente selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });
@@ -163,15 +132,67 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        var checkTeaching = ['$q', 'ngToast', '$stateParams', 'Global', function ($q, ngToast, $stateParams, Global) {
+        var checkParent = ['$q', '$mdToast', '$stateParams', 'Global', function ($q, $mdToast, $stateParams, Global) {
             var deferred = $q.defer();
+
+            Global.setParent($stateParams.schoolId, $stateParams.complexId, $stateParams.studentId, $stateParams.parentId)
+                .then(function () {
+                    deferred.resolve();
+                }, function () {
+                    $mdToast.show({
+                        template: '<md-toast>Il genitore selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
+                    });
+                    deferred.reject();
+                });
+
+            return deferred.promise;
+        }];
+
+        var checkTeacher = ['$q', '$mdToast', '$stateParams', 'Global', function ($q, $mdToast, $stateParams, Global) {
+            var deferred = $q.defer();
+
+            Global.setTeacher($stateParams.schoolId, $stateParams.complexId, $stateParams.teacherId)
+                .then(function () {
+                    deferred.resolve();
+                }, function () {
+                    $mdToast.show({
+                        template: '<md-toast>L\'insegnante selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
+                    });
+                    deferred.reject();
+                });
+
+            return deferred.promise;
+        }];
+
+        var checkTeaching = ['$q', '$mdToast', '$stateParams', 'Global', function ($q, $mdToast, $stateParams, Global) {
+            var deferred = $q.defer();
+
             Global.setTeaching($stateParams.schoolId, $stateParams.complexId, $stateParams.academicYearId, $stateParams.schoolClassId, $stateParams.teachingId)
                 .then(function () {
                     deferred.resolve();
                 }, function () {
-                    ngToast.create({
-                        content: 'L\'insegnamento selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.',
-                        class: 'warning'
+                    $mdToast.show({
+                        template: '<md-toast>L\'insegnamento selezionato non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
+                    });
+                    deferred.reject();
+                });
+
+            return deferred.promise;
+        }];
+
+        var checkCommunication = ['$q', '$mdToast', '$stateParams', 'Global', function ($q, $mdToast, $stateParams, Global) {
+            var deferred = $q.defer();
+
+            Global.setCommunication($stateParams.schoolId, $stateParams.communicationId)
+                .then(function () {
+                    deferred.resolve();
+                }, function () {
+                    $mdToast.show({
+                        template: '<md-toast>La comunicatione selezionata non esiste o non si hanno le giuste autorizzazioni per accedervi.</md-toast>',
+                        hideDelay: 2000
                     });
                     deferred.reject();
                 });
@@ -184,8 +205,8 @@ angular.module('aurea')
             var deferred = $q.defer();
 
             // Make an AJAX call to logout user
-            $http.post('/logout').success(function () {
-                Global.setUser({});
+            $http.post('logout').success(function () {
+                Global.setCurrentUser({});
                 deferred.reject();
                 SmartState.go('login user');
             });
@@ -193,7 +214,7 @@ angular.module('aurea')
             return deferred.promise;
         }];
 
-        $httpProvider.interceptors.push(['$q', '$location', function ($q, $location) {
+        $httpProvider.interceptors.push(['$q', function ($q) {
             return {
                 'response': function (response) {
                     return response || $q.when(response);
@@ -204,10 +225,8 @@ angular.module('aurea')
 
                     switch (status) {
                         case 401:
-                            $location.url('/401');
                             return $q.reject(rejection);
                         case 404:
-                            $location.url('/404');
                             return $q.reject(rejection);
                     }
 
@@ -222,7 +241,6 @@ angular.module('aurea')
 
         // states for my app
         $stateProvider
-
 
             .state('home', {
                 url: '/',
@@ -264,17 +282,24 @@ angular.module('aurea')
 
             .state('create user', {
                 url: '/utenti/crea',
-                templateUrl: 'views/users/create.html',
+                templateUrl: 'views/users/form.html',
                 resolve: {
                     loggedin: checkLoggedin
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit user', {
                 url: '/utenti/:userId/modifica',
-                templateUrl: 'views/users/edit.html',
+                templateUrl: 'views/users/form.html',
                 resolve: {
-                    loggedin: checkLoggedin
+                    loggedin: checkLoggedin,
+                    user: checkUser
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -282,7 +307,8 @@ angular.module('aurea')
                 url: '/utenti/:userId',
                 templateUrl: 'views/users/view.html',
                 resolve: {
-                    loggedin: checkLoggedin
+                    loggedin: checkLoggedin,
+                    user: checkUser
                 }
             })
 
@@ -296,20 +322,24 @@ angular.module('aurea')
 
             .state('create school', {
                 url: '/scuole/nuova',
-                templateUrl: 'views/schools/create.html',
+                templateUrl: 'views/schools/form.html',
                 resolve: {
                     loggedin: checkLoggedin
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit school', {
                 url: '/scuole/:schoolId',
-                templateUrl: 'views/schools/edit.html',
+                templateUrl: 'views/schools/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
-                    provices: ['Provinces', function (Provinces) {
-                        return Provinces.loadProvinces();
-                    }]
+                    school: checkSchool
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -324,30 +354,37 @@ angular.module('aurea')
 
             .state('create complex', {
                 url: '/scuole/:schoolId/plessi/nuovo',
-                templateUrl: 'views/complexes/create.html',
+                templateUrl: 'views/complexes/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     provices: function (Provinces) {
                         return Provinces.loadProvinces();
                     }
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit complex', {
                 url: '/scuole/:schoolId/plessi/:complexId',
-                templateUrl: 'views/complexes/edit.html',
+                templateUrl: 'views/complexes/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
+                    complex: checkComplex,
                     provices: function (Provinces) {
                         return Provinces.loadProvinces();
                     }
+                },
+                data: {
+                    editMode: true
                 }
             })
 
             .state('all academic years', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici',
                 templateUrl: 'views/academicYears/list.html',
                 resolve: {
                     loggedin: checkLoggedin,
@@ -357,22 +394,29 @@ angular.module('aurea')
             })
 
             .state('create academic year', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/nuovo',
-                templateUrl: 'views/academicYears/create.html',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/nuovo',
+                templateUrl: 'views/academicYears/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit academic year', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId',
-                templateUrl: 'views/academicYears/edit.html',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId',
+                templateUrl: 'views/academicYears/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
-                    complex: checkComplex
+                    complex: checkComplex,
+                    academicYear: checkAcademicYear
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -388,21 +432,28 @@ angular.module('aurea')
 
             .state('create teacher', {
                 url: '/scuole/:schoolId/plessi/:complexId/insegnanti/nuovo',
-                templateUrl: 'views/teachers/create.html',
+                templateUrl: 'views/teachers/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit teacher', {
                 url: '/scuole/:schoolId/plessi/:complexId/insegnanti/:teacherId',
-                templateUrl: 'views/teachers/edit.html',
+                templateUrl: 'views/teachers/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
-                    complex: checkComplex
+                    complex: checkComplex,
+                    teacher: checkTeacher
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -418,21 +469,28 @@ angular.module('aurea')
 
             .state('create student', {
                 url: '/scuole/:schoolId/plessi/:complexId/alunni/nuovo',
-                templateUrl: 'views/students/create.html',
+                templateUrl: 'views/students/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit student', {
                 url: '/scuole/:schoolId/plessi/:complexId/alunni/:studentId',
-                templateUrl: 'views/students/edit.html',
+                templateUrl: 'views/students/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
-                    complex: checkComplex
+                    complex: checkComplex,
+                    student: checkStudent
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -449,28 +507,35 @@ angular.module('aurea')
 
             .state('create parent', {
                 url: '/scuole/:schoolId/plessi/:complexId/alunni/:studentId/genitori/nuovo',
-                templateUrl: 'views/parents/create.html',
+                templateUrl: 'views/parents/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex,
                     student: checkStudent
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit parent', {
                 url: '/scuole/:schoolId/plessi/:complexId/alunni/:studentId/genitori/:parentId',
-                templateUrl: 'views/parents/edit.html',
+                templateUrl: 'views/parents/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex,
-                    student: checkStudent
+                    student: checkStudent,
+                    parent: checkParent
+                },
+                data: {
+                    editMode: true
                 }
             })
 
             .state('all school classes', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi',
                 templateUrl: 'views/schoolClasses/list.html',
                 resolve: {
                     loggedin: checkLoggedin,
@@ -481,29 +546,36 @@ angular.module('aurea')
             })
 
             .state('create school class', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/crea',
-                templateUrl: 'views/schoolClasses/create.html',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi/crea',
+                templateUrl: 'views/schoolClasses/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex,
                     academicYear: checkAcademicYear
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit school class', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId',
-                templateUrl: 'views/schoolClasses/edit.html',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi/:schoolClassId',
+                templateUrl: 'views/schoolClasses/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex,
-                    academicYear: checkAcademicYear
+                    academicYear: checkAcademicYear,
+                    schoolClass: checkSchoolClass
+                },
+                data: {
+                    editMode: true
                 }
             })
 
             .state('all class students', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/alunni',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi/:schoolClassId/alunni',
                 templateUrl: 'views/classStudents/list.html',
                 resolve: {
                     loggedin: checkLoggedin,
@@ -515,7 +587,7 @@ angular.module('aurea')
             })
 
             .state('student stats', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/alunni/:studentId',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi/:schoolClassId/alunni/:studentId',
                 templateUrl: 'views/classStudents/stats.html',
                 resolve: {
                     loggedin: checkLoggedin,
@@ -528,7 +600,7 @@ angular.module('aurea')
             })
 
             .state('all teachings', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi/:schoolClassId/insegnamenti',
                 templateUrl: 'views/teachings/list.html',
                 resolve: {
                     loggedin: checkLoggedin,
@@ -540,46 +612,52 @@ angular.module('aurea')
             })
 
             .state('create teaching', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti/crea',
-                templateUrl: 'views/teachings/create.html',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi/:schoolClassId/insegnamenti/crea',
+                templateUrl: 'views/teachings/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex,
                     academicYear: checkAcademicYear,
                     schoolClass: checkSchoolClass
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit teaching', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti/:teachingId',
-                templateUrl: 'views/teachings/edit.html',
-                resolve: {
-                    loggedin: checkLoggedin,
-                    school: checkSchool,
-                    complex: checkComplex,
-                    academicYear: checkAcademicYear,
-                    schoolClass: checkSchoolClass
-                }
-            })
-
-            .state('class registry by date', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/registri-di-classe/:date',
-                templateUrl: 'views/classRegistry/edit.html',
-                controller: 'ClassRegistryCtrl',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi/:schoolClassId/insegnamenti/:teachingId',
+                templateUrl: 'views/teachings/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex,
                     academicYear: checkAcademicYear,
                     schoolClass: checkSchoolClass,
-                    classRegistry: checkClassRegistry
+                    teaching: checkTeaching
+                },
+                data: {
+                    editMode: true
+                }
+            })
+
+            .state('class registry by date', {
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi/:schoolClassId/registri-di-classe/:date',
+                templateUrl: 'views/classRegistry/registry.html',
+                controller: 'ClassRegistryCtrl',
+                resolve: {
+                    loggedin: checkLoggedin,
+                    school: checkSchool,
+                    complex: checkComplex,
+                    academicYear: checkAcademicYear,
+                    schoolClass: checkSchoolClass
                 }
             })
 
             .state('teaching registry by date', {
-                url: '/scuole/:schoolId/plessi/:complexId/anni-accademici/:academicYearId/classi/:schoolClassId/insegnamenti/:teachingId/registri-personali/:date',
-                templateUrl: 'views/teachingRegistry/edit.html',
+                url: '/scuole/:schoolId/plessi/:complexId/anni-scolastici/:academicYearId/classi/:schoolClassId/insegnamenti/:teachingId/registri-personali/:date',
+                templateUrl: 'views/teachingRegistry/registry.html',
                 controller: 'TeachingRegistryCtrl',
                 resolve: {
                     loggedin: checkLoggedin,
@@ -587,8 +665,7 @@ angular.module('aurea')
                     complex: checkComplex,
                     academicYear: checkAcademicYear,
                     schoolClass: checkSchoolClass,
-                    teaching: checkTeaching,
-                    teachingRegistry: checkTeachingRegistry
+                    teaching: checkTeaching
                 }
             })
 
@@ -603,19 +680,26 @@ angular.module('aurea')
 
             .state('create communication', {
                 url: '/scuole/:schoolId/comunicazioni/nuovo',
-                templateUrl: 'views/communications/create.html',
+                templateUrl: 'views/communications/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool
+                },
+                data: {
+                    editMode: false
                 }
             })
 
             .state('edit communication', {
                 url: '/scuole/:schoolId/comunicazioni/:communicationId/modifica',
-                templateUrl: 'views/communications/edit.html',
+                templateUrl: 'views/communications/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
-                    school: checkSchool
+                    school: checkSchool,
+                    communication: checkCommunication
+                },
+                data: {
+                    editMode: true
                 }
             })
 
@@ -624,7 +708,11 @@ angular.module('aurea')
                 templateUrl: 'views/communications/view.html',
                 resolve: {
                     loggedin: checkLoggedin,
-                    school: checkSchool
+                    school: checkSchool,
+                    communication: checkCommunication
+                },
+                data: {
+                    editMode: true
                 }
             });
     });
@@ -633,6 +721,12 @@ angular.module('aurea')
 angular.module('aurea')
     .config(function ($locationProvider) {
         $locationProvider.hashPrefix('!');
+    });
+
+//Setting uiSelect theme
+angular.module('aurea')
+    .config(function(uiSelectConfig) {
+        uiSelectConfig.theme = 'select2';
     });
 
 //Setting Lodash

@@ -1,0 +1,23 @@
+<md-dialog>
+  <md-toolbar>
+    <h2 class="md-toolbar-tools">{{title}}</h2>
+  </md-toolbar>
+  <form name="timeForm" ng-submit="save(timeForm.$valid)" novalidate>
+    <md-content>
+      <md-text-float label="Orario" ng-model="time" type="time" tabindex="0" name="time"
+                     ng-model-options="{ timezone: 'UTC' }" required></md-text-float>
+    </md-content>
+    <div class="md-actions" layout="row">
+      <md-button type="button" ng-show="deleteEnabled" ng-click="delete()" class="md-warn">
+        Cancella
+      </md-button>
+      <span flex></span>
+      <md-button type="button" ng-click="cancel()">
+        Annulla
+      </md-button>
+      <md-button class="md-primary" ng-disabled="timeForm.$invalid">
+        Salva
+      </md-button>
+    </div>
+  </form>
+</md-dialog>

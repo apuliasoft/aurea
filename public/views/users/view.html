@@ -1,4 +1,4 @@
-<section data-ng-controller="UsersCtrl" data-ng-init="findOne()">
+<section ng-controller="UsersCtrl" ng-init="findOne()">
     <h2>Dettaglio utente</h2>
 
     <dl class="dl-horizontal">
@@ -12,5 +12,5 @@
         <dd>{{ roles[user.role] }}</dd>
     </dl>
 
-    <button data-ng-click="goToEditUser(user)" class="btn btn-default">Modifica utente</button>
+    <button ng-click="goToEditUser(user)" class="btn btn-default">Modifica utente</button>
 </section>

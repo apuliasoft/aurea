@@ -1,6 +1,9 @@
 'use strict';
 
-//Name filter used for format a person object
+/**
+ * Trasforma un numero di minuti in formato numerico
+ * in un orario in formato di stringa
+ **/
 angular.module('aurea')
     .filter('time', function () {
         return function (input) {

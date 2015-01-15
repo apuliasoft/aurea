@@ -1,38 +1,41 @@
-<section data-ng-controller="SchoolsCtrl" data-ng-init="find()">
+<section ng-controller="SchoolsCtrl" ng-init="find()" flex layout="column" layout-fill>
 
-  <div class="row">
-    <div class="col-xs-4" data-ng-repeat="school in schools">
-      <div class="thumbnail well well-sm">
-        <h3>{{school.name}}</h3>
-
-        <div class="pull-right">
-          <div class="btn-group btn-group-xs">
-            <button class="btn btn-default" role="button" data-ng-click="goToEditSchool(school)" title="Modifica">
-              <i class="fa fa-pencil"></i>
-            </button>
-            <button class="btn btn-primary" role="button" data-ng-click="goToListComplexes(school)" title="Seleziona">
-              <i class="fa fa-check"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="clearfix"></div>
+  <md-content class="md-padding" md-scroll-y flex>
+    <div layout="column" layout-fill class="content">
+      <div flex layout="column">
+        <section class="md-whiteframe-z1">
+          <md-list>
+            <md-item ng-repeat="school in schools">
+              <md-item-content class="item-content">
+                <div class="md-tile-content" ng-click="goToListComplexes(school)">
+                  <h3 class="item-content-text">
+                    <i class="fa fa-university item-content-icon"></i> {{school.name}}
+                  </h3>
+                </div>
+                <div class="md-tile-right">
+                  <md-button class="icon-button" ng-click="goToEditSchool(school)"
+                             ng-if="global.isAdmin() || global.isManager()">
+                    <i class="fa fa-pencil"></i>
+                    <md-tooltip>Modifica</md-tooltip>
+                  </md-button>
+                  <md-button class="icon-button" as-confirmed-click="remove(school)"
+                             as-confirm-message="Sicuro di voler eliminare questa scuola?" ng-if="global.isAdmin()">
+                    <i class="fa fa-trash"></i>
+                    <md-tooltip>Cancella</md-tooltip>
+                  </md-button>
+                </div>
+              </md-item-content>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-item>
+          </md-list>
+        </section>
       </div>
     </div>
-  </div>
+  </md-content>
 
-  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-    <div class="container">
-      <p class="navbar-text">
-        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-      </p>
-
-      <div class="nav navbar-nav navbar-right btn-group">
-        <button type="button" data-ng-click="goToCreateSchool()" class="btn btn-primary navbar-btn" title="Aggiungi">
-          <i class="fa fa-plus"></i> Aggiungi
-        </button>
-      </div>
-    </div>
-  </nav>
+  <md-button class="md-fab md-primary add-button" ng-click="goToCreateSchool()" ng-if="global.isAdmin()">
+    <i class="fa fa-plus"></i>
+    <md-tooltip>Aggiungi</md-tooltip>
+  </md-button>
 
 </section>

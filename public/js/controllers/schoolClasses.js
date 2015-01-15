@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.schoolClasses')
-    .controller('SchoolClassesCtrl', function ($scope, $stateParams, SmartState, $filter, _, Global, SchoolClass, Student) {
+    .controller('SchoolClassesCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, SchoolClass, Student) {
         $scope.global = Global;
 
         $scope.goToListSchoolClasses = function () {
@@ -13,42 +13,71 @@ angular.module('aurea.schoolClasses')
         };
 
         $scope.goToEditSchoolClass = function (schoolClass) {
-            SmartState.go('edit school class', { schoolClassId: schoolClass._id });
-        };
-
-        $scope.goToTeachings = function (schoolClass) {
-            SmartState.go('all teachings', { schoolClassId: schoolClass._id });
-        };
-
-        $scope.goToClassStudents = function (schoolClass) {
-            SmartState.go('all class students', { schoolClassId: schoolClass._id });
+            SmartState.go('edit school class', {schoolClassId: schoolClass._id});
         };
 
         $scope.goToClassRegistry = function (schoolClass) {
-            SmartState.go('class registry by date', {
-                schoolClassId: schoolClass._id,
-                date: $filter('date')(new Date(), 'yyyy-MM-dd')
-            });
+            if(Global.isAdmin() || Global.isManager() || Global.isTeacher()) {
+                SmartState.go('class registry by date', {
+                    schoolClassId: schoolClass._id
+                });
+            }
+        };
+
+        $scope.goToListTeachings = function (schoolClass) {
+            SmartState.go('all teachings', {schoolClassId: schoolClass._id});
+        };
+
+        $scope.goToListClassStudents = function (schoolClass) {
+            SmartState.go('all class students', {schoolClassId: schoolClass._id});
+        };
+
+        $scope.find = function () {
+            SchoolClass.query({
+                schoolId: Global.getSchool()._id,
+                complexId: Global.getComplex()._id,
+                academicYearId: Global.getAcademicYear()._id
+            }).$promise
+                .then(function (schoolClasses) {
+                    $scope.schoolClasses = schoolClasses;
+                });
         };
 
         $scope.init = function () {
-            $scope.schoolClass = new SchoolClass({
-                academicYear: Global.getAcademicYear()._id,
-                complex: Global.getComplex()._id,
-                school: Global.getSchool()._id
-            });
-            $scope.chosenStudents = [];
+            $scope.editMode = $state.current.data.editMode;
+            if ($state.current.data.editMode) {
+                $scope.title = 'Modifica classe';
+                findOne();
+            } else {
+                $scope.title = 'Nuova classe';
+                prepare();
+            }
+        };
 
-            Student.query({
-                complexId: Global.getComplex()._id,
-                schoolId: Global.getSchool()._id
-            }).$promise
-                .then(function (students) {
-                    Global.title = 'Classi';
-                    Global.subtitle = 'Nuova';
-
-                    $scope.chosableStudents = students;
+        $scope.save = function (isValid) {
+            if (isValid) {
+                var schoolClass = $scope.schoolClass;
+                schoolClass.students = _.map($scope.chosenStudents, function (student) {
+                    return student._id;
                 });
+                if ($state.current.data.editMode) {
+                    update(schoolClass);
+                } else {
+                    create(schoolClass);
+                }
+            }
+        };
+
+        $scope.remove = function (schoolClass) {
+            if (schoolClass) {
+                schoolClass.$remove(function () {
+                    _.remove($scope.schoolClasses, schoolClass);
+                    $mdToast.show({
+                        template: '<md-toast>Classe cancellata</md-toast>',
+                        hideDelay: 2000
+                    });
+                });
+            }
         };
 
         $scope.addStudent = function (student) {
@@ -61,61 +90,24 @@ angular.module('aurea.schoolClasses')
             $scope.chosenStudents = _.without($scope.chosenStudents, student);
         };
 
-        $scope.create = function (isValid) {
-            if (isValid) {
-                var schoolClass = $scope.schoolClass;
-                schoolClass.students = _.map($scope.chosenStudents, function (student) {
-                    return student._id;
-                });
+        var prepare = function () {
+            $scope.schoolClass = new SchoolClass({
+                academicYear: Global.getAcademicYear()._id,
+                complex: Global.getComplex()._id,
+                school: Global.getSchool()._id
+            });
+            $scope.chosenStudents = [];
 
-                console.log(schoolClass);
-
-                schoolClass.$save(function (response) {
-                    $scope.goToListSchoolClasses(response);
-                });
-            }
-        };
-
-        $scope.update = function (isValid) {
-            if (isValid) {
-                var schoolClass = $scope.schoolClass;
-                if (!schoolClass.updated) {
-                    schoolClass.updated = [];
-                }
-                schoolClass.updated.push(new Date().getTime());
-                schoolClass.students = _.map($scope.chosenStudents, function (student) {
-                    return student._id;
-                });
-
-                schoolClass.$update(function (response) {
-                    $scope.goToListSchoolClasses(response);
-                });
-            }
-        };
-
-        $scope.remove = function (schoolClass) {
-            if (schoolClass) {
-                schoolClass.$remove();
-                _.remove($scope.schoolClasses, schoolClass);
-                $scope.goToListSchoolClasses();
-            }
-        };
-
-        $scope.find = function () {
-            SchoolClass.query({
-                schoolId: Global.getSchool()._id,
+            Student.query({
                 complexId: Global.getComplex()._id,
-                academicYearId: Global.getAcademicYear()._id
+                schoolId: Global.getSchool()._id
             }).$promise
-                .then(function (schoolClasses) {
-                    Global.title = 'Classi';
-                    Global.subtitle = Global.getAcademicYear().name;
-
-                    $scope.schoolClasses = schoolClasses;
+                .then(function (students) {
+                    $scope.chosableStudents = students;
                 });
         };
 
-        $scope.findOne = function () {
+        var findOne = function () {
             SchoolClass.get({
                 schoolClassId: $stateParams.schoolClassId,
                 schoolId: Global.getSchool()._id,
@@ -123,9 +115,6 @@ angular.module('aurea.schoolClasses')
                 academicYearId: Global.getAcademicYear()._id
             }).$promise
                 .then(function (schoolClass) {
-                    Global.title = 'Classi';
-                    Global.subtitle = schoolClass.name;
-
                     $scope.schoolClass = schoolClass;
 
                     Student.query({
@@ -140,6 +129,31 @@ angular.module('aurea.schoolClasses')
                             $scope.chosableStudents = _.difference(students, $scope.chosenStudents);
                         });
                 });
+        };
+
+        var create = function (schoolClass) {
+            schoolClass.$save(function (response) {
+                $scope.goToListSchoolClasses(response);
+                $mdToast.show({
+                    template: '<md-toast>Classe creata</md-toast>',
+                    hideDelay: 2000
+                });
+            });
+        };
+
+        var update = function (schoolClass) {
+            if (!schoolClass.updated) {
+                schoolClass.updated = [];
+            }
+            schoolClass.updated.push(new Date().getTime());
+
+            schoolClass.$update(function (response) {
+                $scope.goToListSchoolClasses(response);
+                $mdToast.show({
+                    template: '<md-toast>Classe aggiornata</md-toast>',
+                    hideDelay: 2000
+                });
+            });
         };
     });
 

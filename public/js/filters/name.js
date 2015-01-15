@@ -5,8 +5,8 @@ angular.module('aurea')
     .filter('name', function () {
         return function (input, reverse) {
             if (!reverse) {
-                return input && [input.firstName, input.lastName].join(' ');
+                return input && [input.lastName, input.firstName].join(' ');
             }
-            return input && [input.lastName, input.firstName].join(' ');
+            return input && [input.firstName, input.lastName].join(' ');
         };
     });

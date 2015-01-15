@@ -1,100 +1,49 @@
-<div data-ng-controller="HeaderCtrl">
+<div ng-controller="HeaderCtrl">
+  <section ng-if="global.isLoggedin()">
+    <md-toolbar class="md-white-theme md-whiteframe-z1">
+      <h1 class="md-toolbar-tools">
+        <a ui-sref="home" layout="row" layout-align="center center">
+          <img src="../img/icons/logo.png" class="logo">
+          <span>Aurea</span>
+          <md-tooltip>Home</md-tooltip>
+        </a>
 
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-menu">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Aurea
-                    <small> | un registro elettronico aperto</small>
-                </a>
-            </div>
-            <div class="collapse navbar-collapse" id="header-menu">
-                <ul class="nav navbar-nav navbar-right">
-                    <li data-ng-hide="global.isLoggedin()"><a href="/#!/login">Login</a></li>
-                    <li class="dropdown" data-ng-show="global.isLoggedin()">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{global.user.name}} <b
-                                class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/#!/logout">Logout</a></li>
-                            <li><a href="/#!/utenti/{{global.user._id}}">Profilo</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        <span flex></span>
 
-    <h1>{{global.title}}
-        <small>{{global.subtitle}}</small>
-    </h1>
+        <section layout="row" layout-align="end">
+          <md-button ng-click="getFeedback()" class="icon-button">
+            <i class="fa fa-star-o"></i>
+            <md-tooltip>Feedback</md-tooltip>
+          </md-button>
+          <md-button ng-click="goToListCommunications()" ng-if="global.getSchool()" class="icon-button">
+            <i class="fa fa-bullhorn"></i>
+            <md-tooltip>Comunicazioni</md-tooltip>
+          </md-button>
+          <md-button ng-click="goToViewUser()" class="icon-button" ng-show="false">
+            <i class="fa fa-user"></i>
+            <md-tooltip>Profilo</md-tooltip>
+          </md-button>
+          <md-button ng-click="logout()" class="icon-button">
+            <i class="fa fa-sign-out"></i>
+            <md-tooltip>Logout</md-tooltip>
+          </md-button>
+        </section>
+      </h1>
+    </md-toolbar>
 
-    <ol class="breadcrumb" data-ng-show="global.isLoggedin() && global.getSchools().length">
-        <li class="dropdown" data-ng-show="global.getSchools().length">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                {{ global.getSchool().name }} <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-                <li data-ng-repeat="school in global.getSchools()" data-ng-click="goToSchool(school)">
-                    <a href="">{{ school.name }}</a>
-                </li>
-            </ul>
-        </li>
-        <li class="dropdown" data-ng-show="global.getComplexes().length">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                {{ global.getComplex().name }} <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-                <li data-ng-repeat="complex in global.getComplexes()" data-ng-click="goToComplex(complex)">
-                    <a href="">{{ complex.name }}</a>
-                </li>
-            </ul>
-        </li>
-        <li class="dropdown" data-ng-show="global.getAcademicYears().length">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                {{ global.getAcademicYear().name }} <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-                <li data-ng-repeat="academicYear in global.getAcademicYears()"
-                    data-ng-click="goToAcademicYear(academicYear)">
-                    <a href="">{{ academicYear.name }}</a>
-                </li>
-            </ul>
-        </li>
-        <li class="dropdown" data-ng-show="global.getSchoolClasses().length">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                {{ global.getSchoolClass().name }} <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-                <li data-ng-repeat="schoolClass in global.getSchoolClasses()" data-ng-click="goToSchoolClass(schoolClass)">
-                    <a href="">{{ schoolClass.name }}</a>
-                </li>
-            </ul>
-        </li>
-        <li class="dropdown" data-ng-show="global.getStudents().length">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                {{ global.getStudent().firstName }} {{ global.getStudent().lastName }} <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-                <li data-ng-repeat="student in global.getStudents()" data-ng-click="goToStudent(student)">
-                    <a href="">{{ student.firstName }} {{ student.lastName }}</a>
-                </li>
-            </ul>
-        </li>
-        <li class="dropdown" data-ng-show="global.getTeachings().length">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            {{ global.getTeaching().name }}<b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li data-ng-repeat="teaching in global.getTeachings()" data-ng-click="goToTeaching(teaching)">
-              <a href="">{{ teaching.name }}</a>
-            </li>
-          </ul>
-        </li>
-    </ol>
-
+    <md-toolbar class="md-whiteframe-z1">
+      <div class="md-toolbar-tools">
+        <section ng-repeat="menuitem in menu" class="breadcrumbs">
+          <md-button ng-click="showListBottomSheet(menuitem)" ng-disabled="!menuitem.label" class="breadcrumb">
+            <span class="label" ng-if="menuitem.label">{{menuitem.label}}</span>
+            <span class="value">{{menuitem.value}}</span>
+            <md-tooltip ng-if="menuitem.label">Azioni per {{menuitem.label}}</md-tooltip>
+          </md-button>
+          <span ng-if="!$last" class="grather">
+            <i class="fa fa-angle-right"></i>
+          </span>
+        </section>
+      </div>
+    </md-toolbar>
+  </section>
 </div>

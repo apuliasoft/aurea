@@ -1,0 +1,173 @@
+<section ng-init="init()" flex layout="column">
+
+  <md-content flex layout="row">
+    <md-sidenav layout="column" style="display: flex;" class="md-sidenav-left md-whiteframe-z2"
+                md-component-id="left" md-is-locked-open="true">
+      <md-toolbar class="md-grey-theme md-whiteframe-z1" layout="column">
+        <h2 class="md-toolbar-tools">
+          <span flex>Alunni</span>
+
+          <section layout="row">
+            <md-button ng-click="addVote()" ng-disabled="noneSelected()" class="icon-button">
+              <span>V</span>
+              <md-tooltip>Valutazione</md-tooltip>
+            </md-button>
+            <md-button ng-click="toggleAbsents()" ng-disabled="noneSelected()" class="icon-button">
+              <span>A</span>
+              <md-tooltip>Assenza</md-tooltip>
+            </md-button>
+          </section>
+        </h2>
+      </md-toolbar>
+
+      <md-content flex md-scroll-y>
+        <section ng-repeat="student in classStudents | orderBy:['lastName', 'firstName']" flex layout="row" layout-fill>
+          <md-checkbox ng-model="student.selected" class="menu-item" flex layout="row" layout-fill>
+            <span flex class="title">{{student | name:false}}</span>
+            <span ng-show="studentIsAbsent(student)">A</span>
+            <span ng-show="studentHasVote(student)">V</span>
+          </md-checkbox>
+        </section>
+      </md-content>
+    </md-sidenav>
+
+    <section flex layout="column" layout-fill>
+      <md-toolbar class="md-grey-theme md-whiteframe-z1">
+        <h2 class="md-toolbar-tools" layout-align="end">
+          <md-button ng-click="goPrevDay()" class="icon-button">
+            <i class="fa fa-arrow-circle-o-left"></i>
+            <md-tooltip>Giorno precedente</md-tooltip>
+          </md-button>
+          <span>{{ teachingRegistry.date | date:'EEEE, d MMMM yyyy'}}</span>
+          <md-button ng-click="goNextDay()" class="icon-button">
+            <i class="fa fa-arrow-circle-o-right"></i>
+            <md-tooltip>Giorno successivo</md-tooltip>
+          </md-button>
+        </h2>
+      </md-toolbar>
+
+      <md-content flex md-scroll-y class="md-padding">
+        <div flex layout="row" layout-align="center">
+          <form name="teachingRegistryForm" ng-submit="save()" novalidate>
+            <md-content class="md-padding">
+              <div class="md-whiteframe-z1">
+
+                <section ng-show="teachingRegistry.votes.length">
+                  <md-toolbar class="md-grey-theme">
+                    <h2 class="md-toolbar-tools">
+                      <span flex>Valutazioni</span>
+                    </h2>
+                  </md-toolbar>
+
+                  <md-list>
+                    <md-item ng-repeat="vote in teachingRegistry.votes">
+                      <md-content md-theme="dark" class="md-padding">
+                        <div layout="row">
+                          <md-input-group label="Studente" flex class="md-dark-theme select-group" name="student"
+                                          ng-class="{'md-input-has-value': vote.student}">
+                            <label>Studente</label>
+                            <select ng-model="vote.student" name="student" ng-disabled="true"
+                                    ng-options="classStudent._id as classStudent | name for classStudent in classStudents"></select>
+                          </md-input-group>
+
+                          <md-input-group label="Modalità" class="md-dark-theme select-group short" name="mode"
+                                          ng-class="{'md-input-has-value': vote.mode}">
+                            <label>Modalità</label>
+                            <select ng-model="vote.mode" name="mode">
+                              <option value="orale">Orale</option>
+                              <option value="scritto">Scritto</option>
+                              <option value="pratico">Pratico</option>
+                              <option value="altro">Altro</option>
+                            </select>
+                          </md-input-group>
+
+                          <md-text-float label="Voto" ng-model="vote.vote" class="short"></md-text-float>
+
+                          <md-button type="button" ng-click="removeVote(vote)" class="icon-button">
+                            <i class="fa fa-times"></i>
+                            <md-tooltip>Rimuovi valutazione</md-tooltip>
+                          </md-button>
+
+                          <md-button type="button" ng-click="addPartial(vote)" class="icon-button">
+                            <i class="fa fa-plus"></i>
+                            <md-tooltip>Aggiungi criterio</md-tooltip>
+                          </md-button>
+
+                        </div>
+                      </md-content>
+
+                      <md-content>
+                        <md-list>
+                          <md-item ng-repeat="partial in vote.partials">
+                            <md-content class="md-padding">
+                              <div layout="row">
+                                <md-text-float label="Criterio" ng-model="partial.criterion"
+                                               class="longer"></md-text-float>
+
+                                <md-text-float label="Voto" ng-model="partial.vote" class="short"></md-text-float>
+
+                                <md-button type="button" ng-click="removePartial(vote, partial)" class="icon-button">
+                                  <i class="fa fa-times"></i>
+                                  <md-tooltip>Rimuovi parziale</md-tooltip>
+                                </md-button>
+                              </div>
+                            </md-content>
+                          </md-item>
+                        </md-list>
+                      </md-content>
+                    </md-item>
+                  </md-list>
+                </section>
+
+                <section ng-show="teachingRegistry.absences.length">
+                  <md-toolbar class="md-grey-theme">
+                    <h2 class="md-toolbar-tools">
+                      <span flex>Assenze</span>
+                    </h2>
+                  </md-toolbar>
+
+                  <md-list>
+                    <md-item ng-repeat="absence in teachingRegistry.absences">
+                      <md-content class="md-padding">
+                        <div layout="row">
+                          <md-input-group label="Studente" flex class="select-group" name="student"
+                                          ng-class="{'md-input-has-value': absence.student}">
+                            <label>Studente</label>
+                            <select ng-model="absence.student" name="student" ng-disabled="true"
+                                    ng-options="classStudent._id as classStudent | name for classStudent in classStudents"></select>
+                          </md-input-group>
+
+                          <md-text-float label="Ore" type="number" min="1" ng-model="absence.slots"></md-text-float>
+                        </div>
+                      </md-content>
+                    </md-item>
+                  </md-list>
+                </section>
+
+                <md-toolbar class="md-grey-theme">
+                  <h2 class="md-toolbar-tools">
+                    <span flex>Note</span>
+                  </h2>
+                </md-toolbar>
+
+                <md-content class="md-padding">
+                  <md-text-float label="Note disciplinari" ng-model="teachingRegistry.notes"
+                                 class="longest"></md-text-float>
+                  <md-text-float label="Annotazioni" ng-model="teachingRegistry.annotations"
+                                 class="longest"></md-text-float>
+                </md-content>
+
+                <md-button type="submit" ng-disabled="teachingRegistryForm.$invalid"
+                           class="md-fab md-primary add-button">
+                  <i class="fa fa-save"></i>
+                  <md-tooltip>Salva</md-tooltip>
+                </md-button>
+
+              </div>
+            </md-content>
+          </form>
+        </div>
+      </md-content>
+    </section>
+  </md-content>
+</section>

@@ -1,9 +1,8 @@
 'use strict';
 
 angular.module('aurea.complexes')
-    .controller('ComplexesCtrl', function ($scope, $stateParams, SmartState, _, Provinces, Global, Complex) {
+    .controller('ComplexesCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, Provinces, Complex) {
         $scope.global = Global;
-        $scope.provinces = Provinces.getProvinces();
 
         $scope.goToListComplexes = function () {
             SmartState.go('all complexes');
@@ -14,43 +13,19 @@ angular.module('aurea.complexes')
         };
 
         $scope.goToEditComplex = function (complex) {
-            SmartState.go('edit complex', { complexId: complex._id });
+            SmartState.go('edit complex', {complexId: complex._id});
         };
 
         $scope.goToListAcademicYears = function (complex) {
-            SmartState.go('all academic years', { complexId: complex._id });
+            SmartState.go('all academic years', {complexId: complex._id});
         };
 
-        $scope.init = function () {
-            Global.title = 'Plessi';
-            Global.subtitle = 'Nuovo';
-
-            $scope.complex = new Complex({
-                school: Global.getSchool()._id
-            });
+        $scope.goToListTeachers = function (complex) {
+            SmartState.go('all teachers', {complexId: complex._id});
         };
 
-        $scope.create = function (isValid) {
-            if (isValid) {
-                var complex = $scope.complex;
-                complex.$save(function () {
-                    $scope.goToListComplexes();
-                });
-            }
-        };
-
-        $scope.update = function (isValid) {
-            if (isValid) {
-                var complex = $scope.complex;
-                if (!complex.updated) {
-                    complex.updated = [];
-                }
-                complex.updated.push(new Date().getTime());
-
-                complex.$update(function () {
-                    $scope.goToListComplexes();
-                });
-            }
+        $scope.goToListStudents = function (complex) {
+            SmartState.go('all students', {complexId: complex._id});
         };
 
         $scope.find = function () {
@@ -58,56 +33,83 @@ angular.module('aurea.complexes')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (complexes) {
-                    Global.title = 'Plessi';
-                    Global.subtitle = Global.getSchool().name;
-
                     $scope.complexes = complexes;
                 });
         };
 
-        $scope.findOne = function () {
+        $scope.init = function () {
+            $scope.provinces = Provinces.getProvinces();
+
+            if ($state.current.data.editMode) {
+                $scope.title = 'Modifica plesso';
+                findOne();
+            } else {
+                $scope.title = 'Nuovo plesso';
+                prepare();
+            }
+        };
+
+        $scope.save = function (isValid) {
+            if (isValid) {
+                var complex = $scope.complex;
+                if ($state.current.data.editMode) {
+                    update(complex);
+                } else {
+                    create(complex);
+                }
+            }
+        };
+
+        $scope.remove = function (complex) {
+            if (complex) {
+                complex.$remove(function () {
+                    _.remove($scope.complexes, complex);
+                    $mdToast.show({
+                        template: '<md-toast>Plesso cancellato</md-toast>',
+                        hideDelay: 2000
+                    });
+                });
+            }
+        };
+
+        var prepare = function () {
+            $scope.complex = new Complex({
+                school: Global.getSchool()._id
+            });
+        };
+
+        var findOne = function () {
             Complex.get({
                 schoolId: Global.getSchool()._id,
                 complexId: $stateParams.complexId
             }).$promise
                 .then(function (complex) {
-                    Global.title = 'Plessi';
-                    Global.subtitle = complex.name;
-
                     $scope.complex = complex;
                 });
         };
+
+        var create = function (complex) {
+            complex.$save(function () {
+                $scope.goToListComplexes();
+                $mdToast.show({
+                    template: '<md-toast>Plesso creato</md-toast>',
+                    hideDelay: 2000
+                });
+            });
+        };
+
+        var update = function (complex) {
+            if (!complex.updated) {
+                complex.updated = [];
+            }
+            complex.updated.push(new Date().getTime());
+
+            complex.$update(function () {
+                $scope.goToListComplexes();
+                $mdToast.show({
+                    template: '<md-toast>Plesso aggiornato</md-toast>',
+                    hideDelay: 2000
+                });
+            });
+        };
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

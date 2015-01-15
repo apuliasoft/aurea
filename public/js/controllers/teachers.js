@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.teachers')
-    .controller('TeachersCtrl', function ($scope, $stateParams, $filter, SmartState, _, Global, Teacher) {
+    .controller('TeachersCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, Teacher) {
         $scope.global = Global;
 
         $scope.goToListTeachers = function () {
@@ -17,48 +17,7 @@ angular.module('aurea.teachers')
         };
 
         $scope.isItMe = function (teacher) {
-            return teacher.user._id === Global.getUser()._id;
-        };
-
-        $scope.init = function () {
-            Global.title = 'Insegnanti';
-            Global.subtitle = 'Nuovo';
-
-            $scope.teacher = new Teacher({
-                school: Global.getSchool()._id,
-                complex: Global.getComplex()._id
-            });
-        };
-
-        $scope.create = function (isValid) {
-            if (isValid) {
-                var teacher = $scope.teacher;
-                teacher.$save(function () {
-                    $scope.goToListTeachers();
-                });
-            }
-        };
-
-        $scope.update = function (isValid) {
-            if (isValid) {
-                var teacher = $scope.teacher;
-                if (!teacher.updated) {
-                    teacher.updated = [];
-                }
-                teacher.updated.push(new Date().getTime());
-
-                teacher.$update(function () {
-                    $scope.goToListTeachers();
-                });
-            }
-        };
-
-        $scope.remove = function (teacher) {
-            if (teacher) {
-                teacher.$remove();
-                _.remove($scope.teachers, teacher);
-                $scope.list();
-            }
+            return teacher.user._id === Global.getCurrentUser()._id;
         };
 
         $scope.find = function () {
@@ -67,24 +26,84 @@ angular.module('aurea.teachers')
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (teachers) {
-                    Global.title = 'Insegnanti';
-                    Global.subtitle = Global.getComplex().name;
-
                     $scope.teachers = teachers;
                 });
         };
 
-        $scope.findOne = function () {
+        $scope.init = function () {
+            $scope.editMode = $state.current.data.editMode;
+            if ($state.current.data.editMode) {
+                $scope.title = 'Modifica insegnante';
+                findOne();
+            } else {
+                $scope.title = 'Nuovo insegnante';
+                prepare();
+            }
+        };
+
+        $scope.save = function (isValid) {
+            if (isValid) {
+                var teacher = $scope.teacher;
+                if ($state.current.data.editMode) {
+                    update(teacher);
+                } else {
+                    create(teacher);
+                }
+            }
+        };
+
+        $scope.remove = function (teacher) {
+            if (teacher) {
+                teacher.$remove(function() {
+                    _.remove($scope.teachers, teacher);
+                    $mdToast.show({
+                        template: '<md-toast>Insegnante cancellato</md-toast>',
+                        hideDelay: 2000
+                    });
+                });
+            }
+        };
+
+        var prepare = function () {
+            $scope.teacher = new Teacher({
+                school: Global.getSchool()._id,
+                complex: Global.getComplex()._id
+            });
+        };
+
+        var findOne = function () {
             Teacher.get({
                 teacherId: $stateParams.teacherId,
                 complexId: Global.getComplex()._id,
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (teacher) {
-                    Global.title = 'Insegnanti';
-                    Global.subtitle = $filter('name')(teacher);
-
                     $scope.teacher = teacher;
                 });
+        };
+
+        var create = function (teacher) {
+            teacher.$save(function () {
+                $scope.goToListTeachers();
+                $mdToast.show({
+                    template: '<md-toast>Insegnante creato</md-toast>',
+                    hideDelay: 2000
+                });
+            });
+        };
+
+        var update = function (teacher) {
+            if (!teacher.updated) {
+                teacher.updated = [];
+            }
+            teacher.updated.push(new Date().getTime());
+
+            teacher.$update(function () {
+                $scope.goToListTeachers();
+                $mdToast.show({
+                    template: '<md-toast>Insegnante aggiornato</md-toast>',
+                    hideDelay: 2000
+                });
+            });
         };
     });

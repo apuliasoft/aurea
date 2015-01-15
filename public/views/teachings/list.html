@@ -1,41 +1,43 @@
-<section data-ng-controller="TeachingsCtrl" data-ng-init="find()">
+<section ng-controller="TeachingsCtrl" ng-init="find()" flex layout="column" layout-fill>
 
-  <div class="row">
-    <div class="col-xs-4" data-ng-repeat="teaching in teachings">
-      <div class="thumbnail well well-sm">
-        <h3>{{teaching.name}}</h3>
-
-        <div class="pull-right">
-          <div class="btn-group btn-group-xs">
-            <button class="btn btn-default" role="button" data-ng-click="goToEditTeaching(teaching)" title="Modifica"
-                    data-ng-if="global.isAdmin() || global.isManager()">
-              <i class="fa fa-pencil"></i>
-            </button>
-            <button class="btn btn-primary" role="button" data-ng-click="goToTeachingRegistry(teaching)"
-                    title="Seleziona" data-ng-if="global.isAdmin() || global.isManager() || (global.isTeacher() && teaching.teacher === global.user._id)">
-              <i class="fa fa-check"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="clearfix"></div>
+  <md-content class="md-padding" md-scroll-y flex>
+    <div layout="column" layout-fill class="content">
+      <div flex layout="column">
+        <section class="md-whiteframe-z1">
+          <md-list>
+            <md-item ng-repeat="teaching in teachings">
+              <md-item-content class="item-content">
+                <div class="md-tile-content" ng-click="goToTeachingRegistry(teaching)">
+                  <h3 class="item-content-text">
+                    <i class="fa fa-book item-content-icon"></i> {{teaching.name}}
+                  </h3>
+                </div>
+                <div class="md-tile-right">
+                  <md-button class="icon-button" ng-click="goToEditTeaching(teaching)"
+                             ng-if="global.isAdmin() || global.isManager()">
+                    <i class="fa fa-pencil"></i>
+                    <md-tooltip>Modifica</md-tooltip>
+                  </md-button>
+                  <md-button class="icon-button" as-confirmed-click="remove(student)"
+                             as-confirm-message="Sicuro di voler eliminare questo insegnamento?"
+                             ng-if="global.isAdmin() || global.isManager()">
+                    <i class="fa fa-trash"></i>
+                    <md-tooltip>Cancella</md-tooltip>
+                  </md-button>
+                </div>
+              </md-item-content>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-item>
+          </md-list>
+        </section>
       </div>
     </div>
-  </div>
+  </md-content>
 
-  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-    <div class="container">
-      <p class="navbar-text">
-        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-      </p>
-
-      <div class="nav navbar-nav navbar-right btn-group">
-        <button type="button" data-ng-click="goToCreateTeaching()" class="btn btn-primary navbar-btn" title="Aggiungi"
-                data-ng-if="global.isAdmin() || global.isManager()">
-          <i class="fa fa-plus"></i> Aggiungi
-        </button>
-      </div>
-    </div>
-  </nav>
+  <md-button class="md-fab md-primary add-button" ng-click="goToCreateTeaching()"
+             ng-if="global.isAdmin() || global.isManager()">
+    <i class="fa fa-plus"></i>
+    <md-tooltip>Aggiungi</md-tooltip>
+  </md-button>
 
 </section>

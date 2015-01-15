@@ -1,7 +1,38 @@
-<section data-ng-controller="ClassStudentsCtrl" data-ng-init="findOne()">
-  <div>
-    <h4 class="bg-primary section-title">Assenze</h4>
-  </div>
-  <h3>Totale assenze: {{totalAbsences}}</h3>
-  <d3-bars data="stats" bar-height="20" bar-padding="5"></d3-bars>
+<section ng-controller="ClassStudentsCtrl" ng-init="findOne()" flex layout="column" layout-fill>
+
+  <md-content md-scroll-y flex layout="row" layout-align="center">
+    <md-content flex="66" class="md-padding">
+      <div class="md-whiteframe-z1">
+
+        <md-toolbar>
+          <h2 class="md-toolbar-tools">
+            <span>Statistiche</span>
+          </h2>
+        </md-toolbar>
+
+
+        <!--<div>-->
+        <!--<h4 class="bg-primary section-title">Assenze</h4>-->
+        <!--</div>-->
+
+        <section>
+          <md-toolbar class="md-grey-theme">
+            <h2 class="md-toolbar-tools">
+              <span>Assenze</span>
+            </h2>
+          </md-toolbar>
+          <md-subheader class="md-primary">Totale assenze: {{totalAbsences}} </md-subheader>
+          <!--<h3>Totale assenze: {{totalAbsences}}</h3>-->
+          <d3-bars data="stats" bar-height="20" bar-padding="5"></d3-bars>
+        </section>
+
+      </div>
+    </md-content>
+  </md-content>
+
+  <md-button type="button" class="md-fab back-button" ng-click="goToListClassStudents()">
+    <i class="fa fa-reply-all"></i>
+    <md-tooltip>Torna a Studenti</md-tooltip>
+  </md-button>
+
 </section>

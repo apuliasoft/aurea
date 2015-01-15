@@ -1,11 +1,8 @@
 'use strict';
 
 angular.module('aurea.academicYears')
-    .controller('AcademicYearsCtrl', function ($scope, $stateParams, SmartState, $filter, _, Global, AcademicYear) {
+    .controller('AcademicYearsCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, AcademicYear) {
         $scope.global = Global;
-
-        var toMinute = $filter('minute');
-        var toTime = $filter('time');
 
         $scope.goToListAcademicYears = function () {
             SmartState.go('all academic years');
@@ -23,204 +20,211 @@ angular.module('aurea.academicYears')
             SmartState.go('all school classes', { academicYearId: academicYear._id });
         };
 
-        $scope.init = function () {
-            Global.title = 'Anni accademici';
-            Global.subtitle = 'Nuovo';
-
-            $scope.academicYear = new AcademicYear({
-                school: Global.getSchool()._id,
-                complex: Global.getComplex()._id,
-                timeTable: _.map(_.range(1, 8), function (num) {
-                    return {
-                        weekDay: num,
-                        slots: []
-                    };
-                })
-
-            });
-        };
-
-        $scope.findOne = function () {
-            AcademicYear.get({
-                academicYearId: $stateParams.academicYearId,
-                complexId: Global.getComplex()._id,
-                schoolId: Global.getSchool()._id
-            }).$promise
-                .then(function (academicYear) {
-                    Global.title = 'Anni accademici';
-                    Global.subtitle = academicYear.name;
-
-                    academicYear.startDate = $filter('date')(academicYear.startDate, 'yyyy-MM-dd');
-                    academicYear.endDate = $filter('date')(academicYear.endDate, 'yyyy-MM-dd');
-                    academicYear.timeTable = deserializeData(academicYear.timeTable);
-
-                    var baseTimeTable = _.map(_.range(1, 8), function (num) {
-                        return {
-                            weekDay: num,
-                            slots: []
-                        };
-                    });
-
-                    academicYear.timeTable = _.extend(baseTimeTable, academicYear.timeTable);
-
-                    $scope.academicYear = academicYear;
-                });
-        };
-
         $scope.find = function () {
             AcademicYear.query({
                 complexId: Global.getComplex()._id,
                 schoolId: Global.getSchool()._id
             }).$promise
                 .then(function (academicYears) {
-                    Global.title = 'Anni accademici';
-                    Global.subtitle = Global.getComplex().name;
-
                     $scope.academicYears = academicYears;
                 });
         };
 
-        $scope.addTimeSlot = function (slots) {
-            var last = _.last(slots);
-            var start = last.end;
-            var lastDuration = toMinute(last.end) - toMinute(last.start);
-            var end = toMinute(last.end) + lastDuration;
-            if (end >= 0 && end < 1440) {
-                end = toTime(end);
+        $scope.init = function () {
+            if ($state.current.data.editMode) {
+                $scope.title = 'Modifica anno scolastico';
+                findOne();
             } else {
-                end = undefined;
+                $scope.title = 'Nuovo anno scolastico';
+                prepare();
             }
+        };
 
-            slots.push({
+        $scope.save = function (isValid) {
+            if (isValid) {
+                var academicYear = serializeData($scope.academicYear);
+                if ($state.current.data.editMode) {
+                    update(academicYear);
+                } else {
+                    create(academicYear);
+                }
+            }
+        };
+
+        $scope.switchDay = function (day) {
+            if (day.active) {
+                var last = _.findLast($scope.academicYear.timeTable, function (cur) {
+                    return cur !== day && cur.active && cur.slots.length;
+                });
+                if (last) {
+                    day.slots = _.cloneDeep(last.slots);
+                } else {
+                    $scope.addTimeSlot(day);
+                }
+            } else {
+                day.slots.length = 0;
+            }
+        };
+
+        $scope.addTimeSlot = function (day) {
+            var start = new Date(1970, 0, 1, 8, 30, 0);
+            var duration = 60 * 60 * 1000; // 60 minutes
+
+            if (day.slots.length === 1) {
+                var last = _.last(day.slots);
+                if (last.end) {
+                    start = new Date(last.end.valueOf());
+                    if (last.start) {
+                        duration = last.end.valueOf() - last.start.valueOf();
+                    }
+                }
+            } else if (day.slots.length > 1) {
+                var lasts = _.last(day.slots, 2);
+                if (lasts[0].start && lasts[1].start) {
+                    start = new Date(lasts[1].start.valueOf() + (lasts[1].start.valueOf() - lasts[0].start.valueOf()));
+                    if (lasts[1].end) {
+                        duration = lasts[1].end.valueOf() - lasts[1].start.valueOf();
+                    }
+                }
+            }
+            var end = new Date(start.valueOf() + duration);
+
+            day.slots.push({
                 start: start,
                 end: end
             });
         };
 
-        $scope.addDayTimeSlots = function (timeTable, day) {
-            var lastDay = _.findLast(timeTable, function (day) {
-                return day.slots.length;
-            });
-
-            if (lastDay) {
-                day.slots = _.cloneDeep(lastDay.slots);
-            } else {
-                day.slots.push({
-                    start: undefined,
-                    end: undefined
-                });
-            }
-        };
-
-        $scope.removeDayTimeSlots = function (day) {
-            day.slots.splice(0, day.slots.length);
-        };
-
-        $scope.removeTimeSlot = function (slots, index) {
-            slots.splice(index, 1);
-        };
-
-        $scope.isNotEmptySlot = function (slot) {
-            return slot.start && slot.end;
-        };
-
-        $scope.areAllDaysRemoved = function (timeTables) {
-            return _.find(timeTables, function (timeTable) {
-                return timeTable.slots.length === 0;
-            });
-        };
-
-        $scope.areAllDaysAdded = function (timeTables) {
-            return _.find(timeTables, function (timeTable) {
-                return timeTable.slots.length > 0;
-            });
-        };
-
-        $scope.slotsFilled = function (slots) {
-            return _.every(slots, $scope.slotFilled);
-        };
-
-        $scope.slotFilled = function (slot) {
-            return slot.start && slot.end;
-        };
-
-        $scope.create = function (isValid) {
-            if (isValid) {
-                var academicYear = $scope.academicYear;
-                academicYear.timeTable = serializeData(academicYear.timeTable);
-
-                academicYear.$save(function () {
-                    $scope.goToListAcademicYears();
-                });
-            }
-        };
-
-        $scope.update = function (isValid) {
-            if (isValid) {
-                var academicYear = $scope.academicYear;
-                academicYear.timeTable = serializeData(academicYear.timeTable);
-
-                if (!academicYear.updated) {
-                    academicYear.updated = [];
-                }
-                academicYear.updated.push(new Date().getTime());
-
-                academicYear.$update(function (response) {
-                    $scope.goToListAcademicYears(response);
-                });
-            }
+        $scope.removeTimeSlot = function (day, index) {
+            day.slots.splice(index, 1);
         };
 
         $scope.remove = function (academicYear) {
             if (academicYear) {
                 academicYear.$remove();
                 _.remove($scope.academicYears, academicYear);
-                $scope.goToListAcademicYears();
+                $mdToast.show({
+                    template: '<md-toast>Anno scolastico cancellato</md-toast>',
+                    hideDelay: 2000
+                });
             }
+        };
+
+        var prepare = function () {
+            $scope.academicYear = new AcademicYear({
+                school: Global.getSchool()._id,
+                complex: Global.getComplex()._id,
+                timeTable: baseTimeTable()
+            });
+        };
+
+        var findOne = function () {
+            AcademicYear.get({
+                academicYearId: $stateParams.academicYearId,
+                complexId: Global.getComplex()._id,
+                schoolId: Global.getSchool()._id
+            }).$promise
+                .then(function (academicYear) {
+                    $scope.academicYear = deserializeData(academicYear);
+                });
+        };
+
+        var create = function (academicYear) {
+            academicYear.$save(function () {
+                $scope.goToListAcademicYears();
+                $mdToast.show({
+                    template: '<md-toast>Anno scolastico creato</md-toast>',
+                    hideDelay: 2000
+                });
+            });
+        };
+
+        var update = function (academicYear) {
+            if (!academicYear.updated) {
+                academicYear.updated = [];
+            }
+            academicYear.updated.push(new Date().getTime());
+
+            academicYear.$update(function (response) {
+                $scope.goToListAcademicYears(response);
+                $mdToast.show({
+                    template: '<md-toast>Anno scolastico aggiornato</md-toast>',
+                    hideDelay: 2000
+                });
+            });
+        };
+
+        /**
+         * Genera gli slot vuoti.
+         */
+        var baseTimeTable = function () {
+            var timeTable = _.map([1,2,3,4,5,6,0], function (num) {
+                var result = {};
+                result.weekDay = num;
+                result.active = false;
+                result.slots = [];
+                return result;
+            });
+            return timeTable;
         };
 
         /**
          * Elimina gli slot vuoti e converte il formato degli slot orari.
-         * @param timeTable
+         * @param academicYear
          */
-        var serializeData = function (timeTable) {
+        var serializeData = function (academicYear) {
+            var result = _.cloneDeep(academicYear);
+            result.timeTable = _.chain(academicYear.timeTable)
+                .filter(function (day) {
+                    return day.active && day.slots.length;
+                })
+                .map(function (day) {
+                    var result = {};
+                    result.weekDay = day.weekDay;
+                    result.slots = _.chain(day.slots)
+                        .filter(function (slot) {
+                            return slot.start && slot.end;
+                        })
+                        .map(function (slot) {
+                            var result = {};
+                            result.start = slot.start.valueOf() / (60 * 1000);
+                            result.end = slot.end.valueOf() / (60 * 1000);
+                            return result;
+                        }).value();
+                    return result;
+                }).value();
 
-            timeTable = _.map(timeTable, function (day) {
-                day.slots = _.filter(day.slots, function (slot) {
-                    return $scope.isNotEmptySlot(slot);
-                });
-
-                day.slots = _.map(day.slots, function (slot) {
-                    return {
-                        start: $filter('minute')(slot.start),
-                        end: $filter('minute')(slot.end)
-                    };
-                });
-
-                return day;
-            });
-
-            return timeTable;
+            return new AcademicYear(result);
         };
 
         /**
          * Aggiunge gli slot vuoti se necessario e converte il formato degli slot orari.
-         * @param timeTable
+         * @param academicYear
          */
-        var deserializeData = function (timeTable) {
+        var deserializeData = function (academicYear) {
+            academicYear.startDate = new Date(academicYear.startDate);
+            academicYear.endDate = new Date(academicYear.endDate);
 
-            timeTable = _.map(timeTable, function (day) {
-
-                day.slots = _.map(day.slots, function (slot) {
-                    return {
-                        start: $filter('time')(slot.start),
-                        end: $filter('time')(slot.end)
-                    };
+            var timeTable = _.map(academicYear.timeTable, function (day) {
+                var result = {};
+                result.weekDay = day.weekDay;
+                result.active = true;
+                result.slots = _.map(day.slots, function (slot) {
+                    var result = {};
+                    result.start = new Date(slot.start * 60 * 1000);
+                    result.end = new Date(slot.end * 60 * 1000);
+                    return result;
                 });
-
-                return day;
+                return result;
             });
 
-            return timeTable;
+            academicYear.timeTable = _.map(baseTimeTable(), function (baseSlot) {
+                var slot = _.find(timeTable, function (slot) {
+                    return slot.weekDay === baseSlot.weekDay;
+                }) || baseSlot;
+                return slot;
+            });
+
+            return academicYear;
         };
     });

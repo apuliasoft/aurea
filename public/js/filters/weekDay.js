@@ -9,6 +9,9 @@ angular.module('aurea')
         return function (input) {
             var day = 'Giorno non valido!';
             switch (input) {
+                case 0:
+                    day = 'Domenica';
+                    break;
                 case 1:
                     day = 'Lunedì';
                     break;
@@ -26,9 +29,6 @@ angular.module('aurea')
                     break;
                 case 6:
                     day = 'Sabato';
-                    break;
-                case 7:
-                    day = 'Domenica';
                     break;
             }
             return day;

@@ -1,27 +1,305 @@
 body {
-    padding-top: 70px;
-    padding-bottom: 70px;
-    background-color: #F0F0F0;
-    padding-top: 70px;
-    padding-bottom: 70px;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 100%;
+  color: #808080;
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-.left-menu {
-    position: fixed;
-    height: 100%;
+a {
+  color: #808080;
 }
 
-.main {
-    background-color: #ffffff;
-    min-height: 500px;
-    box-shadow: 5px 5px 5px #CCCCCC;
+md-content {
+  overflow: visible;
 }
 
-.nav > li > a:hover, .nav > li > a.active {
-    background-color: #ffffff;
-    box-shadow: 5px 5px 5px #CCCCCC;
+.logo {
+  max-height: 32px;
 }
 
-.section-title {
-    padding: 10px;
+.logo-big {
+  padding: 20px;
+  width: 100%;
+}
+
+.breadcrumbs {
+  position: relative;
+}
+
+.breadcrumbs .grather {
+  position: absolute;
+  top: 12px;
+  right: -12px;
+}
+
+.breadcrumb {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  height: 44px;
+  text-align: left;
+  width: 100%;
+  max-width: 250px;
+  text-transform: none;
+}
+
+.breadcrumb[disabled] {
+  color: #fff !important;
+  cursor: default !important;
+}
+
+.breadcrumb .label {
+  font-size: 12px;
+  font-weight: 100;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.breadcrumb .value {
+  font-weight: 200;
+  font-size: 20px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+md-bottom-sheet button {
+  color: #808080;
+}
+
+md-bottom-sheet button i {
+  display: inline-block !important;
+  height: 24px;
+  line-height: 24px !important;
+  width: 24px;
+}
+
+md-bottom-sheet button span {
+  padding-left: 12px;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+}
+
+.login-content {
+  border-left: 1px solid #808080;
+}
+
+.md-white-theme {
+  background-color: #fff !important;
+  color: #808080 !important;
+}
+
+.md-white-theme .icon-button {
+  color: #808080 !important;
+}
+
+.md-grey-theme {
+  background-color: #E0E0E0 !important;
+  color: #616161 !important;
+}
+
+.md-grey-theme .icon-button {
+  color: #808080 !important;
+}
+
+.md-dark-theme {
+  background-color: #424242;
+  color: #fff !important;
+}
+
+.add-button {
+  top: auto;
+  right: 24px;
+  bottom: 24px;
+  left: auto;
+  position: fixed;
+}
+
+.back-button {
+  top: auto;
+  left: 24px;
+  bottom: 24px;
+  right: auto;
+  position: fixed;
+}
+
+.content {
+  max-width: 898px;
+  margin: auto;
+}
+
+.item-content {
+  cursor: default;
+}
+
+.item-content-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-content-icon {
+  margin-right: 16px;
+}
+
+.item-content:hover {
+  background-color: #eef6ff;
+}
+
+.icon-button {
+  padding: 15px;
+  opacity: .4;
+
+  -webkit-transition: 0.2s ease-out;
+  transition: 0.2s ease-out;
+  -webkit-transition-property: -webkit-transform, opacity;
+  transition-property: transform, opacity;
+}
+
+.icon-button:hover {
+  background-color: transparent !important;
+  opacity: .8;
+}
+
+:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+::-webkit-datetime-edit-fields-wrapper {
+  visibility: hidden;
+}
+
+.md-input-has-value ::-webkit-datetime-edit-fields-wrapper, .md-input-focused ::-webkit-datetime-edit-fields-wrapper {
+  visibility: visible;
+}
+
+::-webkit-inner-spin-button {
+  display: none;
+}
+
+md-input-group.select-group {
+  display: block;
+  position: relative;
+  margin: 8px 0 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+md-input-group.select-group select {
+  display: block;
+  margin: 0;
+  min-height: 100%;
+  width: 202px;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.73);
+  border: 0;
+  border-radius: 0;
+  line-height: 26px;
+  padding: 2px 1px 1px 1px;
+  -webkit-appearance: none;
+  -webkit-transition: all ease-out 150ms;
+  transition: all ease-out 150ms;
+}
+
+md-input-group.md-dark-theme.select-group {
+  border-color: rgba(255,255,255,0.12);
+}
+
+md-input-group.md-dark-theme.select-group select {
+  color: rgba(255,255,255,1.0);
+}
+
+md-input-group.md-dark-theme label {
+  color: rgba(255,255,255,0.3);
+}
+
+md-input-group.md-dark-theme.md-input-has-value:not(.md-input-focused) label {
+  color: rgba(255,255,255,0.7);
+}
+
+md-input-group.md-dark-theme.md-input-focused label {
+  color: #2196F3;
+}
+
+md-input-group.md-dark-theme input, md-input-group.md-dark-theme textarea {
+  color: rgba(255,255,255,1.0);
+  border-color: rgba(255,255,255,0.12);
+}
+
+md-input-group.md-dark-theme.md-input-focused input, md-input-group.md-dark-theme.md-input-focused textarea {
+  border-color: #2196F3;
+}
+
+md-input-group input[type="date"], md-input-group input[type="time"] {
+  height: 30px;
+  width: 202px;
+}
+
+md-input-group.longest input, md-input-group.longest select {
+  width: 606px;
+}
+
+md-input-group.longer input, md-input-group.longer select {
+  width: 404px;
+}
+
+md-input-group.long input, md-input-group.long select {
+  width: 303px;
+}
+
+md-input-group.short input, md-input-group.short select {
+  width: 101px;
+}
+
+.menu-item {
+  margin: 0;
+  padding: 10px;
+}
+
+.menu-item:hover {
+  background-color: #ccc;
+}
+
+.menu-item .md-label {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  box-sizing: border-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  line-height: 24px;
+}
+
+.menu-item:focus .md-label {
+  border-color: transparent;
+}
+
+.menu-item .md-label .title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.intro button {
+  text-transform: none;
+  font-weight: 200;
+  text-align: left;
+}
+
+.intro button span {
+  display: block;
 }

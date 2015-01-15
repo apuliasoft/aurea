@@ -1,10 +1,8 @@
 'use strict';
 
 angular.module('aurea.system')
-    .controller('IndexCtrl', function ($scope, AcademicYear, Global, SmartState) {
+    .controller('IndexCtrl', function ($scope, SmartState, Global) {
         $scope.global = Global;
-
-        Global.title = 'Aurea: un registro elettronico aperto';
 
         switch (Global.user.role) {
             case 'admin':

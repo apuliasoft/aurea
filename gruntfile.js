@@ -87,6 +87,7 @@ module.exports = function (grunt) {
                     'bower.json',
                     'package.json',
                     'public/res/**',
+                    'public/img/**'
                 ],
                 dest: 'dist/'
             }

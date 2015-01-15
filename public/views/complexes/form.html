@@ -1,0 +1,54 @@
+<section ng-controller="ComplexesCtrl" ng-init="init()" flex layout="column" layout-fill>
+
+  <md-content md-scroll-y flex layout="row" layout-align="center">
+
+    <form name="complexForm" ng-submit="save(complexForm.$valid)" novalidate>
+      <md-content class="md-padding">
+        <div class="md-whiteframe-z1">
+          <md-toolbar>
+            <h2 class="md-toolbar-tools">{{title}}</h2>
+          </md-toolbar>
+
+          <md-content class="md-padding">
+
+            <md-text-float label="Nome" ng-model="complex.name" type="text" tabindex="0" name="name" class="longest"
+                           required></md-text-float>
+
+            <md-text-float label="Via" ng-model="complex.street" type="text" tabindex="1" name="street" class="longest"
+                           required></md-text-float>
+
+            <div layout="row">
+
+              <md-text-float label="CAP" ng-model="complex.zipCode" type="text" tabindex="2" name="zipCode"
+                             class="short"
+                             required></md-text-float>
+
+              <md-text-float label="Città" ng-model="complex.city" type="text" tabindex="3" name="city" class="long"
+                             required></md-text-float>
+
+              <md-input-group label="Provincia" class="md-default-theme select-group" name="province"
+                              ng-class="{'md-input-has-value': complex.province}">
+                <label>Provincia</label>
+                <select ng-model="complex.province" name="province" tabindex="4"
+                        ng-options="province.code as province.name group by province.region for province in provinces"></select>
+              </md-input-group>
+            </div>
+
+          </md-content>
+        </div>
+      </md-content>
+
+      <md-button type="button" class="md-fab back-button" ng-click="goToListComplexes()">
+        <i class="fa fa-reply-all"></i>
+        <md-tooltip>Torna a Plessi</md-tooltip>
+      </md-button>
+
+      <md-button type="submit" ng-disabled="complexForm.$invalid" class="md-fab md-primary add-button">
+        <i class="fa fa-save"></i>
+        <md-tooltip>Salva</md-tooltip>
+      </md-button>
+    </form>
+
+  </md-content>
+
+</section>

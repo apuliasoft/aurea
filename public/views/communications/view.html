@@ -1,31 +1,50 @@
-<section data-ng-controller="CommunicationsCtrl" data-ng-init="findOne()">
+<section ng-controller="CommunicationsCtrl" ng-init="init()" flex layout="column" layout-fill>
 
-  <div class="row">
-    <div class="col-xs-12">
-      <h3>{{communication.title}}</h3>
-      <h5>
-        <small>Pubblicato {{communication.pubDate | date:"EEEE, d MMMM yyyy"}}</small>
-      </h5>
-      <p>{{communication.text}}</p>
-      <div class="clearfix"></div>
-    </div>
-  </div>
+  <md-content md-scroll-y flex layout="row" layout-align="center">
+    <md-content flex="66" class="md-padding">
+      <div class="md-whiteframe-z1">
+        <md-toolbar>
+          <h2 class="md-toolbar-tools">
+            <span>{{communication.title}}</span>
+          </h2>
+        </md-toolbar>
+        <md-subheader class="md-primary">Pubblicato {{communication.pubDate | date:"EEEE, d MMMM yyyy"}}</md-subheader>
+        <md-content class="md-padding">
+          {{communication.text}}
+        </md-content>
 
-  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-    <div class="container">
-      <p class="navbar-text">
-        Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>
-      </p>
 
-      <div class="nav navbar-nav navbar-right btn-group">
-        <button type="button" data-ng-click="remove()" class="btn btn-danger navbar-btn" title="Cancella" data-ng-if="global.isAdmin() || global.isManager()">
-          <i class="fa fa-eraser"></i> Cancella
-        </button>
-        <button type="button" data-ng-click="goToEditCommunication(communication)" class="btn btn-primary navbar-btn" title="Modifica" data-ng-if="global.isAdmin() || global.isManager()">
-          <i class="fa fa-edit"></i> Modifica
-        </button>
       </div>
-    </div>
-  </nav>
+    </md-content>
+  </md-content>
+
+
+  <!--<div class="row">-->
+  <!--<div class="col-xs-12">-->
+  <!--<h3>{{communication.title}}</h3>-->
+  <!--<h5>-->
+  <!--<small>Pubblicato {{communication.pubDate | date:"EEEE, d MMMM yyyy"}}</small>-->
+  <!--</h5>-->
+  <!--<p>{{communication.text}}</p>-->
+  <!--<div class="clearfix"></div>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">-->
+  <!--<div class="container">-->
+  <!--<p class="navbar-text">-->
+  <!--Powered by <a href="http://www.apuliasoft.com" target="new">ApuliaSoft</a>-->
+  <!--</p>-->
+
+  <!--<div class="nav navbar-nav navbar-right btn-group">-->
+  <!--<button type="button" ng-click="remove()" class="btn btn-danger navbar-btn" title="Cancella" ng-if="global.isAdmin() || global.isManager()">-->
+  <!--<i class="fa fa-eraser"></i> Cancella-->
+  <!--</button>-->
+  <!--<button type="button" ng-click="goToEditCommunication(communication)" class="btn btn-primary navbar-btn" title="Modifica" ng-if="global.isAdmin() || global.isManager()">-->
+  <!--<i class="fa fa-edit"></i> Modifica-->
+  <!--</button>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</nav>-->
 
 </section>

@@ -3,12 +3,18 @@
 angular.module('aurea', [
     'ngCookies',
     'ngResource',
-    'ngToast',
-    'ui.bootstrap',
+    'ngAnimate',
+    'ngAria',
+    'ngSanitize',
     'ui.router',
+    'ui.select',
+    'ngMaterial',
     'd3',
+    'angulartics',
+    'angulartics.google.analytics',
     'aurea.system',
     'aurea.users',
+    'aurea.feedbacks',
     'aurea.schools',
     'aurea.complexes',
     'aurea.teachers',
@@ -27,6 +33,7 @@ angular.module('aurea', [
 angular.module('d3', []);
 angular.module('aurea.system', []);
 angular.module('aurea.users', []);
+angular.module('aurea.feedbacks', []);
 angular.module('aurea.schools', []);
 angular.module('aurea.complexes', []);
 angular.module('aurea.teachers', []);
