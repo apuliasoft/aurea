@@ -33,10 +33,9 @@ md-content {
   position: relative;
 }
 
-.breadcrumbs .grather {
-  position: absolute;
+.grather {
   top: 12px;
-  right: -12px;
+  margin: 12px;
 }
 
 .breadcrumb {

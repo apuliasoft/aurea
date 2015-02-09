@@ -33,16 +33,16 @@
 
     <md-toolbar class="md-whiteframe-z1">
       <div class="md-toolbar-tools">
-        <section ng-repeat="menuitem in menu" class="breadcrumbs">
+        <section ng-repeat-start="menuitem in menu" class="breadcrumbs">
           <md-button ng-click="showListBottomSheet(menuitem)" ng-disabled="!menuitem.label" class="breadcrumb">
             <span class="label" ng-if="menuitem.label">{{menuitem.label}}</span>
             <span class="value">{{menuitem.value}}</span>
             <md-tooltip ng-if="menuitem.label">Azioni per {{menuitem.label}}</md-tooltip>
           </md-button>
-          <span ng-if="!$last" class="grather">
-            <i class="fa fa-angle-right"></i>
-          </span>
         </section>
+        <span ng-repeat-end ng-if="!$last" class="grather">
+          <i class="fa fa-angle-right"></i>
+        </span>
       </div>
     </md-toolbar>
   </section>

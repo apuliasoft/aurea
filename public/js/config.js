@@ -723,6 +723,14 @@ angular.module('aurea')
         $locationProvider.hashPrefix('!');
     });
 
+//Setting Angular Material Theme
+angular.module('aurea')
+.config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+        .primaryPalette('light-blue')
+        .accentPalette('pink');
+});
+
 //Setting uiSelect theme
 angular.module('aurea')
     .config(function(uiSelectConfig) {
