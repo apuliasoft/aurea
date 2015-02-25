@@ -1,49 +1,74 @@
 <section ng-controller="StudentsCtrl" ng-init="init()" flex layout="column" layout-fill>
 
-  <md-content md-scroll-y flex layout="row" layout-align="center">
+  <md-content class="md-padding" md-scroll-y flex>
+    <div layout="column" layout-fill class="content">
 
-    <form name="studentForm" ng-submit="save(studentForm.$valid)" novalidate>
+      <form name="studentForm" ng-submit="save(studentForm.$valid)" novalidate flex layout="column">
 
-      <md-content class="md-padding">
-        <div class="md-whiteframe-z1">
+        <section class="md-whiteframe-z1">
           <md-toolbar>
             <h2 class="md-toolbar-tools">{{title}}</h2>
           </md-toolbar>
 
           <md-content class="md-padding">
 
-            <md-text-float label="Email" ng-model="student.user.email" ng-if="!editMode" type="email" tabindex="0"
-                           name="email"
-                           class="longest" required></md-text-float>
+            <div layout layout-sm="column">
 
-            <div layout="row">
+              <md-input-container flex>
+                <label>Nome</label>
+                <input type="text" name="firstName" ng-model="student.firstName" required tabindex="1" autofocus/>
 
-              <md-text-float label="Nome" ng-model="student.firstName" type="text" tabindex="1" name="name"
-                             required></md-text-float>
+                <div ng-messages="studentForm.firstName.$error" ng-show="studentForm.firstName.$dirty">
+                  <div ng-message="required">Nome obbligatorio</div>
+                </div>
+              </md-input-container>
 
-              <md-text-float label="Cognome" ng-model="student.lastName" type="text" tabindex="2" name="street"
-                             required></md-text-float>
+              <md-input-container flex>
+                <label>Cognome</label>
+                <input type="text" name="lastName" ng-model="student.lastName" required tabindex="2"/>
 
-              <md-text-float label="Data di nascita" ng-model="student.birthDate" type="date" tabindex="3"
-                             name="birthDate" required></md-text-float>
+                <div ng-messages="studentForm.lastName.$error" ng-show="studentForm.lastName.$dirty">
+                  <div ng-message="required">Cognome obbligatorio</div>
+                </div>
+              </md-input-container>
+
+              <md-input-container flex>
+                <label>Data di nascita</label>
+                <input type="date" name="birthDate" ng-model="student.birthDate" required tabindex="3"/>
+
+                <div ng-messages="studentForm.birthDate.$error" ng-show="studentForm.birthDate.$dirty">
+                  <div ng-message="required">Data di nascita obbligatoria</div>
+                  <div ng-message="date">Data di nascita non valida</div>
+                </div>
+              </md-input-container>
 
             </div>
 
-          </md-content>
-        </div>
-      </md-content>
+            <md-input-container ng-if="!editMode"  flex>
+              <label>Email</label>
+              <input type="email" name="email" ng-model="student.user.email" required tabindex="4"/>
 
-      <md-button type="button" class="md-fab back-button" ng-click="goToListStudents()">
-        <i class="fa fa-reply-all"></i>
-        <md-tooltip>Torna a Studenti</md-tooltip>
-      </md-button>
+              <div ng-messages="studentForm.email.$error" ng-show="studentForm.email.$dirty">
+                <div ng-message="required">Email obbligatoria</div>
+                <div ng-message="email">Email non valida</div>
+              </div>
+            </md-input-container>
 
-      <md-button type="submit" ng-disabled="studentForm.$invalid" class="md-fab md-primary add-button">
-        <i class="fa fa-save"></i>
-        <md-tooltip>Salva</md-tooltip>
-      </md-button>
-    </form>
+        </section>
+      </form>
 
+    </div>
   </md-content>
+
+  <md-button class="md-fab back-button" ng-click="goToListStudents()" tabindex="6">
+    <i class="fa fa-reply-all"></i>
+    <md-tooltip>Torna a Studenti</md-tooltip>
+  </md-button>
+
+  <md-button ng-disabled="studentForm.$invalid" ng-click="save(studentForm.$valid)" tabindex="5"
+             class="md-fab md-primary add-button">
+    <i class="fa fa-save"></i>
+    <md-tooltip>Salva</md-tooltip>
+  </md-button>
 
 </section>

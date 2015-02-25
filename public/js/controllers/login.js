@@ -1,7 +1,47 @@
 'use strict';
 
 angular.module('aurea.users')
-    .controller('LoginCtrl', function ($scope, $http, $mdToast, SmartState) {
+    .controller('LoginCtrl', function ($scope, $http, $mdDialog, $mdToast, SmartState) {
+        // Register the login() function
+        $scope.login = function () {
+            $http.post('/login', {
+                email: $scope.user.email,
+                password: $scope.user.password
+            })
+                .success(function () {
+                    // authentication OK
+                    $mdToast.show({
+                        template: '<md-toast>Autorizzato</md-toast>',
+                        hideDelay: 2000
+                    });
+                    SmartState.go('home');
+                })
+                .error(function () {
+                    $mdToast.show({
+                        template: '<md-toast>Non autorizzato</md-toast>',
+                        hideDelay: 2000
+                    });
+                });
+        };
+
+        $scope.getInfo = function (event) {
+
+            $mdDialog.show({
+                controller: 'InfoCtrl',
+                templateUrl: 'views/infoDialog.html',
+                targetEvent: event
+            })
+                .then(function (account) {
+                    if (account) {
+                        $scope.user = {
+                            email: account.email,
+                            password: account.password
+                        };
+                    }
+                });
+        };
+    })
+    .controller('InfoCtrl', function ($scope, $mdDialog) {
         $scope.accounts = [
             {
                 role: 'Dirigente',
@@ -25,32 +65,11 @@ angular.module('aurea.users')
             }
         ];
 
-        $scope.setCredentials = function (account) {
-            $scope.user = {
-                email: account.email,
-                password: account.password
-            };
+        $scope.cancel = function () {
+            $mdDialog.cancel();
         };
 
-        // Register the login() function
-        $scope.login = function () {
-            $http.post('/login', {
-                email: $scope.user.email,
-                password: $scope.user.password
-            })
-                .success(function () {
-                    // authentication OK
-                    $mdToast.show({
-                        template: '<md-toast>Autorizzato</md-toast>',
-                        hideDelay: 2000
-                    });
-                    SmartState.go('home');
-                })
-                .error(function () {
-                    $mdToast.show({
-                        template: '<md-toast>Non autorizzato</md-toast>',
-                        hideDelay: 2000
-                    });
-                });
+        $scope.setAccount = function (account) {
+            $mdDialog.hide(account);
         };
     });

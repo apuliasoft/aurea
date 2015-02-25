@@ -1,80 +1,50 @@
-<section ng-controller="LoginCtrl" flex layout="column" layout-fill>
+<section ng-controller="LoginCtrl" flex layout="row" layout-align="center center">
 
-  <md-content class="md-padding" md-scroll-y flex>
+  <div class="logo-big" flex layout="column" layout-align="center">
+    <img src="../img/icons/logo-big.png" class="logo-big">
+  </div>
 
-    <!-- Da cancellare nella versione finale-->
-    <md-content layout="row" layout-align="center">
+  <form name="loginForm" ng-submit="login()" novalidate flex layout="column" layout-align="center">
+    <md-content class="md-padding login-content" layout="row" layout-align="center">
+      <div class="loginForm md-whiteframe-z1" flex>
+        <md-toolbar>
+          <h2 class="md-toolbar-tools">Login</h2>
+        </md-toolbar>
 
-      <md-content flex class="md-padding intro">
+        <md-content class="md-padding">
 
-        <div class="md-whiteframe-z1" layout-align="center">
-          <md-toolbar class="md-grey-theme">
-            <h2 class="md-toolbar-tools">
-              <span>Istruzioni</span>
-            </h2>
-          </md-toolbar>
-          <md-content class="md-padding istruction">
-            <p>Aurea &egrave; una piattaforma web di <b>registro elettronico</b> open source realizzata da <a
-                href="http://www.apuliasoft.com" target="_blank">ApuliaSoft</a>.</p>
+          <md-input-container flex>
+            <label>Email</label>
+            <input type="email" name="email" ng-model="user.email" required tabindex="1" autofocus/>
 
-            <p>Il codice di Aurea risiede interamente sul GitHub all'indirizzo <a
-                href="http://apuliasoft.github.io/aurea" target="_blank">http://apuliasoft.github.io/aurea</a> dove
-              potrete trovare
-              maggiori informazioni in merito al progetto.</p>
+            <div ng-messages="loginForm.email.$error" ng-show="loginForm.email.$dirty">
+              <div ng-message="required">Email obbligatoria</div>
+              <div ng-message="email">Email non valida</div>
+            </div>
+          </md-input-container>
 
-            <p>In questo sito avete a disposizione una demo contenente dati di esempio resettati quotidianamente.
-              Questa demo ha lo scopo di permettere ai dirigenti scolastici di valutare il prodotto e di inviarci
-              feedback (tramite pulsante <i class="fa fa-star-o"></i> in alto a destra dopo il login) su qualunque
-              aspetto
-              della piattaforma, permettendone la continua evoluzione.</p>
+          <md-input-container flex>
+            <label>Password</label>
+            <input type="password" name="password" ng-model="user.password" required tabindex="2"/>
 
-            <p>Per accedere al sistema forniamo 4 account demo con relative credenziali, uno per ogni ruolo disponibile
-              nel sistema. Cliccare su una delle credenziali e successivamente cliccare su <i
-                  class="fa fa-sign-in"></i> (sar&agrave; sempre possibile tornare a questa schermata tramite <i
-                  class="fa fa-sign-out"></i> in alto a destra dopo il logini).</p>
+            <div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$dirty">
+              <div ng-message="required">Password obbligatoria</div>
+            </div>
+          </md-input-container>
 
-            <md-content layout="row" layout-align="space-around center">
-              <md-button ng-repeat="account in accounts" ng-click="setCredentials(account)">
-                <h4>{{ account.role }}</h4>
-                <span><b>EMAIL:</b> {{ account.email }}</span>
-                <span><b>PASSWD:</b> {{ account.password }}</span>
-              </md-button>
-            </md-content>
-          </md-content>
-        </div>
-      </md-content>
-    </md-content>
-
-    <md-content layout="row" layout-align="center">
-      <div class="logo-big" flex layout="column" layout-align="center">
-        <img src="../img/icons/logo-big.png" class="logo-big">
-      </div>
-
-      <form ng-submit="login()" novalidate flex layout="column" layout-align="center">
-        <md-content class="md-padding login-content" layout="row" layout-align="center">
-          <div class="md-whiteframe-z1">
-            <md-toolbar>
-              <h2 class="md-toolbar-tools">Login</h2>
-            </md-toolbar>
-
-            <md-content class="md-padding">
-
-              <md-text-float label="Email" ng-model="user.email" class="long" type="email" tabindex="0"></md-text-float>
-
-              <md-text-float label="Password" ng-model="user.password" class="long" type="password"
-                             tabindex="1"></md-text-float>
-
-            </md-content>
-          </div>
         </md-content>
-
-        <md-button class="md-fab md-primary add-button">
-          <i class="fa fa-sign-in"></i>
-          <md-tooltip>Login</md-tooltip>
-        </md-button>
-      </form>
+      </div>
     </md-content>
 
-  </md-content>
+    <md-button type="button" class="md-fab back-button" ng-click="getInfo()" tabindex="4">
+      <i class="fa fa-info"></i>
+      <md-tooltip>Info</md-tooltip>
+    </md-button>
+
+    <md-button class="md-fab md-primary add-button" tabindex="3">
+      <i class="fa fa-sign-in"></i>
+      <md-tooltip>Login</md-tooltip>
+    </md-button>
+  </form>
 
 </section>

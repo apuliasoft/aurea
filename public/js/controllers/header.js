@@ -11,7 +11,7 @@ angular.module('aurea.system')
             for (var i = 0; i < rules.length; i += 2) {
                 var template = menuTemplate[rules[i]];
                 if (!template) {
-                    if(rules[i] && rules[i] !== 'login') {
+                    if (rules[i] && rules[i] !== 'login') {
                         console.error('Non esiste un template per ' + rules[i]);
                     }
                     continue;
@@ -257,7 +257,7 @@ angular.module('aurea.system')
                     {
                         label: 'Lista classi',
                         icon: 'users',
-                        state: 'all classes'
+                        state: 'all school classes'
                     }
                 ]
             },
@@ -271,7 +271,7 @@ angular.module('aurea.system')
                     {
                         label: 'Lista classi',
                         icon: 'users',
-                        state: 'all classes'
+                        state: 'all school classes'
                     },
                     {
                         label: 'Registro di classe',
@@ -377,26 +377,25 @@ angular.module('aurea.system')
         //    };
         //}];
     })
-  .controller('MenuCtrl', function ($scope, $mdBottomSheet, label, submenu) {
-      $scope.label = label;
-      $scope.submenu = submenu;
+    .controller('MenuCtrl', function ($scope, $mdBottomSheet, label, submenu) {
+        $scope.label = label;
+        $scope.submenu = submenu;
 
-      $scope.itemClick = function (submenuItem) {
-          $mdBottomSheet.hide(submenuItem);
-      };
-  })
-  .controller('FeedbackCtrl', function ($scope, $mdDialog, feedback) {
+        $scope.itemClick = function (submenuItem) {
+            $mdBottomSheet.hide(submenuItem);
+        };
+    })
+    .controller('FeedbackCtrl', function ($scope, $mdDialog, feedback) {
 
-      $scope.feedback = feedback;
+        $scope.feedback = feedback;
 
-      $scope.cancel = function () {
-          $mdDialog.cancel();
-      };
+        $scope.cancel = function () {
+            $mdDialog.cancel();
+        };
 
-      $scope.save = function (isValid) {
-          if (isValid) {
-              $mdDialog.hide($scope.feedback);
-          }
-      };
-  })
-;
+        $scope.save = function (isValid) {
+            if (isValid) {
+                $mdDialog.hide($scope.feedback);
+            }
+        };
+    });

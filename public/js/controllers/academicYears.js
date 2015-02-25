@@ -79,7 +79,7 @@ angular.module('aurea.academicYears')
                     }
                 }
             } else if (day.slots.length > 1) {
-                var lasts = _.last(day.slots, 2);
+                var lasts = _.takeRight(day.slots, 2);
                 if (lasts[0].start && lasts[1].start) {
                     start = new Date(lasts[1].start.valueOf() + (lasts[1].start.valueOf() - lasts[0].start.valueOf()));
                     if (lasts[1].end) {

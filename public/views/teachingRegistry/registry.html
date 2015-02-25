@@ -46,11 +46,10 @@
         </h2>
       </md-toolbar>
 
-      <md-content flex md-scroll-y class="md-padding">
-        <div flex layout="row" layout-align="center">
-          <form name="teachingRegistryForm" ng-submit="save()" novalidate>
-            <md-content class="md-padding">
-              <div class="md-whiteframe-z1">
+      <md-content class="md-padding" md-scroll-y flex>
+        <div layout="column" layout-fill class="content">
+          <form name="teachingRegistryForm" ng-submit="save(teachingRegistryForm.$valid)" novalidate flex layout="column">
+            <section class="md-whiteframe-z1">
 
                 <section ng-show="teachingRegistry.votes.length">
                   <md-toolbar class="md-grey-theme">
@@ -62,26 +61,27 @@
                   <md-list>
                     <md-item ng-repeat="vote in teachingRegistry.votes">
                       <md-content md-theme="dark" class="md-padding">
-                        <div layout="row">
-                          <md-input-group label="Studente" flex class="md-dark-theme select-group" name="student"
-                                          ng-class="{'md-input-has-value': vote.student}">
+                        <div layout layout-sm="column">
+                          <md-input-container ng-class="{'md-input-has-value': vote.student}" flex>
                             <label>Studente</label>
-                            <select ng-model="vote.student" name="student" ng-disabled="true"
+                            <select ng-model="vote.student" name="student" class="md-input" tabindex="2" flex ng-disabled="true"
                                     ng-options="classStudent._id as classStudent | name for classStudent in classStudents"></select>
-                          </md-input-group>
+                          </md-input-container>
 
-                          <md-input-group label="Modalità" class="md-dark-theme select-group short" name="mode"
-                                          ng-class="{'md-input-has-value': vote.mode}">
+                          <md-input-container ng-class="{'md-input-has-value': vote.mode}" flex>
                             <label>Modalità</label>
-                            <select ng-model="vote.mode" name="mode">
+                            <select ng-model="vote.mode" name="mode" class="md-input" tabindex="2" flex>
                               <option value="orale">Orale</option>
                               <option value="scritto">Scritto</option>
                               <option value="pratico">Pratico</option>
                               <option value="altro">Altro</option>
                             </select>
-                          </md-input-group>
+                          </md-input-container>
 
-                          <md-text-float label="Voto" ng-model="vote.vote" class="short"></md-text-float>
+                          <md-input-container ng-class="{'md-input-has-value': vote.vote}" flex>
+                            <label>Voto</label>
+                            <input type="text" name="vote" ng-model="vote.vote">
+                          </md-input-container>
 
                           <md-button type="button" ng-click="removeVote(vote)" class="icon-button">
                             <i class="fa fa-times"></i>
@@ -100,11 +100,16 @@
                         <md-list>
                           <md-item ng-repeat="partial in vote.partials">
                             <md-content class="md-padding">
-                              <div layout="row">
-                                <md-text-float label="Criterio" ng-model="partial.criterion"
-                                               class="longer"></md-text-float>
+                              <div layout layout-sm="column">
+                                <md-input-container ng-class="{'md-input-has-value': partial.criterion}" flex>
+                                  <label>Criterio</label>
+                                  <input type="text" name="criterion" ng-model="partial.criterion">
+                                </md-input-container>
 
-                                <md-text-float label="Voto" ng-model="partial.vote" class="short"></md-text-float>
+                                <md-input-container ng-class="{'md-input-has-value': partial.vote}" flex>
+                                  <label>Voto</label>
+                                  <input type="text" name="vote" ng-model="partial.vote">
+                                </md-input-container>
 
                                 <md-button type="button" ng-click="removePartial(vote, partial)" class="icon-button">
                                   <i class="fa fa-times"></i>
@@ -129,15 +134,17 @@
                   <md-list>
                     <md-item ng-repeat="absence in teachingRegistry.absences">
                       <md-content class="md-padding">
-                        <div layout="row">
-                          <md-input-group label="Studente" flex class="select-group" name="student"
-                                          ng-class="{'md-input-has-value': absence.student}">
+                        <div layout layout-sm="column">
+                          <md-input-container ng-class="{'md-input-has-value': absence.student}" flex>
                             <label>Studente</label>
-                            <select ng-model="absence.student" name="student" ng-disabled="true"
+                            <select ng-model="absence.student" name="student" class="md-input" tabindex="2" flex
                                     ng-options="classStudent._id as classStudent | name for classStudent in classStudents"></select>
-                          </md-input-group>
+                          </md-input-container>
 
-                          <md-text-float label="Ore" type="number" min="1" ng-model="absence.slots"></md-text-float>
+                          <md-input-container flex>
+                            <label>Ore</label>
+                            <input type="number" name="slots" ng-model="absence.slots" min="1" tabindex="2"/>
+                          </md-input-container>
                         </div>
                       </md-content>
                     </md-item>
@@ -151,23 +158,29 @@
                 </md-toolbar>
 
                 <md-content class="md-padding">
-                  <md-text-float label="Note disciplinari" ng-model="teachingRegistry.notes"
-                                 class="longest"></md-text-float>
-                  <md-text-float label="Annotazioni" ng-model="teachingRegistry.annotations"
-                                 class="longest"></md-text-float>
+                  <div layout layout-sm="column">
+                    <md-input-container flex="50">
+                      <label>Note disciplinari</label>
+                      <textarea name="notes" ng-model="teachingRegistry.notes" rows="5" tabindex="2"></textarea>
+                    </md-input-container>
+
+                    <md-input-container flex="50">
+                      <label>Annotazioni</label>
+                      <textarea name="annotations" ng-model="teachingRegistry.annotations" rows="5" tabindex="2"></textarea>
+                    </md-input-container>
+                  </div>
                 </md-content>
 
-                <md-button type="submit" ng-disabled="teachingRegistryForm.$invalid"
-                           class="md-fab md-primary add-button">
-                  <i class="fa fa-save"></i>
-                  <md-tooltip>Salva</md-tooltip>
-                </md-button>
-
-              </div>
-            </md-content>
+            </section>
           </form>
         </div>
       </md-content>
+
+      <md-button ng-disabled="teachingRegistryForm.$invalid" ng-click=save(teachingRegistryForm.$valid)"
+                 class="md-fab md-primary add-button">
+        <i class="fa fa-save"></i>
+        <md-tooltip>Salva</md-tooltip>
+      </md-button>
     </section>
   </md-content>
 </section>

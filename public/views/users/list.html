@@ -7,7 +7,7 @@
           <md-list>
             <md-item ng-repeat="user in users">
               <md-item-content class="item-content">
-                <div class="md-tile-content" ng-click="goToViewUser(user)">
+                <div class="md-tile-content">
                   <h3 class="item-content-text">
                     <i class="fa item-content-icon" ng-class="{
                     'fa-graduation-cap': user.role == 'student',
@@ -38,7 +38,7 @@
     </div>
   </md-content>
 
-  <md-button class="md-fab md-primary add-button" ng-click="goToCreateUser()">
+  <md-button class="md-fab md-primary add-button" ng-click="goToCreateUser()" tabindex="1">
     <i class="fa fa-plus"></i>
     <md-tooltip>Aggiungi</md-tooltip>
   </md-button>

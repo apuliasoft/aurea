@@ -16,6 +16,10 @@ a {
   color: #808080;
 }
 
+md-dialog {
+  max-width: 60%;
+}
+
 md-content {
   overflow: visible;
 }
@@ -27,6 +31,10 @@ md-content {
 .logo-big {
   padding: 20px;
   width: 100%;
+}
+
+.loginForm {
+  max-width: 320px;
 }
 
 .breadcrumbs {
@@ -187,77 +195,41 @@ md-bottom-sheet button span {
   display: none;
 }
 
-md-input-group.select-group {
-  display: block;
-  position: relative;
-  margin: 8px 0 10px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-md-input-group.select-group select {
-  display: block;
-  margin: 0;
-  min-height: 100%;
-  width: 202px;
-  background: transparent;
-  color: rgba(0, 0, 0, 0.73);
-  border: 0;
-  border-radius: 0;
-  line-height: 26px;
-  padding: 2px 1px 1px 1px;
+md-input-container select {
   -webkit-appearance: none;
-  -webkit-transition: all ease-out 150ms;
-  transition: all ease-out 150ms;
 }
 
-md-input-group.md-dark-theme.select-group {
+md-input-container.md-dark-theme.select-group {
   border-color: rgba(255,255,255,0.12);
 }
 
-md-input-group.md-dark-theme.select-group select {
+md-input-container.md-dark-theme.select-group select {
   color: rgba(255,255,255,1.0);
 }
 
-md-input-group.md-dark-theme label {
+md-input-container.md-dark-theme label {
   color: rgba(255,255,255,0.3);
 }
 
-md-input-group.md-dark-theme.md-input-has-value:not(.md-input-focused) label {
+md-input-container.md-dark-theme.md-input-has-value:not(.md-input-focused) label {
   color: rgba(255,255,255,0.7);
 }
 
-md-input-group.md-dark-theme.md-input-focused label {
+md-input-container.md-dark-theme.md-input-focused label {
   color: #2196F3;
 }
 
-md-input-group.md-dark-theme input, md-input-group.md-dark-theme textarea {
+md-input-container.md-dark-theme input, md-input-container.md-dark-theme textarea {
   color: rgba(255,255,255,1.0);
   border-color: rgba(255,255,255,0.12);
 }
 
-md-input-group.md-dark-theme.md-input-focused input, md-input-group.md-dark-theme.md-input-focused textarea {
+md-input-container.md-dark-theme.md-input-focused input, md-input-container.md-dark-theme.md-input-focused textarea {
   border-color: #2196F3;
 }
 
-md-input-group input[type="date"], md-input-group input[type="time"] {
+md-input-container input[type="date"], md-input-container input[type="time"] {
   height: 30px;
-  width: 202px;
-}
-
-md-input-group.longest input, md-input-group.longest select {
-  width: 606px;
-}
-
-md-input-group.longer input, md-input-group.longer select {
-  width: 404px;
-}
-
-md-input-group.long input, md-input-group.long select {
-  width: 303px;
-}
-
-md-input-group.short input, md-input-group.short select {
-  width: 101px;
 }
 
 .menu-item {

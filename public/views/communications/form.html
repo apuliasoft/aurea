@@ -1,37 +1,49 @@
 <section ng-controller="CommunicationsCtrl" ng-init="init()" flex layout="column" layout-fill>
 
-  <md-content md-scroll-y flex layout="row" layout-align="center">
+  <md-content class="md-padding" md-scroll-y flex>
+    <div layout="column" layout-fill class="content">
 
-    <form name="communicationForm" ng-submit="save(communicationForm.$valid)" novalidate>
-      <md-content class="md-padding">
-        <div class="md-whiteframe-z1">
+      <form name="communicationForm" ng-submit="save(communicationForm.$valid)" novalidate flex layout="column">
+        <section class="md-whiteframe-z1">
           <md-toolbar>
             <h2 class="md-toolbar-tools">{{title}}</h2>
           </md-toolbar>
 
           <md-content class="md-padding">
 
-            <md-text-float label="Titolo" ng-model="communication.title" type="text" tabindex="0" name="title" class="longest"
-                           required></md-text-float>
+            <md-input-container flex>
+              <label>Titolo</label>
+              <input type="text" name="title" ng-model="communication.title" required tabindex="1" autofocus/>
 
-            <md-text-float label="Testo" ng-model="communication.text" type="text" tabindex="0" name="text" class="longest"
-                           required></md-text-float>
+              <div ng-messages="communicationForm.title.$error" ng-show="communicationForm.title.$dirty">
+                <div ng-message="required">Nome obbligatorio</div>
+              </div>
+            </md-input-container>
+
+            <md-input-container flex>
+              <label>Testo</label>
+              <textarea name="text" ng-model="communication.text" required rows="5" tabindex="2"></textarea>
+
+              <div ng-messages="communicationForm.text.$error" ng-show="communicationForm.text.$dirty">
+                <div ng-message="required">Testo obbligatorio</div>
+              </div>
+            </md-input-container>
 
           </md-content>
-        </div>
-      </md-content>
+        </section>
+      </form>
 
-      <md-button type="button" class="md-fab back-button" ng-click="goToListCommunications()">
-        <i class="fa fa-reply-all"></i>
-        <md-tooltip>Torna a Comunicazioni</md-tooltip>
-      </md-button>
-
-      <md-button type="submit" ng-disabled="communicationForm.$invalid" class="md-fab md-primary add-button">
-        <i class="fa fa-save"></i>
-        <md-tooltip>Salva</md-tooltip>
-      </md-button>
-    </form>
-
+    </div>
   </md-content>
+
+  <md-button type="button" class="md-fab back-button" ng-click="goToListCommunications()" tabindex="4">
+    <i class="fa fa-reply-all"></i>
+    <md-tooltip>Torna a Comunicazioni</md-tooltip>
+  </md-button>
+
+  <md-button type="submit" ng-disabled="communicationForm.$invalid" tabindex="3" class="md-fab md-primary add-button">
+    <i class="fa fa-save"></i>
+    <md-tooltip>Salva</md-tooltip>
+  </md-button>
 
 </section>

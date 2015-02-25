@@ -1,30 +1,38 @@
-<md-dialog>
+<md-dialog flex>
   <md-toolbar>
     <h2 class="md-toolbar-tools">Invia Feedback</h2>
   </md-toolbar>
-  <form name="feedbackForm" ng-submit="save(feedbackForm.$valid)" novalidate>
-    <md-content class="md-padding">
+  <md-content class="md-padding">
+    <form name="feedbackForm" ng-submit="save(feedbackForm.$valid)" novalidate>
+      <span>Voto: {{feedback.rating}}/5</span>
+      <md-slider md-discrete ng-model="feedback.rating" step="1" min="1" max="5"></md-slider>
 
-      <md-content>
+      <md-input-container flex>
+        <label>Email</label>
+        <input type="email" name="email" ng-model="feedback.email" tabindex="1" autofocus/>
 
-        <span>Voto: {{feedback.rating}}/5</span>
-        <md-slider md-discrete ng-model="feedback.rating" step="1" min="1" max="5"></md-slider>
+        <div ng-messages="feedbackForm.email.$error" ng-show="feedbackForm.email.$dirty">
+          <div ng-message="email">Email non valida</div>
+        </div>
+      </md-input-container>
 
-        <md-text-float label="Email" ng-model="feedback.email" type="text" tabindex="0" name="email"
-                       class="longer"></md-text-float>
+      <md-input-container flex>
+        <label>Messaggio</label>
+        <textarea name="text" ng-model="feedback.text" required rows="5" tabindex="2"></textarea>
 
-        <md-text-float label="Messaggio" ng-model="feedback.text" type="text" tabindex="1" name="text"
-                       class="longer" required></md-text-float>
+        <div ng-messages="feedbackForm.text.$error" ng-show="feedbackForm.text.$dirty">
+          <div ng-message="required">Messaggio obbligatorio</div>
+        </div>
+      </md-input-container>
+    </form>
 
-      </md-content>
-      <div class="md-actions" layout="row">
-        <md-button type="button" ng-click="cancel()">
-          Annulla
-        </md-button>
-        <md-button class="md-primary" ng-disabled="feedbackForm.$invalid">
-          Invia
-        </md-button>
-      </div>
-    </md-content>
-  </form>
+    <div class="md-actions" layout="row">
+      <md-button ng-click="cancel()" tabindex="4">
+        Annulla
+      </md-button>
+      <md-button class="md-primary" ng-disabled="feedbackForm.$invalid" ng-click="save(feedbackForm.$valid)" tabindex="3">
+        Invia
+      </md-button>
+    </div>
+  </md-content>
 </md-dialog>

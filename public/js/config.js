@@ -6,7 +6,7 @@ angular.module('aurea')
 
         $analyticsProvider.virtualPageviews(true);
 
-        var checkLoggedin = ['$q', '$http', '$location', 'Global', function ($q, $http, $location, Global) {
+        var checkLoggedin = ['$q', '$http', 'SmartState', 'Global', function ($q, $http, SmartState, Global) {
             // Initialize a new promise
             var deferred = $q.defer();
 
@@ -21,8 +21,8 @@ angular.module('aurea')
                         Global.setCurrentUser({});
                     }
 
+                    SmartState.go('login user');
                     deferred.reject();
-                    $location.url('/login');
                 }
             });
 
@@ -281,7 +281,7 @@ angular.module('aurea')
             })
 
             .state('create user', {
-                url: '/utenti/crea',
+                url: '/utenti/nuovo',
                 templateUrl: 'views/users/form.html',
                 resolve: {
                     loggedin: checkLoggedin
@@ -292,7 +292,7 @@ angular.module('aurea')
             })
 
             .state('edit user', {
-                url: '/utenti/:userId/modifica',
+                url: '/utenti/:userId',
                 templateUrl: 'views/users/form.html',
                 resolve: {
                     loggedin: checkLoggedin,
@@ -300,15 +300,6 @@ angular.module('aurea')
                 },
                 data: {
                     editMode: true
-                }
-            })
-
-            .state('user by id', {
-                url: '/utenti/:userId',
-                templateUrl: 'views/users/view.html',
-                resolve: {
-                    loggedin: checkLoggedin,
-                    user: checkUser
                 }
             })
 

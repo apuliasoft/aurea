@@ -51,73 +51,86 @@
         </h2>
       </md-toolbar>
 
-      <md-content flex md-scroll-y class="md-padding">
-        <div flex layout="row" layout-align="center">
-          <form name="classRegistryForm" data-ng-submit="save()" novalidate>
-            <md-content class="md-padding">
-              <div class="md-whiteframe-z1">
+      <md-content class="md-padding" md-scroll-y flex>
+        <div layout="column" layout-fill class="content">
+          <form name="classRegistryForm" ng-submit="save(classRegistryForm.$valid)" novalidate flex layout="column">
+            <section class="md-whiteframe-z1">
 
-                <section data-ng-repeat="slot in classRegistry.slots | orderBy:'number'">
-                  <md-toolbar class="md-grey-theme">
-                    <h2 class="md-toolbar-tools">
-                      {{ slot.number | ordinalNumber }}
-                      Ora ({{timeslots.slots[$index].start | time}} - {{timeslots.slots[$index].end | time}})
-                    </h2>
-                  </md-toolbar>
+              <section data-ng-repeat="slot in classRegistry.slots | orderBy:'number'">
+                <md-toolbar class="md-grey-theme">
+                  <h2 class="md-toolbar-tools">
+                    {{ slot.number | ordinalNumber }}
+                    Ora ({{timeslots.slots[$index].start | time}} - {{timeslots.slots[$index].end | time}})
+                  </h2>
+                </md-toolbar>
 
-                  <md-content class="md-padding">
+                <md-content class="md-padding">
 
-                    <md-input-group label="Materia" class="md-default-theme select-group longest" name="teaching"
-                                    ng-class="{'md-input-has-value': slot.teaching}">
-                      <label>Materia</label>
-                      <select ng-model="slot.teaching" name="teaching"
-                              ng-options="teaching._id as teaching.name for teaching in teachings"></select>
-                    </md-input-group>
+                  <md-input-container ng-class="{'md-input-has-value': slot.teaching}" flex>
+                    <label>Materia</label>
+                    <select ng-model="slot.teaching" name="teaching" class="md-input" tabindex="1" flex
+                            ng-options="teaching._id as teaching.name for teaching in teachings"></select>
+                  </md-input-container>
 
+                  <div layout layout-sm="column">
                     <md-checkbox ng-model="slot.isSubstitution">Supplenza</md-checkbox>
 
-                    <md-input-group label="Supplente" class="md-default-theme longest select-group" name="substitution"
-                                    ng-class="{'md-input-has-value': slot.substitution}" ng-if="slot.isSubstitution">
+                    <md-input-container ng-class="{'md-input-has-value': slot.substitution}"
+                                        ng-if="slot.isSubstitution" flex>
                       <label>Supplente</label>
-                      <select ng-model="slot.substitution" name="substitution"
-                              ng-options="teacher._id as teacher | name for teacher in teachers"></select>
-                    </md-input-group>
+                      <select ng-model="slot.substitution" name="substitution" class="md-input" tabindex="2" flex
+                              ng-options="teaching._id as teaching.name for teaching in teachings"></select>
+                    </md-input-container>
+                  </div>
 
-                    <md-text-float label="Argomento" ng-model="slot.subject" class="longest"></md-text-float>
+                  <div layout layout-sm="column">
+                    <md-input-container flex="50">
+                      <label>Argomento</label>
+                      <textarea name="subject" ng-model="slot.subject" rows="5" tabindex="2"></textarea>
+                    </md-input-container>
 
-                    <md-text-float label="Note disciplinari" ng-model="slot.notes" class="longest"></md-text-float>
+                    <md-input-container flex="50">
+                      <label>Note disciplinari</label>
+                      <textarea name="notes" ng-model="slot.notes" rows="5" tabindex="2"></textarea>
+                    </md-input-container>
+                  </div>
 
+                  <div layout layout-sm="column">
                     <md-checkbox ng-model="slot.isSupport">Sostegno</md-checkbox>
 
-                    <ui-select ng-model="slot.supportTeachers" multiple ng-if="slot.isSupport" layout-fill>
+                    <ui-select ng-model="slot.supportTeachers" multiple ng-if="slot.isSupport" layout-fill flex>
                       <ui-select-match>{{ $item | name }}</ui-select-match>
                       <ui-select-choices repeat="teacher._id as teacher in teachers | filter: $select.search">
                         <div ng-bind-html="teacher | name"></div>
                       </ui-select-choices>
                     </ui-select>
+                  </div>
 
+                  <div layout layout-sm="column">
                     <md-checkbox ng-model="slot.isAssistant">Compresenza</md-checkbox>
 
-                    <ui-select ng-model="slot.assistantTeachers" multiple ng-if="slot.isAssistant" layout-fill>
+                    <ui-select ng-model="slot.assistantTeachers" multiple ng-if="slot.isAssistant" layout-fill flex>
                       <ui-select-match>{{ $item | name }}</ui-select-match>
                       <ui-select-choices repeat="teacher._id as teacher in teachers | filter: $select.search">
                         <div ng-bind-html="teacher | name"></div>
                       </ui-select-choices>
                     </ui-select>
-                  </md-content>
+                  </div>
 
-                </section>
+                </md-content>
 
-                <md-button type="submit" ng-disabled="classRegistryForm.$invalid" class="md-fab md-primary add-button">
-                  <i class="fa fa-save"></i>
-                  <md-tooltip>Salva</md-tooltip>
-                </md-button>
+              </section>
 
-              </div>
-            </md-content>
+            </section>
           </form>
         </div>
       </md-content>
+
+      <md-button ng-disabled="classRegistryForm.$invalid" ng-click="save(classRegistryForm.$valid)"
+                 class="md-fab md-primary add-button">
+        <i class="fa fa-save"></i>
+        <md-tooltip>Salva</md-tooltip>
+      </md-button>
     </section>
   </section>
 </section>

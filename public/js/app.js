@@ -3,6 +3,7 @@
 angular.module('aurea', [
     'ngCookies',
     'ngResource',
+    'ngMessages',
     'ngAnimate',
     'ngAria',
     'ngSanitize',

@@ -1,0 +1,37 @@
+<md-dialog flex>
+  <md-toolbar>
+    <h2 class="md-toolbar-tools">Informazioni</h2>
+  </md-toolbar>
+
+  <md-content>
+    <p>Aurea &egrave; una piattaforma web di <b>registro elettronico</b> open source realizzata da <a
+        href="http://www.apuliasoft.com" target="_blank">ApuliaSoft</a>.</p>
+
+    <p>Il codice di Aurea risiede interamente sul GitHub all'indirizzo <a
+        href="http://apuliasoft.github.io/aurea" target="_blank">http://apuliasoft.github.io/aurea</a> dove
+      potrete trovare
+      maggiori informazioni in merito al progetto.</p>
+
+    <p>In questo sito avete a disposizione una demo contenente dati di esempio resettati quotidianamente.
+      Questa demo ha lo scopo di permettere ai dirigenti scolastici di valutare il prodotto e di inviarci
+      feedback (tramite pulsante <i class="fa fa-star-o"></i> in alto a destra dopo il login) su qualunque
+      aspetto
+      della piattaforma, permettendone la continua evoluzione.</p>
+
+    <p>Per accedere al sistema forniamo 4 account demo con relative credenziali, uno per ogni ruolo disponibile
+      nel sistema. Cliccare su una delle credenziali e successivamente cliccare su <i
+          class="fa fa-sign-in"></i> (sar&agrave; sempre possibile tornare a questa schermata tramite <i
+          class="fa fa-sign-out"></i> in alto a destra dopo il login).</p>
+
+  </md-content>
+
+  <div class="md-actions" layout="row">
+    <md-button type="button" ng-click="cancel()">
+      Annulla
+    </md-button>
+    <span flex></span>
+    <md-button ng-repeat="account in accounts" ng-click="setAccount(account)" class="md-primary">
+      {{ account.role }}
+    </md-button>
+  </div>
+</md-dialog>

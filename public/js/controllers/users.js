@@ -24,10 +24,6 @@ angular.module('aurea.users')
             SmartState.go('edit user', {userId: user._id});
         };
 
-        $scope.goToViewUser = function (user) {
-            SmartState.go('user by id', {userId: user._id});
-        };
-
         $scope.find = function () {
             User.query().$promise
                 .then(function (users) {

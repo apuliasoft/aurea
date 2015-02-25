@@ -1,23 +1,32 @@
-<md-dialog>
+<md-dialog flex>
   <md-toolbar>
     <h2 class="md-toolbar-tools">{{title}}</h2>
   </md-toolbar>
-  <form name="timeForm" ng-submit="save(timeForm.$valid)" novalidate>
-    <md-content>
-      <md-text-float label="Orario" ng-model="time" type="time" tabindex="0" name="time"
-                     ng-model-options="{ timezone: 'UTC' }" required></md-text-float>
-    </md-content>
+  <md-content class="md-padding">
+    <form name="timeForm" ng-submit="save(timeForm.$valid)" novalidate>
+      <md-input-container flex>
+        <label>Orario</label>
+        <input type="time" name="time" ng-model="time" ng-model-options="{ timezone: 'UTC' }" required tabindex="1"
+               autofocus />
+
+        <div ng-messages="timeForm.time.$error" ng-show="timeForm.time.$dirty">
+          <div ng-message="required">Orario obbligatorio</div>
+          <div ng-message="time">Orario non valido</div>
+        </div>
+      </md-input-container>
+    </form>
+
     <div class="md-actions" layout="row">
-      <md-button type="button" ng-show="deleteEnabled" ng-click="delete()" class="md-warn">
+      <md-button ng-show="deleteEnabled" ng-click="delete()" class="md-warn" tabindex="4">
         Cancella
       </md-button>
       <span flex></span>
-      <md-button type="button" ng-click="cancel()">
+      <md-button ng-click="cancel()" tabindex="3">
         Annulla
       </md-button>
-      <md-button class="md-primary" ng-disabled="timeForm.$invalid">
+      <md-button class="md-primary" ng-disabled="timeForm.$invalid" ng-click="save(timeForm.$valid)" tabindex="2">
         Salva
       </md-button>
     </div>
-  </form>
+  </md-content>
 </md-dialog>
