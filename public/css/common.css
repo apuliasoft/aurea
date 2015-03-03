@@ -179,39 +179,11 @@ md-bottom-sheet button span {
   opacity: .8;
 }
 
-:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px white inset;
-}
-
-::-webkit-datetime-edit-fields-wrapper {
-  visibility: hidden;
-}
-
-.md-input-has-value ::-webkit-datetime-edit-fields-wrapper, .md-input-focused ::-webkit-datetime-edit-fields-wrapper {
-  visibility: visible;
-}
-
-::-webkit-inner-spin-button {
-  display: none;
-}
-
-md-input-container select {
-  -webkit-appearance: none;
-}
-
-md-input-container.md-dark-theme.select-group {
-  border-color: rgba(255,255,255,0.12);
-}
-
-md-input-container.md-dark-theme.select-group select {
-  color: rgba(255,255,255,1.0);
-}
-
-md-input-container.md-dark-theme label {
+md-input-container.md-dark-theme label, .md-dark-theme md-select span {
   color: rgba(255,255,255,0.3);
 }
 
-md-input-container.md-dark-theme.md-input-has-value:not(.md-input-focused) label {
+md-input-container.md-dark-theme.md-input-has-value:not(.md-input-focused) label, .md-dark-theme md-select.ng-valid-parse span {
   color: rgba(255,255,255,0.7);
 }
 
@@ -219,17 +191,13 @@ md-input-container.md-dark-theme.md-input-focused label {
   color: #2196F3;
 }
 
-md-input-container.md-dark-theme input, md-input-container.md-dark-theme textarea {
+md-input-container.md-dark-theme input, md-input-container.md-dark-theme textarea, .md-dark-theme md-select .md-select-label {
   color: rgba(255,255,255,1.0);
   border-color: rgba(255,255,255,0.12);
 }
 
 md-input-container.md-dark-theme.md-input-focused input, md-input-container.md-dark-theme.md-input-focused textarea {
   border-color: #2196F3;
-}
-
-md-input-container input[type="date"], md-input-container input[type="time"] {
-  height: 30px;
 }
 
 .menu-item {

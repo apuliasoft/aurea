@@ -1,6 +1,6 @@
 'use strict';
 
-//Province service used to serve provinces
+//Smart State service used to serve states
 angular.module('aurea')
     .factory('SmartState', function ($state, $stateParams, $filter, _, Global) {
         var checkDate = function(date, startDate, endDate, weekDays) {

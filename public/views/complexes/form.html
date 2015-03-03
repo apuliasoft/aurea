@@ -51,15 +51,13 @@
                 </div>
               </md-input-container>
 
-              <md-input-container ng-class="{'md-input-has-value': complex.province}" flex="30">
-                <label>Provincia</label>
-                <select ng-model="complex.province" name="province" class="md-input" required tabindex="5" flex
-                        ng-options="province.code as province.name group by province.region for province in provinces"></select>
-
-                <div ng-messages="complexForm.province.$error" ng-show="complexForm.province.$dirty">
-                  <div ng-message="required">Provincia obbligatoria</div>
-                </div>
-              </md-input-container>
+              <md-select ng-model="complex.province" placeholder="Provincia" flex="30" required tabindex="5">
+                <md-optgroup label="{{region.name}}" ng-repeat="region in regions ">
+                  <md-option ng-value="province.code" ng-repeat="province in region.provinces">
+                    {{province.name}}
+                  </md-option>
+                </md-optgroup>
+              </md-select>
 
             </div>
 

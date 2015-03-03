@@ -1,33 +1,33 @@
 'use strict';
 
-//Province service used to serve provinces
+//Regions service used to serve regions
 angular.module('aurea')
-    .factory('Provinces', function ($http, $q) {
-        var provinces;
+    .factory('Regions', function ($http, $q) {
+        var regions;
 
         return {
-            loadProvinces: function () {
+            loadRegions: function () {
                 var deferred = $q.defer();
 
-                if (!provinces) {
+                if (!regions) {
                     // load provinces with AJAX
-                    $http.get('/res/provinces.json')
+                    $http.get('/res/regions.json')
                         .success(function (data) {
-                            provinces = data;
+                            regions = data;
                             deferred.resolve(data);
                         }).error(function (err) {
                             console.error(err);
                             deferred.reject();
                         });
                 } else {
-                    deferred.resolve(provinces);
+                    deferred.resolve(regions);
                 }
 
                 return deferred.promise;
             },
 
-            getProvinces: function () {
-                return provinces;
+            getRegions: function () {
+                return regions;
             }
         };
     });

@@ -170,6 +170,12 @@ angular.module('aurea.teachingRegistry')
             _.remove(vote.partials, partial);
         };
 
+        $scope.getStudentById = function(studentId) {
+            return _.find($scope.classStudents, function(student) {
+                return student._id === studentId;
+            });
+        };
+
         $scope.toggleAbsents = function () {
             var students = selectedStudents();
             var noAbsentStudents = _.filter(students, function(student) {

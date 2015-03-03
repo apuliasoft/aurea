@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Abruzzo",
+    "provinces": [
+      {
+        "code": "CH",
+        "name": "Chieti"
+      },
+      {
+        "code": "AQ",
+        "name": "L'Aquila"
+      },
+      {
+        "code": "PE",
+        "name": "Pescara"
+      },
+      {
+        "code": "TE",
+        "name": "Teramo"
+      }
+    ]
+  },
+  {
+    "name": "Basilicata",
+    "provinces": [
+      {
+        "code": "MT",
+        "name": "Matera"
+      },
+      {
+        "code": "PZ",
+        "name": "Potenza"
+      }
+    ]
+  },
+  {
+    "name": "Calabria",
+    "provinces": [
+      {
+        "code": "CZ",
+        "name": "Catanzaro"
+      },
+      {
+        "code": "CS",
+        "name": "Cosenza"
+      },
+      {
+        "code": "KR",
+        "name": "Crotone"
+      },
+      {
+        "code": "RC",
+        "name": "Reggio Calabria"
+      },
+      {
+        "code": "VV",
+        "name": "Vibo Valentia"
+      }
+    ]
+  },
+  {
+    "name": "Campania",
+    "provinces": [
+      {
+        "code": "AV",
+        "name": "Avellino"
+      },
+      {
+        "code": "BN",
+        "name": "Benevento"
+      },
+      {
+        "code": "CE",
+        "name": "Caserta"
+      },
+      {
+        "code": "NA",
+        "name": "Napoli"
+      },
+      {
+        "code": "SA",
+        "name": "Salerno"
+      }
+    ]
+  },
+  {
+    "name": "Emilia-Romagna",
+    "provinces": [
+      {
+        "code": "BO",
+        "name": "Bologna"
+      },
+      {
+        "code": "FE",
+        "name": "Ferrara"
+      },
+      {
+        "code": "FC",
+        "name": "Forlì-Cesena"
+      },
+      {
+        "code": "MO",
+        "name": "Modena"
+      },
+      {
+        "code": "PR",
+        "name": "Parma"
+      },
+      {
+        "code": "PC",
+        "name": "Piacenza"
+      },
+      {
+        "code": "RA",
+        "name": "Ravenna"
+      },
+      {
+        "code": "RE",
+        "name": "Reggio Emilia"
+      },
+      {
+        "code": "RN",
+        "name": "Rimini"
+      }
+    ]
+  },
+  {
+    "name": "Friuli-Venezia Giulia",
+    "provinces": [
+      {
+        "code": "GO",
+        "name": "Gorizia"
+      },
+      {
+        "code": "PN",
+        "name": "Pordenone"
+      },
+      {
+        "code": "TS",
+        "name": "Trieste"
+      },
+      {
+        "code": "UD",
+        "name": "Udine"
+      }
+    ]
+  },
+  {
+    "name": "Lazio",
+    "provinces": [
+      {
+        "code": "FR",
+        "name": "Frosinone"
+      },
+      {
+        "code": "LT",
+        "name": "Latina"
+      },
+      {
+        "code": "RI",
+        "name": "Rieti"
+      },
+      {
+        "code": "RM",
+        "name": "Roma"
+      },
+      {
+        "code": "VT",
+        "name": "Viterbo"
+      }
+    ]
+  },
+  {
+    "name": "Liguria",
+    "provinces": [
+      {
+        "code": "GE",
+        "name": "Genova"
+      },
+      {
+        "code": "IM",
+        "name": "Imperia"
+      },
+      {
+        "code": "SP",
+        "name": "La Spezia"
+      },
+      {
+        "code": "SV",
+        "name": "Savona"
+      }
+    ]
+  },
+  {
+    "name": "Lombardia",
+    "provinces": [
+      {
+        "code": "BS",
+        "name": "Brescia"
+      },
+      {
+        "code": "CO",
+        "name": "Como"
+      },
+      {
+        "code": "CR",
+        "name": "Cremona"
+      },
+      {
+        "code": "LC",
+        "name": "Lecco"
+      },
+      {
+        "code": "LO",
+        "name": "Lodi"
+      },
+      {
+        "code": "MN",
+        "name": "Mantova"
+      },
+      {
+        "code": "MI",
+        "name": "Milano"
+      },
+      {
+        "code": "MB",
+        "name": "Monza e Brianza"
+      },
+      {
+        "code": "BG",
+        "name": "Bergamo"
+      },
+      {
+        "code": "PV",
+        "name": "Pavia"
+      },
+      {
+        "code": "SO",
+        "name": "Sondrio"
+      },
+      {
+        "code": "VA",
+        "name": "Varese"
+      }
+    ]
+  },
+  {
+    "name": "Marche",
+    "provinces": [
+      {
+        "code": "AN",
+        "name": "Ancona"
+      },
+      {
+        "code": "AP",
+        "name": "Ascoli Piceno"
+      },
+      {
+        "code": "FM",
+        "name": "Fermo"
+      },
+      {
+        "code": "MC",
+        "name": "Macerata"
+      },
+      {
+        "code": "PU",
+        "name": "Pesaro e Urbino"
+      }
+    ]
+  },
+  {
+    "name": "Molise",
+    "provinces": [
+      {
+        "code": "CB",
+        "name": "Campobasso"
+      },
+      {
+        "code": "IS",
+        "name": "Isernia"
+      }
+    ]
+  },
+  {
+    "name": "Piemonte",
+    "provinces": [
+      {
+        "code": "AL",
+        "name": "Alessandria"
+      },
+      {
+        "code": "AT",
+        "name": "Asti"
+      },
+      {
+        "code": "BI",
+        "name": "Biella"
+      },
+      {
+        "code": "CN",
+        "name": "Cuneo"
+      },
+      {
+        "code": "NO",
+        "name": "Novara"
+      },
+      {
+        "code": "TO",
+        "name": "Torino"
+      },
+      {
+        "code": "VB",
+        "name": "Verbano-Cusio-Ossola"
+      },
+      {
+        "code": "VC",
+        "name": "Vercelli"
+      }
+    ]
+  },
+  {
+    "name": "Puglia",
+    "provinces": [
+      {
+        "code": "BA",
+        "name": "Bari"
+      },
+      {
+        "code": "BT",
+        "name": "Barletta-Andria-Trani"
+      },
+      {
+        "code": "BR",
+        "name": "Brindisi"
+      },
+      {
+        "code": "FG",
+        "name": "Foggia"
+      },
+      {
+        "code": "LE",
+        "name": "Lecce"
+      },
+      {
+        "code": "TA",
+        "name": "Taranto"
+      }
+    ]
+  },
+  {
+    "name": "Sardegna",
+    "provinces": [
+      {
+        "code": "CA",
+        "name": "Cagliari"
+      },
+      {
+        "code": "CI",
+        "name": "Carbonia-Iglesias"
+      },
+      {
+        "code": "VS",
+        "name": "Medio Campidano"
+      },
+      {
+        "code": "NU",
+        "name": "Nuoro"
+      },
+      {
+        "code": "OG",
+        "name": "Ogliastra"
+      },
+      {
+        "code": "OT",
+        "name": "Olbia-Tempio"
+      },
+      {
+        "code": "OR",
+        "name": "Oristano"
+      },
+      {
+        "code": "SS",
+        "name": "Sassari"
+      }
+    ]
+  },
+  {
+    "name": "Sicilia",
+    "provinces": [
+      {
+        "code": "AG",
+        "name": "Agrigento"
+      },
+      {
+        "code": "CL",
+        "name": "Caltanissetta"
+      },
+      {
+        "code": "CT",
+        "name": "Catania"
+      },
+      {
+        "code": "EN",
+        "name": "Enna"
+      },
+      {
+        "code": "ME",
+        "name": "Messina"
+      },
+      {
+        "code": "PA",
+        "name": "Palermo"
+      },
+      {
+        "code": "RG",
+        "name": "Ragusa"
+      },
+      {
+        "code": "SR",
+        "name": "Siracusa"
+      },
+      {
+        "code": "TP",
+        "name": "Trapani"
+      }
+    ]
+  },
+  {
+    "name": "Toscana",
+    "provinces": [
+      {
+        "code": "AR",
+        "name": "Arezzo"
+      },
+      {
+        "code": "FI",
+        "name": "Firenze"
+      },
+      {
+        "code": "GR",
+        "name": "Grosseto"
+      },
+      {
+        "code": "LI",
+        "name": "Livorno"
+      },
+      {
+        "code": "LU",
+        "name": "Lucca"
+      },
+      {
+        "code": "MS",
+        "name": "Massa e Carrara"
+      },
+      {
+        "code": "PI",
+        "name": "Pisa"
+      },
+      {
+        "code": "PT",
+        "name": "Pistoia"
+      },
+      {
+        "code": "PO",
+        "name": "Prato"
+      },
+      {
+        "code": "SI",
+        "name": "Siena"
+      }
+    ]
+  },
+  {
+    "name": "Trentino-Alto Adige",
+    "provinces": [
+      {
+        "code": "BZ",
+        "name": "Bolzano"
+      },
+      {
+        "code": "TN",
+        "name": "Trento"
+      }
+    ]
+  },
+  {
+    "name": "Umbria",
+    "provinces": [
+      {
+        "code": "PG",
+        "name": "Perugia"
+      },
+      {
+        "code": "TR",
+        "name": "Terni"
+      }
+    ]
+  },
+  {
+    "name": "Valle d'Aosta",
+    "provinces": [
+      {
+        "code": "AO",
+        "name": "Aosta"
+      }
+    ]
+  },
+  {
+    "name": "Veneto",
+    "provinces": [
+      {
+        "code": "BL",
+        "name": "Belluno"
+      },
+      {
+        "code": "PD",
+        "name": "Padova"
+      },
+      {
+        "code": "RO",
+        "name": "Rovigo"
+      },
+      {
+        "code": "TV",
+        "name": "Treviso"
+      },
+      {
+        "code": "VE",
+        "name": "Venezia"
+      },
+      {
+        "code": "VR",
+        "name": "Verona"
+      },
+      {
+        "code": "VI",
+        "name": "Vicenza"
+      }
+    ]
+  }
+]

@@ -66,21 +66,18 @@
 
                 <md-content class="md-padding">
 
-                  <md-input-container ng-class="{'md-input-has-value': slot.teaching}" flex>
-                    <label>Materia</label>
-                    <select ng-model="slot.teaching" name="teaching" class="md-input" tabindex="1" flex
-                            ng-options="teaching._id as teaching.name for teaching in teachings"></select>
-                  </md-input-container>
+                  <div layout layout-sm="column">
+                    <md-select ng-model="slot.teaching" placeholder="Materia" flex>
+                      <md-option ng-value="teaching._id" ng-repeat="teaching in teachings">{{ teaching.name }}</md-option>
+                    </md-select>
+                  </div>
 
                   <div layout layout-sm="column">
-                    <md-checkbox ng-model="slot.isSubstitution">Supplenza</md-checkbox>
+                    <md-checkbox ng-model="slot.isSubstitution" flex="20">Supplenza</md-checkbox>
 
-                    <md-input-container ng-class="{'md-input-has-value': slot.substitution}"
-                                        ng-if="slot.isSubstitution" flex>
-                      <label>Supplente</label>
-                      <select ng-model="slot.substitution" name="substitution" class="md-input" tabindex="2" flex
-                              ng-options="teaching._id as teaching.name for teaching in teachings"></select>
-                    </md-input-container>
+                    <md-select ng-model="slot.substitution" placeholder="Docente di supplenza" ng-if="slot.isSubstitution" flex>
+                      <md-option ng-value="teacher._id" ng-repeat="teacher in teachers">{{ teacher | name }}</md-option>
+                    </md-select>
                   </div>
 
                   <div layout layout-sm="column">
@@ -96,25 +93,19 @@
                   </div>
 
                   <div layout layout-sm="column">
-                    <md-checkbox ng-model="slot.isSupport">Sostegno</md-checkbox>
+                    <md-checkbox ng-model="slot.isSupport" flex="20">Sostegno</md-checkbox>
 
-                    <ui-select ng-model="slot.supportTeachers" multiple ng-if="slot.isSupport" layout-fill flex>
-                      <ui-select-match>{{ $item | name }}</ui-select-match>
-                      <ui-select-choices repeat="teacher._id as teacher in teachers | filter: $select.search">
-                        <div ng-bind-html="teacher | name"></div>
-                      </ui-select-choices>
-                    </ui-select>
+                    <md-select ng-model="slot.supportTeachers" placeholder="Docenti di sostegno" multiple ng-if="slot.isSupport" flex>
+                      <md-option ng-value="teacher._id" ng-repeat="teacher in teachers">{{ teacher | name }}</md-option>
+                    </md-select>
                   </div>
 
                   <div layout layout-sm="column">
-                    <md-checkbox ng-model="slot.isAssistant">Compresenza</md-checkbox>
+                    <md-checkbox ng-model="slot.isAssistant" flex="20">Compresenza</md-checkbox>
 
-                    <ui-select ng-model="slot.assistantTeachers" multiple ng-if="slot.isAssistant" layout-fill flex>
-                      <ui-select-match>{{ $item | name }}</ui-select-match>
-                      <ui-select-choices repeat="teacher._id as teacher in teachers | filter: $select.search">
-                        <div ng-bind-html="teacher | name"></div>
-                      </ui-select-choices>
-                    </ui-select>
+                    <md-select ng-model="slot.assistantTeachers" placeholder="Docenti di compresenza" multiple ng-if="slot.isAssistant" flex>
+                      <md-option ng-value="teacher._id" ng-repeat="teacher in teachers">{{ teacher | name }}</md-option>
+                    </md-select>
                   </div>
 
                 </md-content>

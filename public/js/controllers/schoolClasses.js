@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aurea.schoolClasses')
-    .controller('SchoolClassesCtrl', function ($scope, $state, $stateParams, $mdToast, _, SmartState, Global, SchoolClass, Student) {
+    .controller('SchoolClassesCtrl', function ($scope, $filter, $state, $stateParams, $mdToast, _, SmartState, Global, SchoolClass, Student) {
         $scope.global = Global;
 
         $scope.goToListSchoolClasses = function () {
@@ -80,9 +80,16 @@ angular.module('aurea.schoolClasses')
             }
         };
 
+        $scope.matchStudent = function (query) {
+            return !query ? [] : _.filter($scope.chosableStudents, function(student) {
+                return $filter('name')(student).toLowerCase().indexOf(query) > -1;
+            });
+        };
+
         $scope.addStudent = function (student) {
             $scope.chosenStudents.push(student);
             $scope.chosableStudents = _.without($scope.chosableStudents, student);
+            $scope.searchText = '';
         };
 
         $scope.removeStudent = function (student) {

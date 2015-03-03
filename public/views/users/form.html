@@ -30,15 +30,13 @@
               </div>
             </md-input-container>
 
-            <md-input-container ng-class="{'md-input-has-value': user.role}" flex>
-              <label>Ruolo</label>
-              <select ng-model="user.role" name="role" class="md-input" required tabindex="3" ng-disabled="editMode"
-                      flex ng-options="role.value as role.label for role in roles"></select>
-
-              <div ng-messages="userForm.role.$error" ng-show="userForm.role.$dirty">
-                <div ng-message="required">Provincia obbligatoria</div>
-              </div>
-            </md-input-container>
+            <div layout layout-sm="column">
+              <md-select ng-model="user.role" placeholder="Ruolo" ng-disabled="editMode" flex required tabindex="3">
+                <md-option ng-value="role.value" ng-repeat="role in roles">
+                  {{role.label}}
+                </md-option>
+              </md-select>
+            </div>
           </md-content>
         </section>
       </form>

@@ -349,8 +349,8 @@ angular.module('aurea')
                 resolve: {
                     loggedin: checkLoggedin,
                     school: checkSchool,
-                    provices: function (Provinces) {
-                        return Provinces.loadProvinces();
+                    regions: function (Regions) {
+                        return Regions.loadRegions();
                     }
                 },
                 data: {
@@ -365,8 +365,8 @@ angular.module('aurea')
                     loggedin: checkLoggedin,
                     school: checkSchool,
                     complex: checkComplex,
-                    provices: function (Provinces) {
-                        return Provinces.loadProvinces();
+                    regions: function (Regions) {
+                        return Regions.loadRegions();
                     }
                 },
                 data: {

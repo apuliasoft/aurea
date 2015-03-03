@@ -26,12 +26,17 @@
             <md-toolbar class="md-grey-theme">
               <h2 class="md-toolbar-tools">
                 <span flex="20">Alunni</span>
-                <ui-select ng-model="chosenStudent" on-select="addStudent($item)" reset-search-input="true" tabindex="2" flex>
-                  <ui-select-match></ui-select-match>
-                  <ui-select-choices repeat="student in chosableStudents | filter: $select.search">
-                    <div ng-bind-html="student | name"></div>
-                  </ui-select-choices>
-                </ui-select>
+
+                <md-autocomplete flex
+                                 md-no-cache="true"
+                                 md-selected-item="chosenStudent"
+                                 md-search-text="searchText"
+                                 md-items="student in matchStudent(searchText)"
+                                 md-item-text="item.display"
+                                 md-selected-item-change="addStudent(chosenStudent)"
+                                 placeholder="Aggiungi studente">
+                  <span md-highlight-text="searchText">{{student | name}}</span>
+                </md-autocomplete>
               </h2>
             </md-toolbar>
 
@@ -44,7 +49,8 @@
                         <i class="fa fa-graduation-cap item-content-icon"></i> {{student | name}}</h3>
                     </div>
                     <div class="md-tile-right">
-                      <md-button type="button" class="icon-button" ng-click="removeStudent(student)" tabindex="{{3+$index}}">
+                      <md-button type="button" class="icon-button" ng-click="removeStudent(student)"
+                                 tabindex="{{3+$index}}">
                         <i class="fa fa-times"></i>
                         <md-tooltip>Cancella</md-tooltip>
                       </md-button>
@@ -67,7 +73,8 @@
     <md-tooltip>Torna a Istituti</md-tooltip>
   </md-button>
 
-  <md-button ng-disabled="schoolClassForm.$invalid" ng-click="save(schoolClassForm.$valid)" tabindex="{{3+chosenStudents.length}}"
+  <md-button ng-disabled="schoolClassForm.$invalid" ng-click="save(schoolClassForm.$valid)"
+             tabindex="{{3+chosenStudents.length}}"
              class="md-fab md-primary add-button">
     <i class="fa fa-save"></i>
     <md-tooltip>Salva</md-tooltip>

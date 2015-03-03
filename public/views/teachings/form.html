@@ -20,15 +20,13 @@
               </div>
             </md-input-container>
 
-            <md-input-container ng-class="{'md-input-has-value': teaching.teacher}" flex>
-              <label>Insegnante</label>
-              <select ng-model="teaching.teacher" name="teacher" class="md-input" required tabindex="2" flex
-                      ng-options="teacher._id as teacher | name for teacher in teachers"></select>
-
-              <div ng-messages="teachingForm.teacher.$error" ng-show="teachingForm.teacher.$dirty">
-                <div ng-message="required">Insegnante obbligatorio</div>
-              </div>
-            </md-input-container>
+            <div layout layout-sm="column">
+              <md-select ng-model="teaching.teacher" placeholder="Insegnante" flex required tabindex="2">
+                <md-option ng-value="teacher._id" ng-repeat="teacher in teachers">
+                  {{teacher | name}}
+                </md-option>
+              </md-select>
+            </div>
           </md-content>
         </section>
       </form>

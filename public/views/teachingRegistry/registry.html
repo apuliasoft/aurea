@@ -61,24 +61,17 @@
                   <md-list>
                     <md-item ng-repeat="vote in teachingRegistry.votes">
                       <md-content md-theme="dark" class="md-padding">
+                        <h2>{{getStudentById(vote.student) | name}}</h2>
                         <div layout layout-sm="column">
-                          <md-input-container ng-class="{'md-input-has-value': vote.student}" flex>
-                            <label>Studente</label>
-                            <select ng-model="vote.student" name="student" class="md-input" tabindex="2" flex ng-disabled="true"
-                                    ng-options="classStudent._id as classStudent | name for classStudent in classStudents"></select>
-                          </md-input-container>
 
-                          <md-input-container ng-class="{'md-input-has-value': vote.mode}" flex>
-                            <label>Modalità</label>
-                            <select ng-model="vote.mode" name="mode" class="md-input" tabindex="2" flex>
-                              <option value="orale">Orale</option>
-                              <option value="scritto">Scritto</option>
-                              <option value="pratico">Pratico</option>
-                              <option value="altro">Altro</option>
-                            </select>
-                          </md-input-container>
+                          <md-select ng-model="vote.mode" placeholder="Modalità" flex>
+                            <md-option ng-value="'orale'">Orale</md-option>
+                            <md-option ng-value="'scritto'">Scritto</md-option>
+                            <md-option ng-value="'pratico'">Pratico</md-option>
+                            <md-option ng-value="'altro'">Altro</md-option>
+                          </md-select>
 
-                          <md-input-container ng-class="{'md-input-has-value': vote.vote}" flex>
+                          <md-input-container flex>
                             <label>Voto</label>
                             <input type="text" name="vote" ng-model="vote.vote">
                           </md-input-container>
@@ -101,12 +94,12 @@
                           <md-item ng-repeat="partial in vote.partials">
                             <md-content class="md-padding">
                               <div layout layout-sm="column">
-                                <md-input-container ng-class="{'md-input-has-value': partial.criterion}" flex>
+                                <md-input-container flex>
                                   <label>Criterio</label>
                                   <input type="text" name="criterion" ng-model="partial.criterion">
                                 </md-input-container>
 
-                                <md-input-container ng-class="{'md-input-has-value': partial.vote}" flex>
+                                <md-input-container flex>
                                   <label>Voto</label>
                                   <input type="text" name="vote" ng-model="partial.vote">
                                 </md-input-container>
@@ -134,12 +127,10 @@
                   <md-list>
                     <md-item ng-repeat="absence in teachingRegistry.absences">
                       <md-content class="md-padding">
-                        <div layout layout-sm="column">
-                          <md-input-container ng-class="{'md-input-has-value': absence.student}" flex>
-                            <label>Studente</label>
-                            <select ng-model="absence.student" name="student" class="md-input" tabindex="2" flex
-                                    ng-options="classStudent._id as classStudent | name for classStudent in classStudents"></select>
-                          </md-input-container>
+                        <div layout layout-sm="column" layout-padding>
+                          <md-select ng-model="absence.student" placeholder="Studente" flex>
+                            <md-option ng-value="classStudent._id" ng-repeat="classStudent in classStudents | orderBy:['lastName', 'firstName']">{{ classStudent | name }}</md-option>
+                          </md-select>
 
                           <md-input-container flex>
                             <label>Ore</label>
@@ -176,7 +167,7 @@
         </div>
       </md-content>
 
-      <md-button ng-disabled="teachingRegistryForm.$invalid" ng-click=save(teachingRegistryForm.$valid)"
+      <md-button ng-disabled="teachingRegistryForm.$invalid" ng-click="save(teachingRegistryForm.$valid)"
                  class="md-fab md-primary add-button">
         <i class="fa fa-save"></i>
         <md-tooltip>Salva</md-tooltip>
