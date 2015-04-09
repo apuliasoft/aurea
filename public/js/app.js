@@ -8,7 +8,6 @@ angular.module('aurea', [
     'ngAria',
     'ngSanitize',
     'ui.router',
-    'ui.select',
     'ngMaterial',
     'd3',
     'angulartics',

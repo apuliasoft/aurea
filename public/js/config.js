@@ -722,12 +722,6 @@ angular.module('aurea')
         .accentPalette('pink');
 });
 
-//Setting uiSelect theme
-angular.module('aurea')
-    .config(function(uiSelectConfig) {
-        uiSelectConfig.theme = 'select2';
-    });
-
 //Setting Lodash
 angular.module('aurea')
     .factory('_', function () {
