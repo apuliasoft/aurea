@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    db: 'mongodb://localhost/aurea-test',
+    db: 'mongodb://' + (process.env.MONGO_PORT_27017_TCP_ADDR ? process.env.MONGO_PORT_27017_TCP_ADDR : 'localhost') + 'aurea-test',
     port: 3001,
     app: {
         name: 'Aurea: un registro elettronico aperto - Test'
