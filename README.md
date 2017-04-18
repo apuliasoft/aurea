@@ -1,6 +1,8 @@
 Aurea: un registro elettronico aperto
 =====================================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/apuliasoft/aurea.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/apuliasoft/aurea.png?branch=master)](https://travis-ci.org/apuliasoft/aurea)
 [![Dependencies Status](https://david-dm.org/apuliasoft/aurea.png)](https://david-dm.org/apuliasoft/aurea)
 
